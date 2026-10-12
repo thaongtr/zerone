@@ -4,6 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Contact — Zerone</title>
+    <meta name="description" content="Book a 30-minute call with Zerone to talk through your professional brand, new clinic or existing clinic." />
     <link rel="icon" href="assets/logo.svg" type="image/svg+xml" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -12,16 +13,60 @@
   </head>
   <body data-page="Contact">
     <div id="chrome-top"></div>
-    <main class="form-page">
-      <div style="width: min(680px, 92vw)">
+    <main class="contact-page">
+      <section class="contact-intro">
         <p class="kicker">Contact</p>
-        <h1 class="display">Start a conversation.</h1>
-        <p>A professional reputation.<br />A new healthcare business.<br />A stronger brand and patient experience.</p>
-        <p style="color: var(--slate)">Ho Chi Minh City, Vietnam</p>
-        <p style="color: var(--slate)">Email · Phone / WhatsApp: details coming soon.</p>
-      </div>
+        <h1 class="display">Book a 30-minute call.</h1>
+        <p class="lede">Tell us what you are trying to build. We will listen, share an honest view, and agree the next step together.</p>
+      </section>
+
+      <section class="contact-block">
+        <h2 class="contact-h">Most calls are about</h2>
+        <ul class="contact-chips">
+          <li>Building a professional reputation</li>
+          <li>Opening a new healthcare business</li>
+          <li>Strengthening the brand and patient experience of an existing clinic</li>
+        </ul>
+      </section>
+
+      <section class="contact-block">
+        <h2 class="contact-h">How it works</h2>
+        <ol class="contact-steps">
+          <li><strong>Reach out</strong><span>Choose the way that suits you below.</span></li>
+          <li><strong>30-minute call</strong><span>We listen to your goals and where you are today.</span></li>
+          <li><strong>Next step</strong><span>If Zerone is the right fit, we agree how to begin.</span></li>
+        </ol>
+      </section>
+
+      <section class="contact-block">
+        <h2 class="contact-h">Get in touch</h2>
+        <div class="contact-cards" id="contact-cards"></div>
+        <p class="contact-loc">Ho Chi Minh City, Vietnam</p>
+      </section>
     </main>
     <div id="chrome-bottom"></div>
     <script src="js/site.js"></script>
+    <script>
+      /* ---- EDIT HERE: fill in the details you want to show. Leave "" to hide a method. ---- */
+      var CONTACT = {
+        booking: "https://docs.google.com/forms/d/e/1FAIpQLSdCS5G2tBktQliHjaVjCL8U8EAnvrs0LmhNkPiKgd8-xR3dHA/viewform",
+        email: "nguyentranlinhthao@zerone.vn",
+        phone: "",     /* e.g. +84 9xx xxx xxx */
+        zalo: "",      /* Zalo link or number, e.g. https://zalo.me/09xxxxxxxx */
+        whatsapp: ""   /* e.g. https://wa.me/849xxxxxxxx */
+      };
+      (function () {
+        var box = document.getElementById("contact-cards"), items = [];
+        if (CONTACT.booking) items.push(["Book a call", "Book a 30-minute call", CONTACT.booking, "Leave your details"]);
+        if (CONTACT.email) items.push(["Email", CONTACT.email, "mailto:" + CONTACT.email, "Send an email"]);
+        if (CONTACT.phone) items.push(["Phone", CONTACT.phone, "tel:" + CONTACT.phone.replace(/[^+\d]/g, ""), "Call us"]);
+        if (CONTACT.zalo) items.push(["Zalo", "Message us on Zalo", CONTACT.zalo.indexOf("http") === 0 ? CONTACT.zalo : "https://zalo.me/" + CONTACT.zalo.replace(/\D/g, ""), "Open Zalo"]);
+        if (CONTACT.whatsapp) items.push(["WhatsApp", "Message us on WhatsApp", CONTACT.whatsapp, "Open WhatsApp"]);
+        box.innerHTML = items.map(function (i) {
+          return '<a class="contact-card" href="' + i[2] + '"' + (i[2].indexOf("http") === 0 ? ' target="_blank" rel="noopener"' : '') + '><span class="contact-card-label">' + i[0] + '</span><strong>' + i[1] + '</strong><span class="contact-card-cta">' + i[3] + ' →</span></a>';
+        }).join("");
+        if (!items.length) box.parentNode.hidden = true;
+      })();
+    </script>
   </body>
 </html>
