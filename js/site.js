@@ -51,8 +51,7 @@ function nav(active) {
   return `
     <nav class="site-nav" aria-label="Main navigation">
       <a class="brand" href="index.html" aria-label="Zerone home">
-        <img src="assets/logo.svg" alt="" />
-        Zerone
+        <img src="assets/logo.svg" alt="Zerone" />
       </a>
       ${links
         .map(
