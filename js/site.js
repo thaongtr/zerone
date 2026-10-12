@@ -70,7 +70,7 @@ function footer() {
     <footer class="footer">
       <div>
         <h3>Healthcare brand and patient experience</h3>
-        <a class="btn" href="contact.html">Start a conversation</a>
+        <a class="btn" href="contact.html">Book a 30-minute call</a>
       </div>
       <div class="footer-cols">
         <div>
