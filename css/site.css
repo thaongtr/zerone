@@ -1127,3 +1127,34 @@ textarea {
 .proof-band .proof-arrow::after { border-color: #fff; }
 .proof-band .btn { background: #fff; color: var(--ink); }
 .proof-band .btn:hover { background: var(--mist); }
+
+/* Home founder block: calmer headline */
+.founder-card .display { font-size: clamp(1.9rem, 3.2vw, 2.9rem); line-height: 1.12; margin-bottom: 1.25rem; }
+.founder-card .btn { margin-top: 0; }
+
+/* Approach page: editorial, text-led rows with image breaks */
+.ap-sub { margin: 0 0 1.2rem; font-family: var(--serif); font-style: italic; font-size: clamp(1.5rem, 3vw, 2.4rem); color: var(--red); letter-spacing: -0.02em; }
+.page-hero .lede { max-width: 52ch; }
+.ap-break { margin: 1rem 7vw 0; border-radius: 22px; overflow: hidden; aspect-ratio: 21 / 8; background: var(--mist); }
+.ap-break img { width: 100%; height: 100%; object-fit: cover; object-position: center 55%; display: block; }
+.ap-rows { margin-top: 2.5rem; border-top: 1px solid rgba(12, 15, 20, 0.16); }
+.ap-row { display: grid; grid-template-columns: minmax(200px, 1fr) 1.6fr; gap: 2rem; align-items: baseline; padding: 1.7rem 0; border-bottom: 1px solid rgba(12, 15, 20, 0.16); }
+.ap-row h3 { margin: 0; font-family: var(--serif); font-weight: 400; font-size: clamp(1.8rem, 3.2vw, 2.7rem); line-height: 1.1; letter-spacing: -0.03em; color: var(--ink); }
+.ap-row p { margin: 0; font-size: 1.1rem; line-height: 1.55; color: #34404c; max-width: 52ch; }
+.ap-label { margin: 0 0 .5rem; font-size: .78rem; font-weight: 600; letter-spacing: .04em; color: var(--red); }
+.ap-across { margin: 2.5rem 0 0; font-size: .78rem; font-weight: 600; letter-spacing: .04em; color: var(--red); }
+.ap-tags li { background: #fff; }
+.ap-note { margin: 1.4rem 0 0; color: var(--slate); font-size: 1rem; }
+.ap-split { display: grid; grid-template-columns: 1.15fr 1fr; gap: 4vw; align-items: center; }
+.ap-split-img { margin: 0; border-radius: 22px; overflow: hidden; aspect-ratio: 4 / 5; background: var(--mist); }
+.ap-split-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.ap-train { display: grid; gap: 1.8rem; margin-top: 2rem; }
+.ap-train h3 { margin: 0 0 .5rem; font-family: var(--serif); font-weight: 400; font-size: 1.5rem; line-height: 1.2; letter-spacing: -0.02em; }
+.ap-train p { margin: 0; color: #34404c; line-height: 1.55; }
+.ap-train .ap-label { margin-bottom: .4rem; }
+@media (max-width: 860px) {
+  .ap-break { aspect-ratio: 4 / 3; border-radius: 16px; }
+  .ap-row { grid-template-columns: 1fr; gap: .6rem; padding: 1.3rem 0; }
+  .ap-split { grid-template-columns: 1fr; }
+  .ap-split-img { aspect-ratio: 4 / 3; }
+}
