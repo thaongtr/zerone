@@ -1351,3 +1351,33 @@ textarea {
 .tt-soft::before { content: ""; position: absolute; left: 50%; top: 58%; width: 92%; height: 62%; z-index: -1; border-radius: 50%; border: 1.5px solid rgba(255,255,255,.9); box-shadow: 0 0 40px rgba(255,255,255,.7), inset 0 0 40px rgba(255,255,255,.6); transform: translate(-50%, -50%) rotate(-8deg); background: none; filter: none; }
 .tt-soft::after { content: none; }
 .tt-node h3 { margin-top: 0; }
+
+/* Nav v5: fit-content width (fixes clipped logo on phones) + mobile Menu */
+.site-nav { width: max-content; max-width: calc(100vw - 20px); white-space: nowrap; }
+.site-nav .brand { flex-shrink: 0; }
+.nav-menu, .nav-panel { display: none; }
+@media (max-width: 760px) {
+  .site-nav .nav-link, .site-nav a.nav-cta { display: none !important; }
+  .nav-menu { display: inline-flex; align-items: center; padding: 11px 18px; border: 0; border-radius: 15px; background: var(--red); color: #fff; font: 600 14px var(--sans); cursor: pointer; }
+  .site-nav.menu-open .nav-menu { background: var(--ink); }
+  .nav-panel { position: absolute; top: calc(100% + 8px); left: 0; right: 0; flex-direction: column; gap: 2px; padding: 10px; border-radius: 22px; background: rgba(255,255,255,.96); -webkit-backdrop-filter: blur(16px); backdrop-filter: blur(16px); box-shadow: 0 18px 50px rgba(12,15,20,.2); border: 1px solid rgba(63,88,115,.14); opacity: 0; pointer-events: none; transform: translateY(-6px); transition: opacity .25s ease, transform .25s var(--ease-out); display: flex; }
+  .site-nav.menu-open .nav-panel { opacity: 1; pointer-events: auto; transform: none; }
+  .nav-panel a { padding: 14px 16px; border-radius: 14px; font-family: var(--serif); font-size: 1.5rem; letter-spacing: -0.02em; color: var(--ink); text-decoration: none; }
+  .nav-panel a:hover { background: var(--mist); }
+  .nav-panel .btn { margin-top: 6px; justify-content: center; font-family: var(--sans); font-size: 1rem; color: #fff; }
+  .nav-panel .btn:hover { background: var(--red-dark); }
+}
+@media (max-width: 760px) { .nav-panel a { padding: 11px 16px; font-size: 1.35rem; } }
+
+/* Menu button: three white bars, morph to X */
+@media (max-width: 760px) {
+  .nav-menu { width: 46px; height: 42px; padding: 0; justify-content: center; }
+  .nav-menu .bars { position: relative; width: 20px; height: 14px; display: block; }
+  .nav-menu .bars i { position: absolute; left: 0; width: 100%; height: 2px; border-radius: 2px; background: #fff; transition: transform .3s var(--ease-out), opacity .2s ease, top .3s var(--ease-out); }
+  .nav-menu .bars i:nth-child(1) { top: 0; }
+  .nav-menu .bars i:nth-child(2) { top: 6px; }
+  .nav-menu .bars i:nth-child(3) { top: 12px; }
+  .site-nav.menu-open .nav-menu .bars i:nth-child(1) { top: 6px; transform: rotate(45deg); }
+  .site-nav.menu-open .nav-menu .bars i:nth-child(2) { opacity: 0; }
+  .site-nav.menu-open .nav-menu .bars i:nth-child(3) { top: 6px; transform: rotate(-45deg); }
+}
