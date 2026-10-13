@@ -893,8 +893,8 @@ textarea {
 .tt-signals { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
 .tt-signals path { fill: none; stroke: rgba(63, 88, 115, 0.4); stroke-width: 1.4; stroke-dasharray: 1; stroke-dashoffset: 1; transition: stroke-dashoffset 1.4s cubic-bezier(0.25, 0.8, 0.2, 1); }
 .tt-signals circle { fill: var(--red); opacity: 0; transition: opacity 0.35s ease; }
-.tt-core { position: absolute; z-index: 3; left: 50%; top: 50%; width: 250px; aspect-ratio: 1; border-radius: 50%; display: grid; place-items: center; padding: 28px; text-align: center; color: #fff; background: var(--red-dark); box-shadow: 0 24px 60px rgba(94, 15, 19, 0.25); opacity: 0; transform: translate(-50%, -50%) scale(0.72); transition: opacity 0.6s ease, transform 1s cubic-bezier(0.16, 1, 0.3, 1); }
-.tt-core::before { content: ""; position: absolute; inset: -12px; border: 1px solid rgba(94, 15, 19, 0.28); border-radius: 50%; }
+.tt-core { position: absolute; z-index: 3; left: 50%; top: 50%; width: 250px; aspect-ratio: 1; border-radius: 50%; display: grid; place-items: center; padding: 28px; text-align: center; color: #fff; background: var(--red); box-shadow: 0 24px 60px rgba(94, 15, 19, 0.25); opacity: 0; transform: translate(-50%, -50%) scale(0.72); transition: opacity 0.6s ease, transform 1s cubic-bezier(0.16, 1, 0.3, 1); }
+.tt-core::before { content: ""; position: absolute; inset: -12px; border: 1px solid rgba(138, 26, 30, 0.28); border-radius: 50%; }
 .tt-core-name { font-family: var(--serif); font-size: 2rem; line-height: 1; }
 .tt-core-by { display: block; margin-top: 14px; font-size: 11px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; opacity: 0.8; }
 .tt-node { position: absolute; z-index: 2; width: 270px; opacity: 0; transform: translateY(12px); transition: opacity 0.5s ease, transform 0.7s cubic-bezier(0.16, 1, 0.3, 1); }
@@ -1247,3 +1247,107 @@ textarea {
 .cta-card.is-blue .btn:hover { background: var(--red-dark); color: #fff; }
 .cta-card.is-blue { padding: 5rem 5vw; }
 @media (max-width: 800px) { .cta-card.is-blue .cta-glass { padding: 2.2rem 1.4rem; } .cta-card.is-blue { padding: 3rem 5vw; } }
+
+/* Proof band: brand blue glass instead of a photo (no client material) */
+.proof-band { background: linear-gradient(160deg, #2f4258 0%, #3f5873 45%, #6f8db2 100%); }
+.proof-band::before { background: none; filter: none; transform: none; inset: 0; z-index: -2; }
+.proof-band::after { inset: auto; left: 62%; top: 50%; width: 120%; height: 80%; transform: translate(-50%, -50%) rotate(-11deg); border-radius: 50%; background: none; border: 2px solid rgba(255,255,255,.5); box-shadow: 0 0 24px rgba(255,255,255,.35), inset 0 0 24px rgba(255,255,255,.2); z-index: -1; pointer-events: none; }
+.proof-band .proof-step { background: rgba(255,255,255,.14); border-color: rgba(255,255,255,.4); }
+.proof-band .btn { background: var(--red); color: #fff; }
+.proof-band .btn:hover { background: var(--red-dark); color: #fff; }
+.proof-band .proof-out { background: #fff; border-color: #fff; }
+
+/* The problem: editorial rows */
+.prob { display: grid; grid-template-columns: 1fr 1.05fr; gap: 6vw; align-items: center; }
+.prob .display { margin-bottom: 1.4rem; }
+.prob-list { border-top: 1px solid rgba(12, 15, 20, .16); }
+.prob-row { display: grid; grid-template-columns: 1fr 1.3fr; gap: 1.5rem; align-items: baseline; padding: 1.25rem 0; border-bottom: 1px solid rgba(12, 15, 20, .16); }
+.prob-row h3 { margin: 0; font-family: var(--serif); font-weight: 400; font-size: clamp(1.5rem, 2.4vw, 2.1rem); letter-spacing: -0.025em; color: var(--ink); }
+.prob-row p { margin: 0; font-size: 1.02rem; color: #34404c; }
+.prob-sum { border-bottom: 0; margin-top: .4rem; padding: 1.4rem 1.5rem; border-radius: 18px; background: var(--red); }
+.prob-sum h3, .prob-sum p { color: #fff; }
+@media (max-width: 860px) { .prob { grid-template-columns: 1fr; gap: 2.2rem; } .prob-row { grid-template-columns: 1fr; gap: .25rem; padding: 1rem 0; } .prob-sum { padding: 1.2rem; } }
+
+/* The problem: photo with sequence that draws itself */
+.prob-visual { position: relative; overflow: hidden; isolation: isolate; border-radius: 28px; aspect-ratio: 4 / 5; max-height: 640px; width: 100%; background: #3f5873; }
+.prob-photo { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: -2; transform: scale(1.04); transition: transform 14s ease-out; }
+.prob-visual.is-in .prob-photo { transform: scale(1.12); }
+.prob-visual::after { content: ""; position: absolute; inset: 0; z-index: -1; background: linear-gradient(180deg, rgba(47,66,88,.62) 0%, rgba(47,66,88,.55) 50%, rgba(63,88,115,.72) 100%); }
+.prob-seq { list-style: none; margin: 0; padding: 2rem 1rem; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; color: #fff; }
+.prob-seq li { position: relative; font-family: var(--serif); font-size: clamp(1.5rem, 2.6vw, 2.2rem); letter-spacing: -0.02em; line-height: 1; opacity: 0; transform: translateY(14px); transition: opacity .7s ease, transform .7s var(--ease-out); transition-delay: calc(var(--i) * .45s); padding-bottom: 38px; }
+.prob-seq li::after { content: ""; position: absolute; left: 50%; bottom: 6px; width: 1px; height: 26px; background: rgba(255,255,255,.85); transform: translateX(-50%) scaleY(0); transform-origin: top; transition: transform .45s ease; transition-delay: calc(var(--i) * .45s + .35s); }
+.prob-seq li.prob-one { padding-bottom: 0; display: flex; flex-direction: column; align-items: center; gap: 14px; }
+.prob-seq li.prob-one::after { display: none; }
+.prob-one img { height: 34px; width: auto; filter: brightness(0) invert(1); }
+.prob-one span { font-size: clamp(1.7rem, 3vw, 2.6rem); font-style: italic; }
+.prob-visual.is-in .prob-seq li { opacity: 1; transform: none; }
+.prob-visual.is-in .prob-seq li::after { transform: translateX(-50%) scaleY(1); }
+@media (prefers-reduced-motion: reduce) { .prob-seq li, .prob-seq li::after, .prob-photo { transition: none; } }
+@media (max-width: 860px) { .prob-visual { aspect-ratio: 4 / 5; max-height: 560px; border-radius: 22px; } }
+
+/* The problem v2: photo + connected chain (one experience) */
+.prob2-wrap { padding-top: 2rem; padding-bottom: 2rem; }
+.prob2 { position: relative; isolation: isolate; overflow: hidden; border-radius: 32px; min-height: 680px; color: #fff; display: grid; grid-template-columns: 1.1fr .9fr; align-items: center; gap: 3rem; padding: 4rem 5vw; }
+.prob2-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: -2; transform: scale(1.02); transition: transform 14s ease-out; }
+.prob2.is-in .prob2-img { transform: scale(1.12); }
+.prob2-shade { position: absolute; inset: 0; z-index: -1; background: linear-gradient(90deg, rgba(30,45,64,.82) 0%, rgba(47,66,88,.55) 50%, rgba(63,88,115,.35) 100%); }
+.prob2 .kicker { color: #fff; }
+.prob2 .display { color: #fff; font-size: clamp(2.1rem, 4.4vw, 3.9rem); margin-bottom: 1.4rem; }
+.prob2 .lede { color: rgba(255,255,255,.9); max-width: 34ch; }
+.prob2-chain { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; align-items: center; }
+.prob2-chain li { font-family: var(--serif); font-size: clamp(1.7rem, 3vw, 2.5rem); letter-spacing: -0.02em; line-height: 1.1; opacity: 0; transform: translateY(14px); transition: opacity .8s var(--ease-out), transform .8s var(--ease-out); }
+.prob2-chain .ln { width: 1px; height: 46px; margin: 12px 0; padding: 0; background: rgba(255,255,255,.85); opacity: 1; transform: scaleY(0); transform-origin: top; transition: transform .6s var(--ease-out); }
+.prob2-chain .one { margin-top: 4px; padding: 14px 28px; font-family: var(--sans); font-size: 1rem; font-weight: 600; letter-spacing: .02em; border-radius: 999px; background: rgba(255,255,255,.18); border: 1px solid rgba(255,255,255,.55); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); }
+.prob2.is-in .prob2-chain li { opacity: 1; transform: none; }
+.prob2.is-in .prob2-chain .ln { transform: scaleY(1); }
+.prob2.is-in .prob2-chain li:nth-child(1) { transition-delay: .1s; } .prob2.is-in .prob2-chain li:nth-child(2) { transition-delay: .35s; }
+.prob2.is-in .prob2-chain li:nth-child(3) { transition-delay: .6s; } .prob2.is-in .prob2-chain li:nth-child(4) { transition-delay: .85s; }
+.prob2.is-in .prob2-chain li:nth-child(5) { transition-delay: 1.1s; } .prob2.is-in .prob2-chain li:nth-child(6) { transition-delay: 1.35s; }
+.prob2.is-in .prob2-chain li:nth-child(7) { transition-delay: 1.6s; } .prob2.is-in .prob2-chain li:nth-child(8) { transition-delay: 1.85s; }
+.prob2.is-in .prob2-chain li:nth-child(9) { transition-delay: 2.1s; } .prob2.is-in .prob2-chain li:nth-child(10) { transition-delay: 2.35s; }
+.prob2.is-in .prob2-chain li:nth-child(11) { transition-delay: 2.6s; }
+@media (max-width: 860px) { .prob2 { grid-template-columns: 1fr; min-height: 0; padding: 2.5rem 6vw 3rem; border-radius: 24px; gap: 2rem; } .prob2-chain { align-items: flex-start; } .prob2-chain .ln { height: 30px; margin-left: 4px; } .prob2-shade { background: linear-gradient(180deg, rgba(30,45,64,.85), rgba(47,66,88,.6)); } }
+@media (prefers-reduced-motion: reduce) { .prob2-img { transition: none; transform: none !important; } }
+.prob2-img { transform: scale(-1.02, 1.02); }
+.prob2.is-in .prob2-img { transform: scale(-1.12, 1.12); }
+@media (prefers-reduced-motion: reduce) { .prob2-img { transform: scaleX(-1) !important; } }
+.prob2-shade { background: linear-gradient(90deg, rgba(30,45,64,.84) 0%, rgba(40,58,80,.66) 55%, rgba(40,58,80,.62) 100%); }
+
+/* problem.jpg (the chosen photo) is not flipped; the fallback room photo is */
+.prob2-img { transform: scale(1.02); object-position: center 40%; }
+.prob2.is-in .prob2-img { transform: scale(1.1); }
+.prob2-img.is-fallback { transform: scale(-1.02, 1.02); }
+.prob2.is-in .prob2-img.is-fallback { transform: scale(-1.1, 1.1); }
+@media (prefers-reduced-motion: reduce) { .prob2-img, .prob2-img.is-fallback { transform: none !important; } .prob2-img.is-fallback { transform: scaleX(-1) !important; } }
+
+/* Trust Translation on a soft photo wash (lobby) */
+.tt-photo { position: relative; isolation: isolate; overflow: hidden; }
+.tt-photo::before { content: ""; position: absolute; inset: 0; z-index: -2; background: url("../assets/img/clinic-lobby.jpg") center / cover no-repeat; }
+.tt-photo::after { content: ""; position: absolute; inset: 0; z-index: -1; background: linear-gradient(180deg, rgba(229,236,244,.94) 0%, rgba(229,236,244,.8) 45%, rgba(229,236,244,.72) 100%); }
+
+/* One experience, light variant on the lobby photo (add class is-light + data photo) */
+.prob2.is-light { color: var(--ink); grid-template-columns: 1fr 1fr; grid-template-rows: auto auto; align-content: center; row-gap: 2rem; }
+.prob2.is-light .prob2-img { object-position: center; }
+.prob2.is-light .prob2-shade { background: linear-gradient(270deg, rgba(255,255,255,.82) 0%, rgba(255,255,255,.6) 48%, rgba(255,255,255,0) 78%); }
+.prob2.is-light .prob2-head { grid-column: 2; grid-row: 1; }
+.prob2.is-light .prob2-chain { grid-column: 2; grid-row: 2; flex-direction: row; flex-wrap: wrap; align-items: center; }
+.prob2.is-light .kicker { color: var(--red); }
+.prob2.is-light .display { color: var(--ink); }
+.prob2.is-light .lede { color: #34404c; }
+.prob2.is-light .prob2-chain li { color: var(--ink); font-size: clamp(1.4rem, 2.2vw, 1.9rem); }
+.prob2.is-light .prob2-chain .ln { width: 26px; height: 1px; margin: 0 12px; background: rgba(12,15,20,.5); transform: scaleX(0); transform-origin: left; }
+.prob2.is-light.is-in .prob2-chain .ln { transform: scaleX(1); }
+.prob2.is-light .prob2-chain .one { margin: 14px 0 0; flex-basis: auto; background: var(--red); border-color: var(--red); color: #fff; }
+@media (max-width: 860px) { .prob2.is-light { grid-template-columns: 1fr; } .prob2.is-light .prob2-head, .prob2.is-light .prob2-chain { grid-column: 1; } .prob2.is-light .prob2-shade { background: linear-gradient(180deg, rgba(255,255,255,.88), rgba(255,255,255,.6)); } }
+.tt-photo::before { filter: blur(9px) saturate(1.05); transform: scale(1.06); background-position: left center; }
+.tt-photo::after { background: linear-gradient(180deg, rgba(229,236,244,.9) 0%, rgba(229,236,244,.78) 50%, rgba(229,236,244,.7) 100%); }
+/* Trust Translation photo wash: cleaner, bluer, less grey */
+.tt-photo::before { filter: blur(7px) saturate(1.15) brightness(1.08); }
+.tt-photo::after { background: linear-gradient(180deg, rgba(236,242,249,.93) 0%, rgba(231,239,248,.84) 50%, rgba(224,234,246,.8) 100%); }
+.tt-photo .src { color: var(--slate); }
+
+/* Trust Translation: soft blue gradient with a faint ring (replaces photo wash) */
+.tt-soft { position: relative; isolation: isolate; overflow: hidden; background: linear-gradient(180deg, #f1f5fa 0%, #dbe6f2 100%); }
+.tt-soft::before { content: ""; position: absolute; left: 50%; top: 58%; width: 92%; height: 62%; z-index: -1; border-radius: 50%; border: 1.5px solid rgba(255,255,255,.9); box-shadow: 0 0 40px rgba(255,255,255,.7), inset 0 0 40px rgba(255,255,255,.6); transform: translate(-50%, -50%) rotate(-8deg); background: none; filter: none; }
+.tt-soft::after { content: none; }
+.tt-node h3 { margin-top: 0; }
