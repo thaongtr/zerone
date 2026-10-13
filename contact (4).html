@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Liên hệ — Zerone</title>
+    <meta name="description" content="Đặt lịch 30 phút với Zerone để trao đổi về thương hiệu chuyên môn, phòng khám mới hoặc phòng khám đang vận hành." />
+    <link rel="canonical" href="https://zerone.vn/vi/contact.html" />
+    <link rel="alternate" hreflang="en" href="https://zerone.vn/contact.html" />
+    <link rel="alternate" hreflang="vi" href="https://zerone.vn/vi/contact.html" />
+    <link rel="alternate" hreflang="x-default" href="https://zerone.vn/contact.html" />
+    <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="../css/site.css?v=20261013c" />
+  </head>
+  <body data-page="Contact">
+    <div id="chrome-top"></div>
+    <main class="contact-page">
+      <section class="contact-intro">
+        <p class="kicker">Liên hệ</p>
+        <h1 class="display">Đặt lịch trao đổi 30 phút.</h1>
+        <p class="lede">Hãy chia sẻ điều bạn muốn xây dựng. Zerone sẽ lắng nghe, trao đổi thẳng thắn và cùng bạn thống nhất bước tiếp theo.</p>
+      </section>
+
+      <section class="contact-block">
+        <h2 class="contact-h">Chọn cách liên hệ với Zerone</h2>
+        <div class="contact-cards" id="contact-cards"></div>
+        <p class="contact-loc">Thành phố Hồ Chí Minh, Việt Nam</p>
+      </section>
+    </main>
+    <div id="chrome-bottom"></div>
+    <script src="../js/site.js?v=20261013c"></script>
+    <script>
+      /* ---- EDIT HERE: fill in the details you want to show. Leave "" to hide a method. ---- */
+      var CONTACT = {
+        booking: "https://docs.google.com/forms/d/e/1FAIpQLSdCS5G2tBktQliHjaVjCL8U8EAnvrs0LmhNkPiKgd8-xR3dHA/viewform",
+        email: "nguyentranlinhthao@zerone.vn",
+        phone: "",     /* e.g. +84 9xx xxx xxx */
+        zalo: "",      /* Zalo link or number, e.g. https://zalo.me/09xxxxxxxx */
+        whatsapp: ""   /* e.g. https://wa.me/849xxxxxxxx */
+      };
+      (function () {
+        var box = document.getElementById("contact-cards"), items = [];
+        if (CONTACT.booking) items.push(["Đặt lịch trao đổi", "Đặt lịch 30 phút", CONTACT.booking, "Để lại thông tin"]);
+        if (CONTACT.email) items.push(["Email", CONTACT.email, "mailto:" + CONTACT.email, "Gửi email"]);
+        if (CONTACT.phone) items.push(["Phone", CONTACT.phone, "tel:" + CONTACT.phone.replace(/[^+\d]/g, ""), "Gọi cho Zerone"]);
+        if (CONTACT.zalo) items.push(["Zalo", "Nhắn tin qua Zalo", CONTACT.zalo.indexOf("http") === 0 ? CONTACT.zalo : "https://zalo.me/" + CONTACT.zalo.replace(/\D/g, ""), "Mở Zalo"]);
+        if (CONTACT.whatsapp) items.push(["WhatsApp", "Nhắn tin qua WhatsApp", CONTACT.whatsapp, "Mở WhatsApp"]);
+        box.innerHTML = items.map(function (i) {
+          return '<a class="contact-card" href="' + i[2] + '"' + (i[2].indexOf("http") === 0 ? ' target="_blank" rel="noopener"' : '') + '><span class="contact-card-label">' + i[0] + '</span><strong>' + i[1] + '</strong><span class="contact-card-cta">' + i[3] + ' →</span></a>';
+        }).join("");
+        if (!items.length) box.parentNode.hidden = true;
+      })();
+    </script>
+  </body>
+</html>
