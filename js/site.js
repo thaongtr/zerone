@@ -60,6 +60,15 @@ function nav(active) {
         )
         .join("")}
       <a class="nav-cta" href="contact.html">Contact</a>
+      <button class="nav-menu" type="button" aria-label="Menu" aria-expanded="false" aria-controls="nav-panel"><span class="bars" aria-hidden="true"><i></i><i></i><i></i></span></button>
+      <div class="nav-panel" id="nav-panel" role="menu">
+        <a href="approach.html">Approach</a>
+        <a href="work.html">Case study</a>
+        <a href="about.html">About</a>
+        <a href="faq.html">FAQ</a>
+        <a href="contact.html">Contact</a>
+        <a class="btn" href="contact.html">Book a 30-minute call</a>
+      </div>
     </nav>
   `;
 }
@@ -204,4 +213,28 @@ document.addEventListener("DOMContentLoaded", () => {
   window.addEventListener("scroll", function () {
     if (!ticking) { ticking = true; requestAnimationFrame(update); }
   }, { passive: true });
+})();
+
+/* Mobile menu */
+(function () {
+  function close() {
+    var n = document.querySelector(".site-nav");
+    if (!n) return;
+    n.classList.remove("menu-open");
+    var b = n.querySelector(".nav-menu");
+    if (b) b.setAttribute("aria-expanded", "false");
+  }
+  document.addEventListener("click", function (e) {
+    var n = document.querySelector(".site-nav");
+    if (!n) return;
+    var btn = e.target.closest ? e.target.closest(".nav-menu") : null;
+    if (btn) {
+      var open = n.classList.toggle("menu-open");
+      btn.setAttribute("aria-expanded", open ? "true" : "false");
+      if (open) n.classList.remove("is-compact");
+      return;
+    }
+    if (!n.contains(e.target)) close();
+  });
+  document.addEventListener("keydown", function (e) { if (e.key === "Escape") close(); });
 })();
