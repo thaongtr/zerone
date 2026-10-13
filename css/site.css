@@ -1381,3 +1381,43 @@ textarea {
   .site-nav.menu-open .nav-menu .bars i:nth-child(2) { opacity: 0; }
   .site-nav.menu-open .nav-menu .bars i:nth-child(3) { top: 6px; transform: rotate(-45deg); }
 }
+
+/* Language switch */
+.site-nav a.nav-lang { padding: 11px 13px; border-radius: 15px; background: rgba(255,255,255,.55); color: var(--ink); font-size: 12px; font-weight: 700; letter-spacing: .08em; text-decoration: none; }
+.site-nav a.nav-lang:hover { background: #fff; }
+.nav-panel .nav-lang-row { margin-top: 4px; padding: 12px 16px; border-top: 1px solid rgba(63,88,115,.16); border-radius: 0 0 14px 14px; font-family: var(--sans); font-size: .95rem; color: var(--slate); }
+@media (max-width: 760px) { .site-nav a.nav-lang { display: none; } }
+
+/* Vietnamese: serif with full diacritic coverage, a little more air for stacked marks */
+html[lang="vi"] { --serif: "Source Serif 4", Georgia, "Times New Roman", serif; }
+html[lang="vi"] .display, html[lang="vi"] .page-hero h1, html[lang="vi"] .cta-card h2, html[lang="vi"] .hero h1, html[lang="vi"] .faq-wrap h2 { letter-spacing: -0.02em; line-height: 1.12; }
+html[lang="vi"] .hero h1 { line-height: 1.1; }
+html[lang="vi"] .ap-row h3, html[lang="vi"] .prob2-chain li, html[lang="vi"] .tt-node h3, html[lang="vi"] .founder-card .display { letter-spacing: -0.01em; line-height: 1.2; }
+html[lang="vi"] .kicker, html[lang="vi"] .ap-label, html[lang="vi"] .proof-tag, html[lang="vi"] .pp-label { letter-spacing: .02em; }
+html[lang="vi"] .tt-node h3 { text-transform: none; }
+html[lang="vi"] .ticker-label { white-space: nowrap; }
+.prose h2 { margin: 2.2rem 0 .5rem; font-family: var(--serif); font-weight: 400; font-size: 1.6rem; letter-spacing: -0.02em; line-height: 1.2; }
+.prose a { color: var(--red); }
+
+/* Vietnamese: balanced headline wrapping */
+html[lang="vi"] h1, html[lang="vi"] h2, html[lang="vi"] .cta-glass h2 { text-wrap: balance; }
+html[lang="vi"] p { text-wrap: pretty; }
+
+/* Nav v6: Safari-safe wordmark collapse (explicit width) + wide mobile menu panel */
+.site-nav .brand .b-word { width: 86.7px; height: 15px; max-width: none; transition: width .4s var(--ease-out), opacity .25s ease; }
+.site-nav.is-compact .brand .b-word { width: 0; max-width: none; opacity: 0; }
+@media (max-width: 640px) {
+  .site-nav .brand .b-word { width: 75.2px; height: 13px; }
+  .site-nav.is-compact .brand .b-word { width: 0; }
+}
+@media (max-width: 760px) {
+  .nav-panel {
+    left: 50%; right: auto; width: min(calc(100vw - 20px), 380px);
+    transform: translate(-50%, -6px);
+    background: #fff;
+    -webkit-backdrop-filter: none; backdrop-filter: none;
+    z-index: 60;
+  }
+  .site-nav.menu-open .nav-panel { transform: translate(-50%, 0); }
+  .nav-panel .btn { white-space: normal; }
+}
