@@ -51,7 +51,7 @@ function nav(active) {
   return `
     <nav class="site-nav" aria-label="Main navigation">
       <a class="brand" href="index.html" aria-label="Zerone home">
-        <img src="assets/logo.svg" alt="Zerone" />
+        <img class="b-mark" src="assets/logo-rings.svg" alt="" /><img class="b-word" src="assets/wordmark-ink.svg" alt="Zerone" />
       </a>
       ${links
         .map(
@@ -66,33 +66,34 @@ function nav(active) {
 
 function footer() {
   return `
-    <footer class="footer">
-      <div>
-        <h3>Healthcare brand and patient experience</h3>
-        <a class="btn" href="contact.html">Book a 30-minute call</a>
-      </div>
-      <div class="footer-cols">
-        <div>
-          <b>Zerone</b>
-          <a href="approach.html">Approach</a>
-          <a href="work.html">Case study</a>
-          <a href="about.html">About</a>
-          <a href="faq.html">FAQ</a>
-          <a href="contact.html">Contact</a>
+    <footer class="footer3">
+      <div class="f3-card">
+        <div class="f3-top">
+          <div class="f3-brand">
+            <img class="f3-logo" src="assets/logo.svg" alt="Zerone" />
+            <p>Healthcare brand and patient experience consultancy. We help doctors and clinic owners turn what they want to be known for into what patients can see, feel and trust.</p>
+            <a class="f3-mail" href="mailto:nguyentranlinhthao@zerone.vn">nguyentranlinhthao@zerone.vn</a>
+          </div>
+          <div class="f3-col">
+            <b>Explore</b>
+            <a href="approach.html">Approach</a>
+            <a href="work.html">Case study</a>
+            <a href="about.html">About</a>
+            <a href="faq.html">FAQ</a>
+          </div>
+          <div class="f3-col">
+            <b>Get in touch</b>
+            <a href="contact.html">Book a 30-minute call</a>
+            <a href="contact.html">Contact</a>
+            <span>Ho Chi Minh City, Vietnam</span>
+          </div>
         </div>
-        <div>
-          <b>More</b>
-          <a href="join.html">Join us</a>
-          <a href="refer.html">Refer</a>
-          <a href="privacy.html">Privacy</a>
-          <a href="terms.html">Terms</a>
+        <div class="f3-bottom">
+          <span>&copy; ${new Date().getFullYear()} Zerone. All rights reserved.</span>
+          <span class="f3-legal"><a href="privacy.html">Privacy</a><a href="terms.html">Terms</a></span>
         </div>
       </div>
-      <div>
-        <div class="footer-photo" role="img" aria-label="Zerone blue field"></div>
-        <p style="margin: 12px 0 0; font-size: 14px">Ho Chi Minh City, Vietnam</p>
-      </div>
-      <p class="legal">© ${new Date().getFullYear()} Zerone. Healthcare Brand &amp; Patient Experience Consultancy.</p>
+      <div class="f3-ghost" aria-hidden="true"><img src="assets/wordmark-burgundy.svg" alt="" /></div>
     </footer>
   `;
 }
@@ -188,3 +189,19 @@ document.addEventListener("DOMContentLoaded", () => {
   quotes();
   reveal();
 });
+
+/* Nav: collapse the wordmark on scroll down, bring it back on scroll up */
+(function () {
+  var last = window.scrollY, ticking = false;
+  function update() {
+    var y = window.scrollY, n = document.querySelector(".site-nav");
+    if (n) {
+      if (y < 60 || y < last - 4) n.classList.remove("is-compact");
+      else if (y > last + 4) n.classList.add("is-compact");
+    }
+    last = y; ticking = false;
+  }
+  window.addEventListener("scroll", function () {
+    if (!ticking) { ticking = true; requestAnimationFrame(update); }
+  }, { passive: true });
+})();
