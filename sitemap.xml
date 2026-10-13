@@ -1,11 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-<url><loc>https://zerone.vn/</loc><lastmod>2026-10-13</lastmod></url>
-<url><loc>https://zerone.vn/about.html</loc><lastmod>2026-10-13</lastmod></url>
-<url><loc>https://zerone.vn/approach.html</loc><lastmod>2026-10-13</lastmod></url>
-<url><loc>https://zerone.vn/work.html</loc><lastmod>2026-10-13</lastmod></url>
-<url><loc>https://zerone.vn/contact.html</loc><lastmod>2026-10-13</lastmod></url>
-<url><loc>https://zerone.vn/faq.html</loc><lastmod>2026-10-13</lastmod></url>
-<url><loc>https://zerone.vn/privacy.html</loc><lastmod>2026-10-13</lastmod></url>
-<url><loc>https://zerone.vn/terms.html</loc><lastmod>2026-10-13</lastmod></url>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+<url><loc>https://zerone.vn/</loc><xhtml:link rel="alternate" hreflang="en" href="https://zerone.vn/"/><xhtml:link rel="alternate" hreflang="vi" href="https://zerone.vn/vi/"/><lastmod>2026-10-13</lastmod></url>
+<url><loc>https://zerone.vn/vi/</loc><xhtml:link rel="alternate" hreflang="en" href="https://zerone.vn/"/><xhtml:link rel="alternate" hreflang="vi" href="https://zerone.vn/vi/"/><lastmod>2026-10-13</lastmod></url>
+<url><loc>https://zerone.vn/about.html</loc><xhtml:link rel="alternate" hreflang="en" href="https://zerone.vn/about.html"/><xhtml:link rel="alternate" hreflang="vi" href="https://zerone.vn/vi/about.html"/><lastmod>2026-10-13</lastmod></url>
+<url><loc>https://zerone.vn/vi/about.html</loc><xhtml:link rel="alternate" hreflang="en" href="https://zerone.vn/about.html"/><xhtml:link rel="alternate" hreflang="vi" href="https://zerone.vn/vi/about.html"/><lastmod>2026-10-13</lastmod></url>
+<url><loc>https://zerone.vn/approach.html</loc><xhtml:link rel="alternate" hreflang="en" href="https://zerone.vn/approach.html"/><xhtml:link rel="alternate" hreflang="vi" href="https://zerone.vn/vi/approach.html"/><lastmod>2026-10-13</lastmod></url>
+<url><loc>https://zerone.vn/vi/approach.html</loc><xhtml:link rel="alternate" hreflang="en" href="https://zerone.vn/approach.html"/><xhtml:link rel="alternate" hreflang="vi" href="https://zerone.vn/vi/approach.html"/><lastmod>2026-10-13</lastmod></url>
+<url><loc>https://zerone.vn/work.html</loc><xhtml:link rel="alternate" hreflang="en" href="https://zerone.vn/work.html"/><xhtml:link rel="alternate" hreflang="vi" href="https://zerone.vn/vi/work.html"/><lastmod>2026-10-13</lastmod></url>
+<url><loc>https://zerone.vn/vi/work.html</loc><xhtml:link rel="alternate" hreflang="en" href="https://zerone.vn/work.html"/><xhtml:link rel="alternate" hreflang="vi" href="https://zerone.vn/vi/work.html"/><lastmod>2026-10-13</lastmod></url>
+<url><loc>https://zerone.vn/contact.html</loc><xhtml:link rel="alternate" hreflang="en" href="https://zerone.vn/contact.html"/><xhtml:link rel="alternate" hreflang="vi" href="https://zerone.vn/vi/contact.html"/><lastmod>2026-10-13</lastmod></url>
+<url><loc>https://zerone.vn/vi/contact.html</loc><xhtml:link rel="alternate" hreflang="en" href="https://zerone.vn/contact.html"/><xhtml:link rel="alternate" hreflang="vi" href="https://zerone.vn/vi/contact.html"/><lastmod>2026-10-13</lastmod></url>
+<url><loc>https://zerone.vn/faq.html</loc><xhtml:link rel="alternate" hreflang="en" href="https://zerone.vn/faq.html"/><xhtml:link rel="alternate" hreflang="vi" href="https://zerone.vn/vi/faq.html"/><lastmod>2026-10-13</lastmod></url>
+<url><loc>https://zerone.vn/vi/faq.html</loc><xhtml:link rel="alternate" hreflang="en" href="https://zerone.vn/faq.html"/><xhtml:link rel="alternate" hreflang="vi" href="https://zerone.vn/vi/faq.html"/><lastmod>2026-10-13</lastmod></url>
+<url><loc>https://zerone.vn/privacy.html</loc><xhtml:link rel="alternate" hreflang="en" href="https://zerone.vn/privacy.html"/><xhtml:link rel="alternate" hreflang="vi" href="https://zerone.vn/vi/privacy.html"/><lastmod>2026-10-13</lastmod></url>
+<url><loc>https://zerone.vn/vi/privacy.html</loc><xhtml:link rel="alternate" hreflang="en" href="https://zerone.vn/privacy.html"/><xhtml:link rel="alternate" hreflang="vi" href="https://zerone.vn/vi/privacy.html"/><lastmod>2026-10-13</lastmod></url>
+<url><loc>https://zerone.vn/terms.html</loc><xhtml:link rel="alternate" hreflang="en" href="https://zerone.vn/terms.html"/><xhtml:link rel="alternate" hreflang="vi" href="https://zerone.vn/vi/terms.html"/><lastmod>2026-10-13</lastmod></url>
+<url><loc>https://zerone.vn/vi/terms.html</loc><xhtml:link rel="alternate" hreflang="en" href="https://zerone.vn/terms.html"/><xhtml:link rel="alternate" hreflang="vi" href="https://zerone.vn/vi/terms.html"/><lastmod>2026-10-13</lastmod></url>
 </urlset>
