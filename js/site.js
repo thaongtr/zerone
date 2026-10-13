@@ -71,7 +71,7 @@ function footer() {
         <div class="f3-top">
           <div class="f3-brand">
             <img class="f3-logo" src="assets/logo.svg" alt="Zerone" />
-            <p>Healthcare brand and patient experience consultancy. We help doctors and clinic owners turn what they want to be known for into what patients can see, feel and trust.</p>
+            <p>Healthcare brand and patient experience consultancy.</p>
             <a class="f3-mail" href="mailto:nguyentranlinhthao@zerone.vn">nguyentranlinhthao@zerone.vn</a>
           </div>
           <div class="f3-col">
