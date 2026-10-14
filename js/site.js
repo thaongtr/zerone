@@ -17,6 +17,7 @@ const T = {
       desc: "Healthcare brand and patient experience consultancy.",
       explore: "Explore", touch: "Get in touch", legal: "Privacy", terms: "Terms",
       city: "Ho Chi Minh City, Vietnam",
+      addr: "L18 Vincom Center Đồng Khởi, 72 Lê Thánh Tôn, Phường Bến Nghé, Quận 1, Ho Chi Minh City, Vietnam, 70000",
       rights: "All rights reserved.",
       approach: "Approach", work: "Case study", about: "About", faq: "FAQ", contact: "Contact",
     },
@@ -32,8 +33,8 @@ const T = {
   },
   vi: {
     ticker: ["Nghiên cứu", "Định vị", "Đề xuất giá trị", "Câu chuyện thương hiệu", "Nhận diện phòng khám", "Hành trình người bệnh", "Nguyên tắc dịch vụ", "Điểm chạm", "Điều phối đội ngũ chuyên gia", "Kiểm soát chất lượng"],
-    nav: { Approach: "Phương pháp", About: "Giới thiệu", FAQ: "Câu hỏi thường gặp", Contact: "Liên hệ" },
-    panel: { approach: "Phương pháp", work: "Dự án điển hình", about: "Giới thiệu", faq: "Câu hỏi thường gặp", contact: "Liên hệ" },
+    nav: { Approach: "Approach", About: "About", FAQ: "FAQ", Contact: "Contact" },
+    panel: { approach: "Approach", work: "Case study", about: "About", faq: "FAQ", contact: "Contact" },
     book: "Đặt lịch trao đổi 30 phút",
     langBtn: "EN", langRow: "English", langTitle: "View in English",
     home: "Trang chủ Zerone", menu: "Menu",
@@ -41,6 +42,7 @@ const T = {
       desc: "Tư vấn thương hiệu y tế và trải nghiệm người bệnh.",
       explore: "Khám phá", touch: "Kết nối", legal: "Chính sách bảo mật", terms: "Điều khoản sử dụng",
       city: "Thành phố Hồ Chí Minh, Việt Nam",
+      addr: "L18 Vincom Center Đồng Khởi, 72 Lê Thánh Tôn, Phường Bến Nghé, Quận 1, TP. Hồ Chí Minh, Việt Nam, 70000",
       rights: "Bảo lưu mọi quyền.",
       approach: "Phương pháp", work: "Dự án điển hình", about: "Giới thiệu", faq: "Câu hỏi thường gặp", contact: "Liên hệ",
     },
@@ -122,7 +124,7 @@ function footer() {
           <div class="f3-brand">
             <img class="f3-logo" src="${P}assets/logo.svg" alt="Zerone" />
             <p>${f.desc}</p>
-            <a class="f3-mail" href="mailto:nguyentranlinhthao@zerone.vn">nguyentranlinhthao@zerone.vn</a>
+            <a class="f3-addr" href="https://www.google.com/maps/search/?api=1&query=Vincom+Center+Dong+Khoi+72+Le+Thanh+Ton+Ho+Chi+Minh+City" target="_blank" rel="noopener">${f.addr}</a>
           </div>
           <div class="f3-col">
             <b>${f.explore}</b>
@@ -135,7 +137,6 @@ function footer() {
             <b>${f.touch}</b>
             <a href="contact.html">${L.book}</a>
             <a href="contact.html">${f.contact}</a>
-            <span>${f.city}</span>
           </div>
         </div>
         <div class="f3-bottom">
