@@ -1176,6 +1176,8 @@ textarea {
 .f3-top { display: grid; grid-template-columns: 1.6fr 1fr 1fr; gap: 3rem; }
 .f3-logo { height: 30px; width: auto; display: block; margin-bottom: 1.1rem; }
 .f3-brand p { margin: 0 0 1rem; max-width: 36ch; font-size: 14.5px; line-height: 1.6; color: var(--slate); }
+.f3-addr { display: block; max-width: 30ch; margin-top: .2rem; font-size: 14px; line-height: 1.55; color: var(--slate); text-decoration: none; }
+.f3-addr:hover { color: var(--red); }
 .f3-mail { font-size: 14.5px; color: var(--red); text-decoration: none; font-weight: 600; }
 .f3-col { display: flex; flex-direction: column; gap: 11px; font-size: 14.5px; }
 .f3-col b { margin-bottom: 4px; font-size: 15px; color: var(--ink); }
@@ -1342,7 +1344,7 @@ textarea {
 @media (max-width: 760px) { .site-nav a.nav-lang { display: none; } }
 
 /* Vietnamese: serif with full diacritic coverage, a little more air for stacked marks */
-html[lang="vi"] { --serif: "Source Serif 4", Georgia, "Times New Roman", serif; }
+html[lang="vi"] { --serif: "Source Serif 4", "Times New Roman", Georgia, serif; }
 html[lang="vi"] .display, html[lang="vi"] .page-hero h1, html[lang="vi"] .cta-card h2, html[lang="vi"] .hero h1, html[lang="vi"] .faq-wrap h2 { letter-spacing: -0.02em; line-height: 1.12; }
 html[lang="vi"] .hero h1 { line-height: 1.1; }
 html[lang="vi"] .ap-row h3, html[lang="vi"] .prob2-chain li, html[lang="vi"] .tt-node h3, html[lang="vi"] .founder-card .display { letter-spacing: -0.01em; line-height: 1.2; }
