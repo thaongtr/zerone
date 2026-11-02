@@ -16,7 +16,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="css/site.css?v=20261102b" />
+    <link rel="stylesheet" href="css/site.css?v=20261102d" />
   </head>
   <body>
     <div id="chrome-top"></div>
@@ -68,24 +68,23 @@
       </div>
     </section>
 
-    <section class="section tt-glow">
+    <section class="section ttm">
       <p class="kicker">Trust Translation™</p>
       <h2 class="display">From provider value to patient choice</h2>
       <p class="lede">Trust Translation™ connects healthcare expertise with the brand patients see, the care teams deliver and the choices patients make.</p>
-      <div class="tt-field" id="tt-field" aria-label="Trust Translation framework">
-        <svg class="tt-signals" viewBox="0 0 1000 600" preserveAspectRatio="none" aria-hidden="true">
-          <path pathLength="1" d="M500 300 C440 230 380 130 300 85"></path>
-          <path pathLength="1" d="M500 300 C580 240 640 170 695 130"></path>
-          <path pathLength="1" d="M500 300 C440 390 390 480 325 535"></path>
-          <path pathLength="1" d="M500 300 C570 380 630 470 690 517"></path>
-          <circle cx="300" cy="85" r="4"></circle><circle cx="695" cy="130" r="4"></circle>
-          <circle cx="325" cy="535" r="4"></circle><circle cx="690" cy="517" r="4"></circle>
+      <div class="ttm-map" id="tt-field" role="group" aria-label="Trust Translation™ connects Care Providers and Care Seekers through Engage and Experience">
+        <svg class="ttm-lines" viewBox="0 0 1000 500" preserveAspectRatio="none" aria-hidden="true">
+          <ellipse class="ttm-draw" pathLength="1" cx="500" cy="240" rx="300" ry="150"></ellipse>
+          <path class="ttm-draw" pathLength="1" d="M315 240H390"></path>
+          <path class="ttm-draw" pathLength="1" d="M610 240H685"></path>
+          <g class="ttm-ends"><path d="M325 234l-8 6 8 6M380 234l8 6-8 6M620 234l-8 6 8 6M675 234l8 6-8 6"></path></g>
         </svg>
-        <div class="tt-core"><div><div class="tt-core-name">Trust<br />Translation™</div><span class="tt-core-by">Developed by Zerone</span></div></div>
-        <article class="tt-node tt-n1"><h3>Provider Value</h3><p>Clinical expertise and a distinctive approach to care.</p></article>
-        <article class="tt-node tt-n2"><h3>Brand Signal</h3><p>Positioning and communication patients can understand.</p></article>
-        <article class="tt-node tt-n3"><h3>Care Proof</h3><p>The experience delivered consistently by the team.</p></article>
-        <article class="tt-node tt-n4"><h3>Patient Choice</h3><p>Helping patients recognise, trust and choose.</p></article>
+        <div class="ttm-card ttm-left"><svg class="ttm-ico" viewBox="0 0 32 32" aria-hidden="true"><path d="M8 5v8a6 6 0 0 0 12 0V5M5 5h6M17 5h6M14 19v2a5 5 0 0 0 10 0v-3"/><circle cx="24" cy="15" r="3"/></svg><span class="ttm-rule"></span><div><h3>Care Providers</h3><p>Expertise &amp; Care</p></div></div>
+        <div class="ttm-hub"><span>Trust<br />Translation™</span></div>
+        <div class="ttm-card ttm-right"><svg class="ttm-ico" viewBox="0 0 32 32" aria-hidden="true"><path d="M16 27S4 19.5 4 11.5A6.5 6.5 0 0 1 16 8a6.5 6.5 0 0 1 12 3.5C28 19.5 16 27 16 27z"/></svg><span class="ttm-rule"></span><div><h3>Care Seekers</h3><p>Discover &amp; Connect</p></div></div>
+        <span class="ttm-tag ttm-top">Engage</span>
+        <span class="ttm-tag ttm-bottom">Experience</span>
+        <p class="ttm-foot"><span>A connected care experience</span></p>
       </div>
       <p class="lede" style="margin-top: 1.5rem">The same framework guides brand strategy and staff training.</p>
       <p class="src">Possible indicators, selected for each engagement: patient understanding, relevant enquiries, team practice and appointment conversion.</p>
@@ -207,7 +206,7 @@
     </div></div></section>
 
     <div id="chrome-bottom"></div>
-    <script src="js/site.js?v=20261102b"></script>
+    <script src="js/site.js?v=20261102d"></script>
     <script>
       (function () {
         var v = document.querySelector(".hero-video"), b = document.querySelector(".hero-toggle");
@@ -233,7 +232,7 @@
         var el = document.getElementById("tt-field");
         if (!el) return;
         if (!("IntersectionObserver" in window) || matchMedia("(prefers-reduced-motion: reduce)").matches) { el.classList.add("is-visible"); return; }
-        new IntersectionObserver(function (e, o) { if (e[0].isIntersecting) { el.classList.add("is-visible"); o.disconnect(); } }, { threshold: 0.25 }).observe(el);
+        new IntersectionObserver(function (e, o) { if (e[0].isIntersecting) { el.classList.add("is-visible"); o.disconnect(); } }, { threshold: 0.3 }).observe(el);
       })();
     </script>
       <script>
