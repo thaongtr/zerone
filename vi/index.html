@@ -14,7 +14,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="../css/site.css?v=20261102f" />
+    <link rel="stylesheet" href="../css/site.css?v=20261102g" />
   </head>
   <body>
     <div id="chrome-top"></div>
@@ -73,8 +73,23 @@
     </section>
 
     <section class="zt-section" id="tt-field" aria-labelledby="zt-title">
+      <svg class="zt-leaf" viewBox="0 0 300 300" aria-hidden="true">
+      <defs><filter id="zt-leafblur" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="7" /></filter></defs>
+      <g filter="url(#zt-leafblur)" fill="#7d90a6" opacity=".34">
+        <path d="M70 20C130 10 190 50 205 110C140 120 85 85 70 20Z" />
+        <path d="M205 110C230 60 270 40 300 45C298 105 262 140 205 110Z" />
+        <path d="M150 140C205 140 245 180 250 235C195 235 155 200 150 140Z" />
+      </g>
+    </svg>
       <div class="zt-visual" role="group" aria-label="Người hành nghề và người cần chăm sóc được kết nối qua Trust Translation, với tương tác và trải nghiệm">
-        <svg class="zt-arc" viewBox="0 0 1000 455" preserveAspectRatio="none" aria-hidden="true"><ellipse cx="500" cy="227.5" rx="493" ry="203" /></svg>
+        <svg class="zt-arc" viewBox="0 0 1000 400" preserveAspectRatio="none" aria-hidden="true">
+          <defs>
+            <linearGradient id="zt-g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffffff" /><stop offset=".45" stop-color="#b9c8dc" /><stop offset="1" stop-color="#8ea3bd" /></linearGradient>
+            <filter id="zt-soft" x="-5%" y="-20%" width="110%" height="140%"><feGaussianBlur stdDeviation="4" /></filter>
+          </defs>
+          <ellipse class="zt-arc-glow" cx="500" cy="200" rx="493" ry="198" filter="url(#zt-soft)" />
+          <ellipse class="zt-arc-line" cx="500" cy="200" rx="493" ry="198" />
+        </svg>
         <div class="zt-midline" aria-hidden="true"></div>
         <span class="zt-dimension zt-dimension--top">Tương tác</span>
         <span class="zt-dot zt-dot--top" aria-hidden="true"></span>
@@ -214,7 +229,7 @@
     </div></div></section>
 
     <div id="chrome-bottom"></div>
-    <script src="../js/site.js?v=20261102f"></script>
+    <script src="../js/site.js?v=20261102g"></script>
     <script>
       (function () {
         var v = document.querySelector(".hero-video"), b = document.querySelector(".hero-toggle");
