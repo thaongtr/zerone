@@ -1640,3 +1640,11 @@ body:has(.contact-page) { background: var(--glass-soft); }
   .space-inner { grid-template-columns: 1fr; }
   .space-phone { order: 2; }
 }
+
+/* Founder perspective: calmer type hierarchy */
+.pov-text p { letter-spacing: -0.01em; }
+.pov-a:first-of-type { font-size: clamp(1.6rem, 2.3vw, 2.1rem); line-height: 1.2; margin-bottom: 1rem; }
+.pov-a + .pov-a { font-size: clamp(1.15rem, 1.5vw, 1.35rem); line-height: 1.4; color: rgba(255,255,255,.92); margin-bottom: 1.6rem; }
+.pov-text p.pov-b { font-family: var(--sans); font-size: 1rem; line-height: 1.75; letter-spacing: 0; color: rgba(255,255,255,.8); max-width: 54ch; }
+.pov-text p.pov-key { font-size: clamp(1.1rem, 1.4vw, 1.25rem); line-height: 1.5; padding-left: 1rem; border-left: 2px solid var(--pov-accent); margin: 1.6rem 0; }
+.pov-text p.pov-end { max-width: 54ch; }
