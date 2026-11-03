@@ -1737,3 +1737,33 @@ html[lang="vi"] .zt-tagline { letter-spacing: .2em; }
   .needs .work-card { transition: opacity .55s ease, transform .55s cubic-bezier(.22,1,.36,1); }
   .needs .work-card:nth-child(2) { transition-delay: .08s; } .needs .work-card:nth-child(3) { transition-delay: .16s; }
 }
+
+/* ===== Insight: statistic + four connected dimensions on one soft curve ===== */
+.prob2-shade { background: linear-gradient(90deg, rgba(30,45,64,.74) 0%, rgba(40,58,80,.5) 55%, rgba(40,58,80,.4) 100%); }
+.prob2 .prob2-stat { font-size: clamp(3.4rem, 8vw, 6.6rem); line-height: 1; letter-spacing: -0.04em; margin: 0 0 1.1rem; }
+.prob2-claim { margin: 0 0 1.6rem; max-width: 26ch; font-family: var(--serif); font-size: clamp(1.3rem, 2vw, 1.7rem); line-height: 1.3; letter-spacing: -0.01em; color: #fff; }
+.prob2-body { margin: 0; max-width: 46ch; font-size: 1.02rem; line-height: 1.75; color: rgba(255,255,255,.9); }
+.prob2-links { --row: 5.5rem; list-style: none; margin: 0; padding: 0; position: relative; justify-self: center; }
+.prob2-links li { height: var(--row); display: flex; align-items: center; padding-left: calc(var(--row) * .64 + 1.1rem); font-family: var(--serif); font-size: clamp(1.45rem, 2.4vw, 2rem); line-height: 1.15; letter-spacing: -0.015em; color: #fff; text-shadow: 0 1px 14px rgba(20,30,45,.35); }
+html[lang="vi"] .prob2-links li { letter-spacing: -0.01em; }
+.prob2-curve { position: absolute; left: 0; top: 0; height: 100%; width: auto; overflow: visible; pointer-events: none; }
+.prob2-curve-line { fill: none; stroke: rgba(255,255,255,.7); stroke-width: 1.1; stroke-linecap: round; stroke-dasharray: 1; stroke-dashoffset: 0; vector-effect: non-scaling-stroke; }
+.prob2-dot circle { fill: #fff; }
+.prob2-dot .halo { fill: rgba(255,255,255,.2); }
+@media (max-width: 860px) {
+  .prob2-links { --row: 4.2rem; justify-self: start; }
+  .prob2-links li { font-size: 1.2rem; }
+  .prob2-shade { background: linear-gradient(180deg, rgba(30,45,64,.8) 0%, rgba(40,58,80,.66) 60%, rgba(40,58,80,.6) 100%); }
+}
+@media (scripting: enabled) and (prefers-reduced-motion: no-preference) {
+  .prob2:not(.is-in) .prob2-curve-line { stroke-dashoffset: 1; }
+  .prob2:not(.is-in) .prob2-dot { opacity: 0; }
+  .prob2:not(.is-in) .prob2-links li { opacity: 0; transform: translateY(8px); }
+  .prob2-curve-line { transition: stroke-dashoffset 1.8s linear .3s; }
+  .prob2-dot { transition: opacity .6s ease; }
+  .prob2-links li { transition: opacity .7s ease, transform .7s cubic-bezier(.22,1,.36,1); }
+  .prob2-dot.d1, .prob2-links li:nth-of-type(1) { transition-delay: .5s; }
+  .prob2-dot.d2, .prob2-links li:nth-of-type(2) { transition-delay: .95s; }
+  .prob2-dot.d3, .prob2-links li:nth-of-type(3) { transition-delay: 1.4s; }
+  .prob2-dot.d4, .prob2-links li:nth-of-type(4) { transition-delay: 1.85s; }
+}
