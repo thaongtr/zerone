@@ -1725,3 +1725,5 @@ html[lang="vi"] .zt-tagline { letter-spacing: .2em; }
   .zt-dot--top { top: 79px; } .zt-dot--bottom { bottom: 65px; }
   .zt-tagline { font-size: 10px; letter-spacing: .18em; gap: 10px; } .zt-tagline::before, .zt-tagline::after { width: 30px; }
 }
+
+.space-note { margin: 1rem 0 0; max-width: 46ch; font-size: .95rem; color: var(--slate); }
