@@ -1641,13 +1641,14 @@ body:has(.contact-page) { background: var(--glass-soft); }
   .space-phone { order: 2; }
 }
 
-/* Founder perspective: calmer type hierarchy */
-.pov-text p { letter-spacing: -0.01em; }
-.pov-a:first-of-type { font-size: clamp(1.6rem, 2.3vw, 2.1rem); line-height: 1.2; margin-bottom: 1rem; }
-.pov-a + .pov-a { font-size: clamp(1.15rem, 1.5vw, 1.35rem); line-height: 1.4; color: rgba(255,255,255,.92); margin-bottom: 1.6rem; }
-.pov-text p.pov-b { font-family: var(--sans); font-size: 1rem; line-height: 1.75; letter-spacing: 0; color: rgba(255,255,255,.8); max-width: 54ch; }
-.pov-text p.pov-key { font-size: clamp(1.1rem, 1.4vw, 1.25rem); line-height: 1.5; padding-left: 1rem; border-left: 2px solid var(--pov-accent); margin: 1.6rem 0; }
-.pov-text p.pov-end { max-width: 54ch; }
+/* Founder perspective: two type levels (lead + body), one text colour, narrow measure */
+.pov-text p.pov-lead { font-family: var(--serif); font-size: clamp(1.6rem, 2.3vw, 2.1rem); line-height: 1.22; letter-spacing: -0.015em; color: #fff; max-width: 24em; margin: 0 0 2rem; }
+.pov-text p.pov-copy { font-family: var(--sans); font-size: 1.05rem; line-height: 1.8; letter-spacing: 0; color: rgba(255,255,255,.88); max-width: 54ch; margin: 0 0 1.5rem; }
+.pov-text p.pov-copy:last-child { margin-bottom: 0; }
+@media (max-width: 720px) {
+  .pov-text p.pov-lead { font-size: 1.45rem; margin-bottom: 1.5rem; }
+  .pov-text p.pov-copy { font-size: 1rem; line-height: 1.7; margin-bottom: 1.2rem; }
+}
 
 /* ===== Trust Translation: pixel-match section (scoped .zt-*) ===== */
 .ttm-head { padding-bottom: 1.5rem; background: linear-gradient(180deg, #f6f8fc 0%, #edf2f9 100%); }
