@@ -1770,3 +1770,27 @@ html[lang="vi"] .prob2-links li { letter-spacing: -0.01em; }
   .prob2-dot.d3, .prob2-links li:nth-of-type(3) { transition-delay: .95s; }
   .prob2-dot.d4, .prob2-links li:nth-of-type(4) { transition-delay: 1.25s; }
 }
+
+/* ===== Approach: OUR SOLUTIONS in Zerone Glass (soft layered gradient, translucent rows) ===== */
+#services {
+  position: relative;
+  background:
+    radial-gradient(ellipse 60% 62% at 10% 4%, rgba(204, 219, 240, .78), transparent 70%),
+    radial-gradient(ellipse 52% 62% at 96% 70%, rgba(190, 206, 229, .8), transparent 72%),
+    radial-gradient(ellipse 42% 46% at 56% 46%, rgba(248, 250, 253, .92), transparent 76%),
+    linear-gradient(180deg, #ffffff 0%, #ebf0f8 16%, #e4ebf5 62%, #f3f6fb 88%, #ffffff 100%);
+}
+#services .ap-rows { border-top: 1px solid rgba(63, 88, 115, .18); }
+#services .ap-row { position: relative; isolation: isolate; border-bottom: 1px solid rgba(63, 88, 115, .18); }
+#services .ap-row h3 { color: #1f3248; }
+#services .ap-row p { color: #5b6f83; }
+#services .ap-row .ap-label { color: #5b6f83; }
+#services .ap-row::before { content: ""; position: absolute; z-index: -1; inset: 0 -1.4rem; border-radius: 18px; background: linear-gradient(90deg, rgba(255, 255, 255, .62), rgba(255, 255, 255, .16)); opacity: 0; transition: opacity .35s ease; pointer-events: none; }
+@media (hover: hover) and (pointer: fine) {
+  #services .ap-row:hover::before { opacity: 1; }
+}
+@media (max-width: 860px) and (scripting: enabled) and (prefers-reduced-motion: no-preference) {
+  #services:not(.is-in) .ap-row { opacity: 0; transform: translateY(10px); }
+  #services .ap-row { transition: opacity .6s ease, transform .6s cubic-bezier(.22,1,.36,1); }
+  #services .ap-row:nth-child(2) { transition-delay: .1s; } #services .ap-row:nth-child(3) { transition-delay: .2s; }
+}

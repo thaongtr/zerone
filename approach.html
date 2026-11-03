@@ -13,7 +13,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="css/site.css?v=20261014f" />
+    <link rel="stylesheet" href="css/site.css?v=20261103h" />
   </head>
   <body data-page="Approach">
     <div id="chrome-top"></div>
@@ -57,14 +57,6 @@
           <p>Team training and implementation support to deliver consistent patient experiences.</p>
         </div>
       </div>
-      <p class="ap-across">In every engagement</p>
-      <ul class="pp-tags ap-tags">
-        <li>Strategy</li>
-        <li>Brand</li>
-        <li>Patient experience</li>
-        <li>Implementation &amp; delivery</li>
-      </ul>
-      <p class="ap-note">The scope is tailored to each engagement.</p>
     </section>
 
     <section class="section ap-split" id="training">
@@ -97,5 +89,13 @@
 
     <div id="chrome-bottom"></div>
     <script src="js/site.js?v=20261014f"></script>
+      <script>
+      (function () {
+        var el = document.getElementById("services");
+        if (!el) return;
+        if (!("IntersectionObserver" in window) || matchMedia("(prefers-reduced-motion: reduce)").matches) { el.classList.add("is-in"); return; }
+        new IntersectionObserver(function (e, o) { if (e[0].isIntersecting) { el.classList.add("is-in"); o.disconnect(); } }, { threshold: 0.2 }).observe(el);
+      })();
+    </script>
   </body>
 </html>
