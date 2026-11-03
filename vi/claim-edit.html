@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Chỉnh sửa hồ sơ chuyên môn — Zerone</title>
+    <meta name="description" content="Trang chỉnh sửa hồ sơ chuyên môn qua liên kết riêng của Zerone." />
+    <meta name="robots" content="noindex, nofollow, noarchive" />
+    <meta name="referrer" content="no-referrer" />
+    <link rel="icon" href="../assets/favicon.svg?v=3" type="image/svg+xml" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="../css/site.css?v=20261104a" />
+    <style>
+      .claim-wrap { max-width: 640px; margin: 0 auto; padding: 7rem 6vw 4rem; }
+      .claim-small { font-size: .9rem; opacity: .8; }
+      .claim-link { background: none; border: 0; padding: .6rem 0; text-decoration: underline; cursor: pointer; font: inherit; color: inherit; opacity: .75; }
+      .claim-check { display: flex; gap: .6rem; align-items: flex-start; margin: 1rem 0; }
+      .claim-check input { width: auto; margin-top: .3rem; }
+      .claim-error { color: var(--red); }
+      .claim-ok { color: var(--blue); }
+      .claim-cred { display: grid; gap: .5rem; grid-template-columns: 1fr 1fr; }
+    </style>
+  </head>
+  <body data-page="ClaimEdit">
+    <div id="chrome-top"></div>
+    <main class="claim-wrap" id="claim-root" aria-live="polite"></main>
+    <div id="chrome-bottom"></div>
+    <script src="../js/site.js?v=20261014f"></script>
+    <script>
+    (function () {
+      /* Free profile editor. The edit link is issued by Zerone only after verifying who you are. Nothing here is
+         published: no services, contact details or booking, and your choice below only records your consent. */
+      var CLAIM_CFG = { url: "https://ahqeigxzfrdqrpzpjhgd.supabase.co", key: "sb_publishable_xJJY7Y-q6bT0WZ3wU_N7iw_-AHjyj1m" };
+      var T = {
+        kicker: "Hồ sơ miễn phí của bạn",
+        title: "Chỉnh sửa hồ sơ chuyên môn",
+        intro: "Bạn đã được Zerone xác minh. Thông tin dưới đây do bạn tự khai và chỉ Zerone nhìn thấy. Chưa có gì được hiển thị công khai.",
+        headline: "Tiêu đề ngắn (tối đa 120 ký tự)", about: "Giới thiệu (tối đa 1500 ký tự)", areas: "Lĩnh vực chuyên môn (cách nhau bằng dấu phẩy, tối đa 10)",
+        credTitle: "Bằng cấp / chứng chỉ bạn tự khai", credName: "Tên", credInst: "Nơi cấp",
+        credNote: "Thông tin tự khai được ghi rõ là chưa xác minh cho đến khi Zerone kiểm tra.",
+        publish: "Tôi đồng ý để Zerone hiển thị các thông tin trên công khai khi hồ sơ của tôi được công bố. Nếu không chọn, hồ sơ được giữ riêng tư.",
+        publishNote: "Lựa chọn này chỉ ghi nhận ý muốn của bạn. Hồ sơ chỉ được công bố khi đủ điều kiện và có xác nhận riêng.",
+        save: "Lưu hồ sơ", saving: "Đang lưu…", saved: "Đã lưu.", remove: "Xóa thông tin của tôi và ngừng liên hệ",
+        removeConfirm: "Zerone sẽ xóa thông tin bạn đã nhập và không liên hệ bạn nữa. Xác nhận?",
+        removedTitle: "Đã xóa.", removedBody: "Zerone đã xóa thông tin bạn nhập và sẽ không liên hệ bạn nữa.",
+        invalidTitle: "Liên kết không còn hiệu lực.", invalidBody: "Liên kết có thể đã bị nhập sai hoặc đã được dừng. Nếu cần, hãy liên hệ người đã gửi cho bạn.",
+        error: "Chưa lưu được. Vui lòng thử lại."
+      };
+      var root = document.getElementById("claim-root");
+      var token = new URLSearchParams(location.search).get("e") || "";
+      var esc = function (s) { return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]; }); };
+      function rpc(fn, args) {
+        return fetch(CLAIM_CFG.url + "/rest/v1/rpc/" + fn, {
+          method: "POST", referrerPolicy: "no-referrer",
+          headers: { "Content-Type": "application/json", apikey: CLAIM_CFG.key, Authorization: "Bearer " + CLAIM_CFG.key },
+          body: JSON.stringify(args)
+        }).then(function (r) { return r.text().then(function (t) { return { ok: r.ok, data: t ? JSON.parse(t) : null }; }); });
+      }
+      function say(title, body) { root.innerHTML = '<h1 class="display">' + esc(title) + '</h1><p class="lede">' + esc(body) + "</p>"; }
+      function show(d) {
+        var p = d.profile || {}, cr = p.credentials || [], rows = "";
+        for (var i = 0; i < 3; i++) {
+          var c = cr[i] || {};
+          rows += '<div class="claim-cred"><input name="ct' + i + '" maxlength="120" placeholder="' + T.credName + '" value="' + esc(c.title) + '" /><input name="ci' + i + '" maxlength="120" placeholder="' + T.credInst + '" value="' + esc(c.institution) + '" /></div>';
+        }
+        root.innerHTML =
+          '<p class="kicker">' + T.kicker + '</p><h1 class="display">' + T.title + '</h1><p class="lede">' + T.intro + "</p>" +
+          '<p class="claim-small"><strong>' + esc(d.name) + "</strong> · " + esc(d.role) + (d.practice ? " · " + esc(d.practice) : "") + "</p>" +
+          '<form class="form" id="edit-form">' +
+          "<label>" + T.headline + '<input name="h" maxlength="120" value="' + esc(p.headline) + '" /></label>' +
+          "<label>" + T.about + '<textarea name="a" rows="6" maxlength="1500">' + esc(p.about) + "</textarea></label>" +
+          "<label>" + T.areas + '<input name="ar" value="' + esc((p.areas || []).join(", ")) + '" /></label>' +
+          "<h2>" + T.credTitle + "</h2>" + rows + '<p class="claim-small">' + T.credNote + "</p>" +
+          '<label class="claim-check"><input type="checkbox" name="pub"' + (d.publication_choice ? " checked" : "") + " /> <span>" + T.publish + "</span></label>" +
+          '<p class="claim-small">' + T.publishNote + "</p>" +
+          '<button class="btn" type="submit">' + T.save + '</button><p class="claim-error" role="alert"></p><p class="claim-ok" role="status"></p></form>' +
+          '<button class="claim-link" id="edit-remove" type="button">' + T.remove + "</button>";
+        var f = document.getElementById("edit-form"), btn = f.querySelector("button"), err = f.querySelector(".claim-error"), ok = f.querySelector(".claim-ok");
+        f.addEventListener("submit", function (e) {
+          e.preventDefault(); btn.disabled = true; btn.textContent = T.saving; err.textContent = ""; ok.textContent = "";
+          var creds = [];
+          for (var i = 0; i < 3; i++) if (f["ct" + i].value.trim()) creds.push({ title: f["ct" + i].value, institution: f["ci" + i].value });
+          var profile = { headline: f.h.value, about: f.a.value, areas: f.ar.value.split(",").map(function (s) { return s.trim(); }).filter(Boolean), credentials: creds };
+          rpc("save_claim_profile", { p_token: token, p_profile: profile, p_publish: f.pub.checked }).then(function (r) {
+            btn.disabled = false; btn.textContent = T.save;
+            if (r.ok) ok.textContent = T.saved; else err.textContent = T.error;
+          });
+        });
+        document.getElementById("edit-remove").addEventListener("click", function () {
+          if (confirm(T.removeConfirm)) rpc("decline_invitation", { p_token: token }).then(function () { say(T.removedTitle, T.removedBody); });
+        });
+      }
+      function hideLang() { document.querySelectorAll(".nav-lang, .nav-lang-row").forEach(function (a) { a.remove(); }); }
+      hideLang(); window.addEventListener("load", hideLang); document.addEventListener("DOMContentLoaded", hideLang);
+      if (!/^[0-9a-f]{32}$/.test(token)) say(T.invalidTitle, T.invalidBody);
+      else rpc("get_claim_profile", { p_token: token }).then(function (r) {
+        if (!r.ok || !r.data) say(T.invalidTitle, T.invalidBody); else show(r.data);
+      }).catch(function () { say(T.invalidTitle, T.invalidBody); });
+    })();
+    </script>
+  </body>
+</html>
