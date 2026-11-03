@@ -122,7 +122,7 @@ function footer() {
           <div class="f3-brand">
             <img class="f3-logo" src="${P}assets/logo.svg" alt="Zerone" />
             <p>${f.desc}</p>
-            <a class="f3-mail" href="mailto:nguyentranlinhthao@zerone.vn">nguyentranlinhthao@zerone.vn</a>
+            <a class="f3-mail" href="mailto:contact@zerone.vn">contact@zerone.vn</a>
           </div>
           <div class="f3-col">
             <b>${f.explore}</b>
