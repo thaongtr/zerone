@@ -1,0 +1,132 @@
+<title>Zerone Space Demo</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600&family=Cormorant+Garamond:wght@500;600&display=swap">
+<style>
+  /* Layout: one iPhone, centred, sized to the viewport; the demo plays on its screen with a short caption below. */
+  :root {
+    --bg: #e8edf5;
+    --ink: #1f2b3d;
+    --muted: #5b6b83;
+    --accent: #8a1a1e;
+    --frame: #1a1c21;
+    --frame-edge: #3a3e47;
+    --screen: #eef3f8;
+    --glow: rgba(255, 255, 255, .85);
+    --shadow: rgba(31, 43, 61, .28);
+    --serif: "Cormorant Garamond", "Iowan Old Style", Georgia, serif;
+    --sans: "Be Vietnam Pro", system-ui, -apple-system, "Segoe UI", sans-serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #0f131a; --ink: #e6ecf5; --muted: #93a3ba; --accent: #e0868a;
+      --frame: #2a2d34; --frame-edge: #565b66; --screen: #0f131a; --glow: rgba(120, 150, 200, .18); --shadow: rgba(0, 0, 0, .6);
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #0f131a; --ink: #e6ecf5; --muted: #93a3ba; --accent: #e0868a;
+    --frame: #2a2d34; --frame-edge: #565b66; --screen: #0f131a; --glow: rgba(120, 150, 200, .18); --shadow: rgba(0, 0, 0, .6);
+    color-scheme: dark;
+  }
+
+  html, body { height: 100%; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--sans);
+    padding-block: 20px;
+    padding-left: max(16px, env(safe-area-inset-left, 0px));
+    padding-right: max(16px, env(safe-area-inset-right, 0px));
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 22px;
+    background-image: radial-gradient(60% 50% at 50% 38%, var(--glow), transparent 70%);
+  }
+
+  /* screen width: as wide as 390px, but never wider than the viewport allows, keeping the phone's 390:844 shape on screen */
+  .phone {
+    --sw: min(390px, calc(100vw - 32px - 22px), calc((100dvh - 160px) * 390 / 844));
+    --bezel: 11px;
+    --r: calc(var(--sw) * .118);
+    position: relative;
+    padding: var(--bezel);
+    border-radius: calc(var(--r) + var(--bezel));
+    background: linear-gradient(145deg, var(--frame-edge), var(--frame) 28%, var(--frame) 72%, var(--frame-edge));
+    box-shadow: 0 0 0 1.5px rgba(255, 255, 255, .06) inset, 0 40px 80px -20px var(--shadow), 0 14px 30px -12px var(--shadow);
+  }
+  .phone::before, .phone::after { /* side buttons */
+    content: ""; position: absolute; width: 3px; background: var(--frame-edge); border-radius: 2px;
+  }
+  .phone::before { left: -3px; top: 17%; height: 7%; box-shadow: 0 calc(var(--sw) * .2) 0 var(--frame-edge), 0 calc(var(--sw) * .36) 0 var(--frame-edge); }
+  .phone::after { right: -3px; top: 25%; height: 13%; }
+
+  .screen {
+    position: relative;
+    width: var(--sw);
+    aspect-ratio: 390 / 844;
+    border-radius: var(--r);
+    overflow: hidden;
+    background: var(--screen);
+  }
+  .screen video { display: block; width: 100%; height: 100%; object-fit: cover; }
+  .island {
+    position: absolute; z-index: 2; left: 50%; top: calc(var(--sw) * .03); transform: translateX(-50%);
+    width: calc(var(--sw) * .29); height: calc(var(--sw) * .085); border-radius: 999px; background: #000;
+    pointer-events: none;
+  }
+  .toggle {
+    position: absolute; inset: 0; z-index: 1; width: 100%; border: 0; padding: 0; background: transparent; cursor: pointer;
+    display: grid; place-items: center;
+  }
+  .toggle:focus-visible { outline: 3px solid var(--accent); outline-offset: -3px; border-radius: var(--r); }
+  .play {
+    width: 64px; height: 64px; border-radius: 50%; display: grid; place-items: center;
+    background: rgba(255, 255, 255, .82); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+    box-shadow: 0 10px 30px rgba(31, 43, 61, .25); opacity: 0; transform: scale(.9); transition: opacity .25s, transform .25s;
+  }
+  .paused .play { opacity: 1; transform: none; }
+  .play svg { margin-left: 3px; }
+
+  .caption { text-align: center; max-width: 30em; }
+  .caption h1 { margin: 0; font: 600 clamp(22px, 3.4vw, 28px)/1.15 var(--serif); letter-spacing: -.1px; text-wrap: balance; }
+  .caption p { margin: 6px 0 0; font-size: 13px; line-height: 1.5; color: var(--muted); text-wrap: balance; }
+
+  @media (prefers-reduced-motion: reduce) { .play { transition: none; } }
+</style>
+
+<main class="phone" aria-label="Bản demo Zerone Space trên iPhone">
+  <div class="screen" id="screen">
+    <span class="island" aria-hidden="true"></span>
+    <video id="demo" muted loop playsinline preload="auto" poster="zerone-space-demo-poster.jpg"
+           aria-label="Bệnh nhân chọn chuyên khoa, xem hồ sơ bác sĩ, theo dõi và đặt lịch khám trong Zerone Space">
+      <source src="zerone-space-demo.mp4" type="video/mp4">
+      <source src="zerone-space-demo.webm" type="video/webm">
+    </video>
+    <button class="toggle" id="toggle" type="button" aria-label="Phát hoặc dừng video">
+      <span class="play" aria-hidden="true">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="#1f2b3d"><path d="M7 4.5v15a1 1 0 0 0 1.5.86l12-7.5a1 1 0 0 0 0-1.72l-12-7.5A1 1 0 0 0 7 4.5z"/></svg>
+      </span>
+    </button>
+  </div>
+</main>
+
+<div class="caption">
+  <h1>Zerone Space trên Zalo</h1>
+  <p>Chọn chuyên khoa, xem hồ sơ và theo dõi bác sĩ, rồi gửi yêu cầu đặt lịch. Hình ảnh, bác sĩ và dữ liệu trong video là minh họa.</p>
+</div>
+
+<script>
+  var v = document.getElementById("demo"), s = document.getElementById("screen");
+  var sync = function () { s.classList.toggle("paused", v.paused); };
+  v.addEventListener("play", sync); v.addEventListener("pause", sync);
+  document.getElementById("toggle").addEventListener("click", function () {
+    if (v.paused) { v.play().catch(sync); } else { v.pause(); }
+  });
+  var calm = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (calm) { v.removeAttribute("autoplay"); sync(); }
+  else { var p = v.play(); if (p && p.catch) p.catch(sync); sync(); }
+</script>
