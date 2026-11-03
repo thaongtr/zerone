@@ -1728,3 +1728,12 @@ html[lang="vi"] .zt-tagline { letter-spacing: .2em; }
 }
 
 .space-note { margin: 1rem 0 0; max-width: 46ch; font-size: .95rem; color: var(--slate); }
+
+/* Needs-based invitation (moved before the closing contact band): slightly deeper slate-blue, quiet reveal */
+.needs { background: linear-gradient(180deg, #e9eff8 0%, #dde7f4 100%); }
+.needs .work-card { background: var(--glass-fill); }
+@media (scripting: enabled) and (prefers-reduced-motion: no-preference) {
+  .needs:not(.is-in) .work-card { opacity: 0; transform: translateY(12px); }
+  .needs .work-card { transition: opacity .55s ease, transform .55s cubic-bezier(.22,1,.36,1); }
+  .needs .work-card:nth-child(2) { transition-delay: .08s; } .needs .work-card:nth-child(3) { transition-delay: .16s; }
+}

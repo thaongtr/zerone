@@ -16,7 +16,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="css/site.css?v=20261103c" />
+    <link rel="stylesheet" href="css/site.css?v=20261103d" />
   </head>
   <body>
     <div id="chrome-top"></div>
@@ -130,30 +130,7 @@
       </div>
     </section>
 
-    <section class="section">
-      <p class="kicker">Services</p>
-      <h2 class="display">What are you trying to build?</h2>
-      <div class="work-grid" style="margin-top: 2rem">
-        <article class="work-card">
-          <div class="num">Professional</div>
-          <h3>Build your name</h3>
-          <p>Personal brand strategy for doctors</p>
-        </article>
-        <article class="work-card">
-          <div class="num">Founder</div>
-          <h3>Build your business</h3>
-          <p>Brand and patient experience for a new clinic</p>
-        </article>
-        <article class="work-card">
-          <div class="num">Business owner</div>
-          <h3>Transform your business</h3>
-          <p>Brand and experience improvement for an existing clinic</p>
-        </article>
-      </div>
-      <p style="margin-top: 1.5rem"><a class="btn" href="approach.html#services">Explore services</a></p>
-    </section>
-
-    <section class="section mist">
+        <section class="section mist">
       <p class="kicker">Capability building</p>
       <h2 class="display">Training for doctors and clinic teams</h2>
       <div class="work-grid two" style="margin-top: 2rem">
@@ -223,13 +200,33 @@
       </div>
     </section>
 
+    <section class="section needs" id="needs">
+      <p class="kicker">WHERE WE CAN HELP</p>
+      <h2 class="display">Where are you in your journey?</h2>
+      <div class="work-grid" style="margin-top: 2rem">
+        <article class="work-card">
+          <h3>Build Your Professional Presence</h3>
+          <p>Help people recognize your expertise and connect with you when they need care.</p>
+        </article>
+        <article class="work-card">
+          <h3>Build a New Practice</h3>
+          <p>Shape your brand and care experience from the very beginning.</p>
+        </article>
+        <article class="work-card">
+          <h3>Grow and Transform</h3>
+          <p>Improve patient experiences, strengthen engagement and build lasting relationships.</p>
+        </article>
+      </div>
+      <p style="margin-top: 1.5rem"><a class="btn" href="contact.html">Let&rsquo;s Discuss Your Goals</a></p>
+    </section>
+
     <section class="cta-band"><div class="cta-card is-blue"><div class="cta-glass">
       <h2>Tell us what you are building.</h2>
       <p><a class="btn" href="contact.html">Book a 30-minute call</a></p>
     </div></div></section>
 
     <div id="chrome-bottom"></div>
-    <script src="js/site.js?v=20261103c"></script>
+    <script src="js/site.js?v=20261103d"></script>
     <script>
       (function () {
         var v = document.querySelector(".hero-video"), b = document.querySelector(".hero-toggle");
@@ -264,6 +261,14 @@
         if (!el) return;
         if (!("IntersectionObserver" in window) || matchMedia("(prefers-reduced-motion: reduce)").matches) { el.classList.add("is-in"); return; }
         new IntersectionObserver(function (e, o) { if (e[0].isIntersecting) { el.classList.add("is-in"); o.disconnect(); } }, { threshold: 0.35 }).observe(el);
+      })();
+    </script>
+    <script>
+      (function () {
+        var el = document.getElementById("needs");
+        if (!el) return;
+        if (!("IntersectionObserver" in window) || matchMedia("(prefers-reduced-motion: reduce)").matches) { el.classList.add("is-in"); return; }
+        new IntersectionObserver(function (e, o) { if (e[0].isIntersecting) { el.classList.add("is-in"); o.disconnect(); } }, { threshold: 0.25 }).observe(el);
       })();
     </script>
   </body>
