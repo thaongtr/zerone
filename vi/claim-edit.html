@@ -19,6 +19,8 @@
       .claim-check { display: flex; gap: .6rem; align-items: flex-start; margin: 1rem 0; }
       .claim-check input { width: auto; margin-top: .3rem; }
       .claim-error { color: var(--red); }
+      .claim-rights { margin-top: 1.5rem; }
+      .claim-rights summary { cursor: pointer; text-decoration: underline; opacity: .75; }
       .claim-ok { color: var(--blue); }
       .claim-cred { display: grid; gap: .5rem; grid-template-columns: 1fr 1fr; }
     </style>
@@ -32,7 +34,10 @@
     (function () {
       /* Free profile editor. The edit link is issued by Zerone only after verifying who you are. Nothing here is
          published: no services, contact details or booking, and your choice below only records your consent. */
-      var CLAIM_CFG = { url: "https://ahqeigxzfrdqrpzpjhgd.supabase.co", key: "sb_publishable_xJJY7Y-q6bT0WZ3wU_N7iw_-AHjyj1m" };
+      // Backend by hostname: the official domain talks to production, every other host (staging previews) to the dev project.
+      var CLAIM_PROD = { url: "https://wbosrucppdmuypspyyhe.supabase.co", key: "sb_publishable_I1pa7lh5MWtApaNUkJ3hIQ_FvK1HwmV" };
+      var CLAIM_DEV = { url: "https://ahqeigxzfrdqrpzpjhgd.supabase.co", key: "sb_publishable_xJJY7Y-q6bT0WZ3wU_N7iw_-AHjyj1m" };
+      var CLAIM_CFG = (location.hostname === "zerone.vn" || location.hostname === "www.zerone.vn") ? CLAIM_PROD : CLAIM_DEV;
       var T = {
         kicker: "Hồ sơ miễn phí của bạn",
         title: "Chỉnh sửa hồ sơ chuyên môn",
@@ -42,6 +47,10 @@
         credNote: "Thông tin tự khai được ghi rõ là chưa xác minh cho đến khi Zerone kiểm tra.",
         publish: "Tôi đồng ý để Zerone hiển thị các thông tin trên công khai khi hồ sơ của tôi được công bố. Nếu không chọn, hồ sơ được giữ riêng tư.",
         publishNote: "Lựa chọn này chỉ ghi nhận ý muốn của bạn. Hồ sơ chỉ được công bố khi đủ điều kiện và có xác nhận riêng.",
+        spaceTitle: "Professional Space",
+        spaceBody: "Professional Space là dịch vụ để nhận yêu cầu đặt lịch và quản lý lịch hẹn qua Zalo; hiện chưa mở bán. Nếu bạn muốn tìm hiểu thêm, hãy để lại quan tâm. Việc này không phải là đăng ký mua và không phát sinh chi phí. Chi tiết gói và điều khoản sẽ được gửi cho bạn trước khi bạn quyết định.",
+        spaceBtn: "Tôi muốn được liên hệ về Professional Space",
+        spaceDone: "Đã ghi nhận quan tâm của bạn. Zerone sẽ liên hệ khi có thông tin để gửi.",
         save: "Lưu hồ sơ", saving: "Đang lưu…", saved: "Đã lưu.", remove: "Xóa thông tin của tôi và ngừng liên hệ",
         removeConfirm: "Zerone sẽ xóa thông tin bạn đã nhập và không liên hệ bạn nữa. Xác nhận?",
         removedTitle: "Đã xóa.", removedBody: "Zerone đã xóa thông tin bạn nhập và sẽ không liên hệ bạn nữa.",
@@ -59,6 +68,24 @@
         }).then(function (r) { return r.text().then(function (t) { return { ok: r.ok, data: t ? JSON.parse(t) : null }; }); });
       }
       function say(title, body) { root.innerHTML = '<h1 class="display">' + esc(title) + '</h1><p class="lede">' + esc(body) + "</p>"; }
+      /* Data-rights request: open to anyone with this link, independent of any plan or Claim. */
+      var RIGHTS = { title: "Quyền về dữ liệu của bạn", intro: "Bạn có thể yêu cầu truy cập, sửa, phản đối hoặc hạn chế việc xử lý dữ liệu của mình bất kỳ lúc nào, không cần xác nhận hồ sơ và không mất phí. Hoặc gửi email tới contact@zerone.vn.",
+        kinds: { access: "Truy cập dữ liệu của tôi", correction: "Sửa thông tin chưa đúng", objection: "Phản đối việc xử lý", restriction: "Hạn chế việc xử lý", other: "Yêu cầu khác" },
+        msg: "Nội dung (tối đa 500 ký tự, không ghi thông tin sức khỏe)", send: "Gửi yêu cầu", sent: "Zerone đã nhận yêu cầu của bạn và sẽ phản hồi qua cách liên hệ đã có hoặc qua email.", err: "Chưa gửi được. Vui lòng thử lại hoặc gửi email tới contact@zerone.vn." };
+      function rightsHtml() {
+        return '<details class="claim-rights"><summary>' + RIGHTS.title + '</summary><p class="claim-small">' + RIGHTS.intro + '</p><form class="form" id="rights-form">' +
+          '<label><select name="k">' + Object.keys(RIGHTS.kinds).map(function (k) { return '<option value="' + k + '">' + RIGHTS.kinds[k] + "</option>"; }).join("") + "</select></label>" +
+          "<label>" + RIGHTS.msg + '<textarea name="m" rows="4" maxlength="500"></textarea></label><button class="btn" type="submit">' + RIGHTS.send + '</button><p class="claim-error" role="alert"></p><p class="claim-ok" role="status"></p></form></details>';
+      }
+      function bindRights(channel) {
+        var f = document.getElementById("rights-form"); if (!f) return;
+        f.addEventListener("submit", function (e) {
+          e.preventDefault(); var b = f.querySelector("button"), er = f.querySelector(".claim-error"), ok = f.querySelector(".claim-ok"); b.disabled = true; er.textContent = ""; ok.textContent = "";
+          rpc("submit_rights_request", { p_token: token, p_kind: f.k.value, p_contact: null, p_message: f.m.value, p_channel: channel }).then(function (r) {
+            b.disabled = false; if (r.ok) { ok.textContent = RIGHTS.sent; f.m.value = ""; } else er.textContent = RIGHTS.err;
+          });
+        });
+      }
       function show(d) {
         var p = d.profile || {}, cr = p.credentials || [], rows = "";
         for (var i = 0; i < 3; i++) {
@@ -76,7 +103,8 @@
           '<label class="claim-check"><input type="checkbox" name="pub"' + (d.publication_choice ? " checked" : "") + " /> <span>" + T.publish + "</span></label>" +
           '<p class="claim-small">' + T.publishNote + "</p>" +
           '<button class="btn" type="submit">' + T.save + '</button><p class="claim-error" role="alert"></p><p class="claim-ok" role="status"></p></form>' +
-          '<button class="claim-link" id="edit-remove" type="button">' + T.remove + "</button>";
+          '<div class="claim-card"><strong>' + T.spaceTitle + '</strong><p class="claim-small">' + T.spaceBody + '</p><button class="btn" type="button" id="space-interest">' + T.spaceBtn + '</button><p class="claim-ok" id="space-ok" role="status"></p></div>' +
+          '<button class="claim-link" id="edit-remove" type="button">' + T.remove + "</button>" + rightsHtml();
         var f = document.getElementById("edit-form"), btn = f.querySelector("button"), err = f.querySelector(".claim-error"), ok = f.querySelector(".claim-ok");
         f.addEventListener("submit", function (e) {
           e.preventDefault(); btn.disabled = true; btn.textContent = T.saving; err.textContent = ""; ok.textContent = "";
@@ -86,6 +114,14 @@
           rpc("save_claim_profile", { p_token: token, p_profile: profile, p_publish: f.pub.checked }).then(function (r) {
             btn.disabled = false; btn.textContent = T.save;
             if (r.ok) ok.textContent = T.saved; else err.textContent = T.error;
+          });
+        });
+        bindRights("edit_page");
+        document.getElementById("space-interest").addEventListener("click", function () {
+          var b = this; b.disabled = true;
+          rpc("express_space_interest", { p_token: token }).then(function (r) {
+            document.getElementById("space-ok").textContent = r.ok ? T.spaceDone : T.error;
+            if (!r.ok) b.disabled = false;
           });
         });
         document.getElementById("edit-remove").addEventListener("click", function () {

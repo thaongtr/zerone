@@ -23,6 +23,8 @@
       .claim-check { display: flex; gap: .6rem; align-items: flex-start; margin: 1rem 0; }
       .claim-check input { width: auto; margin-top: .3rem; }
       .claim-error { color: var(--red); }
+      .claim-rights { margin-top: 1.5rem; }
+      .claim-rights summary { cursor: pointer; text-decoration: underline; opacity: .75; }
     </style>
   </head>
   <body data-page="Claim">
@@ -34,7 +36,10 @@
     (function () {
       /* Personal invitation page. The link token is the only key; the backend returns the invitation's own fields
          (never the contact value) and records "opened". Claiming is a request to be verified, not a verification. */
-      var CLAIM_CFG = { url: "https://ahqeigxzfrdqrpzpjhgd.supabase.co", key: "sb_publishable_xJJY7Y-q6bT0WZ3wU_N7iw_-AHjyj1m" };
+      // Backend by hostname: the official domain talks to production, every other host (staging previews) to the dev project.
+      var CLAIM_PROD = { url: "https://wbosrucppdmuypspyyhe.supabase.co", key: "sb_publishable_I1pa7lh5MWtApaNUkJ3hIQ_FvK1HwmV" };
+      var CLAIM_DEV = { url: "https://ahqeigxzfrdqrpzpjhgd.supabase.co", key: "sb_publishable_xJJY7Y-q6bT0WZ3wU_N7iw_-AHjyj1m" };
+      var CLAIM_CFG = (location.hostname === "zerone.vn" || location.hostname === "www.zerone.vn") ? CLAIM_PROD : CLAIM_DEV;
       var LANES = { health: "Sức khỏe", mental_health: "Sức khỏe tinh thần", veterinary: "Thú y" };
       var T = {
         kicker: "Lời mời riêng dành cho bạn",
@@ -64,6 +69,24 @@
         }).then(function (r) { return r.text().then(function (t) { return { ok: r.ok, data: t ? JSON.parse(t) : null }; }); });
       }
       function say(title, body) { root.innerHTML = '<h1 class="display">' + esc(title) + '</h1><p class="lede">' + esc(body) + "</p>"; }
+      /* Data-rights request: open to anyone with this link, independent of any plan or Claim. */
+      var RIGHTS = { title: "Quyền về dữ liệu của bạn", intro: "Bạn có thể yêu cầu truy cập, sửa, phản đối hoặc hạn chế việc xử lý dữ liệu của mình bất kỳ lúc nào, không cần xác nhận hồ sơ và không mất phí. Hoặc gửi email tới contact@zerone.vn.",
+        kinds: { access: "Truy cập dữ liệu của tôi", correction: "Sửa thông tin chưa đúng", objection: "Phản đối việc xử lý", restriction: "Hạn chế việc xử lý", other: "Yêu cầu khác" },
+        msg: "Nội dung (tối đa 500 ký tự, không ghi thông tin sức khỏe)", send: "Gửi yêu cầu", sent: "Zerone đã nhận yêu cầu của bạn và sẽ phản hồi qua cách liên hệ đã có hoặc qua email.", err: "Chưa gửi được. Vui lòng thử lại hoặc gửi email tới contact@zerone.vn." };
+      function rightsHtml() {
+        return '<details class="claim-rights"><summary>' + RIGHTS.title + '</summary><p class="claim-small">' + RIGHTS.intro + '</p><form class="form" id="rights-form">' +
+          '<label><select name="k">' + Object.keys(RIGHTS.kinds).map(function (k) { return '<option value="' + k + '">' + RIGHTS.kinds[k] + "</option>"; }).join("") + "</select></label>" +
+          "<label>" + RIGHTS.msg + '<textarea name="m" rows="4" maxlength="500"></textarea></label><button class="btn" type="submit">' + RIGHTS.send + '</button><p class="claim-error" role="alert"></p><p class="claim-ok" role="status"></p></form></details>';
+      }
+      function bindRights(channel) {
+        var f = document.getElementById("rights-form"); if (!f) return;
+        f.addEventListener("submit", function (e) {
+          e.preventDefault(); var b = f.querySelector("button"), er = f.querySelector(".claim-error"), ok = f.querySelector(".claim-ok"); b.disabled = true; er.textContent = ""; ok.textContent = "";
+          rpc("submit_rights_request", { p_token: token, p_kind: f.k.value, p_contact: null, p_message: f.m.value, p_channel: channel }).then(function (r) {
+            b.disabled = false; if (r.ok) { ok.textContent = RIGHTS.sent; f.m.value = ""; } else er.textContent = RIGHTS.err;
+          });
+        });
+      }
       function show(p) {
         root.innerHTML =
           '<p class="kicker">' + T.kicker + '</p><h1 class="display">Hồ sơ Zerone của ' + esc(p.name) + '</h1><p class="lede">' + T.intro + "</p>" +
@@ -78,16 +101,17 @@
           "<label>" + T.contact + '<input name="c" required minlength="5" maxlength="120" /></label>' +
           '<label class="claim-check"><input type="checkbox" name="k" /> <span>' + T.consent + "</span></label>" +
           '<button class="btn" type="submit" disabled>' + T.claim + '</button><p class="claim-error" role="alert"></p></form>' +
-          '<button class="claim-link" id="claim-decline" type="button">' + T.decline + "</button>";
+          '<button class="claim-link" id="claim-decline" type="button">' + T.decline + "</button>" + rightsHtml();
         var f = document.getElementById("claim-form"), btn = f.querySelector("button");
         f.k.addEventListener("change", function () { btn.disabled = !f.k.checked; });
         f.addEventListener("submit", function (e) {
           e.preventDefault(); btn.disabled = true; btn.textContent = T.sending;
-          rpc("claim_invitation", { p_token: token, p_contact_method: f.m.value, p_contact: f.c.value, p_consent: f.k.checked }).then(function (r) {
+          rpc("claim_invitation", { p_token: token, p_contact_method: f.m.value, p_contact: f.c.value, p_consent: f.k.checked, p_notice_version: "claim-v0" }).then(function (r) {
             if (r.ok) say(T.doneTitle, T.doneBody);
             else { btn.disabled = false; btn.textContent = T.claim; f.querySelector(".claim-error").textContent = T.error; }
           });
         });
+        bindRights("claim_page");
         document.getElementById("claim-decline").addEventListener("click", function () {
           if (confirm(T.declineConfirm)) rpc("decline_invitation", { p_token: token }).then(function () { say(T.declinedTitle, T.declinedBody); });
         });

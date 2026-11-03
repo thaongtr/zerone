@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Đăng ký quan tâm — Zerone</title>
+    <meta name="description" content="Để lại thông tin nếu bạn muốn Zerone liên hệ về hồ sơ chuyên môn và Professional Space." />
+    <meta name="robots" content="noindex, nofollow, noarchive" />
+    <meta name="referrer" content="no-referrer" />
+    <link rel="icon" href="../assets/favicon.svg?v=3" type="image/svg+xml" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="../css/site.css?v=20261104a" />
+    <style>
+      .claim-wrap { max-width: 640px; margin: 0 auto; padding: 7rem 6vw 4rem; }
+      .claim-small { font-size: .9rem; opacity: .8; }
+      .claim-check { display: flex; gap: .6rem; align-items: flex-start; margin: 1rem 0; }
+      .claim-check input { width: auto; margin-top: .3rem; }
+      .claim-error { color: var(--red); }
+      .claim-draft { background: var(--mist); border-radius: 10px; padding: .6rem .9rem; font-size: .85rem; margin: 1rem 0; }
+    </style>
+  </head>
+  <body data-page="OptIn">
+    <div id="chrome-top"></div>
+    <main class="claim-wrap" id="claim-root" aria-live="polite"></main>
+    <div id="chrome-bottom"></div>
+    <script src="../js/site.js?v=20261014f"></script>
+    <script>
+    (function () {
+      /* Voluntary opt-in. A person leaves their own details and agrees, with two SEPARATE, unticked boxes; the backend keeps
+         the notice version, the time and the optional box as proof. Nothing is published and nobody is contacted until
+         the person has agreed. The wording below is a DRAFT until counsel approves it: on the official domain the form stays
+         closed while NOTICE.approved is false, so a draft can never collect real people's details. */
+      var NOTICE = {
+        version: "optin-draft-0",
+        approved: false,
+        summary: "CÔNG TY TNHH ZERONE (MST 0318035131) thu thập họ tên, chuyên môn, nơi hành nghề và thông tin liên hệ bạn nhập để liên hệ với bạn về việc đăng ký này và về hồ sơ chuyên môn của bạn. Bạn có thể yêu cầu xem, sửa, xóa dữ liệu hoặc ngừng liên hệ bất kỳ lúc nào, miễn phí, qua contact@zerone.vn; việc này không phụ thuộc vào việc bạn có mua dịch vụ hay không.",
+        required: "Tôi đồng ý để Zerone liên hệ với tôi về việc đăng ký này qua thông tin tôi đã nhập.",
+        optional: "Tôi đồng ý nhận thông tin cập nhật về Zerone (tùy chọn, không ảnh hưởng đến việc đăng ký)."
+      };
+      var PROD = { url: "https://wbosrucppdmuypspyyhe.supabase.co", key: "sb_publishable_I1pa7lh5MWtApaNUkJ3hIQ_FvK1HwmV" };
+      var DEV = { url: "https://ahqeigxzfrdqrpzpjhgd.supabase.co", key: "sb_publishable_xJJY7Y-q6bT0WZ3wU_N7iw_-AHjyj1m" };
+      var official = location.hostname === "zerone.vn" || location.hostname === "www.zerone.vn";
+      var CFG = official ? PROD : DEV;
+      var LANES = { health: "Sức khỏe", mental_health: "Sức khỏe tinh thần", veterinary: "Thú y" };
+      var q = new URLSearchParams(location.search);
+      var root = document.getElementById("claim-root");
+      var esc = function (s) { return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]; }); };
+      function rpc(fn, args) {
+        return fetch(CFG.url + "/rest/v1/rpc/" + fn, {
+          method: "POST", referrerPolicy: "no-referrer",
+          headers: { "Content-Type": "application/json", apikey: CFG.key, Authorization: "Bearer " + CFG.key },
+          body: JSON.stringify(args)
+        }).then(function (r) { return r.text().then(function (t) { return { ok: r.ok, status: r.status, text: t }; }); });
+      }
+      function say(title, body) { root.innerHTML = '<h1 class="display">' + esc(title) + '</h1><p class="lede">' + esc(body) + "</p>"; }
+      function hideLang() { document.querySelectorAll(".nav-lang, .nav-lang-row").forEach(function (a) { a.remove(); }); }
+      hideLang(); window.addEventListener("load", hideLang); document.addEventListener("DOMContentLoaded", hideLang);
+
+      if (official && !NOTICE.approved) { say("Trang đăng ký chưa mở.", "Trang này sẽ mở sau khi nội dung thông báo được duyệt. Cảm ơn bạn đã quan tâm."); return; }
+
+      var vertical = LANES[q.get("v")] ? q.get("v") : "health";
+      root.innerHTML =
+        '<p class="kicker">Đăng ký quan tâm</p><h1 class="display">Để Zerone liên hệ với bạn</h1>' +
+        '<p class="lede">Để lại thông tin cơ bản. Zerone sẽ liên hệ để hướng dẫn xác nhận hồ sơ chuyên môn của bạn. Chưa cần gửi bằng cấp hay giấy phép ở bước này.</p>' +
+        (NOTICE.approved ? "" : '<p class="claim-draft">Bản nháp thông báo (' + esc(NOTICE.version) + '), đang chờ luật sư duyệt. Chỉ dùng để thử.</p>') +
+        '<form class="form" id="optin-form">' +
+        '<label>Lĩnh vực<select name="v">' + Object.keys(LANES).map(function (k) { return '<option value="' + k + '"' + (k === vertical ? " selected" : "") + ">" + LANES[k] + "</option>"; }).join("") + "</select></label>" +
+        '<label>Họ và tên<input name="n" required minlength="2" maxlength="80" autocomplete="name" /></label>' +
+        '<label>Chuyên môn / vai trò<input name="r" required minlength="2" maxlength="80" placeholder="Ví dụ: Bác sĩ Da liễu, Chuyên viên tham vấn, Bác sĩ thú y" /></label>' +
+        '<label>Nơi hành nghề (nếu có)<input name="p" maxlength="120" /></label>' +
+        '<label>Khu vực hành nghề<input name="a" maxlength="120" placeholder="Ví dụ: Quận 7, Thảo Điền" /></label>' +
+        '<label>Cách liên hệ<select name="m"><option value="zalo">Zalo</option><option value="phone">Điện thoại</option><option value="email">Email</option></select></label>' +
+        '<label>Số Zalo / điện thoại / email<input name="c" required minlength="5" maxlength="120" /></label>' +
+        '<p class="claim-small">' + esc(NOTICE.summary) + ' Xem thêm <a href="../privacy.html">Chính sách bảo mật</a>.</p>' +
+        '<label class="claim-check"><input type="checkbox" name="k1" /> <span>' + esc(NOTICE.required) + "</span></label>" +
+        '<label class="claim-check"><input type="checkbox" name="k2" /> <span>' + esc(NOTICE.optional) + "</span></label>" +
+        '<button class="btn" type="submit" disabled>Gửi đăng ký</button><p class="claim-error" role="alert"></p></form>';
+      var f = document.getElementById("optin-form"), btn = f.querySelector("button"), err = f.querySelector(".claim-error");
+      f.k1.addEventListener("change", function () { btn.disabled = !f.k1.checked; });
+      f.addEventListener("submit", function (e) {
+        e.preventDefault(); if (!f.k1.checked) return;
+        btn.disabled = true; btn.textContent = "Đang gửi…"; err.textContent = "";
+        rpc("submit_professional_lead", {
+          p_vertical: f.v.value, p_name: f.n.value, p_role: f.r.value, p_practice: f.p.value || null, p_province: "79", p_area: f.a.value || null,
+          p_contact_method: f.m.value, p_contact: f.c.value, p_consent: f.k1.checked,
+          p_source: q.get("src") || q.get("ref") || "website", p_campaign: q.get("c") || q.get("utm_campaign") || null,
+          p_notice_version: NOTICE.version, p_updates_ok: f.k2.checked
+        }).then(function (r) {
+          if (r.ok) { say("Zerone đã nhận thông tin của bạn.", "Đội ngũ Zerone sẽ liên hệ qua cách bạn đã chọn. Bạn có thể yêu cầu xóa thông tin hoặc ngừng liên hệ bất kỳ lúc nào qua contact@zerone.vn."); return; }
+          btn.disabled = false; btn.textContent = "Gửi đăng ký";
+          err.textContent = /rate_limited/.test(r.text) ? "Bạn đã gửi nhiều lần. Vui lòng thử lại sau." : "Chưa gửi được. Vui lòng thử lại.";
+        });
+      });
+    })();
+    </script>
+  </body>
+</html>
