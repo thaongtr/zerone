@@ -1848,3 +1848,14 @@ html[lang="vi"] .ap-row h3, html[lang="vi"] .pp-lead h3, html[lang="vi"] .work-c
 }
 html[lang="vi"] .kicker, html[lang="vi"] .ap-label, html[lang="vi"] .hero-eyebrow, html[lang="vi"] .pp-label, html[lang="vi"] .pp-areas-label, html[lang="vi"] .proof-tag, html[lang="vi"] .contact-h { letter-spacing: var(--ls-eyebrow-vi); }
 .ap-row .ap-label { margin-bottom: .6rem; }
+
+/* Our Solutions: rows are links; light slate-blue arrow drawn with ::after (no extra markup) */
+#services a.ap-row { color: inherit; text-decoration: none; }
+#services a.ap-row::after { content: ""; position: absolute; right: 0; top: 50%; width: 24px; height: 12px; margin-top: -6px; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 12' fill='none' stroke='%238fa3bd' stroke-width='1.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M1 6h21M17 1l5 5-5 5'/%3E%3C/svg%3E") center / contain no-repeat; transition: transform .2s ease; pointer-events: none; }
+#services a.ap-row:focus-visible { outline: 2px solid rgba(63, 88, 115, .55); outline-offset: 4px; border-radius: 12px; }
+#services a.ap-row:focus-visible::before { opacity: 1; }
+@media (hover: hover) and (pointer: fine) {
+  #services a.ap-row:hover::after { transform: translateX(4px); }
+}
+@media (max-width: 860px) { #services a.ap-row { padding-right: 2.2rem; } }
+@media (prefers-reduced-motion: reduce) { #services a.ap-row::after { transition: none; } }
