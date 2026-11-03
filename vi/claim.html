@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Hồ sơ chuyên môn của bạn — Zerone</title>
+    <meta name="description" content="Trang xem hồ sơ chuyên môn qua liên kết riêng của Zerone." />
+    <meta name="robots" content="noindex, nofollow, noarchive" />
+    <meta name="referrer" content="no-referrer" />
+    <link rel="icon" href="../assets/favicon.svg?v=3" type="image/svg+xml" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="../css/site.css?v=20261104a" />
+    <style>
+      .claim-wrap { max-width: 640px; margin: 0 auto; padding: 7rem 6vw 4rem; }
+      .claim-card { background: var(--mist); border-radius: 14px; padding: 1.2rem 1.4rem; margin: 1.4rem 0; }
+      .claim-card strong { display: block; font-size: 1.15rem; }
+      .claim-card p { margin: .25rem 0; }
+      .claim-small { font-size: .9rem; opacity: .8; }
+      .claim-steps { padding-left: 1.2rem; margin: 1rem 0; }
+      .claim-link { background: none; border: 0; padding: .6rem 0; text-decoration: underline; cursor: pointer; font: inherit; color: inherit; opacity: .75; }
+      .claim-check { display: flex; gap: .6rem; align-items: flex-start; margin: 1rem 0; }
+      .claim-check input { width: auto; margin-top: .3rem; }
+      .claim-error { color: var(--red); }
+    </style>
+  </head>
+  <body data-page="Claim">
+    <div id="chrome-top"></div>
+    <main class="claim-wrap" id="claim-root" aria-live="polite"></main>
+    <div id="chrome-bottom"></div>
+    <script src="../js/site.js?v=20261014f"></script>
+    <script>
+    (function () {
+      /* Personal invitation page. The link token is the only key; the backend returns the invitation's own fields
+         (never the contact value) and records "opened". Claiming is a request to be verified, not a verification. */
+      var CLAIM_CFG = { url: "https://ahqeigxzfrdqrpzpjhgd.supabase.co", key: "sb_publishable_xJJY7Y-q6bT0WZ3wU_N7iw_-AHjyj1m" };
+      var LANES = { health: "Sức khỏe", mental_health: "Sức khỏe tinh thần", veterinary: "Thú y" };
+      var T = {
+        kicker: "Lời mời riêng dành cho bạn",
+        intro: "Đây là thông tin chuyên môn Zerone đã chuẩn bị từ nguồn được phép sử dụng. Thông tin chưa được xác nhận bởi bạn, chỉ hiển thị qua liên kết riêng này, chưa công khai và chưa ai tìm thấy.",
+        source: "Nguồn thông tin", unconfirmed: "Chưa xác nhận",
+        steps: ["Xác nhận hồ sơ của tôi", "Zerone xác minh bạn là chủ hồ sơ", "Bạn bổ sung và chọn thông tin hiển thị"],
+        note: "Việc xem và xác nhận hồ sơ không yêu cầu đăng nhập. Zerone không cam kết số lượng khách hàng hay lượt đặt lịch.",
+        correct: "Nếu thông tin chưa đúng, bạn có thể xác nhận rồi chỉnh, hoặc yêu cầu sửa/xóa bằng nút bên dưới.",
+        contactTitle: "Cách Zerone liên hệ với bạn", method: "Cách liên hệ", phone: "Điện thoại", contact: "Số Zalo / điện thoại / email",
+        consent: "Tôi là người trong hồ sơ này và đồng ý để Zerone liên hệ với tôi về việc xác nhận hồ sơ.",
+        claim: "Xác nhận hồ sơ của tôi", sending: "Đang gửi…", decline: "Không phải tôi / yêu cầu xóa thông tin",
+        declineConfirm: "Zerone sẽ không liên hệ bạn về lời mời này nữa và không hiển thị hồ sơ này. Xác nhận?",
+        doneTitle: "Zerone đã nhận yêu cầu xác nhận của bạn.",
+        doneBody: "Việc bấm liên kết chưa phải là xác minh. Đội ngũ Zerone sẽ liên hệ qua cách bạn đã chọn để xác minh bạn là chủ hồ sơ. Trong lúc đó, chưa có gì hiển thị với bệnh nhân.",
+        declinedTitle: "Đã ghi nhận.", declinedBody: "Zerone sẽ không liên hệ bạn về lời mời này nữa và không hiển thị hồ sơ này. Cảm ơn bạn.",
+        invalidTitle: "Liên kết không còn hiệu lực.", invalidBody: "Liên kết có thể đã bị nhập sai hoặc đã được dừng. Nếu cần, hãy liên hệ người đã gửi cho bạn.",
+        error: "Chưa gửi được. Vui lòng thử lại."
+      };
+      var root = document.getElementById("claim-root");
+      var token = new URLSearchParams(location.search).get("t") || "";
+      var esc = function (s) { return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]; }); };
+      function rpc(fn, args) {
+        return fetch(CLAIM_CFG.url + "/rest/v1/rpc/" + fn, {
+          method: "POST", referrerPolicy: "no-referrer",
+          headers: { "Content-Type": "application/json", apikey: CLAIM_CFG.key, Authorization: "Bearer " + CLAIM_CFG.key },
+          body: JSON.stringify(args)
+        }).then(function (r) { return r.text().then(function (t) { return { ok: r.ok, data: t ? JSON.parse(t) : null }; }); });
+      }
+      function say(title, body) { root.innerHTML = '<h1 class="display">' + esc(title) + '</h1><p class="lede">' + esc(body) + "</p>"; }
+      function show(p) {
+        root.innerHTML =
+          '<p class="kicker">' + T.kicker + '</p><h1 class="display">Hồ sơ Zerone của ' + esc(p.name) + '</h1><p class="lede">' + T.intro + "</p>" +
+          '<div class="claim-card"><strong>' + esc(p.name) + '</strong><p class="claim-small">' + esc(LANES[p.vertical]) + " · " + esc(p.role) + "</p>" +
+          (p.practice ? "<p>" + esc(p.practice) + "</p>" : "") +
+          (p.area || p.province ? '<p class="claim-small">' + esc([p.area, p.province].filter(Boolean).join(", ")) + "</p>" : "") +
+          (p.source ? '<p class="claim-small">' + T.source + ": " + esc(p.source) + " · " + T.unconfirmed + "</p>" : "") + "</div>" +
+          '<ol class="claim-steps">' + T.steps.map(function (s) { return "<li>" + s + "</li>"; }).join("") + "</ol>" +
+          '<p class="claim-small">' + T.note + '</p><p class="claim-small">' + T.correct + "</p>" +
+          '<form class="form" id="claim-form"><h2>' + T.contactTitle + "</h2>" +
+          "<label>" + T.method + '<select name="m"><option value="zalo">Zalo</option><option value="phone">' + T.phone + '</option><option value="email">Email</option></select></label>' +
+          "<label>" + T.contact + '<input name="c" required minlength="5" maxlength="120" /></label>' +
+          '<label class="claim-check"><input type="checkbox" name="k" /> <span>' + T.consent + "</span></label>" +
+          '<button class="btn" type="submit" disabled>' + T.claim + '</button><p class="claim-error" role="alert"></p></form>' +
+          '<button class="claim-link" id="claim-decline" type="button">' + T.decline + "</button>";
+        var f = document.getElementById("claim-form"), btn = f.querySelector("button");
+        f.k.addEventListener("change", function () { btn.disabled = !f.k.checked; });
+        f.addEventListener("submit", function (e) {
+          e.preventDefault(); btn.disabled = true; btn.textContent = T.sending;
+          rpc("claim_invitation", { p_token: token, p_contact_method: f.m.value, p_contact: f.c.value, p_consent: f.k.checked }).then(function (r) {
+            if (r.ok) say(T.doneTitle, T.doneBody);
+            else { btn.disabled = false; btn.textContent = T.claim; f.querySelector(".claim-error").textContent = T.error; }
+          });
+        });
+        document.getElementById("claim-decline").addEventListener("click", function () {
+          if (confirm(T.declineConfirm)) rpc("decline_invitation", { p_token: token }).then(function () { say(T.declinedTitle, T.declinedBody); });
+        });
+      }
+      /* This page has no English twin: hide the language switch rather than link to a missing page. */
+      function hideLang() { document.querySelectorAll(".nav-lang, .nav-lang-row").forEach(function (a) { a.remove(); }); }
+      hideLang(); window.addEventListener("load", hideLang); document.addEventListener("DOMContentLoaded", hideLang);
+      if (!/^[0-9a-f]{32}$/.test(token)) say(T.invalidTitle, T.invalidBody);
+      else rpc("get_invitation_preview", { p_token: token }).then(function (r) {
+        if (!r.ok || !r.data) say(T.invalidTitle, T.invalidBody);
+        else if (r.data.requested) say(T.doneTitle, T.doneBody);
+        else show(r.data);
+      }).catch(function () { say(T.invalidTitle, T.invalidBody); });
+    })();
+    </script>
+  </body>
+</html>
