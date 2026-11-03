@@ -1805,3 +1805,46 @@ html[lang="vi"] .prob2-links li { letter-spacing: -0.01em; }
 #training .ap-focus { list-style: none; margin: .5rem 0 0; padding: 0; display: grid; gap: .5rem; }
 #training .ap-focus li { position: relative; padding-left: 1.2rem; font-size: 1.05rem; line-height: 1.5; color: #5b6f83; }
 #training .ap-focus li::before { content: ""; position: absolute; left: 0; top: .62em; width: 5px; height: 5px; border-radius: 50%; background: var(--red); }
+
+/* =====================================================================
+   Shared type system (loaded last). Layout and rhythm may vary by section;
+   type roles may not. Exceptions kept on purpose: hero h1, INSIGHT stat and
+   claim, founder opening line, Trust Translation hub and cards.
+   ===================================================================== */
+:root {
+  --fs-h1: clamp(2.4rem, 5vw, 4.4rem);        /* page-hero titles */
+  --fs-h2: clamp(2rem, 3.6vw, 3.25rem);       /* section headings */
+  --fs-h3-row: clamp(1.6rem, 2.4vw, 2.25rem); /* list-row titles, person name */
+  --fs-h3: clamp(1.35rem, 1.9vw, 1.65rem);    /* card / content titles */
+  --fs-lead: clamp(1.1rem, 1.5vw, 1.25rem);   /* lead paragraphs */
+  --fs-body: 1.0625rem;                       /* body copy */
+  --fs-small: .9375rem;                       /* notes, captions */
+  --fs-eyebrow: .8rem;                        /* eyebrow / labels */
+  --lh-heading: 1.1;
+  --lh-title: 1.2;
+  --lh-body: 1.7;
+  --ls-eyebrow: .1em;
+  --ls-eyebrow-vi: .05em;
+}
+
+/* Headings */
+h1.display { font-size: var(--fs-h1); }
+h2.display:not(.prob2-stat), .cta-band h2, section.cta-band h2, .cta-card h2, .cta-card.is-blue h2 { font-size: var(--fs-h2); line-height: var(--lh-heading); }
+.founder-card h2.display { font-size: clamp(1.9rem, 3.2vw, 2.9rem); }
+.ap-row h3, .pp-lead h3 { font-size: var(--fs-h3-row); line-height: 1.15; }
+.work-card h3, .card h3, .proof-step h3, .pp-card h3, .ap-train h3, .cap h3, .cs-step h3 { font-size: var(--fs-h3); line-height: var(--lh-title); }
+html[lang="vi"] h2.display:not(.prob2-stat), html[lang="vi"] .cta-band h2, html[lang="vi"] .cta-card h2 { line-height: 1.18; letter-spacing: -0.015em; }
+html[lang="vi"] .ap-row h3, html[lang="vi"] .pp-lead h3, html[lang="vi"] .work-card h3, html[lang="vi"] .proof-step h3, html[lang="vi"] .pp-card h3 { line-height: 1.25; }
+
+/* Lead and body */
+.lede { font-size: var(--fs-lead); line-height: 1.55; }
+.ap-row > p, .work-card p, .card p, .cap p, .stat p, .prose p, .faq-item p, .proof-step p, .pp-text, .pov-copy, .prob2-body,
+.ap-train p:not(.ap-label), #training .ap-focus li, .pov-text p.pov-copy, .cs-link p:not(.ap-label), .cs-step p:not(.cs-n) { font-size: var(--fs-body); line-height: var(--lh-body); }
+.ap-note, .pp-note, .space-note, .src, .pp-areas-cap { font-size: var(--fs-small); line-height: 1.6; }
+
+/* One eyebrow style for every small label */
+.kicker, .ap-label, .ap-row .ap-label, .hero-eyebrow, .pp-label, .pp-areas-label, .proof-tag, .contact-h {
+  font-size: var(--fs-eyebrow); font-weight: 600; line-height: 1.4; letter-spacing: var(--ls-eyebrow); text-transform: uppercase;
+}
+html[lang="vi"] .kicker, html[lang="vi"] .ap-label, html[lang="vi"] .hero-eyebrow, html[lang="vi"] .pp-label, html[lang="vi"] .pp-areas-label, html[lang="vi"] .proof-tag, html[lang="vi"] .contact-h { letter-spacing: var(--ls-eyebrow-vi); }
+.ap-row .ap-label { margin-bottom: .6rem; }
