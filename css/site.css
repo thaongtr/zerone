@@ -1801,3 +1801,7 @@ html[lang="vi"] .prob2-links li { letter-spacing: -0.01em; }
 #training .ap-train { margin-top: 1.6rem; gap: 1rem; }
 #training .ap-train p:not(.ap-label) { color: #5b6f83; max-width: 44ch; }
 #training .ap-note { margin-top: 1.6rem; color: #5b6f83; }
+
+#training .ap-focus { list-style: none; margin: .5rem 0 0; padding: 0; display: grid; gap: .5rem; }
+#training .ap-focus li { position: relative; padding-left: 1.2rem; font-size: 1.05rem; line-height: 1.5; color: #5b6f83; }
+#training .ap-focus li::before { content: ""; position: absolute; left: 0; top: .62em; width: 5px; height: 5px; border-radius: 50%; background: var(--red); }
