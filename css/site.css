@@ -1794,3 +1794,10 @@ html[lang="vi"] .prob2-links li { letter-spacing: -0.01em; }
   #services .ap-row { transition: opacity .6s ease, transform .6s cubic-bezier(.22,1,.36,1); }
   #services .ap-row:nth-child(2) { transition-delay: .1s; } #services .ap-row:nth-child(3) { transition-delay: .2s; }
 }
+
+/* ===== Approach: Training as one programme, matching the refined Our Solutions tones ===== */
+#training .display { color: #1f3248; }
+#training .lede { color: #5b6f83; max-width: 44ch; margin-top: 0; }
+#training .ap-train { margin-top: 1.6rem; gap: 1rem; }
+#training .ap-train p:not(.ap-label) { color: #5b6f83; max-width: 44ch; }
+#training .ap-note { margin-top: 1.6rem; color: #5b6f83; }
