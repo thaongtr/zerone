@@ -66,7 +66,7 @@
       .ds-art { position: absolute; top: 0; height: 100%; width: 200%; pointer-events: none; }
       .l .ds-art { left: 0; } .r .ds-art { left: -100%; }
       .ds-status { position: absolute; z-index: 2; top: 3.2%; left: 7%; right: 7%; display: flex; justify-content: space-between; font-size: .66rem; font-weight: 600; }
-      .ds-layer { position: absolute; inset: 0; z-index: 2; padding: 12% 7% 8%; display: flex; flex-direction: column; overflow: hidden; }
+      .ds-layer { position: absolute; inset: 0; z-index: 2; padding: 15% 7% 8%; display: flex; flex-direction: column; overflow: hidden; }
       .ds-brand { display: flex; align-items: center; gap: .35rem; font-weight: 600; font-size: max(.75rem, calc(var(--w) * 0.0280)); color: #2a3558; margin-bottom: 1rem; }
       .ds-brand svg { width: 1.9em; height: auto; }
       .ds-idle-title { font-family: var(--ds-serif); font-weight: 500; font-size: max(1.5rem, calc(var(--w) * 0.0650)); line-height: 1.02; margin: 1.2rem 0 1rem; }
@@ -74,7 +74,7 @@
         box-shadow: 0 8px 22px rgba(60,80,140,.25); display: grid; place-items: center; }
       .ds-play svg { width: 38%; margin-left: 8%; }
       .ds-play:focus-visible, .ds .btn:focus-visible, .ds-chip:focus-visible, .ds-link:focus-visible { outline: 2px solid var(--ds-burgundy); outline-offset: 3px; }
-      .ds-caption { position: absolute; z-index: 5; left: 50%; bottom: 9%; transform: translateX(-50%); width: min(62%, 21rem); text-align: center;
+      .ds-caption { position: absolute; z-index: 8; left: 50%; bottom: 9%; transform: translateX(-50%); width: min(62%, 21rem); text-align: center;
         font-size: max(.62rem, calc(var(--w) * 0.0220)); line-height: 1.35; color: var(--ds-mute); background: rgba(255,255,255,.55); border: 1px solid var(--ds-glass-line);
         border-radius: 999px; padding: .55rem 1rem; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
       .ds-dots { position: absolute; z-index: 5; left: 50%; bottom: 4%; transform: translateX(-50%); display: flex; gap: .45rem; }
@@ -166,7 +166,7 @@
         .ds { padding-top: 5.5rem; }
         .ds-card { padding: 1.2rem 1rem; border-radius: 22px; }
         .ds-duo { aspect-ratio: .78 / 1; }
-        .ds-layer { padding: 14% 6% 8%; } .ds-caption { width: 86%; }
+        .ds-layer { padding: 19% 6% 8%; } .ds-caption { width: 86%; }
         .ds-path li, .ds-block { font-size: .6rem; }
       }
       @media (prefers-reduced-motion: reduce) {
