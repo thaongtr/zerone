@@ -1,0 +1,81 @@
+/* Zerone Spatial Clinical Glass — website-wide visual proof.
+   An additive layer that loads AFTER site.css and reuses its tokens, classes and markup. No content, flow, navigation or logo is touched.
+   Art direction comes from the approved Interactive Doctor Space Preview (airy slate-blue light, white-glass surfaces, burgundy with intent),
+   applied by ROLE rather than as one gradient everywhere:
+     atmosphere  – a fixed, very soft sky behind the whole page (light sections let it show)
+     content     – translucent bands and frosted cards
+     contrast    – dark "proof" bands stay dark, with a light edge
+     action      – burgundy buttons with a soft lit edge
+   Remove the <link> to this file and the site is exactly as before. */
+
+:root {
+  --serif: "Newsreader", Georgia, "Times New Roman", serif;             /* same family as the Interactive Preview display type */
+  --sc-ink: #14213f; --sc-slate: #4d5a78; --sc-bur: #8f1d3f; --sc-bur-hi: #b12b52; --sc-bur-lo: #781434;
+  --glass-fill: linear-gradient(160deg, rgba(255,255,255,.74), rgba(255,255,255,.40));
+  --glass-edge: 1px solid rgba(255,255,255,.88);
+  --glass-shadow: 0 18px 44px rgba(63,88,115,.12), inset 0 1px 0 rgba(255,255,255,.95);
+  --sc-blur: blur(16px) saturate(1.12);
+}
+
+/* ---------- atmosphere: one fixed sky, cheap to render, the page scrolls over it ---------- */
+html { background: #e6edf9; }
+body { background: transparent; }
+body::before {
+  content: ""; position: fixed; inset: 0; z-index: -1; pointer-events: none;
+  background:
+    radial-gradient(62vw 52vh at 6% 0%, rgba(255,255,255,.95), rgba(255,255,255,0) 70%),
+    radial-gradient(58vw 68vh at 100% 36%, rgba(124,152,220,.5), rgba(124,152,220,0) 72%),
+    radial-gradient(44vw 50vh at 0% 78%, rgba(176,196,236,.42), rgba(176,196,236,0) 70%),
+    radial-gradient(76vw 42vh at 46% 106%, rgba(236,224,250,.9), rgba(236,224,250,0) 70%),
+    linear-gradient(112deg, #f3f7fe 0%, #dde8fa 46%, #c4d4f1 100%);
+}
+
+/* ---------- content bands: translucent, so the light shows through (replaces the flat #e5ecf4 / white blocks) ---------- */
+body .section.mist,
+body .section.mist:has(.work-card),
+body .section.prob2-wrap, body .section.ttm-head, body .section.ttm-tail, body .section.pov-wrap, body .section.needs, body .section.space {
+  background: linear-gradient(180deg, rgba(255,255,255,.34), rgba(255,255,255,.10));
+}
+body .section.mist { box-shadow: inset 0 1px 0 rgba(255,255,255,.7); }
+body .section:not(.mist):not(.proof-band):not(.ink):not(.blue):not(.prob2-wrap):not(.ttm-head):not(.ttm-tail):not(.pov-wrap):not(.needs):not(.space) { background-color: transparent; }
+body .contact-page { background: transparent; }
+
+/* ---------- frosted cards: one material for every card-like surface ---------- */
+body .card, body .work-card, body .cap, body .stat, body .pp-card, body .contact-card, body .cs-step, body .cs-points li, body .pp-areas-grid li, body .f3-card,
+body .section .work-card, body .section.mist .work-card, body .section .pp-card, body .section.mist .card, body .section.mist .cap {
+  background: var(--glass-fill); border: var(--glass-edge); border-radius: 26px; box-shadow: var(--glass-shadow);
+  -webkit-backdrop-filter: var(--sc-blur); backdrop-filter: var(--sc-blur);
+}
+body .f3-card { box-shadow: 0 22px 60px rgba(63,88,115,.16), inset 0 1px 0 rgba(255,255,255,.95); }
+body .pp-areas-grid li { border-radius: 18px; }
+@media (hover: hover) { body .work-card:hover, body .pp-card:hover, body .contact-card:hover, body .card:hover { transform: translateY(-2px); box-shadow: 0 24px 56px rgba(63,88,115,.16), inset 0 1px 0 rgba(255,255,255,.95); } }
+
+/* ---------- contrast: the dark proof band stays dark, gains a lit edge and glass inner cards ---------- */
+body .proof-band { box-shadow: inset 0 1px 0 rgba(255,255,255,.22), inset 0 -1px 0 rgba(255,255,255,.1); }
+
+/* ---------- typography: the Preview's hierarchy ---------- */
+body .display, body h1, body h2 { font-weight: 500; letter-spacing: -.012em; color: var(--sc-ink); }
+body .proof-band .display, body .proof-band h2, body .cta-card .display, body .cta-card h2, body .hero .display, body .hero h1 { color: inherit; }
+body .kicker { letter-spacing: .24em; font-weight: 600; color: var(--sc-bur); }
+body .lede { color: var(--sc-slate); line-height: 1.65; }
+
+/* ---------- action: burgundy with intent (primary buttons only) ---------- */
+body .btn:not(.btn-dark):not(.btn-lime):not(.ghost) {
+  background: linear-gradient(180deg, var(--sc-bur-hi) 0%, var(--sc-bur) 55%, var(--sc-bur-lo) 100%); border-radius: 999px;
+  box-shadow: 0 12px 26px rgba(125,22,55,.28), inset 0 1px 0 rgba(255,255,255,.28);
+}
+body .btn:not(.btn-dark):not(.btn-lime):not(.ghost):hover { box-shadow: 0 16px 30px rgba(125,22,55,.34), inset 0 1px 0 rgba(255,255,255,.28); }
+
+/* ---------- platform role: the product section gets the Preview's lit stage behind the device ---------- */
+body .section.space { background: radial-gradient(46vw 58vh at 74% 50%, rgba(255,255,255,.78), rgba(255,255,255,0) 70%), linear-gradient(180deg, rgba(255,255,255,.3), rgba(255,255,255,.08)); }
+body .space-phone { position: relative; }
+body .space-phone::after { content: ""; position: absolute; left: 8%; right: 8%; bottom: -26px; height: 36px; background: radial-gradient(ellipse at center, rgba(70,60,130,.32), rgba(70,60,130,0) 70%); filter: blur(8px); pointer-events: none; z-index: -1; }
+
+/* ---------- depth: a soft ground shadow under the product phone, like the Preview device ---------- */
+body .space-phone { filter: drop-shadow(0 28px 26px rgba(55,70,120,.26)); }
+
+@media (prefers-reduced-motion: reduce) { body .work-card:hover, body .pp-card:hover, body .contact-card:hover, body .card:hover { transform: none; } }
+
+/* ---------- seams: the closing CTA band and any flat grey block now sit on the same sky ---------- */
+body .cta-band { background: transparent; }
+body .section.proof-band + .section, body .cta-band { box-shadow: none; }

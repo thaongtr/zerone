@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Xem trước Doctor Space — Zerone</title>
+    <meta name="description" content="Nhập vài thông tin cơ bản để xem Doctor Space của bạn và cách bệnh nhân gửi yêu cầu đặt lịch. Bản xem trước chạy ngay trên trình duyệt của bạn." />
+    <meta name="robots" content="noindex, nofollow, noarchive" />
+    <meta name="referrer" content="no-referrer" />
+    <link rel="icon" href="../assets/favicon.svg?v=3" type="image/svg+xml" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Newsreader:ital,wght@0,400;0,500;1,400;1,500&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="../css/site.css?v=20261104a" />
+    <style>
+      /* Interactive Doctor Space Preview. Scoped to .ds-; header and footer are the site's own (site.js). Measured against mockup v3 (1672x941). */
+      .ds {
+        --ink: #14213f; --mute: #4d5a78; --bur: #8f1d3f; --bur2: #b0284f; --bur3: #7a1535;
+        --serif: "Newsreader", "Times New Roman", serif;
+        position: relative; overflow: hidden; color: var(--ink); min-height: 100vh; display: flex; align-items: center;
+        padding: 3.4rem 5vw 2rem 6vw; font-family: "Be Vietnam Pro", system-ui, sans-serif;
+        background:
+          radial-gradient(38vw 46vh at 50% 48%, rgba(255,255,255,.5), rgba(255,255,255,0) 72%),
+          radial-gradient(55vw 60vh at 4% 14%, rgba(255,255,255,.9), rgba(255,255,255,0) 70%),
+          radial-gradient(70vw 34vh at 50% 104%, rgba(238,228,250,.95), rgba(238,228,250,0) 72%),
+          radial-gradient(40vw 65vh at 104% 30%, rgba(122,148,214,.8), rgba(122,148,214,0) 72%),
+          linear-gradient(106deg, #ebf0fd 0%, #d4e0f6 38%, #b9cbee 72%, #a2b7e5 100%);
+      }
+      .ds *, .ds *::before, .ds *::after { box-sizing: border-box; }
+      .ds-bg { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; }
+      .ds-grid { position: relative; z-index: 1; width: 100%; max-width: 1760px; margin: 0 auto; display: grid; align-items: center; column-gap: 1.9vw;
+        grid-template-columns: 363fr 702fr 364fr; }
+
+      /* left: intro (363px wide in the mockup) */
+      .ds-left { transform: translateY(-2vh); } .ds-right { transform: translateY(1vh); }
+      .ds-kicker { font-size: clamp(.64rem, .82vw, .9rem); letter-spacing: .3em; text-transform: uppercase; color: #1a2a55; margin: 0 0 clamp(1.4rem, 4.4vh, 3rem); font-weight: 600; }
+      .ds-title { font-family: var(--serif); font-weight: 500; font-size: clamp(1.9rem, 2.72vw, 3.3rem); line-height: 1.2; letter-spacing: -.012em; margin: 0 0 clamp(1rem, 2.4vh, 1.8rem); color: #1a2a55; white-space: nowrap !important; max-width: none; text-wrap: nowrap; }
+      .ds-title em { color: #8f1d3f; font-style: italic; font-weight: 500; font-size: 1.04em; }
+      .ds-lede { color: var(--mute); font-size: clamp(.82rem, 1.02vw, 1.12rem); line-height: 1.65; margin: 0 0 clamp(1.6rem, 5.6vh, 3.6rem); max-width: 20.6em; }
+      .ds-steps { list-style: none; margin: 0; padding: 0; display: flex; justify-content: space-between; align-items: flex-start; position: relative; width: 100%; max-width: 22.2vw; min-width: 17rem; }
+      .ds-steps::before { content: ""; position: absolute; left: 14.3%; right: 12%; top: .62rem; height: 1px; background: rgba(20,33,63,.2); }
+      .ds-steps li { position: relative; text-align: center; font-size: clamp(.7rem, .84vw, .92rem); line-height: 1.35; color: #1a2a55; padding-top: 2rem; }
+      .ds-steps li::before { content: ""; position: absolute; top: 0; left: 50%; width: 1.25rem; height: 1.25rem; margin-left: -.625rem; border-radius: 50%;
+        background: rgba(232,238,252,.8); border: 1.5px solid rgba(20,33,63,.32); transition: background .5s, border-color .5s, box-shadow .5s; }
+      .ds-steps li[aria-current="step"]::before, .ds-steps li.done::before { background: radial-gradient(circle at 35% 30%, #b0284f, #8f1d3f 70%); border-color: #8f1d3f; box-shadow: 0 0 0 4px rgba(143,29,63,.1); }
+      .ds-hinge::after { bottom: calc(var(--w) * -.012); border-radius: calc(var(--w) * .02) calc(var(--w) * .02) 0 0; }
+      .ds-art { position: absolute; top: 0; height: 100%; width: calc(200% + var(--w) * .004); pointer-events: none; }
+      .l .ds-art { left: 0; } .r .ds-art { right: 0; }
+      .ds-status { position: absolute; z-index: 3; top: 4.6%; left: 0; right: 0; font-size: calc(var(--w) * .0205); font-weight: 700; color: #111; pointer-events: none; }
+      .ds-status .t { position: absolute; left: 14%; top: 0; }
+      .ds-status svg { position: absolute; width: calc(var(--w) * .085); height: auto; top: calc(var(--w) * .002); fill: #111; transition: opacity .3s; right: 8%; }
+      .ds-layer { position: absolute; inset: 0; z-index: 2; padding: 15% 7% 8%; display: flex; flex-direction: column; overflow: hidden; }
+      .ds-brand { display: flex; align-items: center; gap: .35em; font-weight: 700; font-size: max(.75rem, calc(var(--w) * .036)); color: #1a2a55; margin-bottom: 1rem; letter-spacing: -.015em; }
+      .ds-brand svg { width: 2.1em; height: auto; flex: none; }
+      /* idle artwork, laid out in % of the screen as in the mockup */
+      .ds-idle { padding: 0; }
+      .ds-idle .ds-brand { position: absolute; left: 14.5%; top: 14.5%; margin: 0; }
+      .ds-idle-title { position: absolute; left: 14.5%; top: 25.5%; margin: 0; white-space: nowrap; font-family: var(--serif); font-weight: 500; font-size: max(1.3rem, calc(var(--w) * .0665)); line-height: 1.02; letter-spacing: -.02em; color: #1a2a55; }
+      .ds-play { position: absolute; left: 55.5%; top: 53%; transform: translate(-50%, -50%); width: max(2.6rem, calc(var(--w) * .094)); aspect-ratio: 1; border-radius: 50%; border: 1px solid rgba(255,255,255,.9); cursor: pointer;
+        background: linear-gradient(160deg, rgba(255,255,255,.95), rgba(232,238,252,.85)); color: #1a2a55; box-shadow: 0 10px 24px rgba(70,90,150,.2), inset 0 1px 0 #fff; display: grid; place-items: center; transition: transform .3s; animation: ds-pulse 4.5s ease-in-out infinite; }
+      .ds-play:hover { transform: translate(-50%, -50%) scale(1.06); animation: none; }
+      .ds-play svg { width: 36%; margin-left: 9%; }
+      @keyframes ds-pulse { 0%, 100% { box-shadow: 0 10px 24px rgba(70,90,150,.2), 0 0 0 0 rgba(255,255,255,.55); } 50% { box-shadow: 0 10px 24px rgba(70,90,150,.2), 0 0 0 calc(var(--w) * .018) rgba(255,255,255,0); } }
+      .ds-play:focus-visible, .ds .btn:focus-visible, .ds-chip:focus-visible, .ds-link:focus-visible, .ds-mini:focus-visible { outline: 2px solid var(--bur); outline-offset: 3px; }
+      .ds-caption { position: absolute; z-index: 8; left: 50%; top: 78%; transform: translateX(-50%) translateZ(calc(var(--w) * .075)); width: 46.7%; text-align: center;
+        font-size: max(.62rem, calc(var(--w) * .0205)); line-height: 1.5; color: #2f3e66; background: linear-gradient(180deg, rgba(255,255,255,.55), rgba(255,255,255,.32)); border: 1px solid rgba(255,255,255,.85);
+        border-radius: 999px; padding: calc(var(--w) * .014) calc(var(--w) * .03); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); box-shadow: 0 6px 20px rgba(70,90,150,.12); transition: opacity .4s; }
+      .ds-dots { position: absolute; z-index: 8; left: 50%; top: 92.5%; transform: translateX(-50%) translateZ(calc(var(--w) * .075)); display: flex; gap: calc(var(--w) * .0185); transition: opacity .4s; }
+      .ds-dots i { width: calc(var(--w) * .0125); height: calc(var(--w) * .0125); min-width: 6px; min-height: 6px; border-radius: 50%; border: 1px solid rgba(255,255,255,.9); background: rgba(255,255,255,.8); }
+      /* ---- proof: pre-rendered device shell (from the approved mockup) + live HTML screens warped onto it ---- */
+      .ds-stage { position: relative; display: flex; justify-content: center; min-width: 0; container-type: inline-size; }
+      .ds-device { --aw: min(calc(100cqw * 1.054), calc(76vh * 1.1128)); position: relative; width: var(--aw); height: calc(var(--aw) * .8986); flex: none; }
+      .ds-float { position: absolute; inset: 0; animation: ds-float 8s ease-in-out infinite alternate; }
+      @keyframes ds-float { from { transform: translateY(0); } to { transform: translateY(-5px); } }
+      .ds-world { --w: 702px; position: absolute; left: 0; top: 0; width: 740px; height: 665px; transform-origin: 0 0; }
+      .ds-shell, .ds-refl img { position: absolute; left: 0; top: 0; width: 740px; height: 665px; max-width: none; pointer-events: none; user-select: none; }
+      .ds-shell { z-index: 5; }
+      .ds-refl { position: absolute; left: 0; top: 633px; width: 740px; height: 230px; overflow: hidden; opacity: .5; filter: blur(4px); pointer-events: none;
+        -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,.95), rgba(0,0,0,0) 92%); mask-image: linear-gradient(to bottom, rgba(0,0,0,.95), rgba(0,0,0,0) 92%); }
+      .ds-refl img { transform: scaleY(-1); }
+      .ds-floor { position: absolute; left: 30px; top: 628px; width: 680px; height: 70px; pointer-events: none; background: radial-gradient(ellipse 50% 50% at 50% 30%, rgba(86,78,140,.5), rgba(86,78,140,0) 100%); filter: blur(10px); bottom: auto; right: auto; }
+      .ds-floor::after { left: 45%; right: 5%; top: 0; height: 90%; }
+      .ds-pane { position: absolute; left: 0; top: 0; width: 332px; height: 600px; transform-origin: 0 0; overflow: hidden; color: var(--ink); z-index: 2; margin: 0;
+        background: linear-gradient(180deg, #f4f7fe 0%, #e4eaf9 55%, #dde3f6 100%); box-shadow: 0 0 0 3px #e4eaf9; }
+      .ds-world > .ds-caption { position: absolute; left: 372px; top: 496px; width: 328px; transform: translateX(-50%); z-index: 6; font-size: 14px; padding: 9px 20px; }
+      .ds-world > .ds-dots { position: absolute; left: 372px; top: 580px; transform: translateX(-50%); z-index: 6; gap: 12px; }
+      .ds-world > .ds-dots i { width: 8px; height: 8px; }
+      .ds-crease { position: absolute; left: 368px; top: 78px; width: 8px; height: 528px; z-index: 3; pointer-events: none; background: linear-gradient(90deg, rgba(60,80,140,.07), rgba(255,255,255,.07) 50%, rgba(60,80,140,.07)); }
+      .ds-pane .ds-art { width: 200%; }
+      .ds-logo-mark { height: 26px; width: auto; display: block; flex: none; } .ds-logo-word { height: 15px; width: auto; display: block; flex: none; }
+      .ds-brand { gap: 9px; } .ds-live .ds-brand { gap: 8px; margin-bottom: 10px; } .ds-live .ds-logo-mark { height: 22px; } .ds-live .ds-logo-word { height: 13px; }
+      .ds-pane .ds-status svg { right: 8%; }
+      .ds-tabs { display: none; }
+      @media (max-width: 900px) { .ds-device { --aw: min(calc(100cqw * 1.054), 600px); } }
+      @media (max-width: 700px) {
+        .ds-stage { flex-direction: column; align-items: center; }
+        .ds-device { --aw: 100cqw; width: 100%; overflow: hidden; }
+        .ds-world { transition: transform .55s cubic-bezier(.22,1,.36,1); }
+        .ds-world > .ds-caption { left: 200px; width: 290px; } .ds-world > .ds-dots { left: 200px; }
+        .ds[data-state="ready"] .ds-tabs { display: flex; }
+        .ds-tabs { gap: 8px; margin-top: 6px; }
+        .ds-tabs button { min-height: 40px; padding: 0 18px; border-radius: 999px; border: 1px solid rgba(143,29,63,.35); background: rgba(255,255,255,.7); color: var(--ink); font: inherit; font-size: .85rem; cursor: pointer; }
+        .ds-tabs button[aria-pressed="true"] { background: var(--bur); border-color: var(--bur); color: #fff; }
+      }
+      .ds-dots i.on { background: #b0284f; border-color: #b0284f; }
+
+      /* states */
+      .ds-live { opacity: 0; visibility: hidden; transition: opacity .5s ease, visibility 0s linear .5s; background: #f6f8fd; }
+      .ds-idle { transition: opacity .4s ease; }
+      .ds[data-state="ready"] .ds-live { opacity: 1; visibility: visible; transition: opacity .5s ease; }
+      .ds[data-state="ready"] .ds-idle, .ds[data-state="ready"] .ds-caption, .ds[data-state="ready"] .ds-dots, .ds[data-state="ready"] .ds-status svg { opacity: 0; pointer-events: none; }
+      .ds-live .ds-brand { margin-bottom: .7rem; }
+      .ds-tag { white-space: nowrap; font-size: .62rem; letter-spacing: .12em; text-transform: uppercase; color: var(--mute); margin-left: auto; }
+      .ds-avatar { width: 26%; aspect-ratio: 1; border-radius: 50%; background: linear-gradient(145deg, #c6d2f0, #9fb2e4); display: grid; place-items: center;
+        font-family: var(--serif); font-size: max(1.1rem, calc(var(--w) * .05)); color: #fff; overflow: hidden; margin: .3rem 0 .6rem; border: 2px solid #fff; box-shadow: 0 6px 16px rgba(60,80,140,.2); }
+      .ds-avatar img { width: 100%; height: 100%; object-fit: cover; display: block; }
+      .ds-name { font-family: var(--serif); font-weight: 500; font-size: max(1.1rem, calc(var(--w) * .046)); line-height: 1.1; margin: 0 0 .25rem; overflow-wrap: anywhere; }
+      .ds-sub { font-size: max(.68rem, calc(var(--w) * .0225)); color: var(--mute); margin: 0 0 .15rem; overflow-wrap: anywhere; }
+      .ds-badge { display: inline-block; align-self: flex-start; font-size: .62rem; padding: .2rem .55rem; border-radius: 999px; background: #e4e9f8; color: #44527c; margin: .55rem 0; }
+      .ds-block { background: #fff; border: 1px solid #e3e8f6; border-radius: 12px; padding: .6rem .7rem; font-size: max(.64rem, calc(var(--w) * .021)); color: var(--mute); line-height: 1.45; margin-bottom: .55rem; }
+      .ds-block b { display: block; color: var(--ink); font-weight: 600; margin-bottom: .15rem; }
+      .ds-mini { margin-top: auto; border: 0; cursor: pointer; font: inherit; font-weight: 600; font-size: max(.7rem, calc(var(--w) * .0225)); color: #fff; padding: .7rem 1rem; border-radius: 999px;
+        background: linear-gradient(180deg, var(--bur2), var(--bur)); box-shadow: 0 8px 18px rgba(143,29,63,.28); }
+      .ds-mini[disabled] { opacity: .45; cursor: default; box-shadow: none; }
+      .ds-mini.ghost { background: #fff; color: var(--bur); border: 1px solid rgba(143,29,63,.4); box-shadow: none; }
+      .ds-h { font-family: var(--serif); font-weight: 500; font-size: max(1.05rem, calc(var(--w) * .042)); margin: 0 0 .5rem; line-height: 1.1; }
+      .ds-path { list-style: none; margin: .4rem 0 0; padding: 0; display: grid; gap: .5rem; }
+      .ds-path li { display: flex; gap: .55rem; align-items: center; background: #fff; border: 1px solid #e3e8f6; border-radius: 12px; padding: .55rem .65rem; font-size: max(.64rem, calc(var(--w) * .0215)); color: var(--mute); }
+      .ds-path li b { display: grid; place-items: center; width: 1.45rem; height: 1.45rem; border-radius: 50%; background: #e4e9f8; color: #44527c; font-size: .68rem; flex: none; }
+      .ds-path li.on { color: var(--ink); border-color: rgba(143,29,63,.35); } .ds-path li.on b, .ds-path li.ok b { background: var(--bur); color: #fff; }
+      .ds-chips { display: flex; flex-wrap: wrap; gap: .35rem; margin: .2rem 0 .6rem; }
+      .ds-chip { border: 1px solid #cdd6ee; background: #fff; color: var(--ink); border-radius: 999px; padding: .35rem .65rem; font: inherit; font-size: max(.64rem, calc(var(--w) * .021)); cursor: pointer; }
+      .ds-chip[aria-pressed="true"] { background: var(--bur); border-color: var(--bur); color: #fff; }
+      .ds-label { font-size: .66rem; color: var(--mute); margin: .1rem 0; }
+      .ds-spin { width: 1.4rem; height: 1.4rem; border-radius: 50%; border: 2px solid #cdd6ee; border-top-color: var(--bur); animation: ds-rot 1s linear infinite; margin: .4rem 0; }
+      @keyframes ds-rot { to { transform: rotate(360deg); } }
+      .ds-sim { font-size: .62rem; color: var(--mute); margin-top: .5rem; line-height: 1.35; }
+      .ds-ok { width: 2rem; height: 2rem; border-radius: 50%; background: var(--bur); color: #fff; display: grid; place-items: center; margin: .2rem 0 .5rem; }
+      .ds-ok svg { width: 55%; }
+      .ds-step { animation: ds-in .45s ease both; display: flex; flex-direction: column; flex: 1; min-height: 0; }
+      @keyframes ds-in { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+      /* a very slow drift of the light waves while the device waits */
+      .ds-art .wv { animation: ds-drift 9s ease-in-out infinite alternate; transform-origin: 50% 100%; }
+      @keyframes ds-drift { from { transform: translateY(0) scaleY(1); } to { transform: translateY(-6px) scaleY(1.025); } }
+
+      /* right: compact glass form (360x494 in the mockup) */
+      .ds-card { background: linear-gradient(160deg, rgba(255,255,255,.5), rgba(255,255,255,.26)); border: 1px solid rgba(255,255,255,.8); border-radius: 26px; padding: clamp(1.1rem, 2.4vh, 1.7rem) clamp(1rem, 1.6vw, 1.7rem);
+        backdrop-filter: blur(16px) saturate(1.1); -webkit-backdrop-filter: blur(16px) saturate(1.1); box-shadow: 0 18px 44px rgba(70,90,150,.14), inset 0 1px 0 rgba(255,255,255,.9); min-width: 0; }
+      .ds-card h2 { font-family: var(--serif); font-weight: 600; font-size: clamp(1.3rem, 1.72vw, 2rem); line-height: 1.1; margin: 0 0 clamp(.6rem, 1.6vh, 1.1rem); color: var(--ink); letter-spacing: -.01em; }
+      .ds-card label, .ds-card .ds-fl { display: block; font-weight: 600; font-size: clamp(.74rem, .84vw, .92rem); color: var(--ink); margin: clamp(.4rem, 1.2vh, .85rem) 0 .3rem; }
+      .ds-card label span { color: var(--bur); }
+      .ds-card input[type="text"], .ds-card select { width: 100%; height: clamp(2.2rem, 4.1vh, 2.7rem); border: 0; border-radius: 12px; padding: 0 1.1rem; font: inherit; font-size: clamp(.74rem, .84vw, .9rem);
+        background: linear-gradient(180deg, rgba(255,255,255,.78), rgba(244,247,254,.6)); color: var(--ink); box-shadow: inset 0 0 0 1px rgba(255,255,255,.9), 0 3px 8px rgba(110,130,190,.12); }
+      .ds-card select { appearance: none; -webkit-appearance: none; padding-right: 2.4rem;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='9' viewBox='0 0 14 9' fill='none' stroke='%2314213f' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M1.5 1.5l5.5 5.5 5.5-5.5'/%3E%3C/svg%3E"), linear-gradient(180deg, rgba(255,255,255,.78), rgba(244,247,254,.6));
+        background-repeat: no-repeat, no-repeat; background-position: right 1rem center, 0 0; }
+      .ds-card input::placeholder { color: #7f8cab; }
+      .ds-card input:focus-visible, .ds-card select:focus-visible { outline: 2px solid var(--bur); outline-offset: 1px; }
+      .ds-card [aria-invalid="true"] { box-shadow: inset 0 0 0 2px var(--bur); }
+      .ds-err { color: var(--bur); font-size: .74rem; margin: .25rem 0 0; }
+      .ds-err:empty { display: none; }
+      .ds-drop { display: flex; align-items: center; gap: .8rem; }
+      .ds-pick { position: relative; width: clamp(3.4rem, 5.6vw, 5.8rem); aspect-ratio: 1.46; border-radius: 12px; border: 1.5px dashed rgba(255,255,255,.95); background: rgba(255,255,255,.22);
+        display: grid; place-items: center; cursor: pointer; color: #4b5a80; overflow: hidden; flex: none; }
+      .ds-pick:focus-within { outline: 2px solid var(--bur); outline-offset: 2px; }
+      .ds-pick input { position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%; }
+      .ds-pick svg { width: 1.5rem; } .ds-pick img { width: 100%; height: 100%; object-fit: cover; }
+      .ds-link { background: none; border: 0; color: var(--bur); font: inherit; font-size: .78rem; cursor: pointer; padding: .2rem 0; text-decoration: underline; }
+      .ds-hint { font-size: .7rem; color: var(--mute); line-height: 1.4; margin: .2rem 0 0; }
+      .ds .btn { display: inline-flex; align-items: center; justify-content: space-between; width: 100%; margin-top: clamp(.9rem, 2.4vh, 1.6rem); height: clamp(2.7rem, 4.9vh, 3.2rem); border: 0; border-radius: 999px; cursor: pointer; padding: 0 1.6rem 0 22%;
+        font: inherit; font-weight: 500; font-size: clamp(.86rem, 1vw, 1.05rem); color: #fff; text-decoration: none; letter-spacing: 0;
+        background: linear-gradient(180deg, #b12b52 0%, #8f1d3f 55%, #781434 100%); box-shadow: 0 12px 24px rgba(125,22,55,.34), inset 0 1px 0 rgba(255,255,255,.28); transition: transform .2s, box-shadow .2s; }
+      .ds .btn:hover { transform: translateY(-1px); box-shadow: 0 16px 28px rgba(125,22,55,.38), inset 0 1px 0 rgba(255,255,255,.28); }
+      .ds .btn[disabled] { opacity: .65; cursor: progress; transform: none; }
+      .ds .btn.ghost { background: rgba(255,255,255,.7); color: var(--bur); border: 1px solid rgba(143,29,63,.45); box-shadow: none; justify-content: center; padding: 0; }
+      .ds-privacy { font-size: clamp(.64rem, .72vw, .76rem); line-height: 1.45; color: var(--mute); margin: .8rem .4rem 0; }
+      .ds-privacy a { color: var(--bur); }
+
+      /* end-of-journey actions */
+      .ds-end { margin-top: 1.4rem; display: none; gap: .6rem; width: min(100%, 22vw); min-width: 15rem; }
+      .ds[data-end="1"] .ds-end { display: grid; animation: ds-in .5s ease both; }
+      .ds-end .btn { margin-top: 0; height: 2.8rem; font-size: .92rem; padding: 0 1.4rem; }
+      .ds-end .btn.ghost { padding: 0; }
+      .ds-end p { margin: 0 0 .2rem; font-size: .82rem; color: var(--mute); }
+      .ds-live-region { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+      /* narrower laptops keep the three zones; tablets and phones stack (copy, device, form) */
+      @media (max-width: 1100px) and (min-width: 901px) { .ds { padding-left: 4vw; padding-right: 4vw; } .ds-grid { grid-template-columns: 24fr 44fr 28fr; column-gap: 2.4vw; } .ds-title { font-size: 2.6vw; } .ds-steps { min-width: 0; width: 100%; } .ds-steps li { font-size: .66rem; } }
+      @media (max-width: 900px) {
+        .ds-left, .ds-right { transform: none; }
+        .ds { display: block; padding: 6.6rem 6vw 2.5rem; }
+        .ds-grid { grid-template-columns: 1fr; max-width: 640px; row-gap: 1.8rem; }
+        .ds-title { white-space: normal; font-size: clamp(2rem, 7vw, 3rem); }
+        .ds-duo { --w: min(100cqw, 540px); }
+        .ds-steps, .ds-end { width: 100%; max-width: none; min-width: 0; } .ds-steps li { font-size: .74rem; }
+        .ds-lede { max-width: 46ch; font-size: 1rem; } .ds-left { transform: translateY(-3vh); } .ds-right { transform: translateY(2vh); }
+      .ds-kicker { font-size: .72rem; }
+        .ds-card h2 { font-size: 1.6rem; } .ds-card label, .ds-card input, .ds-card select { font-size: .9rem; }
+      }
+      @media (max-width: 560px) {
+        .ds-duo { aspect-ratio: .74 / 1; }
+        .ds-title { font-size: 2rem; }
+        .ds-idle-title { font-size: calc(var(--w) * .066); }
+        .ds-caption { width: 80%; }
+        .ds-path li, .ds-block { font-size: .6rem; }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .ds *, .ds *::before, .ds *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+        .ds-duo { transform: none !important; }
+      }
+      /* conversion panels (Claim, Talk to Zerone) */
+      .ds-dialog { border: 1px solid rgba(255,255,255,.85); border-radius: 26px; padding: 0; width: min(520px, calc(100vw - 24px)); max-height: calc(100vh - 24px); overflow: auto; color: var(--ink);
+        background: linear-gradient(160deg, rgba(249,251,255,.97), rgba(232,239,252,.97)); box-shadow: 0 30px 80px rgba(30,45,100,.35); font-family: "Be Vietnam Pro", system-ui, sans-serif; }
+      .ds-dialog::backdrop { background: rgba(28,40,84,.38); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); }
+      .ds-dialog form { position: relative; padding: 1.7rem 1.6rem 1.5rem; }
+      .ds-dialog h2 { font-family: var(--serif); font-weight: 600; font-size: 1.75rem; line-height: 1.1; margin: 0 2rem .5rem 0; color: var(--ink); }
+      .ds-dlead { color: var(--mute); font-size: .92rem; line-height: 1.55; margin: 0 0 .9rem; }
+      .ds-dclose { position: absolute; top: .8rem; right: .9rem; width: 2.4rem; height: 2.4rem; border-radius: 50%; border: 0; background: rgba(255,255,255,.7); color: var(--ink); font-size: 1.5rem; line-height: 1; cursor: pointer; }
+      .ds-dsteps { margin: 0 0 .8rem; padding: 0; list-style: none; display: grid; gap: .35rem; counter-reset: s; }
+      .ds-dsteps li { counter-increment: s; font-size: .84rem; color: var(--ink); display: flex; gap: .6rem; align-items: center; }
+      .ds-dsteps li::before { content: counter(s); display: grid; place-items: center; width: 1.4rem; height: 1.4rem; border-radius: 50%; background: #e4e9f8; color: #44527c; font-size: .72rem; flex: none; }
+      .ds-dialog label { display: block; font-size: .8rem; font-weight: 600; margin: .7rem 0 .25rem; color: var(--ink); } .ds-dialog label span { color: var(--bur); }
+      .ds-dialog input[type="text"], .ds-dialog input[type="tel"], .ds-dialog input[type="email"], .ds-dialog select { width: 100%; height: 2.7rem; border: 0; border-radius: 12px; padding: 0 .9rem; font: inherit; font-size: .9rem; color: var(--ink);
+        background: #fff; box-shadow: inset 0 0 0 1px rgba(150,165,210,.45); }
+      .ds-dialog input:focus-visible, .ds-dialog select:focus-visible, .ds-dclose:focus-visible { outline: 2px solid var(--bur); outline-offset: 1px; }
+      .ds-drow { display: grid; grid-template-columns: 8.5rem 1fr; gap: .6rem; } .ds-dgrow { min-width: 0; }
+      .ds-dnotice { font-size: .74rem; line-height: 1.5; color: var(--mute); margin: .8rem 0 0; } .ds-dnotice a { color: var(--bur); }
+      .ds-dialog label.ds-dcheck { display: flex; gap: .6rem; align-items: flex-start; font-weight: 400; font-size: .8rem; line-height: 1.45; margin: .7rem 0 0; }
+      .ds-dcheck input { width: 1.15rem; height: 1.15rem; margin-top: .15rem; flex: none; accent-color: var(--bur); }
+      .ds-dialog .btn { margin-top: 1rem; } .ds-dialog .btn[disabled] { opacity: .5; cursor: not-allowed; }
+      .ds-ok-big { width: 3rem; height: 3rem; border-radius: 50%; background: var(--bur); color: #fff; display: grid; place-items: center; margin: .2rem 0 .8rem; } .ds-ok-big svg { width: 50%; }
+      /* privacy note under the form: one short line, the rest on request */
+      .ds-pn { margin: .8rem .4rem 0; font-size: clamp(.66rem, .74vw, .78rem); line-height: 1.5; color: var(--mute); }
+      .ds-pn p { margin: 0; } .ds-pn a { color: var(--bur); }
+      .ds-pn summary { cursor: pointer; color: var(--bur); list-style: none; display: inline; } .ds-pn summary::-webkit-details-marker { display: none; }
+      .ds-pn details { display: inline; } .ds-pn details summary::before { content: " · "; color: var(--mute); } .ds-pn details[open] { display: block; margin-top: .25rem; } .ds-pn details[open] summary { display: none; } .ds-pn details p { margin: 0; }
+      .ds-cta-note { margin: -.1rem .3rem .5rem; font-size: .78rem; line-height: 1.45; color: var(--mute); }
+      /* ---- adaptive portrait hero (Doctor Profile inside the left screen) ---- */
+      .ds-live.ds-profile { padding: 0; background: #f4f7fe; }
+      .ds-pt { position: absolute; left: 0; top: 0; width: 332px; height: 336px; overflow: hidden; background: linear-gradient(160deg, #cfdbf3, #e9eefa); touch-action: none; cursor: grab; outline-offset: -3px; }
+      .ds-pt:active { cursor: grabbing; } .ds-pt:focus-visible { outline: 2px solid var(--bur); }
+      .ds-pt-img { position: absolute; max-width: none; user-select: none; -webkit-user-drag: none; pointer-events: none; }
+      .ds-pt-fallback { position: absolute; inset: 0; display: grid; place-items: center; background: radial-gradient(60% 55% at 50% 36%, rgba(255,255,255,.55), rgba(255,255,255,0) 70%), linear-gradient(160deg, #9db3e4, #c3b6dc 62%, #e6ebf8); }
+      .ds-pt-fallback span { display: grid; place-items: center; width: 118px; height: 118px; border-radius: 50%; margin-top: -40px; background: rgba(255,255,255,.34); border: 1px solid rgba(255,255,255,.8); backdrop-filter: blur(6px);
+        font-family: var(--serif); font-size: 54px; color: #fff; text-shadow: 0 2px 10px rgba(40,55,110,.3); }
+      /* the photo melts into the white information area: no hard line, no filter over the face */
+      .ds-pt-fade { position: absolute; left: 0; right: 0; bottom: -1px; height: 62%; pointer-events: none;
+        background: linear-gradient(to bottom, rgba(244,247,254,0) 0%, rgba(240,245,253,.22) 34%, rgba(238,243,252,.62) 62%, rgba(244,247,254,.93) 86%, #f4f7fe 100%); }
+      .ds-ptchip, .ds-ptsig { position: absolute; z-index: 3; top: 52px; display: flex; align-items: center; gap: 7px; padding: 6px 11px; border-radius: 999px; font-size: 10.5px; color: #3b4a73;
+        background: rgba(255,255,255,.74); border: 1px solid rgba(255,255,255,.9); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); box-shadow: 0 6px 16px rgba(40,55,110,.16); }
+      .ds-ptchip { left: 14px; } .ds-ptsig { right: 14px; }
+      .ds-ptchip .ds-logo-mark { height: 15px; } .ds-ptchip .ds-logo-word { height: 9px; }
+      .ds-ptctl { position: absolute; z-index: 3; right: 12px; top: 112px; display: flex; flex-direction: column; gap: 8px; }
+      .ds-ptctl button { width: 32px; height: 32px; border-radius: 50%; border: 1px solid rgba(255,255,255,.9); background: rgba(255,255,255,.7); color: #1a2a55; font-size: 17px; line-height: 1; cursor: pointer; backdrop-filter: blur(8px); box-shadow: 0 4px 12px rgba(40,55,110,.18); }
+      .ds-ptctl button:focus-visible { outline: 2px solid var(--bur); outline-offset: 2px; }
+      .ds-info { position: absolute; left: 0; right: 0; top: 270px; bottom: 0; padding: 0 20px 16px; display: flex; flex-direction: column; z-index: 2; }
+      .ds-info .ds-name { font-size: 30px; line-height: 1.06; margin: 0 0 5px; font-weight: 600; letter-spacing: -.01em; overflow-wrap: anywhere; } .ds-info .ds-name.long { font-size: 24px; } .ds-info .ds-name.xl { font-size: 19px; }
+      .ds-info .ds-sub { font-size: 14px; margin: 0 0 2px; color: #3b4a73; font-weight: 500; } .ds-work { font-size: 12.5px; margin: 0; color: var(--mute); overflow-wrap: anywhere; }
+      .ds-note { margin-top: 10px; padding: 9px 12px; border-radius: 14px; font-size: 11.5px; line-height: 1.45; color: var(--mute); background: rgba(255,255,255,.72); border: 1px solid rgba(255,255,255,.9); box-shadow: 0 6px 16px rgba(60,80,140,.08); max-height: 92px; overflow: hidden; }
+      .ds-note b { display: block; color: var(--ink); font-weight: 600; margin-bottom: 2px; }
+      .ds-nrow { display: flex; justify-content: space-between; gap: 10px; padding: 3px 0; } .ds-nrow span { color: var(--ink); } .ds-nrow em { font-style: normal; text-align: right; }
+      .ds-actions { margin-top: auto; display: flex; gap: 10px; } .ds-actions .ds-mini { margin: 0; flex: 1; font-size: 13px; padding: 12px 8px; } .ds-actions .ds-mini.ghost { flex: .62; background: rgba(255,255,255,.72); backdrop-filter: blur(8px); }
+      .ds[data-state="ready"][data-photo="1"] .ds-pane.l .ds-status .t { color: #fff; text-shadow: 0 1px 4px rgba(0,0,0,.55); }
+    </style>
+  </head>
+
+  <body data-page="Preview">
+    <div id="chrome-top"></div>
+    <main class="ds" id="ds" data-state="idle" data-end="0">
+      <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+        <defs>
+          <linearGradient id="dsBg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f4f8ff"/><stop offset=".55" stop-color="#e2ebfb"/><stop offset="1" stop-color="#d7def4"/></linearGradient>
+          <linearGradient id="dsBlue" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#bccaea" stop-opacity=".9"/><stop offset=".5" stop-color="#93a9d6"/><stop offset="1" stop-color="#e4eaf8" stop-opacity=".9"/></linearGradient>
+          <linearGradient id="dsRed" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#d398b1" stop-opacity=".7"/><stop offset=".35" stop-color="#a44a6b"/><stop offset=".7" stop-color="#8e3458"/><stop offset="1" stop-color="#cfa7c2" stop-opacity=".8"/></linearGradient>
+          <linearGradient id="dsHL" x1="0" y1="0" x2="1" y2="0"><stop offset="0.36" stop-color="#000"/><stop offset="0.56" stop-color="#fff"/></linearGradient><linearGradient id="dsHR" x1="0" y1="0" x2="1" y2="0"><stop offset="0.44" stop-color="#fff"/><stop offset="0.6" stop-color="#000"/></linearGradient>
+          <mask id="dsMaskR" maskUnits="userSpaceOnUse" x="0" y="0" width="1100" height="1000"><rect width="1100" height="1000" fill="url(#dsHL)"/></mask>
+          <mask id="dsMaskB" maskUnits="userSpaceOnUse" x="0" y="0" width="1100" height="1000"><rect width="1100" height="1000" fill="url(#dsHR)"/></mask>
+          <filter id="dsBlur8"><feGaussianBlur stdDeviation="8"/></filter>
+          <filter id="dsBlur2"><feGaussianBlur stdDeviation="2"/></filter>
+          <filter id="dsBlur6"><feGaussianBlur stdDeviation="6"/></filter>
+          <filter id="dsBlur18"><feGaussianBlur stdDeviation="18"/></filter>
+        </defs>
+      </svg>
+      <svg class="ds-bg" viewBox="0 0 1672 941" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+        <path d="M1180 0 C 1380 130 1560 90 1672 210 L1672 0 Z" fill="#fff" opacity=".14"/>
+        <path d="M1330 0 C 1440 120 1600 150 1672 270" fill="none" stroke="#fff" stroke-width="1.6" opacity=".75"/>
+        <path d="M1250 0 C 1400 160 1560 200 1672 340" fill="none" stroke="#fff" stroke-width="1.2" opacity=".4"/>
+        <path d="M0 941 L0 724 C 200 722 340 800 540 941 Z" fill="#fff" opacity=".2"/>
+        <path d="M0 700 C 160 700 270 760 430 792" fill="none" stroke="#fff" stroke-width="1.6" opacity=".6"/>
+        <path d="M0 765 C 200 745 340 825 530 855" fill="none" stroke="#fff" stroke-width="1.2" opacity=".38"/>
+        <path d="M1672 805 C 1500 835 1420 900 1330 941 L1672 941 Z" fill="#fff" opacity=".22"/>
+        <path d="M1672 800 C 1500 830 1420 900 1330 941" fill="none" stroke="#fff" stroke-width="1.4" opacity=".55"/>
+      </svg>
+      <div class="ds-grid">
+        <section class="ds-left" aria-labelledby="ds-h1">
+          <p class="ds-kicker">Interactive Preview</p>
+          <h1 class="ds-title" id="ds-h1">Doctor Space<br>của bạn,<br>qua <em>góc nhìn<br>bệnh nhân.</em></h1>
+          <p class="ds-lede">Tạo bản xem trước hồ sơ chuyên môn và khám phá cách bệnh nhân tìm hiểu, kết nối và đặt lịch với bạn trên Zerone.</p>
+          <ol class="ds-steps" id="ds-steps" aria-label="Các bước">
+            <li aria-current="step">Nhập thông tin</li>
+            <li>Xem trước</li>
+            <li>Trải nghiệm<br>đặt lịch</li>
+          </ol>
+          <div class="ds-end" id="ds-end">
+            <p>Bạn đã xem xong hành trình. Bước tiếp theo là của bạn:</p>
+            <button type="button" class="btn" id="ds-claim"><span>Claim Your Space</span> <span aria-hidden="true">→</span></button>
+            <p class="ds-cta-note">Xác minh chuyên môn của bạn và nhận liên kết để chỉnh sửa hồ sơ.</p>
+            <button type="button" class="btn ghost" id="ds-talk">Talk to Zerone</button>
+            <p class="ds-cta-note">Để lại cách liên hệ, Founder của Zerone sẽ trao đổi với bạn.</p>
+          </div>
+        </section>
+
+        <section class="ds-stage" aria-label="Xem trước Doctor Space trên điện thoại gập">
+          <div class="ds-device" id="ds-duo">
+            <div class="ds-float">
+              <div class="ds-world" id="ds-world">
+                <div class="ds-floor" aria-hidden="true"></div>
+                <div class="ds-refl" aria-hidden="true"><img src="../assets/doctor-space/foldable-full.png" alt="" /></div>
+                <div class="ds-pane l" id="ds-pane-l">
+                  <svg class="ds-art" viewBox="0 0 1100 1000" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+                  <rect width="1100" height="1000" fill="url(#dsBg)"/>
+                  <g class="wv">
+                    <path mask="url(#dsMaskB)" d="M0 560 C 120 500 260 500 380 560 C 480 610 540 690 640 700 L640 1000 L0 1000 Z" fill="#d3e1f6" opacity=".7"/>
+                    <path mask="url(#dsMaskB)" d="M0 610 C 90 560 200 540 300 590 C 400 640 480 720 600 735 L600 1000 L0 1000 Z" fill="url(#dsBlue)" filter="url(#dsBlur2)"/>
+                    <path mask="url(#dsMaskB)" d="M0 770 C 150 700 340 720 600 800 L600 1000 L0 1000 Z" fill="#fff" opacity=".3"/>
+                    <path d="M0 640 C 120 590 260 600 380 660 S 540 748 660 738" fill="none" stroke="#fff" stroke-width="3" opacity=".9" filter="url(#dsBlur2)"/>
+                    <ellipse cx="820" cy="720" rx="330" ry="90" fill="#dba5bb" opacity=".3" filter="url(#dsBlur18)"/>
+                    <path mask="url(#dsMaskR)" d="M400 810 C 560 755 700 690 820 666 C 930 645 1020 660 1100 692 L1100 1000 L400 1000 Z" fill="url(#dsRed)" filter="url(#dsBlur8)"/>
+                    <path mask="url(#dsMaskR)" d="M420 820 C 600 790 760 720 880 650 C 980 595 1050 540 1100 500 L1100 1000 L420 1000 Z" fill="#fff" opacity=".1"/>
+                    <path d="M540 745 C 740 735 900 600 1010 450 S 1100 280 1100 250" fill="none" stroke="#fff" stroke-width="16" opacity=".22" filter="url(#dsBlur6)"/>
+                    <path d="M540 745 C 740 735 900 600 1010 450 S 1100 280 1100 250" fill="none" stroke="#fff" stroke-width="3" opacity=".9" filter="url(#dsBlur2)"/>
+                  </g>
+                </svg>
+                  <div class="ds-status" aria-hidden="true"><span class="t">9:41</span></div>
+                  <div class="ds-layer ds-idle">
+                    <div class="ds-brand"><img class="ds-logo-mark" src="../assets/logo-rings.svg" alt="" /><img class="ds-logo-word" src="../assets/wordmark-ink.svg" alt="Zerone" /></div>
+                    <p class="ds-idle-title">Your<br>Doctor Space</p>
+                    <button class="ds-play" id="ds-play" type="button" aria-label="Xem thử bằng hồ sơ mẫu"><svg viewBox="0 0 10 12" aria-hidden="true"><path d="M0 0v12l10-6z" fill="currentColor"/></svg></button>
+                  </div>
+                  <div class="ds-layer ds-live l-proc" id="ds-profile" aria-live="off"></div>
+                </div>
+                <div class="ds-pane r" id="ds-pane-r">
+                  <svg class="ds-art" viewBox="0 0 1100 1000" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+                  <rect width="1100" height="1000" fill="url(#dsBg)"/>
+                  <g class="wv">
+                    <path mask="url(#dsMaskB)" d="M0 560 C 120 500 260 500 380 560 C 480 610 540 690 640 700 L640 1000 L0 1000 Z" fill="#d3e1f6" opacity=".7"/>
+                    <path mask="url(#dsMaskB)" d="M0 610 C 90 560 200 540 300 590 C 400 640 480 720 600 735 L600 1000 L0 1000 Z" fill="url(#dsBlue)" filter="url(#dsBlur2)"/>
+                    <path mask="url(#dsMaskB)" d="M0 770 C 150 700 340 720 600 800 L600 1000 L0 1000 Z" fill="#fff" opacity=".3"/>
+                    <path d="M0 640 C 120 590 260 600 380 660 S 540 748 660 738" fill="none" stroke="#fff" stroke-width="3" opacity=".9" filter="url(#dsBlur2)"/>
+                    <ellipse cx="820" cy="720" rx="330" ry="90" fill="#dba5bb" opacity=".3" filter="url(#dsBlur18)"/>
+                    <path mask="url(#dsMaskR)" d="M400 810 C 560 755 700 690 820 666 C 930 645 1020 660 1100 692 L1100 1000 L400 1000 Z" fill="url(#dsRed)" filter="url(#dsBlur8)"/>
+                    <path mask="url(#dsMaskR)" d="M420 820 C 600 790 760 720 880 650 C 980 595 1050 540 1100 500 L1100 1000 L420 1000 Z" fill="#fff" opacity=".1"/>
+                    <path d="M540 745 C 740 735 900 600 1010 450 S 1100 280 1100 250" fill="none" stroke="#fff" stroke-width="16" opacity=".22" filter="url(#dsBlur6)"/>
+                    <path d="M540 745 C 740 735 900 600 1010 450 S 1100 280 1100 250" fill="none" stroke="#fff" stroke-width="3" opacity=".9" filter="url(#dsBlur2)"/>
+                  </g>
+                </svg>
+                  <div class="ds-status" aria-hidden="true"><svg viewBox="0 0 60 18"><path d="M0 14h3v4H0zM5 11h3v7H5zM10 8h3v10h-3zM15 5h3v13h-3z"/><path d="M30 3C25 3 21 5 18 8l2 2c2.5-2.3 5.7-3.7 10-3.7S37.500 7.700 40 10l2-2c-3-3-7-5-12-5zM30 8c-2.600 0-4.800 1-6.600 2.600l2 2C27 11.400 28.400 10.800 30 10.800s3 .6 4.600 1.800l2-2C34.800 9 32.600 8 30 8zM30 13a3 3 0 100 .1z" transform="translate(-2 0) scale(.9) translate(3 1)"/><rect x="44" y="4" width="14" height="9" rx="2.500"/></svg></div>
+                  <div class="ds-layer ds-live" id="ds-journey"></div>
+                </div>
+                <div class="ds-crease" aria-hidden="true"></div>
+                <img class="ds-shell" src="../assets/doctor-space/foldable-shell.png" alt="" />
+                <p class="ds-caption" id="ds-caption">Nhập thông tin để xem bản hiển thị Doctor Space của bạn</p>
+                <div class="ds-dots" aria-hidden="true"><i></i><i class="on"></i><i></i></div>
+              </div>
+            </div>
+          </div>
+          <div class="ds-tabs" role="group" aria-label="Chọn màn hình xem"><button type="button" data-v="l" aria-pressed="true">Hồ sơ</button><button type="button" data-v="r" aria-pressed="false">Đặt lịch</button></div>
+        </section>
+
+        <aside class="ds-right">
+          <form class="ds-card" id="ds-form" novalidate aria-labelledby="ds-fh">
+            <h2 id="ds-fh">Xem trước Doctor Space</h2>
+            <label for="ds-n">Họ và tên <span aria-hidden="true">*</span></label>
+            <input type="text" id="ds-n" name="n" maxlength="80" autocomplete="off" placeholder="VD: BS. Nguyễn Minh An" aria-describedby="ds-ne" />
+            <p class="ds-err" id="ds-ne" role="alert"></p>
+            <label for="ds-s">Chuyên môn <span aria-hidden="true">*</span></label>
+            <select id="ds-s" name="s" aria-describedby="ds-se">
+              <option value="">Chọn chuyên môn</option>
+              <optgroup label="Sức khỏe"><option>Da liễu</option><option>Nha khoa</option><option>Nhi khoa</option><option>Sản phụ khoa</option><option>Tim mạch</option><option>Tai mũi họng</option><option>Cơ xương khớp</option><option>Tạo hình thẩm mỹ</option><option>Nội tổng quát</option></optgroup>
+              <optgroup label="Sức khỏe tinh thần"><option>Tâm thần học</option><option>Tâm lý lâm sàng</option><option>Tham vấn</option></optgroup>
+              <optgroup label="Thú y"><option>Thú y</option></optgroup>
+              <option>Khác</option>
+            </select>
+            <p class="ds-err" id="ds-se" role="alert"></p>
+            <label for="ds-w">Nơi làm việc</label>
+            <input type="text" id="ds-w" name="w" maxlength="100" autocomplete="off" placeholder="VD: Bệnh viện Đại học Y Dược TP.HCM" />
+            <span class="ds-fl" id="ds-pl">Ảnh chân dung</span>
+            <div class="ds-drop">
+              <label class="ds-pick" style="margin:0" aria-labelledby="ds-pl">
+                <span id="ds-pickface"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M12 4v16M4 12h16"/></svg></span>
+                <input type="file" id="ds-f" accept="image/jpeg,image/png,image/webp" aria-describedby="ds-fe ds-fh2" />
+              </label>
+              <div><button type="button" class="ds-link" id="ds-rm" hidden>Xóa ảnh</button>
+                <p class="ds-hint" id="ds-fh2">JPG, PNG hoặc WebP, tối đa 5 MB.</p></div>
+            </div>
+            <p class="ds-err" id="ds-fe" role="alert"></p>
+            <button class="btn" type="submit" id="ds-go"><span id="ds-gol">Xem trước ngay</span> <span aria-hidden="true">→</span></button>
+          </form>
+          <div class="ds-pn">Bản xem trước chạy ngay trên trình duyệt của bạn: tên, nơi làm việc và ảnh <b>không được gửi đi hay lưu lại</b>. <a href="privacy.html">Chính sách bảo mật</a><details><summary>Xem thêm</summary><p>Zerone chỉ đếm ẩn danh các bước bạn bấm (không kèm thông tin cá nhân) và không liên hệ bạn nếu bạn không chọn Claim hoặc để lại thông tin.</p></details></div>
+        </aside>
+      </div>
+      <dialog class="ds-dialog" id="ds-dialog" aria-labelledby="ds-dt">
+        <form id="ds-dform" novalidate>
+          <button type="button" class="ds-dclose" id="ds-dclose" aria-label="Đóng">×</button>
+          <div id="ds-dview-form">
+            <h2 id="ds-dt"></h2>
+            <p class="ds-dlead" id="ds-dl"></p>
+            <ol class="ds-dsteps" id="ds-dsteps"></ol>
+            <label for="ds-dn">Họ và tên <span aria-hidden="true">*</span></label>
+            <input type="text" id="ds-dn" maxlength="80" autocomplete="name" />
+            <label for="ds-ds">Chuyên môn <span aria-hidden="true">*</span></label>
+            <select id="ds-ds"></select>
+            <div id="ds-dpw"><label for="ds-dp">Nơi làm việc</label><input type="text" id="ds-dp" maxlength="120" /></div>
+            <div class="ds-drow">
+              <div><label for="ds-dm">Cách liên hệ</label><select id="ds-dm"><option value="zalo">Zalo</option><option value="phone">Điện thoại</option><option value="email">Email</option></select></div>
+              <div class="ds-dgrow"><label for="ds-dc">Số hoặc email <span aria-hidden="true">*</span></label><input type="tel" id="ds-dc" maxlength="120" placeholder="Số điện thoại hoặc Zalo" autocomplete="off" /></div>
+            </div>
+            <p class="ds-dnotice" id="ds-dnotice"></p>
+            <p class="ds-dnotice">Ảnh chân dung và nội dung xem trước của bạn không được gửi đi. Xem <a href="privacy.html" target="_blank" rel="noopener">Chính sách bảo mật</a>.</p>
+            <label class="ds-dcheck"><input type="checkbox" id="ds-k1" /> <span id="ds-k1l"></span></label>
+            <label class="ds-dcheck"><input type="checkbox" id="ds-k2" /> <span>Tôi đồng ý nhận thông tin cập nhật về Zerone (tùy chọn, không ảnh hưởng đến yêu cầu này).</span></label>
+            <p class="ds-err" id="ds-derr" role="alert"></p>
+            <button class="btn" type="submit" id="ds-dgo" disabled><span id="ds-dgol">Gửi</span> <span aria-hidden="true">→</span></button>
+          </div>
+          <div id="ds-dview-done" hidden>
+            <div class="ds-ok-big" aria-hidden="true"><svg viewBox="0 0 12 10" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M1 5l3.5 3.5L11 1.5"/></svg></div>
+            <h2>Cảm ơn bạn</h2>
+            <p class="ds-dlead" id="ds-ddone-text"></p>
+            <button class="btn ghost" type="button" id="ds-ddone">Đóng</button>
+          </div>
+        </form>
+      </dialog>
+      <div class="ds-live-region" id="ds-live" role="status" aria-live="polite"></div>
+    </main>
+    <div id="chrome-bottom"></div>
+    <script src="../js/site.js?v=20261014f"></script>
+
+    <script>
+    (function () {
+      "use strict";
+      /* Doctor Space preview. The doctor's name, workplace and photo are rendered here, in the browser, and are never sent anywhere:
+         no upload, no browser storage of any kind, the photo only lives as an in-memory blob URL. The only network call is an
+         anonymous milestone event (kind + a random per-visit id) to the existing Founder OS ledger. */
+      var PROD = { url: "https://wbosrucppdmuypspyyhe.supabase.co", key: "sb_publishable_I1pa7lh5MWtApaNUkJ3hIQ_FvK1HwmV" };
+      var DEV = { url: "https://ahqeigxzfrdqrpzpjhgd.supabase.co", key: "sb_publishable_xJJY7Y-q6bT0WZ3wU_N7iw_-AHjyj1m" };
+      var official = location.hostname === "zerone.vn" || location.hostname === "www.zerone.vn";
+      var CFG = official ? PROD : DEV;
+      var MAX_BYTES = 5 * 1024 * 1024, OUT_PX = 480;
+      var reduce = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
+      var $ = function (id) { return document.getElementById(id); };
+      var root = $("ds"), form = $("ds-form"), nameEl = $("ds-n"), specEl = $("ds-s"), workEl = $("ds-w"), fileEl = $("ds-f");
+      var state = { name: "", spec: "", work: "", photo: null, pw: 0, ph: 0, fx: .5, fy: .3, zoom: 1, auto: null, sample: false, step: 0, day: null, time: null };
+      var sid = (function () { var a = new Uint8Array(12); (window.crypto || window.msCrypto).getRandomValues(a); return Array.prototype.map.call(a, function (b) { return ("0" + b.toString(16)).slice(-2); }).join(""); })();
+      var sent = {}, timers = [];
+
+      function track(kind) {
+        if (sent[kind]) return; sent[kind] = true;
+        try {
+          fetch(CFG.url + "/rest/v1/rpc/track_preview_event", { method: "POST", keepalive: true, referrerPolicy: "no-referrer",
+            headers: { "Content-Type": "application/json", apikey: CFG.key, Authorization: "Bearer " + CFG.key },
+            body: JSON.stringify({ p_kind: kind, p_session: sid }) }).catch(function () {});
+        } catch (e) {}
+      }
+      function el(tag, cls, text) { var n = document.createElement(tag); if (cls) n.className = cls; if (text != null) n.textContent = text; return n; }
+      function announce(t) { var r = $("ds-live"); r.textContent = ""; setTimeout(function () { r.textContent = t; }, 30); }
+      function later(fn, ms) { timers.push(setTimeout(fn, reduce ? Math.min(ms, 150) : ms)); }
+      function clearTimers() { timers.forEach(clearTimeout); timers = []; }
+      function setStepper(i) {
+        Array.prototype.forEach.call($("ds-steps").children, function (li, k) {
+          if (k === i) li.setAttribute("aria-current", "step"); else li.removeAttribute("aria-current");
+          li.classList.toggle("done", k < i);
+        });
+      }
+      function initials(n) { var p = n.replace(/^(GS|PGS|TS|ThS|BS|BSCKI|BSCKII|CKI|CKII|Dr)[.\s]+/gi, "").trim().split(/\s+/); return ((p[p.length - 1] || "?").charAt(0)).toUpperCase(); }
+
+      /* ---------- photo: validate type by content, size, then re-draw on a canvas (drops EXIF/GPS), keep only in memory ---------- */
+      function sniff(buf) {
+        var b = new Uint8Array(buf.slice(0, 12));
+        if (b[0] === 0xff && b[1] === 0xd8 && b[2] === 0xff) return "jpeg";
+        if (b[0] === 0x89 && b[1] === 0x50 && b[2] === 0x4e && b[3] === 0x47) return "png";
+        if (b[4] === 0x66 && b[5] === 0x74 && b[6] === 0x79 && b[7] === 0x70 && (String.fromCharCode(b[8], b[9], b[10], b[11]) === "heic" || String.fromCharCode(b[8], b[9], b[10], b[11]) === "heix" || String.fromCharCode(b[8], b[9], b[10], b[11]) === "mif1")) return "heic";
+        if (b[0] === 0x52 && b[1] === 0x49 && b[2] === 0x46 && b[3] === 0x46 && b[8] === 0x57 && b[9] === 0x45 && b[10] === 0x42 && b[11] === 0x50) return "webp";
+        return null;
+      }
+      function clearPhoto() { if (state.photo) URL.revokeObjectURL(state.photo); state.photo = null; fileEl.value = ""; paintPick(); $("ds-fe").textContent = ""; }
+      function paintPick() {
+        var f = $("ds-pickface"); f.textContent = "";
+        if (state.photo) { var i = el("img"); i.src = state.photo; i.alt = "Ảnh chân dung đã chọn"; f.appendChild(i); }
+        else f.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>';
+        $("ds-rm").hidden = !state.photo;
+      }
+      function loadPhoto(file) {
+        var err = $("ds-fe"); err.textContent = "";
+        if (!file) return Promise.resolve();
+        if (file.size > MAX_BYTES) { err.textContent = "Ảnh lớn hơn 5 MB. Vui lòng chọn ảnh nhỏ hơn."; fileEl.value = ""; return Promise.resolve(); }
+        return file.arrayBuffer().then(function (buf) {
+          var kindSniffed = sniff(buf), heicTried = kindSniffed === "heic";
+          if (!kindSniffed) { err.textContent = "Chỉ nhận ảnh JPG, PNG hoặc WebP."; fileEl.value = ""; return; }
+          return new Promise(function (res) {
+            var url = URL.createObjectURL(new Blob([buf])), img = new Image();
+            img.onload = function () {
+              var iw = img.naturalWidth, ih = img.naturalHeight, k = Math.min(1, 1280 / Math.max(iw, ih)), c = document.createElement("canvas"); c.width = Math.round(iw * k); c.height = Math.round(ih * k);
+              c.getContext("2d").drawImage(img, 0, 0, c.width, c.height);
+              URL.revokeObjectURL(url);
+              findFace(c).then(function (f) {
+                var port = c.height >= c.width, fx = f ? f.x : .5, fy = f ? f.y : (port ? .3 : .4);
+                c.toBlob(function (blob) { if (state.photo) URL.revokeObjectURL(state.photo); state.photo = URL.createObjectURL(blob); state.pw = c.width; state.ph = c.height; state.fx = fx; state.fy = fy; state.zoom = 1; state.auto = { fx: fx, fy: fy }; paintPick(); res(); }, "image/jpeg", .92);
+              });
+            };
+            img.onerror = function () { URL.revokeObjectURL(url); err.textContent = heicTried ? "Trình duyệt này chưa đọc được ảnh HEIC. Vui lòng chọn ảnh JPG hoặc PNG (trên iPhone: Cài đặt > Máy ảnh > Định dạng > Tương thích nhất)." : "Không đọc được ảnh này. Vui lòng thử ảnh khác."; fileEl.value = ""; res(); };
+            img.src = url;
+          });
+        });
+      }
+      fileEl.addEventListener("change", function () { loadPhoto(fileEl.files && fileEl.files[0]); });
+      $("ds-rm").addEventListener("click", function () { clearPhoto(); fileEl.focus(); });
+
+
+      /* ---------- adaptive portrait: everything runs in the browser; the picture is never sent anywhere ---------- */
+      var HW = 332, HH = 336, FACE_Y = .46;
+      function skinCentroid(c) {
+        var sw = 80, sh = Math.max(8, Math.min(140, Math.round(80 * c.height / c.width))), t = document.createElement("canvas"); t.width = sw; t.height = sh;
+        var g = t.getContext("2d", { willReadFrequently: true }); g.drawImage(c, 0, 0, sw, sh); var d = g.getImageData(0, 0, sw, sh).data, sx = 0, sy = 0, n = 0, lim = Math.round(sh * .7);
+        for (var y = 0; y < lim; y++) for (var x = Math.round(sw * .1); x < Math.round(sw * .9); x++) { var i = (y * sw + x) * 4, r = d[i], gg = d[i + 1], bb = d[i + 2];
+          var Y = .299 * r + .587 * gg + .114 * bb, cb = 128 - .168736 * r - .331264 * gg + .5 * bb, cr = 128 + .5 * r - .418688 * gg - .081312 * bb;
+          if (Y > 45 && Y < 240 && cb > 77 && cb < 127 && cr > 133 && cr < 173) { sx += x; sy += y; n++; } }
+        if (n < sw * lim * .02) return null; return { x: sx / n / sw, y: Math.max(0, sy / n / sh - .03) };
+      }
+      function findFace(c) {
+        var fallback = function () { try { return skinCentroid(c); } catch (e) { return null; } };
+        if (window.FaceDetector) { try { return new window.FaceDetector({ fastMode: true, maxDetectedFaces: 3 }).detect(c).then(function (faces) {
+          if (!faces || !faces.length) return fallback(); var f = faces.sort(function (p, q) { return q.boundingBox.width - p.boundingBox.width; })[0].boundingBox;
+          return { x: (f.x + f.width / 2) / c.width, y: (f.y + f.height / 2) / c.height }; }).catch(fallback); } catch (e) { /* fall through */ } }
+        return Promise.resolve(fallback());
+      }
+      /* cover-fit at natural proportions (never stretched), the focal point pinned near the upper third; zoom keeps the focal point fixed */
+      function place(img) {
+        var iw = state.pw, ih = state.ph, s = Math.max(HW / iw, HH / ih) * state.zoom, w = iw * s, h = ih * s;
+        var left = Math.min(0, Math.max(HW - w, HW / 2 - state.fx * w)), top = Math.min(0, Math.max(HH - h, HH * FACE_Y - state.fy * h));
+        state.fx = (HW / 2 - left) / w; state.fy = (HH * FACE_Y - top) / h;
+        img.style.width = w + "px"; img.style.height = h + "px"; img.style.left = left + "px"; img.style.top = top + "px"; return { w: w, h: h };
+      }
+
+      /* ---------- rendering ---------- */
+      function renderProfile() {
+        var p = $("ds-profile"); p.textContent = ""; p.classList.add("ds-profile"); root.setAttribute("data-photo", state.photo ? "1" : "0");
+        var hero = el("div", "ds-pt"); hero.setAttribute("role", "group"); hero.tabIndex = 0;
+        hero.setAttribute("aria-label", state.photo ? "Ảnh chân dung. Kéo để đổi vị trí; dùng nút cộng, trừ để phóng to; phím mũi tên để di chuyển." : "Ảnh chân dung chưa được thêm");
+        var img = null;
+        if (state.photo) { img = el("img", "ds-pt-img"); img.src = state.photo; img.alt = ""; img.draggable = false; hero.appendChild(img); place(img); }
+        else { var fb = el("div", "ds-pt-fallback"); fb.appendChild(el("span", null, initials(state.name))); hero.appendChild(fb); }
+        hero.appendChild(el("div", "ds-pt-fade"));
+        var chip = el("div", "ds-ptchip"); chip.innerHTML = '<img class="ds-logo-mark" src="../assets/logo-rings.svg" alt="" /><img class="ds-logo-word" src="../assets/wordmark-ink.svg" alt="Zerone" />'; chip.appendChild(el("span", null, "Xem trước")); hero.appendChild(chip);
+        hero.appendChild(el("div", "ds-ptsig", "Chưa xác minh"));
+        if (img) {
+          var ctl = el("div", "ds-ptctl"), mk = function (t, label, fn) { var b = el("button", null, t); b.type = "button"; b.setAttribute("aria-label", label); b.addEventListener("click", function (e) { e.stopPropagation(); fn(); }); return b; };
+          var redraw = function () { place(img); };
+          ctl.appendChild(mk("+", "Phóng to ảnh", function () { state.zoom = Math.min(2.4, state.zoom * 1.15); redraw(); }));
+          ctl.appendChild(mk("−", "Thu nhỏ ảnh", function () { state.zoom = Math.max(1, state.zoom / 1.15); redraw(); }));
+          ctl.appendChild(mk("↺", "Đặt lại khung ảnh", function () { state.zoom = 1; state.fx = state.auto.fx; state.fy = state.auto.fy; redraw(); }));
+          hero.appendChild(ctl);
+          var drag = null;
+          hero.addEventListener("pointerdown", function (e) { if (e.target.closest(".ds-ptctl")) return; drag = { x: e.clientX, y: e.clientY }; try { hero.setPointerCapture(e.pointerId); } catch (x) {} });
+          hero.addEventListener("pointermove", function (e) { if (!drag) return; var r = hero.getBoundingClientRect(), k = HW / (r.width || HW), sz = place(img);
+            state.fx -= (e.clientX - drag.x) * k / sz.w; state.fy -= (e.clientY - drag.y) * k / sz.h; drag = { x: e.clientX, y: e.clientY }; place(img); });
+          var end = function () { drag = null; }; hero.addEventListener("pointerup", end); hero.addEventListener("pointercancel", end);
+          hero.addEventListener("keydown", function (e) { var sz = place(img), st = 14 / sz.w, st2 = 14 / sz.h, used = true;
+            if (e.key === "ArrowLeft") state.fx -= st; else if (e.key === "ArrowRight") state.fx += st; else if (e.key === "ArrowUp") state.fy -= st2; else if (e.key === "ArrowDown") state.fy += st2;
+            else if (e.key === "+" || e.key === "=") state.zoom = Math.min(2.4, state.zoom * 1.1); else if (e.key === "-") state.zoom = Math.max(1, state.zoom / 1.1); else used = false;
+            if (used) { e.preventDefault(); place(img); } });
+        }
+        p.appendChild(hero);
+        var info = el("div", "ds-info"), nm = el("h3", "ds-name", state.name); if (state.name.length > 34) nm.classList.add("xl"); else if (state.name.length > 20) nm.classList.add("long"); info.appendChild(nm);
+        info.appendChild(el("p", "ds-sub", state.spec)); if (state.work) info.appendChild(el("p", "ds-work", state.work));
+        var note = el("div", "ds-note"); info.appendChild(note);
+        var more = false, paintNote = function () { note.textContent = "";
+          if (!more) { note.appendChild(el("b", null, "Giới thiệu và chứng chỉ")); note.appendChild(document.createTextNode("Bạn tự viết phần giới thiệu sau khi Claim. Chứng chỉ và hội viên chỉ hiển thị khi được cung cấp và xác minh.")); return; }
+          [["Giới thiệu", "Chưa có"], ["Chứng chỉ và hội viên", "Hiển thị khi được xác minh"], ["Đánh giá", "Chưa có"]].forEach(function (r) { var row = el("div", "ds-nrow"); row.appendChild(el("span", null, r[0])); row.appendChild(el("em", null, r[1])); note.appendChild(row); }); };
+        paintNote();
+        var act = el("div", "ds-actions"), book = el("button", "ds-mini", "Yêu cầu đặt lịch"); book.type = "button"; book.id = "ds-book"; book.addEventListener("click", function () { go(1); });
+        var mo = el("button", "ds-mini ghost", "Xem thêm"); mo.type = "button"; mo.setAttribute("aria-expanded", "false");
+        mo.addEventListener("click", function () { more = !more; mo.textContent = more ? "Thu gọn" : "Xem thêm"; mo.setAttribute("aria-expanded", String(more)); paintNote(); });
+        act.appendChild(book); act.appendChild(mo); info.appendChild(act); p.appendChild(info);
+      }
+      function days() {
+        var out = [], names = ["Chủ nhật", "Thứ hai", "Thứ ba", "Thứ tư", "Thứ năm", "Thứ sáu", "Thứ bảy"], d = new Date();
+        for (var i = 1; i <= 3; i++) { var x = new Date(d.getFullYear(), d.getMonth(), d.getDate() + i); out.push((i === 1 ? "Ngày mai" : names[x.getDay()]) + " " + x.getDate() + "/" + (x.getMonth() + 1)); }
+        return out;
+      }
+      function chips(list, key, onChange) {
+        var w = el("div", "ds-chips"); w.setAttribute("role", "group");
+        list.forEach(function (t) { var c = el("button", "ds-chip", t); c.type = "button"; c.setAttribute("aria-pressed", String(state[key] === t));
+          c.addEventListener("click", function () { state[key] = t; Array.prototype.forEach.call(w.children, function (o) { o.setAttribute("aria-pressed", String(o === c)); }); onChange(); }); w.appendChild(c); });
+        return w;
+      }
+      function go(step) {
+        clearTimers(); state.step = step; if (window.__dsPan) window.__dsPan(step === 0 ? "l" : "r"); var j = $("ds-journey"); j.textContent = ""; var s = el("div", "ds-step"); j.appendChild(s);
+        var path = el("ol", "ds-path"), cur = step === 0 ? 0 : step < 3 ? 1 : 3;
+        ["Hồ sơ chuyên môn", "Yêu cầu đặt lịch", "Phòng khám xác nhận"].forEach(function (t, i) {
+          var li = el("li", i < cur ? "ok" : i === cur ? "on" : ""); li.appendChild(el("b", null, String(i + 1))); li.appendChild(el("span", null, t)); path.appendChild(li); });
+        var sw = el("div", "ds-brand"); sw.appendChild(el("span", "ds-tag", "Mô phỏng")); sw.style.marginBottom = ".4rem"; s.appendChild(sw);
+        if (step === 0) {
+          s.appendChild(el("h3", "ds-h", "Hành trình của bệnh nhân")); s.appendChild(path);
+          s.appendChild(el("p", "ds-sim", "Nhấn “Yêu cầu đặt lịch” trên hồ sơ bên trái để xem bệnh nhân gửi yêu cầu."));
+          setStepper(1);
+        } else if (step === 1) {
+          s.appendChild(el("h3", "ds-h", "Yêu cầu đặt lịch")); s.appendChild(el("p", "ds-label", "Ngày mong muốn"));
+          var send = el("button", "ds-mini", "Gửi yêu cầu (mô phỏng)"); send.type = "button"; send.disabled = !(state.day && state.time);
+          var upd = function () { send.disabled = !(state.day && state.time); };
+          s.appendChild(chips(days(), "day", upd)); s.appendChild(el("p", "ds-label", "Giờ mong muốn")); s.appendChild(chips(["09:00", "10:30", "14:00", "16:00"], "time", upd));
+          var b = el("div", "ds-block"); b.appendChild(el("b", null, "Bệnh nhân mẫu")); b.appendChild(document.createTextNode("Dữ liệu minh họa, không phải người thật.")); s.appendChild(b);
+          send.addEventListener("click", function () { go(2); }); s.appendChild(send); setStepper(1);
+        } else if (step === 2) {
+          s.appendChild(el("h3", "ds-h", "Đã gửi yêu cầu")); s.appendChild(el("div", "ds-spin")); s.appendChild(el("p", "ds-sub", "Đang chờ phòng khám xác nhận…"));
+          s.appendChild(el("p", "ds-sim", "Mô phỏng: chưa có lịch hẹn thật nào được tạo.")); announce("Đã gửi yêu cầu mô phỏng. Đang chờ phòng khám xác nhận.");
+          later(function () { go(3); }, 1600);
+        } else {
+          var ok = el("div", "ds-ok"); ok.innerHTML = '<svg viewBox="0 0 12 10" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M1 5l3.5 3.5L11 1.5"/></svg>'; s.appendChild(ok);
+          s.appendChild(el("h3", "ds-h", "Phòng khám đã xác nhận")); s.appendChild(el("p", "ds-sub", state.day + " · " + state.time));
+          var d = el("div", "ds-block"); d.appendChild(el("b", null, "Đây là mô phỏng")); d.appendChild(document.createTextNode("Không có lịch hẹn nào được tạo và không có thông báo nào được gửi đến bất kỳ cơ sở nào.")); s.appendChild(d);
+          var again = el("button", "ds-mini ghost", "Xem lại hành trình"); again.type = "button"; again.addEventListener("click", function () { state.day = state.time = null; go(0); }); s.appendChild(again);
+          setStepper(2); root.setAttribute("data-end", "1"); announce("Phòng khám đã xác nhận trong mô phỏng. Bạn có thể chọn Claim Your Space hoặc Talk to Zerone.");
+        }
+      }
+
+      /* ---------- validate and generate ---------- */
+      function validate() {
+        var n = nameEl.value.trim().replace(/\s+/g, " "), s = specEl.value, ok = true;
+        var ne = $("ds-ne"), se = $("ds-se"); ne.textContent = se.textContent = ""; nameEl.removeAttribute("aria-invalid"); specEl.removeAttribute("aria-invalid");
+        if (n.length < 2) { ne.textContent = "Vui lòng nhập họ và tên (ít nhất 2 ký tự)."; nameEl.setAttribute("aria-invalid", "true"); ok = false; }
+        if (!s) { se.textContent = "Vui lòng chọn chuyên môn."; specEl.setAttribute("aria-invalid", "true"); ok = false; }
+        if (!ok) { (n.length < 2 ? nameEl : specEl).focus(); return null; }
+        return { name: n, spec: s, work: workEl.value.trim().replace(/\s+/g, " ") };
+      }
+      function generate(v, sample) {
+        clearTimers(); track("started");
+        state.name = v.name; state.spec = v.spec; state.work = v.work; state.sample = !!sample; state.day = state.time = null;
+        root.setAttribute("data-end", "0"); root.setAttribute("data-state", "processing");
+        $("ds-caption").textContent = "Đang dựng Doctor Space của bạn…"; $("ds-go").disabled = true; $("ds-gol").textContent = "Đang dựng…"; setStepper(1);
+        later(function () {
+          renderProfile(); go(0); root.setAttribute("data-state", "ready"); $("ds-go").disabled = false; $("ds-gol").textContent = "Cập nhật xem trước";
+          if (!sample) track("generated");
+          announce("Doctor Space của bạn đã sẵn sàng. Nhấn Yêu cầu đặt lịch để xem hành trình bệnh nhân.");
+          if (window.matchMedia("(max-width: 1100px)").matches) $("ds-duo").scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "center" });
+        }, 750);
+      }
+      form.addEventListener("submit", function (e) { e.preventDefault(); var v = validate(); if (v) generate(v, false); });
+      $("ds-play").addEventListener("click", function () { generate({ name: "Bác sĩ Mẫu", spec: "Chuyên môn mẫu", work: "Phòng khám mẫu" }, true); });
+      [nameEl, specEl, workEl].forEach(function (i) { i.addEventListener("focus", function () { track("started"); }, { once: true }); });
+      fileEl.addEventListener("click", function () { track("started"); });
+
+      /* very light parallax: the whole device tilts as ONE rigid object (the fold stays a fold); off for touch and reduced motion */
+      if (!reduce && window.matchMedia && matchMedia("(hover: hover) and (pointer: fine)").matches) {
+        var duo = $("ds-duo"), raf = 0;
+        document.addEventListener("pointermove", function (e) {
+          if (raf) return; raf = requestAnimationFrame(function () { raf = 0;
+            var x = (e.clientX / innerWidth - .5), y = (e.clientY / innerHeight - .5);
+            duo.style.transform = "translate(" + (x * -8).toFixed(1) + "px," + (y * -5).toFixed(1) + "px)"; });
+        }, { passive: true });
+      }
+            /* the device shell is a pre-rendered image; each live screen is warped onto its quad with a homography so content and animation stay real HTML */
+      (function () {
+        var Q = { l: [[40.6, 29.8], [373, 75.6], [373, 605.7], [42.7, 629.4]], r: [[370.5, 76.1], [695.3, 29.7], [694.6, 628.7], [370.5, 604.8]] }, CW = 332, CH = 600;
+        function homography(pts) {
+          var src = [[0, 0], [CW, 0], [CW, CH], [0, CH]], A = [], b = [];
+          for (var i = 0; i < 4; i++) { var x = src[i][0], y = src[i][1], u = pts[i][0], v = pts[i][1];
+            A.push([x, y, 1, 0, 0, 0, -u * x, -u * y]); b.push(u); A.push([0, 0, 0, x, y, 1, -v * x, -v * y]); b.push(v); }
+          for (var c = 0; c < 8; c++) { var m = c; for (var r = c + 1; r < 8; r++) if (Math.abs(A[r][c]) > Math.abs(A[m][c])) m = r;
+            var t = A[c]; A[c] = A[m]; A[m] = t; var tb = b[c]; b[c] = b[m]; b[m] = tb;
+            for (var r2 = c + 1; r2 < 8; r2++) { var f = A[r2][c] / A[c][c]; for (var k = c; k < 8; k++) A[r2][k] -= f * A[c][k]; b[r2] -= f * b[c]; } }
+          var h = new Array(8); for (var r3 = 7; r3 >= 0; r3--) { var s = b[r3]; for (var k2 = r3 + 1; k2 < 8; k2++) s -= A[r3][k2] * h[k2]; h[r3] = s / A[r3][r3]; }
+          return "matrix3d(" + [h[0], h[3], 0, h[6], h[1], h[4], 0, h[7], 0, 0, 1, 0, h[2], h[5], 0, 1].join(",") + ")";
+        }
+        $("ds-pane-l").style.transform = homography(Q.l); $("ds-pane-r").style.transform = homography(Q.r);
+        var dev = $("ds-duo"), world = $("ds-world"), mq = window.matchMedia("(max-width: 700px)"), view = "l", tabs = document.querySelectorAll(".ds-tabs button");
+        /* desktop: the whole device scales to its column. phones: one screen at a time at a readable size (tap targets stay large); the view pans between profile and booking */
+        function fit() {
+          if (mq.matches) {
+            var s = dev.clientWidth / 350, x = view === "l" ? 25 : 368;
+            world.style.transform = "translateX(" + (-x * s).toFixed(2) + "px) scale(" + s.toFixed(4) + ")"; dev.style.height = Math.round(760 * s) + "px"; root.setAttribute("data-mobile", "1");
+          } else { world.style.transform = "scale(" + (dev.clientWidth / 740) + ")"; dev.style.height = ""; root.removeAttribute("data-mobile"); }
+          Array.prototype.forEach.call(tabs, function (t) { t.setAttribute("aria-pressed", String(t.getAttribute("data-v") === view)); });
+        }
+        window.__dsPan = function (v) { view = v; fit(); };
+        Array.prototype.forEach.call(tabs, function (t) { t.addEventListener("click", function () { window.__dsPan(t.getAttribute("data-v")); }); });
+        fit(); if (window.ResizeObserver) new ResizeObserver(fit).observe(dev); else window.addEventListener("resize", fit);
+        if (mq.addEventListener) mq.addEventListener("change", fit);
+      })();
+      /* Conversion. Claim and Talk to Zerone open in-page panels that create a lead in the EXISTING system (submit_professional_lead:
+         consent proof, notice version, rate limit, Admin queue, Founder OS counts per campaign). Nothing is sent before the person
+         submits; the preview photo is never sent. While the notice wording is a draft, the official domain falls back to a plain email. */
+      (function () {
+        var NOTICE = { version: "preview-draft-0", approved: false };
+        var MH = ["Tâm thần học", "Tâm lý lâm sàng", "Tham vấn"], VET = ["Thú y"];
+        var SUMMARY = "CÔNG TY TNHH ZERONE (MST 0318035131) thu thập họ tên, chuyên môn, nơi hành nghề và thông tin liên hệ bạn nhập ở đây để xử lý đúng yêu cầu này. Ảnh và nội dung xem trước không được gửi. Bạn có thể yêu cầu xem, sửa, xóa dữ liệu hoặc ngừng liên hệ bất kỳ lúc nào, miễn phí, qua contact@zerone.vn.";
+        var MODES = {
+          claim: {
+            campaign: "preview-claim", event: "claim_requested", title: "Claim Your Space", practice: true, submit: "Gửi yêu cầu Claim",
+            lead: "Gửi yêu cầu để Zerone xác minh chuyên môn của bạn. Hồ sơ chỉ được tạo khi bạn đã được xác minh.",
+            steps: ["Bạn gửi yêu cầu", "Zerone xác minh chuyên môn của bạn", "Bạn nhận liên kết để chỉnh sửa hồ sơ"],
+            consent: "Tôi đồng ý để Zerone liên hệ và xác minh thông tin chuyên môn của tôi nhằm xử lý yêu cầu Claim này.",
+            done: "Zerone đã nhận yêu cầu Claim của bạn. Chúng tôi sẽ liên hệ qua cách bạn đã chọn để xác minh chuyên môn trước khi bạn nhận liên kết chỉnh sửa hồ sơ. Chưa có hồ sơ nào được công bố.",
+            mail: "Claim hồ sơ Doctor Space"
+          },
+          talk: {
+            campaign: "preview-founder-call", event: "founder_call_requested", title: "Trao đổi với Zerone", practice: false, submit: "Gửi thông tin",
+            lead: "Để lại cách liên hệ để Founder của Zerone trao đổi với bạn về Doctor Space. Chưa cần xác minh hay tạo hồ sơ.",
+            steps: [],
+            consent: "Tôi đồng ý để Zerone liên hệ với tôi qua thông tin trên để trao đổi về Doctor Space.",
+            done: "Zerone đã nhận thông tin của bạn. Founder sẽ liên hệ qua cách bạn đã chọn. Bạn không cần làm gì thêm.",
+            mail: "Trao đổi với Zerone về Doctor Space"
+          }
+        };
+        var dlg = $("ds-dialog"), f = $("ds-dform"), mode = null, opener = null;
+        if (!dlg || !f) return;
+        function fresh() { $("ds-dview-form").hidden = false; $("ds-dview-done").hidden = true; $("ds-derr").textContent = ""; $("ds-dgo").disabled = false; $("ds-dgol").textContent = MODES[mode].submit; }
+        function open(m, btn) {
+          mode = m; opener = btn; var M = MODES[m];
+          if (official && !NOTICE.approved) { location.href = "mailto:contact@zerone.vn?subject=" + encodeURIComponent(M.mail); track(M.event); return; }
+          $("ds-dt").textContent = M.title; $("ds-dl").textContent = M.lead; $("ds-dnotice").textContent = SUMMARY; $("ds-k1l").textContent = M.consent;
+          var st = $("ds-dsteps"); st.textContent = ""; M.steps.forEach(function (t) { var li = document.createElement("li"); li.textContent = t; st.appendChild(li); }); st.hidden = !M.steps.length;
+          $("ds-dpw").hidden = !M.practice;
+          var sel = $("ds-ds"); sel.innerHTML = $("ds-s").innerHTML; sel.value = state.spec || ""; $("ds-dn").value = state.name || ""; $("ds-dp").value = state.work || "";
+          $("ds-dm").value = "zalo"; $("ds-dc").value = ""; $("ds-k1").checked = false; $("ds-k2").checked = false; fresh(); $("ds-dgo").disabled = true;
+          if (dlg.showModal) dlg.showModal(); else dlg.setAttribute("open", "");
+          $("ds-dn").focus();
+        }
+        function close() { if (dlg.close) dlg.close(); else dlg.removeAttribute("open"); if (opener) opener.focus(); }
+        $("ds-claim").addEventListener("click", function () { open("claim", this); });
+        $("ds-talk").addEventListener("click", function () { open("talk", this); });
+        $("ds-dclose").addEventListener("click", close); $("ds-ddone").addEventListener("click", close);
+        dlg.addEventListener("click", function (e) { if (e.target === dlg) close(); });
+        $("ds-k1").addEventListener("change", function () { $("ds-dgo").disabled = !this.checked; });
+        $("ds-dm").addEventListener("change", function () { $("ds-dc").placeholder = this.value === "email" ? "ten@example.com" : "Số điện thoại hoặc Zalo"; $("ds-dc").type = this.value === "email" ? "email" : "tel"; });
+        function vertical(spec) { return MH.indexOf(spec) >= 0 ? "mental_health" : VET.indexOf(spec) >= 0 ? "veterinary" : "health"; }
+        f.addEventListener("submit", function (e) {
+          e.preventDefault(); if (!$("ds-k1").checked) return;
+          var M = MODES[mode], err = $("ds-derr"), name = $("ds-dn").value.trim().replace(/\s+/g, " "), spec = $("ds-ds").value, method = $("ds-dm").value, contact = $("ds-dc").value.trim();
+          err.textContent = "";
+          if (name.length < 2) { err.textContent = "Vui lòng nhập họ và tên."; $("ds-dn").focus(); return; }
+          if (!spec) { err.textContent = "Vui lòng chọn chuyên môn."; $("ds-ds").focus(); return; }
+          if (method === "email" ? !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(contact) : contact.replace(/\D/g, "").length < 9) { err.textContent = method === "email" ? "Email chưa đúng định dạng." : "Số điện thoại hoặc Zalo chưa đúng."; $("ds-dc").focus(); return; }
+          var go = $("ds-dgo"); go.disabled = true; $("ds-dgol").textContent = "Đang gửi…";
+          fetch(CFG.url + "/rest/v1/rpc/submit_professional_lead", { method: "POST", referrerPolicy: "no-referrer",
+            headers: { "Content-Type": "application/json", apikey: CFG.key, Authorization: "Bearer " + CFG.key },
+            body: JSON.stringify({ p_vertical: vertical(spec), p_name: name, p_role: spec, p_practice: M.practice ? ($("ds-dp").value.trim() || null) : null, p_province: "79", p_area: null,
+              p_contact_method: method, p_contact: contact, p_consent: true, p_source: "preview", p_campaign: M.campaign, p_notice_version: NOTICE.version, p_updates_ok: $("ds-k2").checked })
+          }).then(function (r) { return r.text().then(function (t) { return { ok: r.ok, text: t }; }); }).then(function (r) {
+            if (r.ok) { track(M.event); $("ds-ddone-text").textContent = M.done; $("ds-dview-form").hidden = true; $("ds-dview-done").hidden = false; $("ds-ddone").focus(); announce("Zerone đã nhận thông tin của bạn."); return; }
+            go.disabled = false; $("ds-dgol").textContent = M.submit;
+            err.textContent = /rate_limited/.test(r.text) ? "Bạn đã gửi nhiều lần. Vui lòng thử lại sau." : "Chưa gửi được. Vui lòng thử lại hoặc email contact@zerone.vn.";
+          }).catch(function () { go.disabled = false; $("ds-dgol").textContent = M.submit; err.textContent = "Không có kết nối. Vui lòng thử lại hoặc email contact@zerone.vn."; });
+        });
+      })();
+      window.addEventListener("pagehide", function () { if (state.photo) URL.revokeObjectURL(state.photo); });
+    })();
+    </script>
+  </body>
+</html>
