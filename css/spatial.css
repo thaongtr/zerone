@@ -32,11 +32,12 @@ body::before {
 
 /* ---------- content bands: translucent, so the light shows through (replaces the flat #e5ecf4 / white blocks) ---------- */
 body .section.mist,
-body .section.mist:has(.work-card),
 body .section.prob2-wrap, body .section.ttm-head, body .section.ttm-tail, body .section.pov-wrap, body .section.needs, body .section.space {
   background: linear-gradient(180deg, rgba(255,255,255,.34), rgba(255,255,255,.10));
 }
 body .section.mist { box-shadow: inset 0 1px 0 rgba(255,255,255,.7); }
+/* kept as its own rule: a browser without :has() drops only this one, not the whole list */
+body .section.mist:has(.work-card) { background: linear-gradient(180deg, rgba(255,255,255,.34), rgba(255,255,255,.10)); }
 body .section:not(.mist):not(.proof-band):not(.ink):not(.blue):not(.prob2-wrap):not(.ttm-head):not(.ttm-tail):not(.pov-wrap):not(.needs):not(.space) { background-color: transparent; }
 body .contact-page { background: transparent; }
 
