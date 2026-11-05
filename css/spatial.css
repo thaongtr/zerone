@@ -75,3 +75,7 @@ body .space-phone::after { content: ""; position: absolute; left: 8%; right: 8%;
 body .space-phone { filter: drop-shadow(0 28px 26px rgba(55,70,120,.26)); }
 
 @media (prefers-reduced-motion: reduce) { body .work-card:hover, body .pp-card:hover, body .contact-card:hover, body .card:hover { transform: none; } }
+
+/* ---------- seams: the closing CTA band and any flat grey block now sit on the same sky ---------- */
+body .cta-band { background: transparent; }
+body .section.proof-band + .section, body .cta-band { box-shadow: none; }
