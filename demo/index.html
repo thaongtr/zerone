@@ -93,6 +93,7 @@
 
   .caption { text-align: center; max-width: 30em; }
   .caption h1 { margin: 0; font: 600 clamp(22px, 3.4vw, 28px)/1.15 var(--serif); letter-spacing: -.1px; text-wrap: balance; }
+  .caption .invite { margin-top: 12px; color: var(--ink); } .caption .invite a { color: var(--accent); font-weight: 600; text-underline-offset: 3px; }
   .caption p { margin: 6px 0 0; font-size: 13px; line-height: 1.5; color: var(--muted); text-wrap: balance; }
 
   @media (prefers-reduced-motion: reduce) { .play { transition: none; } }
@@ -117,8 +118,10 @@
 <div class="caption">
   <h1>Zerone Space trên Zalo</h1>
   <p>Chọn chuyên khoa, xem hồ sơ và theo dõi bác sĩ, rồi gửi yêu cầu đặt lịch. Hình ảnh, bác sĩ và dữ liệu trong video là minh họa.</p>
+  <p class="invite">Đã hình dung trải nghiệm? <a href="../vi/xem-truoc.html?src=site-demo" data-journey-try data-journey-src="site-demo">Hãy xem Doctor Space của chính bạn →</a></p>
 </div>
 
+<script src="../js/journey.js" defer></script>
 <script>
   var v = document.getElementById("demo"), s = document.getElementById("screen");
   var sync = function () { s.classList.toggle("paused", v.paused); };

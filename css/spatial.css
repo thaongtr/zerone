@@ -80,3 +80,9 @@ body .space-phone { filter: drop-shadow(0 28px 26px rgba(55,70,120,.26)); }
 /* ---------- seams: the closing CTA band and any flat grey block now sit on the same sky ---------- */
 body .cta-band { background: transparent; }
 body .section.proof-band + .section, body .cta-band { box-shadow: none; }
+
+/* ---------- journey: the secondary text link beside the primary Zerone Space button ---------- */
+body .space-cta { margin-top: 1.5rem; display: flex; flex-wrap: wrap; align-items: center; gap: .9rem 1.6rem; }
+body .space-try { display: inline-flex; align-items: center; min-height: 44px; color: var(--sc-bur); font-weight: 500; font-size: .98rem; text-decoration: underline; text-decoration-color: rgba(143,29,63,.35); text-underline-offset: 6px; transition: text-decoration-color .2s, color .2s; }
+body .space-try:hover, body .space-try:focus-visible { color: var(--sc-bur-lo); text-decoration-color: currentColor; }
+body .space-try:focus-visible { outline: 2px solid var(--sc-bur); outline-offset: 4px; border-radius: 4px; }
