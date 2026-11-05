@@ -235,6 +235,32 @@
       .ds-pn summary { cursor: pointer; color: var(--bur); list-style: none; display: inline; } .ds-pn summary::-webkit-details-marker { display: none; }
       .ds-pn details { display: inline; } .ds-pn details summary::before { content: " · "; color: var(--mute); } .ds-pn details[open] { display: block; margin-top: .25rem; } .ds-pn details[open] summary { display: none; } .ds-pn details p { margin: 0; }
       .ds-cta-note { margin: -.1rem .3rem .5rem; font-size: .78rem; line-height: 1.45; color: var(--mute); }
+      /* ---- adaptive portrait hero (Doctor Profile inside the left screen) ---- */
+      .ds-live.ds-profile { padding: 0; background: #f4f7fe; }
+      .ds-pt { position: absolute; left: 0; top: 0; width: 332px; height: 336px; overflow: hidden; background: linear-gradient(160deg, #cfdbf3, #e9eefa); touch-action: none; cursor: grab; outline-offset: -3px; }
+      .ds-pt:active { cursor: grabbing; } .ds-pt:focus-visible { outline: 2px solid var(--bur); }
+      .ds-pt-img { position: absolute; max-width: none; user-select: none; -webkit-user-drag: none; pointer-events: none; }
+      .ds-pt-fallback { position: absolute; inset: 0; display: grid; place-items: center; background: radial-gradient(60% 55% at 50% 36%, rgba(255,255,255,.55), rgba(255,255,255,0) 70%), linear-gradient(160deg, #9db3e4, #c3b6dc 62%, #e6ebf8); }
+      .ds-pt-fallback span { display: grid; place-items: center; width: 118px; height: 118px; border-radius: 50%; margin-top: -40px; background: rgba(255,255,255,.34); border: 1px solid rgba(255,255,255,.8); backdrop-filter: blur(6px);
+        font-family: var(--serif); font-size: 54px; color: #fff; text-shadow: 0 2px 10px rgba(40,55,110,.3); }
+      /* the photo melts into the white information area: no hard line, no filter over the face */
+      .ds-pt-fade { position: absolute; left: 0; right: 0; bottom: -1px; height: 62%; pointer-events: none;
+        background: linear-gradient(to bottom, rgba(244,247,254,0) 0%, rgba(240,245,253,.22) 34%, rgba(238,243,252,.62) 62%, rgba(244,247,254,.93) 86%, #f4f7fe 100%); }
+      .ds-ptchip, .ds-ptsig { position: absolute; z-index: 3; top: 52px; display: flex; align-items: center; gap: 7px; padding: 6px 11px; border-radius: 999px; font-size: 10.5px; color: #3b4a73;
+        background: rgba(255,255,255,.74); border: 1px solid rgba(255,255,255,.9); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); box-shadow: 0 6px 16px rgba(40,55,110,.16); }
+      .ds-ptchip { left: 14px; } .ds-ptsig { right: 14px; }
+      .ds-ptchip .ds-logo-mark { height: 15px; } .ds-ptchip .ds-logo-word { height: 9px; }
+      .ds-ptctl { position: absolute; z-index: 3; right: 12px; top: 112px; display: flex; flex-direction: column; gap: 8px; }
+      .ds-ptctl button { width: 32px; height: 32px; border-radius: 50%; border: 1px solid rgba(255,255,255,.9); background: rgba(255,255,255,.7); color: #1a2a55; font-size: 17px; line-height: 1; cursor: pointer; backdrop-filter: blur(8px); box-shadow: 0 4px 12px rgba(40,55,110,.18); }
+      .ds-ptctl button:focus-visible { outline: 2px solid var(--bur); outline-offset: 2px; }
+      .ds-info { position: absolute; left: 0; right: 0; top: 270px; bottom: 0; padding: 0 20px 16px; display: flex; flex-direction: column; z-index: 2; }
+      .ds-info .ds-name { font-size: 30px; line-height: 1.06; margin: 0 0 5px; font-weight: 600; letter-spacing: -.01em; overflow-wrap: anywhere; } .ds-info .ds-name.long { font-size: 24px; } .ds-info .ds-name.xl { font-size: 19px; }
+      .ds-info .ds-sub { font-size: 14px; margin: 0 0 2px; color: #3b4a73; font-weight: 500; } .ds-work { font-size: 12.5px; margin: 0; color: var(--mute); overflow-wrap: anywhere; }
+      .ds-note { margin-top: 10px; padding: 9px 12px; border-radius: 14px; font-size: 11.5px; line-height: 1.45; color: var(--mute); background: rgba(255,255,255,.72); border: 1px solid rgba(255,255,255,.9); box-shadow: 0 6px 16px rgba(60,80,140,.08); max-height: 92px; overflow: hidden; }
+      .ds-note b { display: block; color: var(--ink); font-weight: 600; margin-bottom: 2px; }
+      .ds-nrow { display: flex; justify-content: space-between; gap: 10px; padding: 3px 0; } .ds-nrow span { color: var(--ink); } .ds-nrow em { font-style: normal; text-align: right; }
+      .ds-actions { margin-top: auto; display: flex; gap: 10px; } .ds-actions .ds-mini { margin: 0; flex: 1; font-size: 13px; padding: 12px 8px; } .ds-actions .ds-mini.ghost { flex: .62; background: rgba(255,255,255,.72); backdrop-filter: blur(8px); }
+      .ds[data-state="ready"][data-photo="1"] .ds-pane.l .ds-status .t { color: #fff; text-shadow: 0 1px 4px rgba(0,0,0,.55); }
     </style>
   </head>
 
@@ -423,7 +449,7 @@
       var reduce = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
       var $ = function (id) { return document.getElementById(id); };
       var root = $("ds"), form = $("ds-form"), nameEl = $("ds-n"), specEl = $("ds-s"), workEl = $("ds-w"), fileEl = $("ds-f");
-      var state = { name: "", spec: "", work: "", photo: null, sample: false, step: 0, day: null, time: null };
+      var state = { name: "", spec: "", work: "", photo: null, pw: 0, ph: 0, fx: .5, fy: .3, zoom: 1, auto: null, sample: false, step: 0, day: null, time: null };
       var sid = (function () { var a = new Uint8Array(12); (window.crypto || window.msCrypto).getRandomValues(a); return Array.prototype.map.call(a, function (b) { return ("0" + b.toString(16)).slice(-2); }).join(""); })();
       var sent = {}, timers = [];
 
@@ -473,10 +499,13 @@
           return new Promise(function (res) {
             var url = URL.createObjectURL(new Blob([buf])), img = new Image();
             img.onload = function () {
-              var s = Math.min(img.naturalWidth, img.naturalHeight), c = document.createElement("canvas"); c.width = c.height = Math.min(OUT_PX, s);
-              c.getContext("2d").drawImage(img, (img.naturalWidth - s) / 2, (img.naturalHeight - s) / 2, s, s, 0, 0, c.width, c.height);
+              var iw = img.naturalWidth, ih = img.naturalHeight, k = Math.min(1, 1280 / Math.max(iw, ih)), c = document.createElement("canvas"); c.width = Math.round(iw * k); c.height = Math.round(ih * k);
+              c.getContext("2d").drawImage(img, 0, 0, c.width, c.height);
               URL.revokeObjectURL(url);
-              c.toBlob(function (blob) { if (state.photo) URL.revokeObjectURL(state.photo); state.photo = URL.createObjectURL(blob); paintPick(); res(); }, "image/jpeg", .9);
+              findFace(c).then(function (f) {
+                var port = c.height >= c.width, fx = f ? f.x : .5, fy = f ? f.y : (port ? .3 : .4);
+                c.toBlob(function (blob) { if (state.photo) URL.revokeObjectURL(state.photo); state.photo = URL.createObjectURL(blob); state.pw = c.width; state.ph = c.height; state.fx = fx; state.fy = fy; state.zoom = 1; state.auto = { fx: fx, fy: fy }; paintPick(); res(); }, "image/jpeg", .92);
+              });
             };
             img.onerror = function () { URL.revokeObjectURL(url); err.textContent = heicTried ? "Trình duyệt này chưa đọc được ảnh HEIC. Vui lòng chọn ảnh JPG hoặc PNG (trên iPhone: Cài đặt > Máy ảnh > Định dạng > Tương thích nhất)." : "Không đọc được ảnh này. Vui lòng thử ảnh khác."; fileEl.value = ""; res(); };
             img.src = url;
@@ -486,20 +515,72 @@
       fileEl.addEventListener("change", function () { loadPhoto(fileEl.files && fileEl.files[0]); });
       $("ds-rm").addEventListener("click", function () { clearPhoto(); fileEl.focus(); });
 
+
+      /* ---------- adaptive portrait: everything runs in the browser; the picture is never sent anywhere ---------- */
+      var HW = 332, HH = 336, FACE_Y = .46;
+      function skinCentroid(c) {
+        var sw = 80, sh = Math.max(8, Math.min(140, Math.round(80 * c.height / c.width))), t = document.createElement("canvas"); t.width = sw; t.height = sh;
+        var g = t.getContext("2d", { willReadFrequently: true }); g.drawImage(c, 0, 0, sw, sh); var d = g.getImageData(0, 0, sw, sh).data, sx = 0, sy = 0, n = 0, lim = Math.round(sh * .7);
+        for (var y = 0; y < lim; y++) for (var x = Math.round(sw * .1); x < Math.round(sw * .9); x++) { var i = (y * sw + x) * 4, r = d[i], gg = d[i + 1], bb = d[i + 2];
+          var Y = .299 * r + .587 * gg + .114 * bb, cb = 128 - .168736 * r - .331264 * gg + .5 * bb, cr = 128 + .5 * r - .418688 * gg - .081312 * bb;
+          if (Y > 45 && Y < 240 && cb > 77 && cb < 127 && cr > 133 && cr < 173) { sx += x; sy += y; n++; } }
+        if (n < sw * lim * .02) return null; return { x: sx / n / sw, y: Math.max(0, sy / n / sh - .03) };
+      }
+      function findFace(c) {
+        var fallback = function () { try { return skinCentroid(c); } catch (e) { return null; } };
+        if (window.FaceDetector) { try { return new window.FaceDetector({ fastMode: true, maxDetectedFaces: 3 }).detect(c).then(function (faces) {
+          if (!faces || !faces.length) return fallback(); var f = faces.sort(function (p, q) { return q.boundingBox.width - p.boundingBox.width; })[0].boundingBox;
+          return { x: (f.x + f.width / 2) / c.width, y: (f.y + f.height / 2) / c.height }; }).catch(fallback); } catch (e) { /* fall through */ } }
+        return Promise.resolve(fallback());
+      }
+      /* cover-fit at natural proportions (never stretched), the focal point pinned near the upper third; zoom keeps the focal point fixed */
+      function place(img) {
+        var iw = state.pw, ih = state.ph, s = Math.max(HW / iw, HH / ih) * state.zoom, w = iw * s, h = ih * s;
+        var left = Math.min(0, Math.max(HW - w, HW / 2 - state.fx * w)), top = Math.min(0, Math.max(HH - h, HH * FACE_Y - state.fy * h));
+        state.fx = (HW / 2 - left) / w; state.fy = (HH * FACE_Y - top) / h;
+        img.style.width = w + "px"; img.style.height = h + "px"; img.style.left = left + "px"; img.style.top = top + "px"; return { w: w, h: h };
+      }
+
       /* ---------- rendering ---------- */
       function renderProfile() {
-        var p = $("ds-profile"); p.textContent = "";
-        var brand = el("div", "ds-brand"); brand.innerHTML = '<img class="ds-logo-mark" src="../assets/logo-rings.svg" alt="" /><img class="ds-logo-word" src="../assets/wordmark-ink.svg" alt="Zerone" />'; brand.appendChild(el("span", "ds-tag", "Xem trước")); p.appendChild(brand);
-        var av = el("div", "ds-avatar");
-        if (state.photo) { var im = el("img"); im.src = state.photo; im.alt = ""; av.appendChild(im); } else av.textContent = initials(state.name);
-        p.appendChild(av);
-        p.appendChild(el("h3", "ds-name", state.name));
-        p.appendChild(el("p", "ds-sub", state.spec));
-        if (state.work) p.appendChild(el("p", "ds-sub", state.work));
-        p.appendChild(el("span", "ds-badge", "Chưa xác minh · bản xem trước"));
-        var b = el("div", "ds-block"); b.appendChild(el("b", null, "Giới thiệu")); b.appendChild(document.createTextNode("Phần giới thiệu do chính bạn viết sau khi Claim. Zerone không tự điền bằng cấp hay thành tích.")); p.appendChild(b);
-        var book = el("button", "ds-mini", "Đặt lịch khám"); book.type = "button"; book.id = "ds-book";
-        book.addEventListener("click", function () { go(1); }); p.appendChild(book);
+        var p = $("ds-profile"); p.textContent = ""; p.classList.add("ds-profile"); root.setAttribute("data-photo", state.photo ? "1" : "0");
+        var hero = el("div", "ds-pt"); hero.setAttribute("role", "group"); hero.tabIndex = 0;
+        hero.setAttribute("aria-label", state.photo ? "Ảnh chân dung. Kéo để đổi vị trí; dùng nút cộng, trừ để phóng to; phím mũi tên để di chuyển." : "Ảnh chân dung chưa được thêm");
+        var img = null;
+        if (state.photo) { img = el("img", "ds-pt-img"); img.src = state.photo; img.alt = ""; img.draggable = false; hero.appendChild(img); place(img); }
+        else { var fb = el("div", "ds-pt-fallback"); fb.appendChild(el("span", null, initials(state.name))); hero.appendChild(fb); }
+        hero.appendChild(el("div", "ds-pt-fade"));
+        var chip = el("div", "ds-ptchip"); chip.innerHTML = '<img class="ds-logo-mark" src="../assets/logo-rings.svg" alt="" /><img class="ds-logo-word" src="../assets/wordmark-ink.svg" alt="Zerone" />'; chip.appendChild(el("span", null, "Xem trước")); hero.appendChild(chip);
+        hero.appendChild(el("div", "ds-ptsig", "Chưa xác minh"));
+        if (img) {
+          var ctl = el("div", "ds-ptctl"), mk = function (t, label, fn) { var b = el("button", null, t); b.type = "button"; b.setAttribute("aria-label", label); b.addEventListener("click", function (e) { e.stopPropagation(); fn(); }); return b; };
+          var redraw = function () { place(img); };
+          ctl.appendChild(mk("+", "Phóng to ảnh", function () { state.zoom = Math.min(2.4, state.zoom * 1.15); redraw(); }));
+          ctl.appendChild(mk("−", "Thu nhỏ ảnh", function () { state.zoom = Math.max(1, state.zoom / 1.15); redraw(); }));
+          ctl.appendChild(mk("↺", "Đặt lại khung ảnh", function () { state.zoom = 1; state.fx = state.auto.fx; state.fy = state.auto.fy; redraw(); }));
+          hero.appendChild(ctl);
+          var drag = null;
+          hero.addEventListener("pointerdown", function (e) { if (e.target.closest(".ds-ptctl")) return; drag = { x: e.clientX, y: e.clientY }; try { hero.setPointerCapture(e.pointerId); } catch (x) {} });
+          hero.addEventListener("pointermove", function (e) { if (!drag) return; var r = hero.getBoundingClientRect(), k = HW / (r.width || HW), sz = place(img);
+            state.fx -= (e.clientX - drag.x) * k / sz.w; state.fy -= (e.clientY - drag.y) * k / sz.h; drag = { x: e.clientX, y: e.clientY }; place(img); });
+          var end = function () { drag = null; }; hero.addEventListener("pointerup", end); hero.addEventListener("pointercancel", end);
+          hero.addEventListener("keydown", function (e) { var sz = place(img), st = 14 / sz.w, st2 = 14 / sz.h, used = true;
+            if (e.key === "ArrowLeft") state.fx -= st; else if (e.key === "ArrowRight") state.fx += st; else if (e.key === "ArrowUp") state.fy -= st2; else if (e.key === "ArrowDown") state.fy += st2;
+            else if (e.key === "+" || e.key === "=") state.zoom = Math.min(2.4, state.zoom * 1.1); else if (e.key === "-") state.zoom = Math.max(1, state.zoom / 1.1); else used = false;
+            if (used) { e.preventDefault(); place(img); } });
+        }
+        p.appendChild(hero);
+        var info = el("div", "ds-info"), nm = el("h3", "ds-name", state.name); if (state.name.length > 34) nm.classList.add("xl"); else if (state.name.length > 20) nm.classList.add("long"); info.appendChild(nm);
+        info.appendChild(el("p", "ds-sub", state.spec)); if (state.work) info.appendChild(el("p", "ds-work", state.work));
+        var note = el("div", "ds-note"); info.appendChild(note);
+        var more = false, paintNote = function () { note.textContent = "";
+          if (!more) { note.appendChild(el("b", null, "Giới thiệu và chứng chỉ")); note.appendChild(document.createTextNode("Bạn tự viết phần giới thiệu sau khi Claim. Chứng chỉ và hội viên chỉ hiển thị khi được cung cấp và xác minh.")); return; }
+          [["Giới thiệu", "Chưa có"], ["Chứng chỉ và hội viên", "Hiển thị khi được xác minh"], ["Đánh giá", "Chưa có"]].forEach(function (r) { var row = el("div", "ds-nrow"); row.appendChild(el("span", null, r[0])); row.appendChild(el("em", null, r[1])); note.appendChild(row); }); };
+        paintNote();
+        var act = el("div", "ds-actions"), book = el("button", "ds-mini", "Yêu cầu đặt lịch"); book.type = "button"; book.id = "ds-book"; book.addEventListener("click", function () { go(1); });
+        var mo = el("button", "ds-mini ghost", "Xem thêm"); mo.type = "button"; mo.setAttribute("aria-expanded", "false");
+        mo.addEventListener("click", function () { more = !more; mo.textContent = more ? "Thu gọn" : "Xem thêm"; mo.setAttribute("aria-expanded", String(more)); paintNote(); });
+        act.appendChild(book); act.appendChild(mo); info.appendChild(act); p.appendChild(info);
       }
       function days() {
         var out = [], names = ["Chủ nhật", "Thứ hai", "Thứ ba", "Thứ tư", "Thứ năm", "Thứ sáu", "Thứ bảy"], d = new Date();
@@ -520,7 +601,7 @@
         var sw = el("div", "ds-brand"); sw.appendChild(el("span", "ds-tag", "Mô phỏng")); sw.style.marginBottom = ".4rem"; s.appendChild(sw);
         if (step === 0) {
           s.appendChild(el("h3", "ds-h", "Hành trình của bệnh nhân")); s.appendChild(path);
-          s.appendChild(el("p", "ds-sim", "Nhấn “Đặt lịch khám” trên hồ sơ bên trái để xem bệnh nhân gửi yêu cầu."));
+          s.appendChild(el("p", "ds-sim", "Nhấn “Yêu cầu đặt lịch” trên hồ sơ bên trái để xem bệnh nhân gửi yêu cầu."));
           setStepper(1);
         } else if (step === 1) {
           s.appendChild(el("h3", "ds-h", "Yêu cầu đặt lịch")); s.appendChild(el("p", "ds-label", "Ngày mong muốn"));
@@ -559,7 +640,7 @@
         later(function () {
           renderProfile(); go(0); root.setAttribute("data-state", "ready"); $("ds-go").disabled = false; $("ds-gol").textContent = "Cập nhật xem trước";
           if (!sample) track("generated");
-          announce("Doctor Space của bạn đã sẵn sàng. Nhấn Đặt lịch khám để xem hành trình bệnh nhân.");
+          announce("Doctor Space của bạn đã sẵn sàng. Nhấn Yêu cầu đặt lịch để xem hành trình bệnh nhân.");
           if (window.matchMedia("(max-width: 1100px)").matches) $("ds-duo").scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "center" });
         }, 750);
       }
