@@ -90,7 +90,18 @@
       .ds-logo-mark { height: 26px; width: auto; display: block; flex: none; } .ds-logo-word { height: 15px; width: auto; display: block; flex: none; }
       .ds-brand { gap: 9px; } .ds-live .ds-brand { gap: 8px; margin-bottom: 10px; } .ds-live .ds-logo-mark { height: 22px; } .ds-live .ds-logo-word { height: 13px; }
       .ds-pane .ds-status svg { right: 8%; }
+      .ds-tabs { display: none; }
       @media (max-width: 900px) { .ds-device { --aw: min(calc(100cqw * 1.054), 600px); } }
+      @media (max-width: 700px) {
+        .ds-stage { flex-direction: column; align-items: center; }
+        .ds-device { --aw: 100cqw; width: 100%; overflow: hidden; }
+        .ds-world { transition: transform .55s cubic-bezier(.22,1,.36,1); }
+        .ds-world > .ds-caption { left: 200px; width: 290px; } .ds-world > .ds-dots { left: 200px; }
+        .ds[data-state="ready"] .ds-tabs { display: flex; }
+        .ds-tabs { gap: 8px; margin-top: 6px; }
+        .ds-tabs button { min-height: 40px; padding: 0 18px; border-radius: 999px; border: 1px solid rgba(143,29,63,.35); background: rgba(255,255,255,.7); color: var(--ink); font: inherit; font-size: .85rem; cursor: pointer; }
+        .ds-tabs button[aria-pressed="true"] { background: var(--bur); border-color: var(--bur); color: #fff; }
+      }
 
       /* states */
       .ds-live { opacity: 0; visibility: hidden; transition: opacity .5s ease, visibility 0s linear .5s; background: #f6f8fd; }
@@ -176,11 +187,11 @@
       @media (max-width: 1100px) and (min-width: 901px) { .ds { padding-left: 4vw; padding-right: 4vw; } .ds-grid { grid-template-columns: 24fr 44fr 28fr; column-gap: 2.4vw; } .ds-title { font-size: 2.6vw; } .ds-steps { min-width: 0; width: 100%; } .ds-steps li { font-size: .66rem; } }
       @media (max-width: 900px) {
         .ds-left, .ds-right { transform: none; }
-        .ds { display: block; padding: 6rem 6vw 2.5rem; }
+        .ds { display: block; padding: 6.6rem 6vw 2.5rem; }
         .ds-grid { grid-template-columns: 1fr; max-width: 640px; row-gap: 1.8rem; }
         .ds-title { white-space: normal; font-size: clamp(2rem, 7vw, 3rem); }
         .ds-duo { --w: min(100cqw, 540px); }
-        .ds-steps, .ds-end { width: 100%; min-width: 0; }
+        .ds-steps, .ds-end { width: 100%; max-width: none; min-width: 0; } .ds-steps li { font-size: .74rem; }
         .ds-lede { max-width: 46ch; font-size: 1rem; } .ds-left { transform: translateY(-3vh); } .ds-right { transform: translateY(2vh); }
       .ds-kicker { font-size: .72rem; }
         .ds-card h2 { font-size: 1.6rem; } .ds-card label, .ds-card input, .ds-card select { font-size: .9rem; }
@@ -293,6 +304,7 @@
               </div>
             </div>
           </div>
+          <div class="ds-tabs" role="group" aria-label="Chọn màn hình xem"><button type="button" data-v="l" aria-pressed="true">Hồ sơ</button><button type="button" data-v="r" aria-pressed="false">Đặt lịch</button></div>
         </section>
 
         <aside class="ds-right">
@@ -436,7 +448,7 @@
         return w;
       }
       function go(step) {
-        clearTimers(); state.step = step; var j = $("ds-journey"); j.textContent = ""; var s = el("div", "ds-step"); j.appendChild(s);
+        clearTimers(); state.step = step; if (window.__dsPan) window.__dsPan(step === 0 ? "l" : "r"); var j = $("ds-journey"); j.textContent = ""; var s = el("div", "ds-step"); j.appendChild(s);
         var path = el("ol", "ds-path"), cur = step === 0 ? 0 : step < 3 ? 1 : 3;
         ["Hồ sơ chuyên môn", "Yêu cầu đặt lịch", "Phòng khám xác nhận"].forEach(function (t, i) {
           var li = el("li", i < cur ? "ok" : i === cur ? "on" : ""); li.appendChild(el("b", null, String(i + 1))); li.appendChild(el("span", null, t)); path.appendChild(li); });
@@ -516,9 +528,19 @@
           return "matrix3d(" + [h[0], h[3], 0, h[6], h[1], h[4], 0, h[7], 0, 0, 1, 0, h[2], h[5], 0, 1].join(",") + ")";
         }
         $("ds-pane-l").style.transform = homography(Q.l); $("ds-pane-r").style.transform = homography(Q.r);
-        var dev = $("ds-duo"), world = $("ds-world");
-        function fit() { world.style.transform = "scale(" + (dev.clientWidth / 740) + ")"; }
+        var dev = $("ds-duo"), world = $("ds-world"), mq = window.matchMedia("(max-width: 700px)"), view = "l", tabs = document.querySelectorAll(".ds-tabs button");
+        /* desktop: the whole device scales to its column. phones: one screen at a time at a readable size (tap targets stay large); the view pans between profile and booking */
+        function fit() {
+          if (mq.matches) {
+            var s = dev.clientWidth / 350, x = view === "l" ? 25 : 368;
+            world.style.transform = "translateX(" + (-x * s).toFixed(2) + "px) scale(" + s.toFixed(4) + ")"; dev.style.height = Math.round(760 * s) + "px"; root.setAttribute("data-mobile", "1");
+          } else { world.style.transform = "scale(" + (dev.clientWidth / 740) + ")"; dev.style.height = ""; root.removeAttribute("data-mobile"); }
+          Array.prototype.forEach.call(tabs, function (t) { t.setAttribute("aria-pressed", String(t.getAttribute("data-v") === view)); });
+        }
+        window.__dsPan = function (v) { view = v; fit(); };
+        Array.prototype.forEach.call(tabs, function (t) { t.addEventListener("click", function () { window.__dsPan(t.getAttribute("data-v")); }); });
         fit(); if (window.ResizeObserver) new ResizeObserver(fit).observe(dev); else window.addEventListener("resize", fit);
+        if (mq.addEventListener) mq.addEventListener("change", fit);
       })();
       window.addEventListener("pagehide", function () { if (state.photo) URL.revokeObjectURL(state.photo); });
     })();
