@@ -80,12 +80,12 @@
       .ds-refl img { transform: scaleY(-1); }
       .ds-floor { position: absolute; left: 30px; top: 628px; width: 680px; height: 70px; pointer-events: none; background: radial-gradient(ellipse 50% 50% at 50% 30%, rgba(86,78,140,.5), rgba(86,78,140,0) 100%); filter: blur(10px); bottom: auto; right: auto; }
       .ds-floor::after { left: 45%; right: 5%; top: 0; height: 90%; }
-      .ds-pane { position: absolute; left: 0; top: 0; width: 332px; height: 600px; transform-origin: 0 0; overflow: hidden; color: var(--ink); z-index: 2;
+      .ds-pane { position: absolute; left: 0; top: 0; width: 332px; height: 600px; transform-origin: 0 0; overflow: hidden; color: var(--ink); z-index: 2; margin: 0;
         background: linear-gradient(180deg, #f4f7fe 0%, #e4eaf9 55%, #dde3f6 100%); box-shadow: 0 0 0 3px #e4eaf9; }
       .ds-world > .ds-caption { position: absolute; left: 372px; top: 496px; width: 328px; transform: translateX(-50%); z-index: 6; font-size: 14px; padding: 9px 20px; }
       .ds-world > .ds-dots { position: absolute; left: 372px; top: 580px; transform: translateX(-50%); z-index: 6; gap: 12px; }
       .ds-world > .ds-dots i { width: 8px; height: 8px; }
-      .ds-crease { position: absolute; left: 368px; top: 78px; width: 8px; height: 528px; z-index: 3; pointer-events: none; background: linear-gradient(90deg, rgba(60,80,140,.09), rgba(255,255,255,.2) 50%, rgba(60,80,140,.09)); }
+      .ds-crease { position: absolute; left: 368px; top: 78px; width: 8px; height: 528px; z-index: 3; pointer-events: none; background: linear-gradient(90deg, rgba(60,80,140,.07), rgba(255,255,255,.07) 50%, rgba(60,80,140,.07)); }
       .ds-pane .ds-art { width: 200%; }
       .ds-pane .ds-status svg { right: 8%; }
       @media (max-width: 900px) { .ds-device { --aw: min(calc(100cqw * 1.054), 600px); } }
