@@ -69,7 +69,9 @@
       .ds-dots i { width: calc(var(--w) * .0125); height: calc(var(--w) * .0125); min-width: 6px; min-height: 6px; border-radius: 50%; border: 1px solid rgba(255,255,255,.9); background: rgba(255,255,255,.8); }
       /* ---- proof: pre-rendered device shell (from the approved mockup) + live HTML screens warped onto it ---- */
       .ds-stage { position: relative; display: flex; justify-content: center; min-width: 0; container-type: inline-size; }
-      .ds-device { --aw: min(calc(100cqw * 1.054), calc(76vh * 1.1128)); position: relative; width: var(--aw); height: calc(var(--aw) * .8986); flex: none; }
+      .ds-device { --aw: min(calc((100vw - 12vw) * .44), calc(76vh * 1.1128)); position: relative; width: var(--aw); height: calc(var(--aw) * .8986); flex: none; }
+      @supports (width: 1cqw) { .ds-device { --aw: min(calc(100cqw * 1.054), calc(76vh * 1.1128)); } }
+      @supports (height: 100svh) { .ds { min-height: 100svh; } .ds-device { --aw: min(calc((100vw - 12vw) * .44), calc(76svh * 1.1128)); } @supports (width: 1cqw) { .ds-device { --aw: min(calc(100cqw * 1.054), calc(76svh * 1.1128)); } } }
       .ds-float { position: absolute; inset: 0; animation: ds-float 8s ease-in-out infinite alternate; }
       @keyframes ds-float { from { transform: translateY(0); } to { transform: translateY(-5px); } }
       .ds-world { --w: 702px; position: absolute; left: 0; top: 0; width: 740px; height: 665px; transform-origin: 0 0; }
@@ -80,6 +82,7 @@
       .ds-refl img { transform: scaleY(-1); }
       .ds-floor { position: absolute; left: 30px; top: 628px; width: 680px; height: 70px; pointer-events: none; background: radial-gradient(ellipse 50% 50% at 50% 30%, rgba(86,78,140,.5), rgba(86,78,140,0) 100%); filter: blur(10px); bottom: auto; right: auto; }
       .ds-floor::after { left: 45%; right: 5%; top: 0; height: 90%; }
+      .ds-screens { position: absolute; inset: 0; z-index: 2; perspective: 1000px; perspective-origin: 0 0; clip-path: polygon(40.6px 29.8px, 372px 75.6px, 695.3px 29.7px, 694.6px 628.7px, 371px 604.8px, 42.7px 629.4px); }
       .ds-pane { position: absolute; left: 0; top: 0; width: 332px; height: 600px; transform-origin: 0 0; overflow: hidden; color: var(--ink); z-index: 2; margin: 0;
         background: linear-gradient(180deg, #f4f7fe 0%, #e4eaf9 55%, #dde3f6 100%); box-shadow: 0 0 0 3px #e4eaf9; }
       .ds-world > .ds-caption { position: absolute; left: 372px; top: 496px; width: 328px; transform: translateX(-50%); z-index: 6; font-size: 14px; padding: 9px 20px; }
@@ -94,7 +97,8 @@
       @media (max-width: 900px) { .ds-device { --aw: min(calc(100cqw * 1.054), 600px); } }
       @media (max-width: 700px) {
         .ds-stage { flex-direction: column; align-items: center; }
-        .ds-device { --aw: 100cqw; width: 100%; overflow: hidden; }
+        .ds-device { --aw: calc(100vw - 12vw); width: 100%; overflow: hidden; }
+        @supports (width: 1cqw) { .ds-device { --aw: 100cqw; } }
         .ds-world { transition: transform .55s cubic-bezier(.22,1,.36,1); }
         .ds-world > .ds-caption { left: 200px; width: 290px; } .ds-world > .ds-dots { left: 200px; }
         .ds[data-state="ready"] .ds-tabs { display: flex; }
@@ -228,6 +232,7 @@
       .ds-dialog label.ds-dcheck { display: flex; gap: .6rem; align-items: flex-start; font-weight: 400; font-size: .8rem; line-height: 1.45; margin: .7rem 0 0; }
       .ds-dcheck input { width: 1.15rem; height: 1.15rem; margin-top: .15rem; flex: none; accent-color: var(--bur); }
       .ds-dialog .btn { margin-top: 1rem; } .ds-dialog .btn[disabled] { opacity: .5; cursor: not-allowed; }
+      .ds-dmail { font-size: 1.05rem; margin: .2rem 0 .2rem; color: var(--ink); } .ds-dialog a.btn { text-decoration: none; }
       .ds-ok-big { width: 3rem; height: 3rem; border-radius: 50%; background: var(--bur); color: #fff; display: grid; place-items: center; margin: .2rem 0 .8rem; } .ds-ok-big svg { width: 50%; }
       /* privacy note under the form: one short line, the rest on request */
       .ds-pn { margin: .8rem .4rem 0; font-size: clamp(.66rem, .74vw, .78rem); line-height: 1.5; color: var(--mute); }
@@ -316,6 +321,7 @@
               <div class="ds-world" id="ds-world">
                 <div class="ds-floor" aria-hidden="true"></div>
                 <div class="ds-refl" aria-hidden="true"><img src="../assets/doctor-space/foldable-full.png" alt="" /></div>
+                <div class="ds-screens" id="ds-screens">
                 <div class="ds-pane l" id="ds-pane-l">
                   <svg class="ds-art" viewBox="0 0 1100 1000" preserveAspectRatio="none" aria-hidden="true" focusable="false">
                   <rect width="1100" height="1000" fill="url(#dsBg)"/>
@@ -356,6 +362,7 @@
                 </svg>
                   <div class="ds-status" aria-hidden="true"><svg viewBox="0 0 60 18"><path d="M0 14h3v4H0zM5 11h3v7H5zM10 8h3v10h-3zM15 5h3v13h-3z"/><path d="M30 3C25 3 21 5 18 8l2 2c2.5-2.3 5.7-3.7 10-3.7S37.500 7.700 40 10l2-2c-3-3-7-5-12-5zM30 8c-2.600 0-4.800 1-6.600 2.600l2 2C27 11.400 28.400 10.800 30 10.800s3 .6 4.600 1.800l2-2C34.800 9 32.600 8 30 8zM30 13a3 3 0 100 .1z" transform="translate(-2 0) scale(.9) translate(3 1)"/><rect x="44" y="4" width="14" height="9" rx="2.500"/></svg></div>
                   <div class="ds-layer ds-live" id="ds-journey"></div>
+                </div>
                 </div>
                 <div class="ds-crease" aria-hidden="true"></div>
                 <img class="ds-shell" src="../assets/doctor-space/foldable-shell.png" alt="" />
@@ -421,6 +428,14 @@
             <label class="ds-dcheck"><input type="checkbox" id="ds-k2" /> <span>Tôi đồng ý nhận thông tin cập nhật về Zerone (tùy chọn, không ảnh hưởng đến yêu cầu này).</span></label>
             <p class="ds-err" id="ds-derr" role="alert"></p>
             <button class="btn" type="submit" id="ds-dgo" disabled><span id="ds-dgol">Gửi</span> <span aria-hidden="true">→</span></button>
+          </div>
+          <div id="ds-dview-mail" hidden>
+            <h2 id="ds-mt"></h2>
+            <p class="ds-dlead" id="ds-ml"></p>
+            <p class="ds-dmail"><b>contact@zerone.vn</b></p>
+            <a class="btn" id="ds-mopen" href="mailto:contact@zerone.vn"><span>Mở email</span> <span aria-hidden="true">→</span></a>
+            <button class="btn ghost" type="button" id="ds-mcopy">Sao chép địa chỉ email</button>
+            <p class="ds-dnotice">Zerone chỉ nhận thông tin bạn tự gửi qua email. Ảnh chân dung và nội dung xem trước của bạn không được gửi đi. Xem <a href="privacy.html" target="_blank" rel="noopener">Chính sách bảo mật</a>.</p>
           </div>
           <div id="ds-dview-done" hidden>
             <div class="ds-ok-big" aria-hidden="true"><svg viewBox="0 0 12 10" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M1 5l3.5 3.5L11 1.5"/></svg></div>
@@ -669,9 +684,14 @@
             var t = A[c]; A[c] = A[m]; A[m] = t; var tb = b[c]; b[c] = b[m]; b[m] = tb;
             for (var r2 = c + 1; r2 < 8; r2++) { var f = A[r2][c] / A[c][c]; for (var k = c; k < 8; k++) A[r2][k] -= f * A[c][k]; b[r2] -= f * b[c]; } }
           var h = new Array(8); for (var r3 = 7; r3 >= 0; r3--) { var s = b[r3]; for (var k2 = r3 + 1; k2 < 8; k2++) s -= A[r3][k2] * h[k2]; h[r3] = s / A[r3][r3]; }
-          return "matrix3d(" + [h[0], h[3], 0, h[6], h[1], h[4], 0, h[7], 0, 0, 1, 0, h[2], h[5], 0, 1].join(",") + ")";
+          var P = 1000; /* w = 1 - z/P with z = c*x + d*y, so c = -h6*P and d = -h7*P: the same homography, written with a standard depth axis */
+          return "matrix3d(" + [h[0], h[3], -h[6] * P, 0, h[1], h[4], -h[7] * P, 0, 0, 0, 1, 0, h[2], h[5], 0, 1].join(",") + ")";
         }
-        $("ds-pane-l").style.transform = homography(Q.l); $("ds-pane-r").style.transform = homography(Q.r);
+        /* Browsers that do not apply CSS perspective get a flat (affine) fit instead; both are clipped to the screen shape so nothing can spill outside the frame */
+        function perspectiveWorks() { try { var w = document.createElement("div"), a = document.createElement("div"); w.style.cssText = "position:absolute;left:-9999px;top:0;perspective:500px;width:200px;height:200px"; a.style.cssText = "width:200px;height:200px;transform:rotateY(60deg)"; w.appendChild(a); document.body.appendChild(w); var h = a.getBoundingClientRect().height; document.body.removeChild(w); return h > 215; } catch (e) { return true; } }
+        function affine(pts) { var tl = pts[0], tr = pts[1], bl = pts[3], k = ((pts[2][1] - pts[1][1]) + (pts[3][1] - pts[0][1])) / 2 / CH; /* k: fit the average edge height so nothing at the bottom is cut */ return "matrix(" + [(tr[0] - tl[0]) / CW, (tr[1] - tl[1]) / CW, (bl[0] - tl[0]) / CH * k, (bl[1] - tl[1]) / CH * k, tl[0], tl[1]].join(",") + ")"; }
+        var warp = perspectiveWorks() ? homography : affine; root.setAttribute("data-warp", warp === homography ? "3d" : "flat");
+        $("ds-pane-l").style.transform = warp(Q.l); $("ds-pane-r").style.transform = warp(Q.r);
         var dev = $("ds-duo"), world = $("ds-world"), mq = window.matchMedia("(max-width: 700px)"), view = "l", tabs = document.querySelectorAll(".ds-tabs button");
         /* desktop: the whole device scales to its column. phones: one screen at a time at a readable size (tap targets stay large); the view pans between profile and booking */
         function fit() {
@@ -713,10 +733,11 @@
         };
         var dlg = $("ds-dialog"), f = $("ds-dform"), mode = null, opener = null;
         if (!dlg || !f) return;
-        function fresh() { $("ds-dview-form").hidden = false; $("ds-dview-done").hidden = true; $("ds-derr").textContent = ""; $("ds-dgo").disabled = false; $("ds-dgol").textContent = MODES[mode].submit; }
+        var PARTNER = (function () { try { var q = new URLSearchParams(location.search), v = q.get("src") || q.get("ref") || q.get("utm_campaign") || ""; return /^[a-z0-9_-]{1,40}$/i.test(v) ? v : ""; } catch (e) { return ""; } })();
+        function fresh() { $("ds-dview-mail").hidden = true; $("ds-dview-form").hidden = false; $("ds-dview-done").hidden = true; $("ds-derr").textContent = ""; $("ds-dgo").disabled = false; $("ds-dgol").textContent = MODES[mode].submit; }
         function open(m, btn) {
           mode = m; opener = btn; var M = MODES[m];
-          if (official && !NOTICE.approved) { location.href = "mailto:contact@zerone.vn?subject=" + encodeURIComponent(M.mail); track(M.event); return; }
+          if (official && !NOTICE.approved) { openMail(M); return; }
           $("ds-dt").textContent = M.title; $("ds-dl").textContent = M.lead; $("ds-dnotice").textContent = SUMMARY; $("ds-k1l").textContent = M.consent;
           var st = $("ds-dsteps"); st.textContent = ""; M.steps.forEach(function (t) { var li = document.createElement("li"); li.textContent = t; st.appendChild(li); }); st.hidden = !M.steps.length;
           $("ds-dpw").hidden = !M.practice;
@@ -726,6 +747,16 @@
           $("ds-dn").focus();
         }
         function close() { if (dlg.close) dlg.close(); else dlg.removeAttribute("open"); if (opener) opener.focus(); }
+        /* while the notice wording is a draft, the official domain collects nothing: a clear email path with the partner code, never a closed form */
+        function openMail(M) {
+          var subject = M.mail + (PARTNER ? " [" + PARTNER + "]" : ""), body = "Xin chào Zerone,\n\nTôi muốn " + (M === MODES.claim ? "yêu cầu Claim hồ sơ Doctor Space của tôi." : "trao đổi về Doctor Space.") + (PARTNER ? "\n\nMã giới thiệu: " + PARTNER : "");
+          $("ds-dview-form").hidden = true; $("ds-dview-done").hidden = true; $("ds-dview-mail").hidden = false; $("ds-mt").textContent = M.title;
+          $("ds-ml").textContent = M === MODES.claim ? "Gửi email để Zerone xác minh chuyên môn của bạn. Hồ sơ chỉ được tạo khi bạn đã được xác minh." : "Gửi email để Founder của Zerone trao đổi với bạn về Doctor Space.";
+          $("ds-mopen").href = "mailto:contact@zerone.vn?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(body);
+          $("ds-mopen").onclick = function () { track(M.event); };
+          var cp = $("ds-mcopy"); cp.textContent = "Sao chép địa chỉ email"; cp.onclick = function () { var done = function () { cp.textContent = "Đã sao chép"; }; try { navigator.clipboard.writeText("contact@zerone.vn").then(done, function () { window.prompt("Sao chép địa chỉ email:", "contact@zerone.vn"); }); } catch (e) { window.prompt("Sao chép địa chỉ email:", "contact@zerone.vn"); } };
+          if (dlg.showModal) dlg.showModal(); else dlg.setAttribute("open", ""); $("ds-mopen").focus();
+        }
         $("ds-claim").addEventListener("click", function () { open("claim", this); });
         $("ds-talk").addEventListener("click", function () { open("talk", this); });
         $("ds-dclose").addEventListener("click", close); $("ds-ddone").addEventListener("click", close);
@@ -744,7 +775,7 @@
           fetch(CFG.url + "/rest/v1/rpc/submit_professional_lead", { method: "POST", referrerPolicy: "no-referrer",
             headers: { "Content-Type": "application/json", apikey: CFG.key, Authorization: "Bearer " + CFG.key },
             body: JSON.stringify({ p_vertical: vertical(spec), p_name: name, p_role: spec, p_practice: M.practice ? ($("ds-dp").value.trim() || null) : null, p_province: "79", p_area: null,
-              p_contact_method: method, p_contact: contact, p_consent: true, p_source: "preview", p_campaign: M.campaign, p_notice_version: NOTICE.version, p_updates_ok: $("ds-k2").checked })
+              p_contact_method: method, p_contact: contact, p_consent: true, p_source: PARTNER || "preview", p_campaign: M.campaign, p_notice_version: NOTICE.version, p_updates_ok: $("ds-k2").checked })
           }).then(function (r) { return r.text().then(function (t) { return { ok: r.ok, text: t }; }); }).then(function (r) {
             if (r.ok) { track(M.event); $("ds-ddone-text").textContent = M.done; $("ds-dview-form").hidden = true; $("ds-dview-done").hidden = false; $("ds-ddone").focus(); announce("Zerone đã nhận thông tin của bạn."); return; }
             go.disabled = false; $("ds-dgol").textContent = M.submit;
