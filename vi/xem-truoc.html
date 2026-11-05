@@ -733,11 +733,13 @@
         };
         var dlg = $("ds-dialog"), f = $("ds-dform"), mode = null, opener = null;
         if (!dlg || !f) return;
+        /* ?mode=email shows the production behaviour (email path, nothing collected) on any host, so a phone on staging can check it */
+        var FORCE_MAIL = /[?&]mode=email(&|$)/.test(location.search);
         var PARTNER = (function () { try { var q = new URLSearchParams(location.search), v = q.get("src") || q.get("ref") || q.get("utm_campaign") || ""; return /^[a-z0-9_-]{1,40}$/i.test(v) ? v : ""; } catch (e) { return ""; } })();
         function fresh() { $("ds-dview-mail").hidden = true; $("ds-dview-form").hidden = false; $("ds-dview-done").hidden = true; $("ds-derr").textContent = ""; $("ds-dgo").disabled = false; $("ds-dgol").textContent = MODES[mode].submit; }
         function open(m, btn) {
           mode = m; opener = btn; var M = MODES[m];
-          if (official && !NOTICE.approved) { openMail(M); return; }
+          if ((official && !NOTICE.approved) || FORCE_MAIL) { openMail(M); return; }
           $("ds-dt").textContent = M.title; $("ds-dl").textContent = M.lead; $("ds-dnotice").textContent = SUMMARY; $("ds-k1l").textContent = M.consent;
           var st = $("ds-dsteps"); st.textContent = ""; M.steps.forEach(function (t) { var li = document.createElement("li"); li.textContent = t; st.appendChild(li); }); st.hidden = !M.steps.length;
           $("ds-dpw").hidden = !M.practice;
