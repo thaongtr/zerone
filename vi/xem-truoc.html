@@ -307,9 +307,9 @@
             <li>Trải nghiệm<br>đặt lịch</li>
           </ol>
           <div class="ds-end" id="ds-end">
-            <p>Bạn đã xem xong hành trình. Bước tiếp theo là của bạn:</p>
+            <p>Bạn đã xem xong hành trình mô phỏng (đặt lịch thật qua Zerone chưa mở). Bước tiếp theo là của bạn:</p>
             <button type="button" class="btn" id="ds-claim"><span>Claim Your Space</span> <span aria-hidden="true">→</span></button>
-            <p class="ds-cta-note">Xác minh chuyên môn của bạn và nhận liên kết để chỉnh sửa hồ sơ.</p>
+            <p class="ds-cta-note">Gửi yêu cầu để Zerone hướng dẫn bạn xác minh chuyên môn và tạo hồ sơ.</p>
             <button type="button" class="btn ghost" id="ds-talk">Talk to Zerone</button>
             <p class="ds-cta-note">Để lại cách liên hệ, Founder của Zerone sẽ trao đổi với bạn.</p>
           </div>
@@ -753,7 +753,7 @@
         function openMail(M) {
           var subject = M.mail + (PARTNER ? " [" + PARTNER + "]" : ""), body = "Xin chào Zerone,\n\nTôi muốn " + (M === MODES.claim ? "yêu cầu Claim hồ sơ Doctor Space của tôi." : "trao đổi về Doctor Space.") + (PARTNER ? "\n\nMã giới thiệu: " + PARTNER : "");
           $("ds-dview-form").hidden = true; $("ds-dview-done").hidden = true; $("ds-dview-mail").hidden = false; $("ds-mt").textContent = M.title;
-          $("ds-ml").textContent = M === MODES.claim ? "Gửi email để Zerone xác minh chuyên môn của bạn. Hồ sơ chỉ được tạo khi bạn đã được xác minh." : "Gửi email để Founder của Zerone trao đổi với bạn về Doctor Space.";
+          $("ds-ml").textContent = M === MODES.claim ? "Gửi email, Zerone sẽ liên hệ lại để hướng dẫn xác minh chuyên môn của bạn. Hồ sơ chỉ được tạo sau khi bạn được xác minh." : "Gửi email, Founder của Zerone sẽ trả lời và trao đổi với bạn về Doctor Space.";
           $("ds-mopen").href = "mailto:contact@zerone.vn?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(body);
           $("ds-mopen").onclick = function () { track(M.event); };
           var cp = $("ds-mcopy"); cp.textContent = "Sao chép địa chỉ email"; cp.onclick = function () { var done = function () { cp.textContent = "Đã sao chép"; }; try { navigator.clipboard.writeText("contact@zerone.vn").then(done, function () { window.prompt("Sao chép địa chỉ email:", "contact@zerone.vn"); }); } catch (e) { window.prompt("Sao chép địa chỉ email:", "contact@zerone.vn"); } };
