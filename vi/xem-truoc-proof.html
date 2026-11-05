@@ -373,6 +373,7 @@
         var b = new Uint8Array(buf.slice(0, 12));
         if (b[0] === 0xff && b[1] === 0xd8 && b[2] === 0xff) return "jpeg";
         if (b[0] === 0x89 && b[1] === 0x50 && b[2] === 0x4e && b[3] === 0x47) return "png";
+        if (b[4] === 0x66 && b[5] === 0x74 && b[6] === 0x79 && b[7] === 0x70 && (String.fromCharCode(b[8], b[9], b[10], b[11]) === "heic" || String.fromCharCode(b[8], b[9], b[10], b[11]) === "heix" || String.fromCharCode(b[8], b[9], b[10], b[11]) === "mif1")) return "heic";
         if (b[0] === 0x52 && b[1] === 0x49 && b[2] === 0x46 && b[3] === 0x46 && b[8] === 0x57 && b[9] === 0x45 && b[10] === 0x42 && b[11] === 0x50) return "webp";
         return null;
       }
@@ -388,7 +389,8 @@
         if (!file) return Promise.resolve();
         if (file.size > MAX_BYTES) { err.textContent = "Ảnh lớn hơn 5 MB. Vui lòng chọn ảnh nhỏ hơn."; fileEl.value = ""; return Promise.resolve(); }
         return file.arrayBuffer().then(function (buf) {
-          if (!sniff(buf)) { err.textContent = "Chỉ nhận ảnh JPG, PNG hoặc WebP."; fileEl.value = ""; return; }
+          var kindSniffed = sniff(buf), heicTried = kindSniffed === "heic";
+          if (!kindSniffed) { err.textContent = "Chỉ nhận ảnh JPG, PNG hoặc WebP."; fileEl.value = ""; return; }
           return new Promise(function (res) {
             var url = URL.createObjectURL(new Blob([buf])), img = new Image();
             img.onload = function () {
@@ -397,7 +399,7 @@
               URL.revokeObjectURL(url);
               c.toBlob(function (blob) { if (state.photo) URL.revokeObjectURL(state.photo); state.photo = URL.createObjectURL(blob); paintPick(); res(); }, "image/jpeg", .9);
             };
-            img.onerror = function () { URL.revokeObjectURL(url); err.textContent = "Không đọc được ảnh này. Vui lòng thử ảnh khác."; fileEl.value = ""; res(); };
+            img.onerror = function () { URL.revokeObjectURL(url); err.textContent = heicTried ? "Trình duyệt này chưa đọc được ảnh HEIC. Vui lòng chọn ảnh JPG hoặc PNG (trên iPhone: Cài đặt > Máy ảnh > Định dạng > Tương thích nhất)." : "Không đọc được ảnh này. Vui lòng thử ảnh khác."; fileEl.value = ""; res(); };
             img.src = url;
           });
         });
