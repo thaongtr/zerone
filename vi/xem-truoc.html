@@ -45,27 +45,29 @@
 
       /* centre: foldable iPhone Duo. 624x700 in the mockup (aspect .89), 74% of the viewport height */
       .ds-stage { position: relative; display: flex; justify-content: center; min-width: 0; container-type: inline-size; }
-      .ds-duo { --w: min(100cqw, 62vh); position: relative; width: var(--w); aspect-ratio: .89 / 1; display: grid; grid-template-columns: 1fr 1fr; column-gap: calc(var(--w) * .016);
+      .ds-duo { --w: min(100cqw, 63vh); position: relative; width: var(--w); aspect-ratio: .89 / 1; display: grid; grid-template-columns: 1fr 1fr; column-gap: calc(var(--w) * .016);
         perspective: 1150px; transform-style: preserve-3d; transition: transform .6s ease-out;
-        -webkit-box-reflect: below 6px linear-gradient(transparent 80%, rgba(255,255,255,.3)); }
+        -webkit-box-reflect: below 6px linear-gradient(transparent 80%, rgba(255,255,255,.42)); }
       .ds-floor { position: absolute; left: 4%; right: 4%; bottom: -2.5%; height: 7%; background: radial-gradient(ellipse at center, rgba(55,70,120,.42), rgba(55,70,120,0) 70%); filter: blur(12px); pointer-events: none; }
       /* each half: lavender-silver metal, thick on the outer side and thin top and bottom, black bezel inside, tilted around the hinge */
       .ds-half { position: relative; transform-style: preserve-3d; box-shadow: 0 26px 30px -22px rgba(40,55,110,.55); }
       .ds-half.l { padding: calc(var(--w) * .02) calc(var(--w) * .008) calc(var(--w) * .02) calc(var(--w) * .05); border-radius: calc(var(--w) * .072) calc(var(--w) * .03) calc(var(--w) * .03) calc(var(--w) * .072); transform: rotateY(19deg); transform-origin: right center;
-        background: linear-gradient(90deg, #fbfbff 0%, #d5d8ea 1.2%, #8f94b6 3.2%, #cfd2e6 5.5%, #7a7fa6 8.5%, #4a4f76 12%, #2a2d4a 100%); }
+        background: linear-gradient(90deg, #ffffff 0%, #e3e5f4 .8%, #8f8bb4 2%, #e6e7f6 3.6%, #a19ec4 5.2%, #6b6796 7%, #494670 9.5%, #33315a 12%, #25243f 100%); }
       .ds-half.r { padding: calc(var(--w) * .02) calc(var(--w) * .05) calc(var(--w) * .02) calc(var(--w) * .008); border-radius: calc(var(--w) * .03) calc(var(--w) * .072) calc(var(--w) * .072) calc(var(--w) * .03); transform: rotateY(-19deg); transform-origin: left center;
-        background: linear-gradient(270deg, #fbfbff 0%, #d5d8ea 1.2%, #8f94b6 3.2%, #cfd2e6 5.5%, #7a7fa6 8.5%, #4a4f76 12%, #2a2d4a 100%); }
+        background: linear-gradient(270deg, #ffffff 0%, #e3e5f4 .8%, #8f8bb4 2%, #e6e7f6 3.6%, #a19ec4 5.2%, #6b6796 7%, #494670 9.5%, #33315a 12%, #25243f 100%); }
       .ds-half::before { content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none;
-        background: linear-gradient(180deg, rgba(255,255,255,.4), rgba(255,255,255,0) 5%, rgba(255,255,255,0) 95%, rgba(255,255,255,.25)); box-shadow: inset 0 0 0 1px rgba(255,255,255,.75), inset 0 0 0 2px rgba(35,38,66,.35); }
+        background: linear-gradient(180deg, #fff 0, rgba(255,255,255,.35) 1%, rgba(255,255,255,0) 3%, rgba(255,255,255,0) 97%, rgba(255,255,255,.3) 99%, rgba(255,255,255,.75) 100%), radial-gradient(circle at 10% 5%, rgba(255,255,255,.75), rgba(255,255,255,0) 13%), radial-gradient(circle at 90% 96%, rgba(255,255,255,.45), rgba(255,255,255,0) 12%); box-shadow: inset 0 0 0 1px rgba(255,255,255,.8), inset 0 0 0 2px rgba(40,38,70,.3), 0 0 0 1px rgba(55,52,90,.45); }
       .ds-half i.btn1, .ds-half i.btn2 { position: absolute; width: .8%; background: linear-gradient(90deg, #d4d6e8, #7b80a2); border-radius: 2px; }
       .ds-half.l i.btn1 { left: -.5%; top: 25%; height: 6%; } .ds-half.l i.btn2 { left: -.5%; top: 33%; height: 9%; }
       .ds-half.r i.btn1 { right: -.5%; top: 29%; height: 14%; } .ds-half.r i.btn2 { display: none; }
       .ds-screen { position: relative; height: 100%; overflow: hidden; color: var(--ink); border: calc(var(--w) * .011) solid #090a12;
-        background: linear-gradient(180deg, #f4f7fe 0%, #e4eaf9 55%, #dde3f6 100%); box-shadow: 0 0 0 1px rgba(255,255,255,.18), inset 0 0 12px rgba(0,0,0,.2); }
+        background: linear-gradient(180deg, #f4f7fe 0%, #e4eaf9 55%, #dde3f6 100%); box-shadow: 0 0 0 1.5px rgba(214,216,238,.6), inset 0 0 12px rgba(0,0,0,.2); }
       .l .ds-screen { border-radius: calc(var(--w) * .066) calc(var(--w) * .036) calc(var(--w) * .036) calc(var(--w) * .066); }
       .r .ds-screen { border-radius: calc(var(--w) * .036) calc(var(--w) * .066) calc(var(--w) * .066) calc(var(--w) * .036); }
       .ds-hinge { position: absolute; left: calc(50% - var(--w) * .0095); width: calc(var(--w) * .019); top: calc(var(--w) * .008); bottom: calc(var(--w) * .008); z-index: 6; pointer-events: none; border-radius: 3px;
         background: linear-gradient(90deg, #101224 0%, #3a3f5f 26%, #a3a8c6 47%, #d9dcec 50%, #a3a8c6 53%, #3a3f5f 74%, #101224 100%); box-shadow: 0 0 10px rgba(0,0,0,.45); transform: translateZ(3px); }
+      .ds-hinge::before, .ds-hinge::after { content: ""; position: absolute; left: -45%; width: 190%; height: calc(var(--w) * .03); border-radius: 40% 40% 30% 30%; background: linear-gradient(90deg, #3d3a60, #d8dbee 30%, #fff 50%, #b9bcd6 70%, #3d3a60); box-shadow: 0 1px 3px rgba(0,0,0,.4); }
+      .ds-hinge::before { top: -1px; } .ds-hinge::after { bottom: -1px; }
       .ds-art { position: absolute; top: 0; height: 100%; width: calc(200% + var(--w) * .016); pointer-events: none; }
       .l .ds-art { left: 0; } .r .ds-art { right: 0; }
       .ds-status { position: absolute; z-index: 3; top: 3.6%; left: 0; right: 0; font-size: calc(var(--w) * .021); font-weight: 700; color: #111; pointer-events: none; }
