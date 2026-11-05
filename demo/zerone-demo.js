@@ -12,7 +12,7 @@
   var base = script && script.src ? script.src.replace(/[^/?#]*([?#].*)?$/, "") : "/demo/";
 
   var TEXT = {
-    vi: { close: "Đóng", label: "Bản demo Zerone Space", toggle: "Phát hoặc dừng video", note: "Hình ảnh, bác sĩ và dữ liệu trong video là minh họa." },
+    vi: { close: "Đóng", label: "Bản demo Zerone Space", toggle: "Phát hoặc dừng video", note: "Hình ảnh, bác sĩ và dữ liệu trong video là minh họa.", invite: "Đã hình dung trải nghiệm? Hãy xem Doctor Space của chính bạn.", inviteCta: "Tạo thử Doctor Space" },
     en: { close: "Close", label: "Zerone Space demo", toggle: "Play or pause the video", note: "Images, doctors and data in the video are illustrative." },
   };
   var LABEL = /^\s*(explore|khám phá)\s+zerone\s+space\s*$/i;
@@ -41,6 +41,7 @@
     ".zd-close{position:absolute;top:max(14px,env(safe-area-inset-top,0px));right:max(14px,env(safe-area-inset-right,0px));width:44px;height:44px;border-radius:50%;border:1px solid rgba(255,255,255,.28);" +
     "background:rgba(255,255,255,.14);color:#fff;cursor:pointer;display:grid;place-items:center;-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);transition:background .15s}" +
     ".zd-close:hover{background:rgba(255,255,255,.26)}" +
+    ".zd-invite{margin:0;max-width:30em;text-align:center;font-size:14.5px;line-height:1.5;color:rgba(255,255,255,.92)}.zd-try{color:#fff;font-weight:600;text-decoration:underline;text-underline-offset:3px;white-space:nowrap}.zd-try:focus-visible{outline:3px solid #fff;outline-offset:3px;border-radius:4px}" +
     ".zd-note{margin:0;max-width:30em;text-align:center;font-size:12.5px;line-height:1.5;color:rgba(255,255,255,.72)}" +
     "@media (max-height:640px){.zd-note{display:none}.zd-phone{--sw:min(390px,calc(100vw - 54px),calc((100dvh - 56px) * 390 / 844))}}" +
     "@media (prefers-reduced-motion:reduce){.zd-root,.zd-phone,.zd-play{transition:none}}";
@@ -75,6 +76,7 @@
           '<button class="zd-toggle" type="button" aria-label="' + tx.toggle + '"><span class="zd-play" aria-hidden="true">' +
             '<svg width="22" height="22" viewBox="0 0 24 24" fill="#1f2b3d"><path d="M7 4.5v15a1 1 0 0 0 1.5.86l12-7.5a1 1 0 0 0 0-1.72l-12-7.5A1 1 0 0 0 7 4.5z"/></svg></span></button>' +
         '</div></div>' +
+        (tx.invite ? '<p class="zd-invite">' + tx.invite + ' <a class="zd-try" href="' + base + '../vi/xem-truoc.html?src=site-demo" data-journey-try data-journey-src="site-demo">' + tx.inviteCta + ' →</a></p>' : '') +
         '<p class="zd-note">' + tx.note + '</p>' +
       '</div>');
     var screen = root.querySelector(".zd-screen"), video = root.querySelector("video"), toggle = root.querySelector(".zd-toggle"), close = root.querySelector(".zd-close");
@@ -107,7 +109,7 @@
   function trap(e) {
     if (e.key === "Escape") { e.preventDefault(); closeDialog(); return; }
     if (e.key !== "Tab") return;
-    var items = root.querySelectorAll("button"), first = items[0], last = items[items.length - 1];
+    var items = root.querySelectorAll("button, a[href]"), first = items[0], last = items[items.length - 1];
     if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
     else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
   }

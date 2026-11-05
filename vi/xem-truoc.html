@@ -465,6 +465,7 @@
       var $ = function (id) { return document.getElementById(id); };
       var root = $("ds"), form = $("ds-form"), nameEl = $("ds-n"), specEl = $("ds-s"), workEl = $("ds-w"), fileEl = $("ds-f");
       var state = { name: "", spec: "", work: "", photo: null, pw: 0, ph: 0, fx: .5, fy: .3, zoom: 1, auto: null, sample: false, step: 0, day: null, time: null };
+      var SRC = (function () { try { var q = new URLSearchParams(location.search), v = (q.get("src") || q.get("ref") || q.get("utm_campaign") || "").toLowerCase(); return /^[a-z0-9_-]{1,40}$/.test(v) ? v : ""; } catch (e) { return ""; } })();
       var sid = (function () { var a = new Uint8Array(12); (window.crypto || window.msCrypto).getRandomValues(a); return Array.prototype.map.call(a, function (b) { return ("0" + b.toString(16)).slice(-2); }).join(""); })();
       var sent = {}, timers = [];
 
@@ -473,10 +474,12 @@
         try {
           fetch(CFG.url + "/rest/v1/rpc/track_preview_event", { method: "POST", keepalive: true, referrerPolicy: "no-referrer",
             headers: { "Content-Type": "application/json", apikey: CFG.key, Authorization: "Bearer " + CFG.key },
-            body: JSON.stringify({ p_kind: kind, p_session: sid }) }).catch(function () {});
+            body: JSON.stringify({ p_kind: kind, p_session: sid, p_source: SRC || null }) }).catch(function () {});
         } catch (e) {}
       }
       function el(tag, cls, text) { var n = document.createElement(tag); if (cls) n.className = cls; if (text != null) n.textContent = text; return n; }
+      function hideLang() { document.querySelectorAll(".nav-lang, .nav-lang-row").forEach(function (a) { a.remove(); }); }
+      hideLang(); window.addEventListener("load", hideLang); document.addEventListener("DOMContentLoaded", hideLang);
       function announce(t) { var r = $("ds-live"); r.textContent = ""; setTimeout(function () { r.textContent = t; }, 30); }
       function later(fn, ms) { timers.push(setTimeout(fn, reduce ? Math.min(ms, 150) : ms)); }
       function clearTimers() { timers.forEach(clearTimeout); timers = []; }
@@ -634,7 +637,7 @@
           s.appendChild(el("h3", "ds-h", "Phòng khám đã xác nhận")); s.appendChild(el("p", "ds-sub", state.day + " · " + state.time));
           var d = el("div", "ds-block"); d.appendChild(el("b", null, "Đây là mô phỏng")); d.appendChild(document.createTextNode("Không có lịch hẹn nào được tạo và không có thông báo nào được gửi đến bất kỳ cơ sở nào.")); s.appendChild(d);
           var again = el("button", "ds-mini ghost", "Xem lại hành trình"); again.type = "button"; again.addEventListener("click", function () { state.day = state.time = null; go(0); }); s.appendChild(again);
-          setStepper(2); root.setAttribute("data-end", "1"); announce("Phòng khám đã xác nhận trong mô phỏng. Bạn có thể chọn Claim Your Space hoặc Talk to Zerone.");
+          setStepper(2); track("booking_simulated"); root.setAttribute("data-end", "1"); announce("Phòng khám đã xác nhận trong mô phỏng. Bạn có thể chọn Claim Your Space hoặc Talk to Zerone.");
         }
       }
 
@@ -735,10 +738,10 @@
         if (!dlg || !f) return;
         /* ?mode=email shows the production behaviour (email path, nothing collected) on any host, so a phone on staging can check it */
         var FORCE_MAIL = /[?&]mode=email(&|$)/.test(location.search);
-        var PARTNER = (function () { try { var q = new URLSearchParams(location.search), v = q.get("src") || q.get("ref") || q.get("utm_campaign") || ""; return /^[a-z0-9_-]{1,40}$/i.test(v) ? v : ""; } catch (e) { return ""; } })();
+        var PARTNER = SRC;
         function fresh() { $("ds-dview-mail").hidden = true; $("ds-dview-form").hidden = false; $("ds-dview-done").hidden = true; $("ds-derr").textContent = ""; $("ds-dgo").disabled = false; $("ds-dgol").textContent = MODES[mode].submit; }
         function open(m, btn) {
-          mode = m; opener = btn; var M = MODES[m];
+          mode = m; opener = btn; var M = MODES[m]; track(m === "claim" ? "claim_intent" : "talk_intent");
           if ((official && !NOTICE.approved) || FORCE_MAIL) { openMail(M); return; }
           $("ds-dt").textContent = M.title; $("ds-dl").textContent = M.lead; $("ds-dnotice").textContent = SUMMARY; $("ds-k1l").textContent = M.consent;
           var st = $("ds-dsteps"); st.textContent = ""; M.steps.forEach(function (t) { var li = document.createElement("li"); li.textContent = t; st.appendChild(li); }); st.hidden = !M.steps.length;
