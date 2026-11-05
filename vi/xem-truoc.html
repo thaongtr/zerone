@@ -20,6 +20,7 @@
         position: relative; overflow: hidden; color: var(--ink); min-height: 100vh; display: flex; align-items: center;
         padding: 3.4rem 5vw 2rem 6vw; font-family: "Be Vietnam Pro", system-ui, sans-serif;
         background:
+          radial-gradient(38vw 46vh at 50% 48%, rgba(255,255,255,.5), rgba(255,255,255,0) 72%),
           radial-gradient(55vw 60vh at 4% 14%, rgba(255,255,255,.9), rgba(255,255,255,0) 70%),
           radial-gradient(70vw 34vh at 50% 104%, rgba(238,228,250,.95), rgba(238,228,250,0) 72%),
           radial-gradient(40vw 65vh at 104% 30%, rgba(122,148,214,.8), rgba(122,148,214,0) 72%),
@@ -42,34 +43,6 @@
       .ds-steps li::before { content: ""; position: absolute; top: 0; left: 50%; width: 1.25rem; height: 1.25rem; margin-left: -.625rem; border-radius: 50%;
         background: rgba(232,238,252,.8); border: 1.5px solid rgba(20,33,63,.32); transition: background .5s, border-color .5s, box-shadow .5s; }
       .ds-steps li[aria-current="step"]::before, .ds-steps li.done::before { background: radial-gradient(circle at 35% 30%, #b0284f, #8f1d3f 70%); border-color: #8f1d3f; box-shadow: 0 0 0 4px rgba(143,29,63,.1); }
-
-      /* centre: foldable device. 702x630 in the mockup (aspect 1.114): an open book, one continuous screen, thin graphite frame, a V-shaped silhouette from the fold */
-      .ds-stage { position: relative; display: flex; justify-content: center; min-width: 0; container-type: inline-size; }
-      .ds-duo { --w: min(100cqw, 69vh); position: relative; width: var(--w); aspect-ratio: 1.114 / 1; display: grid; grid-template-columns: 1fr 1fr; column-gap: 0;
-        perspective: calc(var(--w) * 1.15); transform-style: preserve-3d; transition: transform .6s ease-out;
- }
-      .ds-floor { position: absolute; left: 2%; right: 2%; bottom: -11%; height: 20%; pointer-events: none; background: radial-gradient(ellipse 50% 50% at 50% 0%, rgba(96,88,150,.55), rgba(96,88,150,0) 100%); filter: blur(10px); }
-      .ds-floor::after { content: ""; position: absolute; left: 38%; right: 8%; top: 8%; height: 80%; background: radial-gradient(ellipse at center, rgba(228,150,184,.62), rgba(228,150,184,0) 70%); filter: blur(14px); }
-      .ds-half { position: relative; transform-style: preserve-3d; box-shadow: 0 30px 34px -24px rgba(35,45,95,.6); }
-      .ds-half.l { padding: calc(var(--w) * .012) 0 calc(var(--w) * .012) calc(var(--w) * .013); border-radius: calc(var(--w) * .075) calc(var(--w) * .008) calc(var(--w) * .008) calc(var(--w) * .075); transform: rotateY(12deg); transform-origin: right center;
-        background: linear-gradient(90deg, #9096ae 0%, #565a72 .9%, #2a2d3f 2.4%, #1b1d2b 5%, #181a27 100%); }
-      .ds-half.r { padding: calc(var(--w) * .012) calc(var(--w) * .013) calc(var(--w) * .012) 0; border-radius: calc(var(--w) * .008) calc(var(--w) * .075) calc(var(--w) * .075) calc(var(--w) * .008); transform: rotateY(-12deg); transform-origin: left center;
-        background: linear-gradient(270deg, #9096ae 0%, #565a72 .9%, #2a2d3f 2.4%, #1b1d2b 5%, #181a27 100%); }
-      .ds-half::before { content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none;
-        background: linear-gradient(180deg, rgba(255,255,255,.4) 0, rgba(255,255,255,.08) 1.4%, rgba(255,255,255,0) 4%, rgba(255,255,255,0) 96%, rgba(255,255,255,.1) 99%, rgba(255,255,255,.28) 100%);
-        box-shadow: inset 0 0 0 1px rgba(255,255,255,.28), 0 0 0 1px rgba(25,28,48,.5); }
-      .ds-half i.btn1, .ds-half i.btn2 { position: absolute; width: .6%; background: linear-gradient(90deg, #9096ae, #3b3e54); border-radius: 2px; }
-      .ds-half.l i.btn1 { left: -.35%; top: 26%; height: 9%; } .ds-half.l i.btn2 { display: none; }
-      .ds-half.r i.btn1 { right: -.35%; top: 30%; height: 12%; } .ds-half.r i.btn2 { display: none; }
-      .ds-screen { position: relative; height: 100%; overflow: hidden; color: var(--ink); border: calc(var(--w) * .006) solid #05060b;
-        background: linear-gradient(180deg, #f4f7fe 0%, #e4eaf9 55%, #dde3f6 100%); box-shadow: inset 0 0 10px rgba(0,0,0,.18); }
-      .l .ds-screen { border-radius: calc(var(--w) * .062) calc(var(--w) * .004) calc(var(--w) * .004) calc(var(--w) * .062);  border-right-width: 0; }
-      .r .ds-screen { border-radius: calc(var(--w) * .004) calc(var(--w) * .062) calc(var(--w) * .062) calc(var(--w) * .004);  border-left-width: 0; }
-      /* the crease: a soft light/dark line across the single screen, with a small hinge cap at the top and bottom of the frame */
-      .ds-hinge { position: absolute; left: calc(50% - var(--w) * .0035); width: calc(var(--w) * .007); top: calc(var(--w) * .012); bottom: calc(var(--w) * .012); z-index: 6; pointer-events: none;
-        background: linear-gradient(90deg, rgba(40,50,90,.22), rgba(255,255,255,.55) 50%, rgba(40,50,90,.22)); transform: translateZ(3px); }
-      .ds-hinge::before, .ds-hinge::after { content: ""; position: absolute; left: 50%; transform: translateX(-50%); width: calc(var(--w) * .075); height: calc(var(--w) * .017); background: linear-gradient(180deg, #2c2f42, #12141f); }
-      .ds-hinge::before { top: calc(var(--w) * -.012); border-radius: 0 0 calc(var(--w) * .02) calc(var(--w) * .02); }
       .ds-hinge::after { bottom: calc(var(--w) * -.012); border-radius: calc(var(--w) * .02) calc(var(--w) * .02) 0 0; }
       .ds-art { position: absolute; top: 0; height: 100%; width: calc(200% + var(--w) * .004); pointer-events: none; }
       .l .ds-art { left: 0; } .r .ds-art { right: 0; }
@@ -94,6 +67,41 @@
         border-radius: 999px; padding: calc(var(--w) * .014) calc(var(--w) * .03); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); box-shadow: 0 6px 20px rgba(70,90,150,.12); transition: opacity .4s; }
       .ds-dots { position: absolute; z-index: 8; left: 50%; top: 92.5%; transform: translateX(-50%) translateZ(calc(var(--w) * .075)); display: flex; gap: calc(var(--w) * .0185); transition: opacity .4s; }
       .ds-dots i { width: calc(var(--w) * .0125); height: calc(var(--w) * .0125); min-width: 6px; min-height: 6px; border-radius: 50%; border: 1px solid rgba(255,255,255,.9); background: rgba(255,255,255,.8); }
+      /* ---- proof: pre-rendered device shell (from the approved mockup) + live HTML screens warped onto it ---- */
+      .ds-stage { position: relative; display: flex; justify-content: center; min-width: 0; container-type: inline-size; }
+      .ds-device { --aw: min(calc(100cqw * 1.054), calc(76vh * 1.1128)); position: relative; width: var(--aw); height: calc(var(--aw) * .8986); flex: none; }
+      .ds-float { position: absolute; inset: 0; animation: ds-float 8s ease-in-out infinite alternate; }
+      @keyframes ds-float { from { transform: translateY(0); } to { transform: translateY(-5px); } }
+      .ds-world { --w: 702px; position: absolute; left: 0; top: 0; width: 740px; height: 665px; transform-origin: 0 0; }
+      .ds-shell, .ds-refl img { position: absolute; left: 0; top: 0; width: 740px; height: 665px; max-width: none; pointer-events: none; user-select: none; }
+      .ds-shell { z-index: 5; }
+      .ds-refl { position: absolute; left: 0; top: 633px; width: 740px; height: 230px; overflow: hidden; opacity: .5; filter: blur(4px); pointer-events: none;
+        -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,.95), rgba(0,0,0,0) 92%); mask-image: linear-gradient(to bottom, rgba(0,0,0,.95), rgba(0,0,0,0) 92%); }
+      .ds-refl img { transform: scaleY(-1); }
+      .ds-floor { position: absolute; left: 30px; top: 628px; width: 680px; height: 70px; pointer-events: none; background: radial-gradient(ellipse 50% 50% at 50% 30%, rgba(86,78,140,.5), rgba(86,78,140,0) 100%); filter: blur(10px); bottom: auto; right: auto; }
+      .ds-floor::after { left: 45%; right: 5%; top: 0; height: 90%; }
+      .ds-pane { position: absolute; left: 0; top: 0; width: 332px; height: 600px; transform-origin: 0 0; overflow: hidden; color: var(--ink); z-index: 2; margin: 0;
+        background: linear-gradient(180deg, #f4f7fe 0%, #e4eaf9 55%, #dde3f6 100%); box-shadow: 0 0 0 3px #e4eaf9; }
+      .ds-world > .ds-caption { position: absolute; left: 372px; top: 496px; width: 328px; transform: translateX(-50%); z-index: 6; font-size: 14px; padding: 9px 20px; }
+      .ds-world > .ds-dots { position: absolute; left: 372px; top: 580px; transform: translateX(-50%); z-index: 6; gap: 12px; }
+      .ds-world > .ds-dots i { width: 8px; height: 8px; }
+      .ds-crease { position: absolute; left: 368px; top: 78px; width: 8px; height: 528px; z-index: 3; pointer-events: none; background: linear-gradient(90deg, rgba(60,80,140,.07), rgba(255,255,255,.07) 50%, rgba(60,80,140,.07)); }
+      .ds-pane .ds-art { width: 200%; }
+      .ds-logo-mark { height: 26px; width: auto; display: block; flex: none; } .ds-logo-word { height: 15px; width: auto; display: block; flex: none; }
+      .ds-brand { gap: 9px; } .ds-live .ds-brand { gap: 8px; margin-bottom: 10px; } .ds-live .ds-logo-mark { height: 22px; } .ds-live .ds-logo-word { height: 13px; }
+      .ds-pane .ds-status svg { right: 8%; }
+      .ds-tabs { display: none; }
+      @media (max-width: 900px) { .ds-device { --aw: min(calc(100cqw * 1.054), 600px); } }
+      @media (max-width: 700px) {
+        .ds-stage { flex-direction: column; align-items: center; }
+        .ds-device { --aw: 100cqw; width: 100%; overflow: hidden; }
+        .ds-world { transition: transform .55s cubic-bezier(.22,1,.36,1); }
+        .ds-world > .ds-caption { left: 200px; width: 290px; } .ds-world > .ds-dots { left: 200px; }
+        .ds[data-state="ready"] .ds-tabs { display: flex; }
+        .ds-tabs { gap: 8px; margin-top: 6px; }
+        .ds-tabs button { min-height: 40px; padding: 0 18px; border-radius: 999px; border: 1px solid rgba(143,29,63,.35); background: rgba(255,255,255,.7); color: var(--ink); font: inherit; font-size: .85rem; cursor: pointer; }
+        .ds-tabs button[aria-pressed="true"] { background: var(--bur); border-color: var(--bur); color: #fff; }
+      }
       .ds-dots i.on { background: #b0284f; border-color: #b0284f; }
 
       /* states */
@@ -180,11 +188,11 @@
       @media (max-width: 1100px) and (min-width: 901px) { .ds { padding-left: 4vw; padding-right: 4vw; } .ds-grid { grid-template-columns: 24fr 44fr 28fr; column-gap: 2.4vw; } .ds-title { font-size: 2.6vw; } .ds-steps { min-width: 0; width: 100%; } .ds-steps li { font-size: .66rem; } }
       @media (max-width: 900px) {
         .ds-left, .ds-right { transform: none; }
-        .ds { display: block; padding: 6rem 6vw 2.5rem; }
+        .ds { display: block; padding: 6.6rem 6vw 2.5rem; }
         .ds-grid { grid-template-columns: 1fr; max-width: 640px; row-gap: 1.8rem; }
         .ds-title { white-space: normal; font-size: clamp(2rem, 7vw, 3rem); }
         .ds-duo { --w: min(100cqw, 540px); }
-        .ds-steps, .ds-end { width: 100%; min-width: 0; }
+        .ds-steps, .ds-end { width: 100%; max-width: none; min-width: 0; } .ds-steps li { font-size: .74rem; }
         .ds-lede { max-width: 46ch; font-size: 1rem; } .ds-left { transform: translateY(-3vh); } .ds-right { transform: translateY(2vh); }
       .ds-kicker { font-size: .72rem; }
         .ds-card h2 { font-size: 1.6rem; } .ds-card label, .ds-card input, .ds-card select { font-size: .9rem; }
@@ -200,14 +208,42 @@
         .ds *, .ds *::before, .ds *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
         .ds-duo { transform: none !important; }
       }
+      /* conversion panels (Claim, Talk to Zerone) */
+      .ds-dialog { border: 1px solid rgba(255,255,255,.85); border-radius: 26px; padding: 0; width: min(520px, calc(100vw - 24px)); max-height: calc(100vh - 24px); overflow: auto; color: var(--ink);
+        background: linear-gradient(160deg, rgba(249,251,255,.97), rgba(232,239,252,.97)); box-shadow: 0 30px 80px rgba(30,45,100,.35); font-family: "Be Vietnam Pro", system-ui, sans-serif; }
+      .ds-dialog::backdrop { background: rgba(28,40,84,.38); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); }
+      .ds-dialog form { position: relative; padding: 1.7rem 1.6rem 1.5rem; }
+      .ds-dialog h2 { font-family: var(--serif); font-weight: 600; font-size: 1.75rem; line-height: 1.1; margin: 0 2rem .5rem 0; color: var(--ink); }
+      .ds-dlead { color: var(--mute); font-size: .92rem; line-height: 1.55; margin: 0 0 .9rem; }
+      .ds-dclose { position: absolute; top: .8rem; right: .9rem; width: 2.4rem; height: 2.4rem; border-radius: 50%; border: 0; background: rgba(255,255,255,.7); color: var(--ink); font-size: 1.5rem; line-height: 1; cursor: pointer; }
+      .ds-dsteps { margin: 0 0 .8rem; padding: 0; list-style: none; display: grid; gap: .35rem; counter-reset: s; }
+      .ds-dsteps li { counter-increment: s; font-size: .84rem; color: var(--ink); display: flex; gap: .6rem; align-items: center; }
+      .ds-dsteps li::before { content: counter(s); display: grid; place-items: center; width: 1.4rem; height: 1.4rem; border-radius: 50%; background: #e4e9f8; color: #44527c; font-size: .72rem; flex: none; }
+      .ds-dialog label { display: block; font-size: .8rem; font-weight: 600; margin: .7rem 0 .25rem; color: var(--ink); } .ds-dialog label span { color: var(--bur); }
+      .ds-dialog input[type="text"], .ds-dialog input[type="tel"], .ds-dialog input[type="email"], .ds-dialog select { width: 100%; height: 2.7rem; border: 0; border-radius: 12px; padding: 0 .9rem; font: inherit; font-size: .9rem; color: var(--ink);
+        background: #fff; box-shadow: inset 0 0 0 1px rgba(150,165,210,.45); }
+      .ds-dialog input:focus-visible, .ds-dialog select:focus-visible, .ds-dclose:focus-visible { outline: 2px solid var(--bur); outline-offset: 1px; }
+      .ds-drow { display: grid; grid-template-columns: 8.5rem 1fr; gap: .6rem; } .ds-dgrow { min-width: 0; }
+      .ds-dnotice { font-size: .74rem; line-height: 1.5; color: var(--mute); margin: .8rem 0 0; } .ds-dnotice a { color: var(--bur); }
+      .ds-dialog label.ds-dcheck { display: flex; gap: .6rem; align-items: flex-start; font-weight: 400; font-size: .8rem; line-height: 1.45; margin: .7rem 0 0; }
+      .ds-dcheck input { width: 1.15rem; height: 1.15rem; margin-top: .15rem; flex: none; accent-color: var(--bur); }
+      .ds-dialog .btn { margin-top: 1rem; } .ds-dialog .btn[disabled] { opacity: .5; cursor: not-allowed; }
+      .ds-ok-big { width: 3rem; height: 3rem; border-radius: 50%; background: var(--bur); color: #fff; display: grid; place-items: center; margin: .2rem 0 .8rem; } .ds-ok-big svg { width: 50%; }
+      /* privacy note under the form: one short line, the rest on request */
+      .ds-pn { margin: .8rem .4rem 0; font-size: clamp(.66rem, .74vw, .78rem); line-height: 1.5; color: var(--mute); }
+      .ds-pn p { margin: 0; } .ds-pn a { color: var(--bur); }
+      .ds-pn summary { cursor: pointer; color: var(--bur); list-style: none; display: inline; } .ds-pn summary::-webkit-details-marker { display: none; }
+      .ds-pn details { display: inline; } .ds-pn details summary::before { content: " · "; color: var(--mute); } .ds-pn details[open] { display: block; margin-top: .25rem; } .ds-pn details[open] summary { display: none; } .ds-pn details p { margin: 0; }
+      .ds-cta-note { margin: -.1rem .3rem .5rem; font-size: .78rem; line-height: 1.45; color: var(--mute); }
     </style>
   </head>
+
   <body data-page="Preview">
     <div id="chrome-top"></div>
     <main class="ds" id="ds" data-state="idle" data-end="0">
       <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
         <defs>
-          <linearGradient id="dsBg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f8faff"/><stop offset=".6" stop-color="#e9eefb"/><stop offset="1" stop-color="#dfe3f5"/></linearGradient>
+          <linearGradient id="dsBg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f4f8ff"/><stop offset=".55" stop-color="#e2ebfb"/><stop offset="1" stop-color="#d7def4"/></linearGradient>
           <linearGradient id="dsBlue" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#bccaea" stop-opacity=".9"/><stop offset=".5" stop-color="#93a9d6"/><stop offset="1" stop-color="#e4eaf8" stop-opacity=".9"/></linearGradient>
           <linearGradient id="dsRed" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#d398b1" stop-opacity=".7"/><stop offset=".35" stop-color="#a44a6b"/><stop offset=".7" stop-color="#8e3458"/><stop offset="1" stop-color="#cfa7c2" stop-opacity=".8"/></linearGradient>
           <linearGradient id="dsHL" x1="0" y1="0" x2="1" y2="0"><stop offset="0.36" stop-color="#000"/><stop offset="0.56" stop-color="#fff"/></linearGradient><linearGradient id="dsHR" x1="0" y1="0" x2="1" y2="0"><stop offset="0.44" stop-color="#fff"/><stop offset="0.6" stop-color="#000"/></linearGradient>
@@ -232,8 +268,8 @@
       <div class="ds-grid">
         <section class="ds-left" aria-labelledby="ds-h1">
           <p class="ds-kicker">Interactive Preview</p>
-          <h1 class="ds-title" id="ds-h1">Tạo Doctor Space<br>của bạn trong<br><em>vài phút.</em></h1>
-          <p class="ds-lede">Chỉ cần vài thông tin cơ bản để xem ngay bản hiển thị hồ sơ và cách bệnh nhân sẽ trải nghiệm trên Zerone.</p>
+          <h1 class="ds-title" id="ds-h1">Doctor Space<br>của bạn,<br>qua <em>góc nhìn<br>bệnh nhân.</em></h1>
+          <p class="ds-lede">Tạo bản xem trước hồ sơ chuyên môn và khám phá cách bệnh nhân tìm hiểu, kết nối và đặt lịch với bạn trên Zerone.</p>
           <ol class="ds-steps" id="ds-steps" aria-label="Các bước">
             <li aria-current="step">Nhập thông tin</li>
             <li>Xem trước</li>
@@ -241,62 +277,68 @@
           </ol>
           <div class="ds-end" id="ds-end">
             <p>Bạn đã xem xong hành trình. Bước tiếp theo là của bạn:</p>
-            <a class="btn" id="ds-claim" href="dang-ky.html?src=preview&amp;c=doctor-space-preview"><span>Claim Your Space</span> <span aria-hidden="true">→</span></a>
-            <a class="btn ghost" id="ds-talk" href="contact.html">Talk to Zerone</a>
+            <button type="button" class="btn" id="ds-claim"><span>Claim Your Space</span> <span aria-hidden="true">→</span></button>
+            <p class="ds-cta-note">Xác minh chuyên môn của bạn và nhận liên kết để chỉnh sửa hồ sơ.</p>
+            <button type="button" class="btn ghost" id="ds-talk">Talk to Zerone</button>
+            <p class="ds-cta-note">Để lại cách liên hệ, Founder của Zerone sẽ trao đổi với bạn.</p>
           </div>
         </section>
 
         <section class="ds-stage" aria-label="Xem trước Doctor Space trên điện thoại gập">
-          <div class="ds-floor" aria-hidden="true"></div>
-          <div class="ds-duo" id="ds-duo">
-            <div class="ds-half l">
-              <i class="btn1"></i><i class="btn2"></i>
-              <div class="ds-screen">
-                <svg class="ds-art" viewBox="0 0 1100 1000" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+          <div class="ds-device" id="ds-duo">
+            <div class="ds-float">
+              <div class="ds-world" id="ds-world">
+                <div class="ds-floor" aria-hidden="true"></div>
+                <div class="ds-refl" aria-hidden="true"><img src="../assets/doctor-space/foldable-full.png" alt="" /></div>
+                <div class="ds-pane l" id="ds-pane-l">
+                  <svg class="ds-art" viewBox="0 0 1100 1000" preserveAspectRatio="none" aria-hidden="true" focusable="false">
                   <rect width="1100" height="1000" fill="url(#dsBg)"/>
                   <g class="wv">
+                    <path mask="url(#dsMaskB)" d="M0 560 C 120 500 260 500 380 560 C 480 610 540 690 640 700 L640 1000 L0 1000 Z" fill="#d3e1f6" opacity=".7"/>
                     <path mask="url(#dsMaskB)" d="M0 610 C 90 560 200 540 300 590 C 400 640 480 720 600 735 L600 1000 L0 1000 Z" fill="url(#dsBlue)" filter="url(#dsBlur2)"/>
                     <path mask="url(#dsMaskB)" d="M0 770 C 150 700 340 720 600 800 L600 1000 L0 1000 Z" fill="#fff" opacity=".3"/>
                     <path d="M0 640 C 120 590 260 600 380 660 S 540 748 660 738" fill="none" stroke="#fff" stroke-width="3" opacity=".9" filter="url(#dsBlur2)"/>
-                    <ellipse cx="820" cy="720" rx="330" ry="80" fill="#dba5bb" opacity=".34" filter="url(#dsBlur18)"/>
-                    <path mask="url(#dsMaskR)" d="M420 840 C 560 800 700 745 820 704 C 930 670 1030 662 1100 692 L1100 1000 L400 1000 Z" fill="url(#dsRed)" filter="url(#dsBlur8)"/>
+                    <ellipse cx="820" cy="720" rx="330" ry="90" fill="#dba5bb" opacity=".3" filter="url(#dsBlur18)"/>
+                    <path mask="url(#dsMaskR)" d="M400 810 C 560 755 700 690 820 666 C 930 645 1020 660 1100 692 L1100 1000 L400 1000 Z" fill="url(#dsRed)" filter="url(#dsBlur8)"/>
+                    <path mask="url(#dsMaskR)" d="M420 820 C 600 790 760 720 880 650 C 980 595 1050 540 1100 500 L1100 1000 L420 1000 Z" fill="#fff" opacity=".1"/>
                     <path d="M540 745 C 740 735 900 600 1010 450 S 1100 280 1100 250" fill="none" stroke="#fff" stroke-width="16" opacity=".22" filter="url(#dsBlur6)"/>
                     <path d="M540 745 C 740 735 900 600 1010 450 S 1100 280 1100 250" fill="none" stroke="#fff" stroke-width="3" opacity=".9" filter="url(#dsBlur2)"/>
                   </g>
                 </svg>
-                <div class="ds-status" aria-hidden="true"><span class="t">9:41</span></div>
-                <div class="ds-layer ds-idle">
-                  <div class="ds-brand"><svg viewBox="0 0 44 26" fill="none" stroke="#c0334f" stroke-width="2" aria-hidden="true"><circle cx="14" cy="13" r="10.500"/><circle cx="30" cy="13" r="10.500"/></svg>Zerone</div>
-                  <p class="ds-idle-title">Your<br>Doctor Space</p>
-                  <button class="ds-play" id="ds-play" type="button" aria-label="Xem thử bằng hồ sơ mẫu"><svg viewBox="0 0 10 12" aria-hidden="true"><path d="M0 0v12l10-6z" fill="currentColor"/></svg></button>
+                  <div class="ds-status" aria-hidden="true"><span class="t">9:41</span></div>
+                  <div class="ds-layer ds-idle">
+                    <div class="ds-brand"><img class="ds-logo-mark" src="../assets/logo-rings.svg" alt="" /><img class="ds-logo-word" src="../assets/wordmark-ink.svg" alt="Zerone" /></div>
+                    <p class="ds-idle-title">Your<br>Doctor Space</p>
+                    <button class="ds-play" id="ds-play" type="button" aria-label="Xem thử bằng hồ sơ mẫu"><svg viewBox="0 0 10 12" aria-hidden="true"><path d="M0 0v12l10-6z" fill="currentColor"/></svg></button>
+                  </div>
+                  <div class="ds-layer ds-live l-proc" id="ds-profile" aria-live="off"></div>
                 </div>
-                <div class="ds-layer ds-live l-proc" id="ds-profile" aria-live="off"></div>
-              </div>
-            </div>
-            <div class="ds-hinge" aria-hidden="true"></div>
-            <div class="ds-half r">
-              <i class="btn1"></i><i class="btn2"></i>
-              <div class="ds-screen">
-                <svg class="ds-art" viewBox="0 0 1100 1000" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+                <div class="ds-pane r" id="ds-pane-r">
+                  <svg class="ds-art" viewBox="0 0 1100 1000" preserveAspectRatio="none" aria-hidden="true" focusable="false">
                   <rect width="1100" height="1000" fill="url(#dsBg)"/>
                   <g class="wv">
+                    <path mask="url(#dsMaskB)" d="M0 560 C 120 500 260 500 380 560 C 480 610 540 690 640 700 L640 1000 L0 1000 Z" fill="#d3e1f6" opacity=".7"/>
                     <path mask="url(#dsMaskB)" d="M0 610 C 90 560 200 540 300 590 C 400 640 480 720 600 735 L600 1000 L0 1000 Z" fill="url(#dsBlue)" filter="url(#dsBlur2)"/>
                     <path mask="url(#dsMaskB)" d="M0 770 C 150 700 340 720 600 800 L600 1000 L0 1000 Z" fill="#fff" opacity=".3"/>
                     <path d="M0 640 C 120 590 260 600 380 660 S 540 748 660 738" fill="none" stroke="#fff" stroke-width="3" opacity=".9" filter="url(#dsBlur2)"/>
-                    <ellipse cx="820" cy="720" rx="330" ry="80" fill="#dba5bb" opacity=".34" filter="url(#dsBlur18)"/>
-                    <path mask="url(#dsMaskR)" d="M420 840 C 560 800 700 745 820 704 C 930 670 1030 662 1100 692 L1100 1000 L400 1000 Z" fill="url(#dsRed)" filter="url(#dsBlur8)"/>
+                    <ellipse cx="820" cy="720" rx="330" ry="90" fill="#dba5bb" opacity=".3" filter="url(#dsBlur18)"/>
+                    <path mask="url(#dsMaskR)" d="M400 810 C 560 755 700 690 820 666 C 930 645 1020 660 1100 692 L1100 1000 L400 1000 Z" fill="url(#dsRed)" filter="url(#dsBlur8)"/>
+                    <path mask="url(#dsMaskR)" d="M420 820 C 600 790 760 720 880 650 C 980 595 1050 540 1100 500 L1100 1000 L420 1000 Z" fill="#fff" opacity=".1"/>
                     <path d="M540 745 C 740 735 900 600 1010 450 S 1100 280 1100 250" fill="none" stroke="#fff" stroke-width="16" opacity=".22" filter="url(#dsBlur6)"/>
                     <path d="M540 745 C 740 735 900 600 1010 450 S 1100 280 1100 250" fill="none" stroke="#fff" stroke-width="3" opacity=".9" filter="url(#dsBlur2)"/>
                   </g>
                 </svg>
-                <div class="ds-status" aria-hidden="true">
-                  <svg viewBox="0 0 60 18"><path d="M0 14h3v4H0zM5 11h3v7H5zM10 8h3v10h-3zM15 5h3v13h-3z"/><path d="M30 3C25 3 21 5 18 8l2 2c2.5-2.3 5.7-3.7 10-3.7S37.500 7.700 40 10l2-2c-3-3-7-5-12-5zM30 8c-2.600 0-4.800 1-6.600 2.600l2 2C27 11.400 28.400 10.800 30 10.800s3 .6 4.600 1.800l2-2C34.800 9 32.600 8 30 8zM30 13a3 3 0 100 .1z" transform="translate(-2 0) scale(.9) translate(3 1)"/><rect x="44" y="4" width="14" height="9" rx="2.500"/></svg></div>
-                <div class="ds-layer ds-live" id="ds-journey"></div>
+                  <div class="ds-status" aria-hidden="true"><svg viewBox="0 0 60 18"><path d="M0 14h3v4H0zM5 11h3v7H5zM10 8h3v10h-3zM15 5h3v13h-3z"/><path d="M30 3C25 3 21 5 18 8l2 2c2.5-2.3 5.7-3.7 10-3.7S37.500 7.700 40 10l2-2c-3-3-7-5-12-5zM30 8c-2.600 0-4.800 1-6.600 2.600l2 2C27 11.400 28.400 10.800 30 10.800s3 .6 4.600 1.800l2-2C34.800 9 32.600 8 30 8zM30 13a3 3 0 100 .1z" transform="translate(-2 0) scale(.9) translate(3 1)"/><rect x="44" y="4" width="14" height="9" rx="2.500"/></svg></div>
+                  <div class="ds-layer ds-live" id="ds-journey"></div>
+                </div>
+                <div class="ds-crease" aria-hidden="true"></div>
+                <img class="ds-shell" src="../assets/doctor-space/foldable-shell.png" alt="" />
+                <p class="ds-caption" id="ds-caption">Nhập thông tin để xem bản hiển thị Doctor Space của bạn</p>
+                <div class="ds-dots" aria-hidden="true"><i></i><i class="on"></i><i></i></div>
               </div>
             </div>
-            <p class="ds-caption" id="ds-caption">Nhập thông tin để xem bản hiển thị Doctor Space của bạn</p>
-            <div class="ds-dots" aria-hidden="true"><i></i><i class="on"></i><i></i></div>
           </div>
+          <div class="ds-tabs" role="group" aria-label="Chọn màn hình xem"><button type="button" data-v="l" aria-pressed="true">Hồ sơ</button><button type="button" data-v="r" aria-pressed="false">Đặt lịch</button></div>
         </section>
 
         <aside class="ds-right">
@@ -328,13 +370,45 @@
             <p class="ds-err" id="ds-fe" role="alert"></p>
             <button class="btn" type="submit" id="ds-go"><span id="ds-gol">Xem trước ngay</span> <span aria-hidden="true">→</span></button>
           </form>
-          <p class="ds-privacy">Bản xem trước chạy trên trình duyệt của bạn: thông tin và ảnh <b>không được gửi đi hay lưu lại</b>, và Zerone không liên hệ bạn nếu bạn không chọn Claim. <a href="privacy.html">Chính sách bảo mật</a></p>
+          <div class="ds-pn">Bản xem trước chạy ngay trên trình duyệt của bạn: tên, nơi làm việc và ảnh <b>không được gửi đi hay lưu lại</b>. <a href="privacy.html">Chính sách bảo mật</a><details><summary>Xem thêm</summary><p>Zerone chỉ đếm ẩn danh các bước bạn bấm (không kèm thông tin cá nhân) và không liên hệ bạn nếu bạn không chọn Claim hoặc để lại thông tin.</p></details></div>
         </aside>
       </div>
+      <dialog class="ds-dialog" id="ds-dialog" aria-labelledby="ds-dt">
+        <form id="ds-dform" novalidate>
+          <button type="button" class="ds-dclose" id="ds-dclose" aria-label="Đóng">×</button>
+          <div id="ds-dview-form">
+            <h2 id="ds-dt"></h2>
+            <p class="ds-dlead" id="ds-dl"></p>
+            <ol class="ds-dsteps" id="ds-dsteps"></ol>
+            <label for="ds-dn">Họ và tên <span aria-hidden="true">*</span></label>
+            <input type="text" id="ds-dn" maxlength="80" autocomplete="name" />
+            <label for="ds-ds">Chuyên môn <span aria-hidden="true">*</span></label>
+            <select id="ds-ds"></select>
+            <div id="ds-dpw"><label for="ds-dp">Nơi làm việc</label><input type="text" id="ds-dp" maxlength="120" /></div>
+            <div class="ds-drow">
+              <div><label for="ds-dm">Cách liên hệ</label><select id="ds-dm"><option value="zalo">Zalo</option><option value="phone">Điện thoại</option><option value="email">Email</option></select></div>
+              <div class="ds-dgrow"><label for="ds-dc">Số hoặc email <span aria-hidden="true">*</span></label><input type="tel" id="ds-dc" maxlength="120" placeholder="Số điện thoại hoặc Zalo" autocomplete="off" /></div>
+            </div>
+            <p class="ds-dnotice" id="ds-dnotice"></p>
+            <p class="ds-dnotice">Ảnh chân dung và nội dung xem trước của bạn không được gửi đi. Xem <a href="privacy.html" target="_blank" rel="noopener">Chính sách bảo mật</a>.</p>
+            <label class="ds-dcheck"><input type="checkbox" id="ds-k1" /> <span id="ds-k1l"></span></label>
+            <label class="ds-dcheck"><input type="checkbox" id="ds-k2" /> <span>Tôi đồng ý nhận thông tin cập nhật về Zerone (tùy chọn, không ảnh hưởng đến yêu cầu này).</span></label>
+            <p class="ds-err" id="ds-derr" role="alert"></p>
+            <button class="btn" type="submit" id="ds-dgo" disabled><span id="ds-dgol">Gửi</span> <span aria-hidden="true">→</span></button>
+          </div>
+          <div id="ds-dview-done" hidden>
+            <div class="ds-ok-big" aria-hidden="true"><svg viewBox="0 0 12 10" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M1 5l3.5 3.5L11 1.5"/></svg></div>
+            <h2>Cảm ơn bạn</h2>
+            <p class="ds-dlead" id="ds-ddone-text"></p>
+            <button class="btn ghost" type="button" id="ds-ddone">Đóng</button>
+          </div>
+        </form>
+      </dialog>
       <div class="ds-live-region" id="ds-live" role="status" aria-live="polite"></div>
     </main>
     <div id="chrome-bottom"></div>
     <script src="../js/site.js?v=20261014f"></script>
+
     <script>
     (function () {
       "use strict";
@@ -415,8 +489,7 @@
       /* ---------- rendering ---------- */
       function renderProfile() {
         var p = $("ds-profile"); p.textContent = "";
-        var brand = el("div", "ds-brand"); brand.innerHTML = '<svg viewBox="0 0 40 24" fill="none" stroke="#8f1d3f" stroke-width="2.4" aria-hidden="true"><circle cx="13" cy="12" r="9"/><circle cx="27" cy="12" r="9"/></svg>';
-        brand.appendChild(document.createTextNode("Zerone")); brand.appendChild(el("span", "ds-tag", "Xem trước")); p.appendChild(brand);
+        var brand = el("div", "ds-brand"); brand.innerHTML = '<img class="ds-logo-mark" src="../assets/logo-rings.svg" alt="" /><img class="ds-logo-word" src="../assets/wordmark-ink.svg" alt="Zerone" />'; brand.appendChild(el("span", "ds-tag", "Xem trước")); p.appendChild(brand);
         var av = el("div", "ds-avatar");
         if (state.photo) { var im = el("img"); im.src = state.photo; im.alt = ""; av.appendChild(im); } else av.textContent = initials(state.name);
         p.appendChild(av);
@@ -440,7 +513,7 @@
         return w;
       }
       function go(step) {
-        clearTimers(); state.step = step; var j = $("ds-journey"); j.textContent = ""; var s = el("div", "ds-step"); j.appendChild(s);
+        clearTimers(); state.step = step; if (window.__dsPan) window.__dsPan(step === 0 ? "l" : "r"); var j = $("ds-journey"); j.textContent = ""; var s = el("div", "ds-step"); j.appendChild(s);
         var path = el("ol", "ds-path"), cur = step === 0 ? 0 : step < 3 ? 1 : 3;
         ["Hồ sơ chuyên môn", "Yêu cầu đặt lịch", "Phòng khám xác nhận"].forEach(function (t, i) {
           var li = el("li", i < cur ? "ok" : i === cur ? "on" : ""); li.appendChild(el("b", null, String(i + 1))); li.appendChild(el("span", null, t)); path.appendChild(li); });
@@ -494,8 +567,6 @@
       $("ds-play").addEventListener("click", function () { generate({ name: "Bác sĩ Mẫu", spec: "Chuyên môn mẫu", work: "Phòng khám mẫu" }, true); });
       [nameEl, specEl, workEl].forEach(function (i) { i.addEventListener("focus", function () { track("started"); }, { once: true }); });
       fileEl.addEventListener("click", function () { track("started"); });
-      $("ds-claim").addEventListener("click", function () { track("claim_requested"); });
-      $("ds-talk").addEventListener("click", function () { track("founder_call_requested"); });
 
       /* very light parallax: the whole device tilts as ONE rigid object (the fold stays a fold); off for touch and reduced motion */
       if (!reduce && window.matchMedia && matchMedia("(hover: hover) and (pointer: fine)").matches) {
@@ -503,9 +574,103 @@
         document.addEventListener("pointermove", function (e) {
           if (raf) return; raf = requestAnimationFrame(function () { raf = 0;
             var x = (e.clientX / innerWidth - .5), y = (e.clientY / innerHeight - .5);
-            duo.style.transform = "rotateY(" + (x * 3).toFixed(2) + "deg) rotateX(" + (-y * 2).toFixed(2) + "deg)"; });
+            duo.style.transform = "translate(" + (x * -8).toFixed(1) + "px," + (y * -5).toFixed(1) + "px)"; });
         }, { passive: true });
       }
+            /* the device shell is a pre-rendered image; each live screen is warped onto its quad with a homography so content and animation stay real HTML */
+      (function () {
+        var Q = { l: [[40.6, 29.8], [373, 75.6], [373, 605.7], [42.7, 629.4]], r: [[370.5, 76.1], [695.3, 29.7], [694.6, 628.7], [370.5, 604.8]] }, CW = 332, CH = 600;
+        function homography(pts) {
+          var src = [[0, 0], [CW, 0], [CW, CH], [0, CH]], A = [], b = [];
+          for (var i = 0; i < 4; i++) { var x = src[i][0], y = src[i][1], u = pts[i][0], v = pts[i][1];
+            A.push([x, y, 1, 0, 0, 0, -u * x, -u * y]); b.push(u); A.push([0, 0, 0, x, y, 1, -v * x, -v * y]); b.push(v); }
+          for (var c = 0; c < 8; c++) { var m = c; for (var r = c + 1; r < 8; r++) if (Math.abs(A[r][c]) > Math.abs(A[m][c])) m = r;
+            var t = A[c]; A[c] = A[m]; A[m] = t; var tb = b[c]; b[c] = b[m]; b[m] = tb;
+            for (var r2 = c + 1; r2 < 8; r2++) { var f = A[r2][c] / A[c][c]; for (var k = c; k < 8; k++) A[r2][k] -= f * A[c][k]; b[r2] -= f * b[c]; } }
+          var h = new Array(8); for (var r3 = 7; r3 >= 0; r3--) { var s = b[r3]; for (var k2 = r3 + 1; k2 < 8; k2++) s -= A[r3][k2] * h[k2]; h[r3] = s / A[r3][r3]; }
+          return "matrix3d(" + [h[0], h[3], 0, h[6], h[1], h[4], 0, h[7], 0, 0, 1, 0, h[2], h[5], 0, 1].join(",") + ")";
+        }
+        $("ds-pane-l").style.transform = homography(Q.l); $("ds-pane-r").style.transform = homography(Q.r);
+        var dev = $("ds-duo"), world = $("ds-world"), mq = window.matchMedia("(max-width: 700px)"), view = "l", tabs = document.querySelectorAll(".ds-tabs button");
+        /* desktop: the whole device scales to its column. phones: one screen at a time at a readable size (tap targets stay large); the view pans between profile and booking */
+        function fit() {
+          if (mq.matches) {
+            var s = dev.clientWidth / 350, x = view === "l" ? 25 : 368;
+            world.style.transform = "translateX(" + (-x * s).toFixed(2) + "px) scale(" + s.toFixed(4) + ")"; dev.style.height = Math.round(760 * s) + "px"; root.setAttribute("data-mobile", "1");
+          } else { world.style.transform = "scale(" + (dev.clientWidth / 740) + ")"; dev.style.height = ""; root.removeAttribute("data-mobile"); }
+          Array.prototype.forEach.call(tabs, function (t) { t.setAttribute("aria-pressed", String(t.getAttribute("data-v") === view)); });
+        }
+        window.__dsPan = function (v) { view = v; fit(); };
+        Array.prototype.forEach.call(tabs, function (t) { t.addEventListener("click", function () { window.__dsPan(t.getAttribute("data-v")); }); });
+        fit(); if (window.ResizeObserver) new ResizeObserver(fit).observe(dev); else window.addEventListener("resize", fit);
+        if (mq.addEventListener) mq.addEventListener("change", fit);
+      })();
+      /* Conversion. Claim and Talk to Zerone open in-page panels that create a lead in the EXISTING system (submit_professional_lead:
+         consent proof, notice version, rate limit, Admin queue, Founder OS counts per campaign). Nothing is sent before the person
+         submits; the preview photo is never sent. While the notice wording is a draft, the official domain falls back to a plain email. */
+      (function () {
+        var NOTICE = { version: "preview-draft-0", approved: false };
+        var MH = ["Tâm thần học", "Tâm lý lâm sàng", "Tham vấn"], VET = ["Thú y"];
+        var SUMMARY = "CÔNG TY TNHH ZERONE (MST 0318035131) thu thập họ tên, chuyên môn, nơi hành nghề và thông tin liên hệ bạn nhập ở đây để xử lý đúng yêu cầu này. Ảnh và nội dung xem trước không được gửi. Bạn có thể yêu cầu xem, sửa, xóa dữ liệu hoặc ngừng liên hệ bất kỳ lúc nào, miễn phí, qua contact@zerone.vn.";
+        var MODES = {
+          claim: {
+            campaign: "preview-claim", event: "claim_requested", title: "Claim Your Space", practice: true, submit: "Gửi yêu cầu Claim",
+            lead: "Gửi yêu cầu để Zerone xác minh chuyên môn của bạn. Hồ sơ chỉ được tạo khi bạn đã được xác minh.",
+            steps: ["Bạn gửi yêu cầu", "Zerone xác minh chuyên môn của bạn", "Bạn nhận liên kết để chỉnh sửa hồ sơ"],
+            consent: "Tôi đồng ý để Zerone liên hệ và xác minh thông tin chuyên môn của tôi nhằm xử lý yêu cầu Claim này.",
+            done: "Zerone đã nhận yêu cầu Claim của bạn. Chúng tôi sẽ liên hệ qua cách bạn đã chọn để xác minh chuyên môn trước khi bạn nhận liên kết chỉnh sửa hồ sơ. Chưa có hồ sơ nào được công bố.",
+            mail: "Claim hồ sơ Doctor Space"
+          },
+          talk: {
+            campaign: "preview-founder-call", event: "founder_call_requested", title: "Trao đổi với Zerone", practice: false, submit: "Gửi thông tin",
+            lead: "Để lại cách liên hệ để Founder của Zerone trao đổi với bạn về Doctor Space. Chưa cần xác minh hay tạo hồ sơ.",
+            steps: [],
+            consent: "Tôi đồng ý để Zerone liên hệ với tôi qua thông tin trên để trao đổi về Doctor Space.",
+            done: "Zerone đã nhận thông tin của bạn. Founder sẽ liên hệ qua cách bạn đã chọn. Bạn không cần làm gì thêm.",
+            mail: "Trao đổi với Zerone về Doctor Space"
+          }
+        };
+        var dlg = $("ds-dialog"), f = $("ds-dform"), mode = null, opener = null;
+        if (!dlg || !f) return;
+        function fresh() { $("ds-dview-form").hidden = false; $("ds-dview-done").hidden = true; $("ds-derr").textContent = ""; $("ds-dgo").disabled = false; $("ds-dgol").textContent = MODES[mode].submit; }
+        function open(m, btn) {
+          mode = m; opener = btn; var M = MODES[m];
+          if (official && !NOTICE.approved) { location.href = "mailto:contact@zerone.vn?subject=" + encodeURIComponent(M.mail); track(M.event); return; }
+          $("ds-dt").textContent = M.title; $("ds-dl").textContent = M.lead; $("ds-dnotice").textContent = SUMMARY; $("ds-k1l").textContent = M.consent;
+          var st = $("ds-dsteps"); st.textContent = ""; M.steps.forEach(function (t) { var li = document.createElement("li"); li.textContent = t; st.appendChild(li); }); st.hidden = !M.steps.length;
+          $("ds-dpw").hidden = !M.practice;
+          var sel = $("ds-ds"); sel.innerHTML = $("ds-s").innerHTML; sel.value = state.spec || ""; $("ds-dn").value = state.name || ""; $("ds-dp").value = state.work || "";
+          $("ds-dm").value = "zalo"; $("ds-dc").value = ""; $("ds-k1").checked = false; $("ds-k2").checked = false; fresh(); $("ds-dgo").disabled = true;
+          if (dlg.showModal) dlg.showModal(); else dlg.setAttribute("open", "");
+          $("ds-dn").focus();
+        }
+        function close() { if (dlg.close) dlg.close(); else dlg.removeAttribute("open"); if (opener) opener.focus(); }
+        $("ds-claim").addEventListener("click", function () { open("claim", this); });
+        $("ds-talk").addEventListener("click", function () { open("talk", this); });
+        $("ds-dclose").addEventListener("click", close); $("ds-ddone").addEventListener("click", close);
+        dlg.addEventListener("click", function (e) { if (e.target === dlg) close(); });
+        $("ds-k1").addEventListener("change", function () { $("ds-dgo").disabled = !this.checked; });
+        $("ds-dm").addEventListener("change", function () { $("ds-dc").placeholder = this.value === "email" ? "ten@example.com" : "Số điện thoại hoặc Zalo"; $("ds-dc").type = this.value === "email" ? "email" : "tel"; });
+        function vertical(spec) { return MH.indexOf(spec) >= 0 ? "mental_health" : VET.indexOf(spec) >= 0 ? "veterinary" : "health"; }
+        f.addEventListener("submit", function (e) {
+          e.preventDefault(); if (!$("ds-k1").checked) return;
+          var M = MODES[mode], err = $("ds-derr"), name = $("ds-dn").value.trim().replace(/\s+/g, " "), spec = $("ds-ds").value, method = $("ds-dm").value, contact = $("ds-dc").value.trim();
+          err.textContent = "";
+          if (name.length < 2) { err.textContent = "Vui lòng nhập họ và tên."; $("ds-dn").focus(); return; }
+          if (!spec) { err.textContent = "Vui lòng chọn chuyên môn."; $("ds-ds").focus(); return; }
+          if (method === "email" ? !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(contact) : contact.replace(/\D/g, "").length < 9) { err.textContent = method === "email" ? "Email chưa đúng định dạng." : "Số điện thoại hoặc Zalo chưa đúng."; $("ds-dc").focus(); return; }
+          var go = $("ds-dgo"); go.disabled = true; $("ds-dgol").textContent = "Đang gửi…";
+          fetch(CFG.url + "/rest/v1/rpc/submit_professional_lead", { method: "POST", referrerPolicy: "no-referrer",
+            headers: { "Content-Type": "application/json", apikey: CFG.key, Authorization: "Bearer " + CFG.key },
+            body: JSON.stringify({ p_vertical: vertical(spec), p_name: name, p_role: spec, p_practice: M.practice ? ($("ds-dp").value.trim() || null) : null, p_province: "79", p_area: null,
+              p_contact_method: method, p_contact: contact, p_consent: true, p_source: "preview", p_campaign: M.campaign, p_notice_version: NOTICE.version, p_updates_ok: $("ds-k2").checked })
+          }).then(function (r) { return r.text().then(function (t) { return { ok: r.ok, text: t }; }); }).then(function (r) {
+            if (r.ok) { track(M.event); $("ds-ddone-text").textContent = M.done; $("ds-dview-form").hidden = true; $("ds-dview-done").hidden = false; $("ds-ddone").focus(); announce("Zerone đã nhận thông tin của bạn."); return; }
+            go.disabled = false; $("ds-dgol").textContent = M.submit;
+            err.textContent = /rate_limited/.test(r.text) ? "Bạn đã gửi nhiều lần. Vui lòng thử lại sau." : "Chưa gửi được. Vui lòng thử lại hoặc email contact@zerone.vn.";
+          }).catch(function () { go.disabled = false; $("ds-dgol").textContent = M.submit; err.textContent = "Không có kết nối. Vui lòng thử lại hoặc email contact@zerone.vn."; });
+        });
+      })();
       window.addEventListener("pagehide", function () { if (state.photo) URL.revokeObjectURL(state.photo); });
     })();
     </script>
