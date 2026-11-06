@@ -12,8 +12,8 @@
   var base = script && script.src ? script.src.replace(/[^/?#]*([?#].*)?$/, "") : "/demo/";
 
   var TEXT = {
-    vi: { close: "Đóng", label: "Bản demo Zerone Space", toggle: "Phát hoặc dừng video", note: "Hình ảnh, bác sĩ và dữ liệu trong video là minh họa.", flow: "Khám phá → Đặt lịch → Quay lại", flowNote: "Tìm bác sĩ, gửi yêu cầu đặt lịch, theo dõi để quay lại. Hai nguồn tiếp cận: kênh của bạn và mạng lưới Zerone (mở rộng theo giai đoạn).", invite: "Đã hình dung trải nghiệm? Hãy xem Doctor Space của chính bạn.", inviteCta: "Tạo thử Doctor Space" },
-    en: { flow: "Discover → Book → Return", flowNote: "Find a doctor, send a booking request, follow to come back. Two sources of access: your own channels and the Zerone network (expanding in phases).", close: "Close", label: "Zerone Space demo", toggle: "Play or pause the video", note: "Images, doctors and data in the video are illustrative." },
+    vi: { close: "Đóng", label: "Bản demo Zerone Space", toggle: "Phát hoặc dừng video", note: "Hình ảnh, bác sĩ và dữ liệu trong video là minh họa.", flow: "Khám phá → Đặt lịch → Quay lại", flowNote: "Tìm bác sĩ, gửi yêu cầu đặt lịch, theo dõi để quay lại.", invite: "Đã hình dung trải nghiệm? Hãy xem Doctor Space của chính bạn.", inviteCta: "Tạo thử Doctor Space" },
+    en: { flow: "Discover → Book → Return", flowNote: "Find a doctor, send a booking request, follow to come back.", close: "Close", label: "Zerone Space demo", toggle: "Play or pause the video", note: "Images, doctors and data in the video are illustrative." },
   };
   var LABEL = /^\s*(explore|khám phá)\s+zerone\s+space\s*$/i;
 
