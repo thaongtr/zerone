@@ -96,3 +96,7 @@ body .space-try:focus-visible { outline: 2px solid var(--sc-bur); outline-offset
 .space-reach span { font-size: 1rem; line-height: 1.5; color: var(--slate); }
 .reach-tag { font-style: normal; margin-left: .4rem; padding: .08rem .5rem; border-radius: 999px; border: 1px solid rgba(63, 88, 115, .35); font-size: .68rem; letter-spacing: .06em; text-transform: none; color: var(--slate); }
 .space-status { margin: 1rem 0 0; max-width: 46ch; font-size: .88rem; color: var(--slate); }
+/* positioning proof: balanced line breaks (no orphan words) */
+#zerone-space h2, #zerone-space .lede, #zerone-space .space-note, .space-reach span, .space-reach b, .what-two h3, .what-two p, .what-two .num, .section.mist:has(a[href$="#training"]) h2, .section.mist:has(a[href$="#training"]) .work-card h3, .section.mist:has(a[href$="#training"]) .work-card p { text-wrap: balance; }
+.space-reach b { display: flex; flex-wrap: wrap; align-items: center; gap: .15rem .45rem; }
+.reach-tag { margin-left: 0; white-space: nowrap; }
