@@ -86,3 +86,17 @@ body .space-cta { margin-top: 1.5rem; display: flex; flex-wrap: wrap; align-item
 body .space-try { display: inline-block; white-space: nowrap; line-height: 1.2; padding: .8rem 0; color: var(--sc-bur); font-weight: 500; font-size: .98rem; text-decoration: underline; text-decoration-color: rgba(143,29,63,.35); text-underline-offset: 6px; transition: text-decoration-color .2s, color .2s; }
 body .space-try:hover, body .space-try:focus-visible { color: var(--sc-bur-lo); text-decoration-color: currentColor; }
 body .space-try:focus-visible { outline: 2px solid var(--sc-bur); outline-offset: 4px; border-radius: 4px; }
+
+/* positioning proof: hero subheadline, two-value cards, reach lines */
+.hero-sub { margin: 1.1rem auto 1.9rem; max-width: 44rem; font-size: clamp(1.02rem, 1.5vw, 1.2rem); line-height: 1.55; color: #fff; text-shadow: 0 1px 16px rgba(12, 30, 50, .6); }
+.what-two { margin-top: 2rem; text-align: left; }
+.space-reach { list-style: none; margin: 1.2rem 0 0; padding: 0; display: grid; gap: .8rem; max-width: 46ch; }
+.space-reach li { display: grid; gap: .15rem; padding-left: .9rem; border-left: 2px solid var(--burgundy, #7a1f3d); }
+.space-reach b { font-size: .8rem; letter-spacing: .12em; text-transform: uppercase; color: var(--ink, #1f2b3d); }
+.space-reach span { font-size: 1rem; line-height: 1.5; color: var(--slate); }
+.reach-tag { font-style: normal; margin-left: .4rem; padding: .08rem .5rem; border-radius: 999px; border: 1px solid rgba(63, 88, 115, .35); font-size: .68rem; letter-spacing: .06em; text-transform: none; color: var(--slate); }
+.space-status { margin: 1rem 0 0; max-width: 46ch; font-size: .88rem; color: var(--slate); }
+/* positioning proof: balanced line breaks (no orphan words) */
+#zerone-space h2, #zerone-space .lede, #zerone-space .space-note, .space-reach span, .space-reach b, .what-two h3, .what-two p, .what-two .num, .section.mist:has(a[href$="#training"]) h2, .section.mist:has(a[href$="#training"]) .work-card h3, .section.mist:has(a[href$="#training"]) .work-card p { text-wrap: balance; }
+.space-reach b { display: flex; flex-wrap: wrap; align-items: center; gap: .15rem .45rem; }
+.reach-tag { margin-left: 0; white-space: nowrap; }

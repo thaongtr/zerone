@@ -12,18 +12,18 @@
   var base = script && script.src ? script.src.replace(/[^/?#]*([?#].*)?$/, "") : "/demo/";
 
   var TEXT = {
-    vi: { close: "Đóng", label: "Bản demo Zerone Space", toggle: "Phát hoặc dừng video", note: "Hình ảnh, bác sĩ và dữ liệu trong video là minh họa.", invite: "Đã hình dung trải nghiệm? Hãy xem Doctor Space của chính bạn.", inviteCta: "Tạo thử Doctor Space" },
-    en: { close: "Close", label: "Zerone Space demo", toggle: "Play or pause the video", note: "Images, doctors and data in the video are illustrative." },
+    vi: { close: "Đóng", label: "Bản demo Zerone Space", toggle: "Phát hoặc dừng video", note: "Hình ảnh, bác sĩ và dữ liệu trong video là minh họa.", flow: "Khám phá → Đặt lịch → Quay lại", flowNote: "Tìm bác sĩ, gửi yêu cầu đặt lịch, theo dõi để quay lại.", invite: "Đã hình dung trải nghiệm? Hãy xem Doctor Space của chính bạn.", inviteCta: "Tạo thử Doctor Space" },
+    en: { flow: "Discover → Book → Return", flowNote: "Find a doctor, send a booking request, follow to come back.", close: "Close", label: "Zerone Space demo", toggle: "Play or pause the video", note: "Images, doctors and data in the video are illustrative." },
   };
   var LABEL = /^\s*(explore|khám phá)\s+zerone\s+space\s*$/i;
 
   var CSS =
-    ".zd-root{position:fixed;inset:0;z-index:2147483000;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;" +
+    ".zd-root{position:fixed;inset:0;z-index:2147483000;display:flex;flex-direction:column;align-items:center;justify-content:center;justify-content:safe center;overflow-y:auto;gap:12px;" +
     "padding:max(16px,env(safe-area-inset-top,0px)) max(16px,env(safe-area-inset-right,0px)) max(16px,env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px));" +
     "box-sizing:border-box;background:rgba(14,18,26,.58);-webkit-backdrop-filter:blur(16px) saturate(1.1);backdrop-filter:blur(16px) saturate(1.1);" +
     "opacity:0;transition:opacity .22s ease;font-family:'Be Vietnam Pro',system-ui,-apple-system,'Segoe UI',sans-serif}" +
     ".zd-root.zd-open{opacity:1}" +
-    ".zd-phone{--sw:min(390px,calc(100vw - 32px - 22px),calc((100dvh - 120px) * 390 / 844));--r:calc(var(--sw) * .118);position:relative;padding:11px;" +
+    ".zd-phone{--sw:min(390px,calc(100vw - 32px - 22px),calc((100dvh - 232px) * 390 / 844));--r:calc(var(--sw) * .118);position:relative;padding:11px;" +
     "border-radius:calc(var(--r) + 11px);background:linear-gradient(145deg,#3a3e47,#1a1c21 28%,#1a1c21 72%,#3a3e47);" +
     "box-shadow:0 0 0 1.5px rgba(255,255,255,.07) inset,0 50px 100px -20px rgba(0,0,0,.7),0 16px 36px -12px rgba(0,0,0,.5);" +
     "transform:translateY(14px) scale(.97);transition:transform .3s cubic-bezier(.2,.8,.2,1)}" +
@@ -41,9 +41,11 @@
     ".zd-close{position:absolute;top:max(14px,env(safe-area-inset-top,0px));right:max(14px,env(safe-area-inset-right,0px));width:44px;height:44px;border-radius:50%;border:1px solid rgba(255,255,255,.28);" +
     "background:rgba(255,255,255,.14);color:#fff;cursor:pointer;display:grid;place-items:center;-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);transition:background .15s}" +
     ".zd-close:hover{background:rgba(255,255,255,.26)}" +
-    ".zd-invite{margin:0;max-width:30em;text-align:center;font-size:14.5px;line-height:1.5;color:rgba(255,255,255,.92)}.zd-try{color:#fff;font-weight:600;text-decoration:underline;text-underline-offset:3px;white-space:nowrap}.zd-try:focus-visible{outline:3px solid #fff;outline-offset:3px;border-radius:4px}" +
-    ".zd-note{margin:0;max-width:30em;text-align:center;font-size:12.5px;line-height:1.5;color:rgba(255,255,255,.72)}" +
+    ".zd-invite{margin:0;max-width:30em;text-wrap:balance;text-align:center;font-size:14.5px;line-height:1.5;color:rgba(255,255,255,.92)}.zd-try{color:#fff;font-weight:600;text-decoration:underline;text-underline-offset:3px;white-space:nowrap}.zd-try:focus-visible{outline:3px solid #fff;outline-offset:3px;border-radius:4px}" +
+    ".zd-flow{margin:0;max-width:44em;text-wrap:balance;text-align:center;font-size:13.5px;line-height:1.45;color:rgba(255,255,255,.9)}.zd-flow b{display:block;font-size:15px;font-weight:600;letter-spacing:.02em;color:#fff}.zd-note{margin:0;max-width:30em;text-wrap:balance;text-align:center;font-size:12.5px;line-height:1.5;color:rgba(255,255,255,.72)}" +
+    "@media (max-width:520px){.zd-flow span{display:none}.zd-phone{--sw:min(390px,calc(100vw - 54px),calc((100dvh - 215px) * 390 / 844))}}" +
     "@media (max-height:640px){.zd-note{display:none}.zd-phone{--sw:min(390px,calc(100vw - 54px),calc((100dvh - 56px) * 390 / 844))}}" +
+    "@media (max-height:680px){.zd-flow span{display:none}.zd-phone{--sw:min(390px,calc(100vw - 54px),calc((100dvh - 150px) * 390 / 844))}}" +
     "@media (prefers-reduced-motion:reduce){.zd-root,.zd-phone,.zd-play{transition:none}}";
 
   var root, lastFocus, closeTimer, prefetched, calm = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)");
@@ -76,6 +78,7 @@
           '<button class="zd-toggle" type="button" aria-label="' + tx.toggle + '"><span class="zd-play" aria-hidden="true">' +
             '<svg width="22" height="22" viewBox="0 0 24 24" fill="#1f2b3d"><path d="M7 4.5v15a1 1 0 0 0 1.5.86l12-7.5a1 1 0 0 0 0-1.72l-12-7.5A1 1 0 0 0 7 4.5z"/></svg></span></button>' +
         '</div></div>' +
+        '<p class="zd-flow"><b>' + tx.flow + '</b><span>' + tx.flowNote + '</span></p>' +
         (tx.invite ? '<p class="zd-invite">' + tx.invite + ' <a class="zd-try" href="' + base + '../vi/xem-truoc.html?src=site-demo" data-journey-try data-journey-src="site-demo">' + tx.inviteCta + ' →</a></p>' : '') +
         '<p class="zd-note">' + tx.note + '</p>' +
       '</div>');
