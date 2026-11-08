@@ -1894,12 +1894,9 @@ html[lang="vi"] .kicker, html[lang="vi"] .ap-label, html[lang="vi"] .hero-eyebro
 }
 .f3-social svg { width: 17px; height: 17px; display: block; }
 .f3-social a[data-channel="youtube"] svg { width: 18px; height: 18px; }
-.f3-social a[data-channel="zalo"] .f3-social-mark { background: transparent; border-radius: 0; color: var(--red); }
-.f3-social a[data-channel="zalo"] svg { width: 32px; height: 32px; }
+.f3-social a[data-channel="zalo"] svg { width: 25px; height: 9.07px; }
 .f3-social a:hover .f3-social-mark,
 .f3-social a:focus-visible .f3-social-mark { background: var(--red-dark); }
-.f3-social a[data-channel="zalo"]:hover .f3-social-mark,
-.f3-social a[data-channel="zalo"]:focus-visible .f3-social-mark { background: transparent; color: var(--red-dark); }
 .f3-social a:focus-visible { outline: 2px solid var(--ink); outline-offset: 1px; }
 @media (max-width: 800px) { .f3-social { margin-top: 0.65rem; } }
 @media (prefers-reduced-motion: reduce) { .f3-social-mark { transition: none; } }
