@@ -18,6 +18,7 @@ const T = {
       explore: "Explore", touch: "Get in touch", legal: "Privacy", terms: "Terms",
       city: "Ho Chi Minh City, Vietnam",
       addr: "L18 Vincom Center Đồng Khởi, 72 Lê Thánh Tôn, Phường Bến Nghé, Quận 1, Ho Chi Minh City, Vietnam, 70000",
+      channels: "Official channels",
       rights: "All rights reserved.",
       approach: "Approach", work: "Case study", about: "About", faq: "FAQ", contact: "Contact",
     },
@@ -43,6 +44,7 @@ const T = {
       explore: "Khám phá", touch: "Kết nối", legal: "Chính sách bảo mật", terms: "Điều khoản sử dụng",
       city: "Thành phố Hồ Chí Minh, Việt Nam",
       addr: "L18 Vincom Center Đồng Khởi, 72 Lê Thánh Tôn, Phường Bến Nghé, Quận 1, TP. Hồ Chí Minh, Việt Nam, 70000",
+      channels: "Kênh chính thức",
       rights: "Bảo lưu mọi quyền.",
       approach: "Phương pháp", work: "Dự án điển hình", about: "Giới thiệu", faq: "Câu hỏi thường gặp", contact: "Liên hệ",
     },
@@ -60,6 +62,21 @@ const T = {
 const L = T[LANG];
 const tickerItems = L.ticker;
 const faqs = L.faqs;
+
+/* Official channels in the footer on every page. Edit this list only.
+   Uncomment an entry and set href to publish it. An empty href stays hidden. */
+const CHANNELS = [
+  { label: "LinkedIn", href: "https://www.linkedin.com/company/zerone-vietnam-consulting" },
+  { label: "Zalo", href: "https://zalo.me/1458646250790074597" },
+  // { label: "Facebook", href: "" },
+  // { label: "YouTube", href: "" },
+];
+
+function channelLinks() {
+  return CHANNELS.filter(function (c) { return c && c.href; }).map(function (c) {
+    return '<a href="' + c.href + '" target="_blank" rel="noopener">' + c.label + "</a>";
+  }).join("");
+}
 
 /* ---------- Language switch: map this page to its twin ---------- */
 function twinHref() {
@@ -125,6 +142,7 @@ function footer() {
             <img class="f3-logo" src="${P}assets/logo.svg" alt="Zerone" />
             <p>${f.desc}</p>
             <a class="f3-addr" href="https://www.google.com/maps/search/?api=1&query=Vincom+Center+Dong+Khoi+72+Le+Thanh+Ton+Ho+Chi+Minh+City" target="_blank" rel="noopener">${f.addr}</a>
+            ${channelLinks() ? `<nav class="f3-social" aria-label="${f.channels}">${channelLinks()}</nav>` : ""}
           </div>
           <div class="f3-col">
             <b>${f.explore}</b>
