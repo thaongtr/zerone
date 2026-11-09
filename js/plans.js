@@ -22,7 +22,7 @@
       feats: ["Hồ sơ chuyên môn", "QR & đường dẫn riêng", "Tiếp nhận yêu cầu đặt lịch", "Workspace quản lý lịch hẹn", "Cập nhật hồ sơ & thông tin dịch vụ", "Duy trì nền tảng & hỗ trợ kỹ thuật"],
       coTitle: "Xác nhận đăng ký", sumPlan: "Gói đăng ký", sumSchedule: "Lịch thanh toán", sumPeriod: "Giá mỗi kỳ", sumSetup: "Phí thiết lập",
       sumSetupFree: "Miễn phí", sumVat: "VAT", sumVatIncl: function (p) { return "đã gồm trong giá (" + p + "%)"; },
-      sumVatAdd: function (p) { return p + "% cộng thêm"; }, sumVatNone: "Chưa áp dụng", sumTotal: "Thanh toán hôm nay",
+      sumVatAdd: function (p) { return p + "% cộng thêm"; }, sumVatNone: "Không cộng thêm", finalPrice: "Giá niêm yết là số tiền cuối cùng bạn thanh toán.", sumTotal: "Thanh toán hôm nay",
       sumCommit: function (m) { return "Tổng cam kết " + m + " tháng"; }, sumNext: "Kỳ thanh toán tiếp theo", nextNone: function (m) { return "Không có kỳ nào trong " + m + " tháng. Khi hết hạn, bạn gia hạn nếu muốn."; },
       nextMonthly: "Sau mỗi tháng, khi bạn chủ động thanh toán", noAuto: "Zerone không tự động trừ tiền. Mỗi kỳ tiếp theo bạn tự thanh toán trước ngày đến hạn; Zerone nhắc bạn trước hạn.",
       monthlyTerms: "Theo tháng, không cam kết năm.", onceTerms: function (m) { return m + " tháng, thanh toán một lần."; },
@@ -53,7 +53,7 @@
       feats: ["Professional profile", "Your own QR & link", "Appointment-request intake", "Workspace to manage appointments", "Profile & service updates", "Platform upkeep & technical support"],
       coTitle: "Confirm your subscription", sumPlan: "Plan", sumSchedule: "Payment schedule", sumPeriod: "Price per period", sumSetup: "Setup fee",
       sumSetupFree: "Free", sumVat: "VAT", sumVatIncl: function (p) { return "included in the price (" + p + "%)"; },
-      sumVatAdd: function (p) { return p + "% added"; }, sumVatNone: "Not applied", sumTotal: "Due today",
+      sumVatAdd: function (p) { return p + "% added"; }, sumVatNone: "None added", finalPrice: "The listed price is the final amount you pay.", sumTotal: "Due today",
       sumCommit: function (m) { return m + "-month commitment total"; }, sumNext: "Next payment", nextNone: function (m) { return "None within the " + m + " months. At the end you renew only if you wish."; },
       nextMonthly: "After each month, when you choose to pay", noAuto: "Zerone never charges you automatically. You pay each later instalment yourself before its due date, and Zerone reminds you beforehand.",
       monthlyTerms: "Monthly, no annual commitment.", onceTerms: function (m) { return m + " months, paid once."; },
@@ -187,7 +187,7 @@
     else if (q.periods > 1) next = fmtDate(addMonths(now, q.months_per_period)) + " · " + vnd(q.period_price_vnd * (q.prices_include_vat ? 1 : 1 + q.vat_rate_pct / 100));
     else next = L.nextNone(q.commitment_months);
     html += "<div class=\"co-row\"><dt>" + L.sumNext + "</dt><dd>" + next + "</dd></div></dl>" +
-      "<p class=\"co-note\">" + perLabel + " " + L.noAuto + "</p>";
+      "<p class=\"co-note\">" + L.finalPrice + " " + perLabel + " " + L.noAuto + "</p>";
     el("co-summary").innerHTML = html;
     el("co-back").addEventListener("click", function () { history.back(); });
     if (!el("co-form")) renderForm(q);
