@@ -1895,6 +1895,7 @@ html[lang="vi"] .kicker, html[lang="vi"] .ap-label, html[lang="vi"] .hero-eyebro
   transition: background-color .2s ease, color .2s ease;
 }
 .f3-social svg { width: 17px; height: 17px; display: block; }
+.f3-social [data-channel="facebook"] svg,
 .f3-social [data-channel="instagram"] svg,
 .f3-social [data-channel="tiktok"] svg,
 .f3-social [data-channel="youtube"] svg { width: 18px; height: 18px; }
