@@ -179,12 +179,12 @@
     return L.term;
   }
   function renderCheckout() {
-    state.view = "checkout";
+    state.view = "checkout"; state.order = null; persist();   /* a new purchase starts here: an older order amount is never shown */
     track("checkout_started");
     root.innerHTML = "<h1>" + L.coTitle + "</h1><div class=\"co-wrap\"><div class=\"co-card\" id=\"co-summary\"></div><div class=\"co-card\" id=\"co-formbox\"></div></div>";
     entered(L.coTitle);
     var code = planCode();
-    getQuote(code).then(function (q) { if (state.view === "checkout") fillCheckout(q); });
+    getQuote(code).then(function (q) { if (state.view === "checkout" && q.plan === planCode()) fillCheckout(q); });
     fillCheckout(localQuote(code));
   }
   function fillCheckout(q) {
@@ -244,13 +244,14 @@
   }
 
   /* ---------- order status (also the page an interrupted buyer returns to) ---------- */
+  function planLabel(c) { return c === "monthly" ? L.monthly : c === "annual" ? L.annual : L.term + " · " + (c === "term_3m" ? L.every3 : L.every6); }
   function payBox(s) {
     var b = s.bank, amt = s.pay_now.amount_vnd;
     var qr = "https://img.vietqr.io/image/" + encodeURIComponent(b.code) + "-" + encodeURIComponent(b.account_no) + "-compact2.png?amount=" + amt +
       "&addInfo=" + encodeURIComponent(s.payment_reference) + "&accountName=" + encodeURIComponent(b.account_name);
     function row(k, v, copy) { return "<div class=\"co-row\"><dt>" + k + "</dt><dd>" + esc(v) + (copy ? " <button type=\"button\" class=\"co-copy\" data-copy=\"" + esc(copy) + "\">" + L.copy + "</button>" : "") + "</dd></div>"; }
     return "<h2>" + L.payTitle + "</h2><img class=\"co-qr\" src=\"" + qr + "\" alt=\"" + L.qrAlt + "\" width=\"220\" height=\"220\" referrerpolicy=\"no-referrer\">" +
-      "<dl class=\"co-rows\" style=\"text-align:left\">" + row(L.payBank, b.code) + row(L.payAcct, b.account_no, b.account_no) + row(L.payName, b.account_name) +
+      "<dl class=\"co-rows\" style=\"text-align:left\">" + row(L.sumPlan, planLabel(s.plan)) + row(L.payBank, b.code) + row(L.payAcct, b.account_no, b.account_no) + row(L.payName, b.account_name) +
       row(L.payAmount, vnd(amt), String(amt)) + row(L.payRef, s.payment_reference, s.payment_reference) + "</dl><p class=\"co-note\">" + L.payNote + "</p>";
   }
   function bindCopy() {
