@@ -1872,7 +1872,8 @@ html[lang="vi"] .kicker, html[lang="vi"] .ap-label, html[lang="vi"] .hero-eyebro
   padding: 0;
 }
 .f3-social li { display: flex; }
-.f3-social a {
+.f3-social a,
+.f3-social .f3-social-item {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -1881,6 +1882,7 @@ html[lang="vi"] .kicker, html[lang="vi"] .ap-label, html[lang="vi"] .hero-eyebro
   border-radius: 12px;
   color: var(--red);
 }
+.f3-social .is-soon { cursor: default; }
 .f3-social-mark {
   width: 32px;
   height: 32px;
@@ -1893,8 +1895,10 @@ html[lang="vi"] .kicker, html[lang="vi"] .ap-label, html[lang="vi"] .hero-eyebro
   transition: background-color .2s ease, color .2s ease;
 }
 .f3-social svg { width: 17px; height: 17px; display: block; }
-.f3-social a[data-channel="youtube"] svg { width: 18px; height: 18px; }
-.f3-social a[data-channel="zalo"] svg { width: 25px; height: 9.07px; }
+.f3-social [data-channel="instagram"] svg,
+.f3-social [data-channel="tiktok"] svg,
+.f3-social [data-channel="youtube"] svg { width: 18px; height: 18px; }
+.f3-social [data-channel="zalo"] svg { width: 25px; height: 9.07px; }
 .f3-social a:hover .f3-social-mark,
 .f3-social a:focus-visible .f3-social-mark { background: var(--red-dark); }
 .f3-social a:focus-visible { outline: 2px solid var(--ink); outline-offset: 1px; }
