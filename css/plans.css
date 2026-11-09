@@ -87,3 +87,49 @@
 .plan-mark { background: rgba(255,255,255,.9); }
 .plan-term span, .co-form input[type=text], .co-form input[type=email], .co-form select { background: rgba(255,255,255,.85); }
 .plan-card .plan-radio { z-index: 0; }
+
+/* ---------- steps, payment screen, success receipt ---------- */
+.co-steps { list-style: none; display: flex; justify-content: center; align-items: center; gap: 0; margin: -18px auto 30px; padding: 0; max-width: 520px; }
+.co-steps li { display: flex; align-items: center; gap: 8px; font-size: .88rem; color: var(--slate); white-space: nowrap; }
+.co-steps li + li::before { content: ""; width: 44px; height: 1px; background: #c4ccd8; margin: 0 12px; }
+.co-steps .n { width: 24px; height: 24px; border-radius: 50%; border: 1.5px solid #9aa4b4; display: inline-flex; align-items: center; justify-content: center; font-size: .78rem; font-weight: 700; background: rgba(255,255,255,.85); }
+.co-steps .is-active { color: var(--ink); font-weight: 600; }
+.co-steps .is-active .n { border-color: var(--sc-bur, var(--red)); background: var(--sc-bur, var(--red)); color: #fff; }
+.co-steps .is-done .n { border-color: var(--sc-bur, var(--red)); color: var(--sc-bur, var(--red)); }
+.pay-wrap { display: grid; grid-template-columns: 340px 1fr; gap: 24px; align-items: start; max-width: 940px; margin: 0 auto; }
+.pay-qr { text-align: center; padding: 28px 24px 24px; }
+.pay-qr .co-qr { width: 240px; height: 240px; max-width: 100%; margin: 0 auto 16px; }
+.pay-wait { display: flex; justify-content: center; align-items: center; gap: 10px; margin: 0 0 4px; font-weight: 600; color: var(--ink); font-size: .95rem; }
+.pay-hold { margin: 0 0 16px; font-size: .84rem; color: var(--slate); }
+.spin { width: 16px; height: 16px; border-radius: 50%; border: 2px solid #d3d9e3; border-top-color: var(--sc-bur, var(--red)); animation: zspin .9s linear infinite; }
+@keyframes zspin { to { transform: rotate(360deg); } }
+.btn-ghost { display: inline-flex; align-items: center; justify-content: center; padding: 11px 20px; border-radius: 12px; border: 1px solid #b7c0cd; background: rgba(255,255,255,.7); color: var(--ink); font-weight: 600; font-size: .92rem; cursor: pointer; }
+.btn-ghost:hover { border-color: var(--sc-bur, var(--red)); color: var(--sc-bur, var(--red)); }
+.btn-ghost[disabled] { opacity: .55; cursor: default; }
+.pay-details h2 { font-size: 1.35rem; margin-bottom: 10px; }
+.co-done.ok { max-width: 640px; }
+.ok-mark { width: 68px; height: 68px; margin: 0 auto 16px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #fff; background: #2f7d5b; box-shadow: 0 10px 28px rgba(47, 125, 91, .28); animation: zpop .45s var(--ease-out); }
+@keyframes zpop { from { transform: scale(.6); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+.co-done.ok h1 { margin-bottom: 8px; }
+.ok-lead { margin: 0 0 28px; }
+.receipt { text-align: left; margin: 0 auto 22px; }
+.co-next { text-align: left; margin: 0 0 24px; padding: 0 4px; }
+.co-next h2 { font-size: 1.15rem; margin-bottom: 6px; }
+.co-next p { margin: 0; color: var(--slate); font-size: .95rem; }
+.co-actions { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+.co-loading { text-align: center; color: var(--slate); }
+@media (max-width: 880px) {
+  .pay-wrap { grid-template-columns: 1fr; }
+  .co-steps { margin-top: -10px; }
+  .co-steps li + li::before { width: 18px; margin: 0 8px; }
+  .co-steps .t { font-size: .8rem; }
+  .co-actions .btn, .co-actions .btn-ghost { width: 100%; }
+}
+@media (prefers-reduced-motion: reduce) { .spin, .ok-mark { animation: none; } }
+@media print {
+  #chrome-top, #chrome-bottom, .co-actions, .co-steps, .pay-wrap { display: none !important; }
+  body::before { display: none; }
+  .plans-page { padding: 0; }
+  .receipt { box-shadow: none; border: 1px solid #999; background: #fff; }
+}
+.receipt .co-rows, .co-done .receipt .co-rows { background: none; border: 0; box-shadow: none; -webkit-backdrop-filter: none; backdrop-filter: none; padding: 0; border-radius: 0; }

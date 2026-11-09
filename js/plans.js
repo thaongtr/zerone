@@ -166,7 +166,7 @@
   function renderCheckout() {
     state.view = "checkout"; state.order = null; persist();   /* a new purchase starts here: an older order amount is never shown */
     track("checkout_started");
-    root.innerHTML = "<h1>" + L.coTitle + "</h1><div class=\"co-wrap\"><div class=\"co-card\" id=\"co-summary\"></div><div class=\"co-card\" id=\"co-formbox\"></div></div>";
+    root.innerHTML = "<h1>" + L.coTitle + "</h1>" + stepper(2) + "<div class=\"co-wrap\"><div class=\"co-card\" id=\"co-summary\"></div><div class=\"co-card\" id=\"co-formbox\"></div></div>";
     entered(L.coTitle);
     var code = planCode();
     getQuote(code).then(function (q) { if (state.view === "checkout" && q.plan === planCode()) fillCheckout(q); });
@@ -224,55 +224,131 @@
     var btn = el("co-submit"); btn.disabled = true; btn.textContent = L.placing;
     rpc("create_subscription_order", { p_plan: q.plan, p_vertical: v("vertical"), p_name: v("name"), p_practice: v("practice") || null,
       p_contact_method: v("method"), p_contact: v("contact"), p_consent: true, p_notice: null, p_terms_accepted: true })
-      .then(function (r) { track("order_created"); state.order = r.order_id; persist(); history.replaceState({ v: "done" }, "", "#order"); renderDone(r.order_id); })
+      .then(function (r) { track("order_created"); state.order = r.order_id; persist(); history.replaceState({ v: "done" }, "", "#order/" + r.order_id); renderDone(r.order_id); })
       .catch(function (e) { btn.disabled = false; btn.textContent = L.place; err.textContent = (e.name === "TypeError") ? L.offline : (e.status === 429 || /rate_limited/.test(e.message)) ? L.errRate : L.errGeneric; });
   }
 
-  /* ---------- order status (also the page an interrupted buyer returns to) ---------- */
+  /* ---------- payment screen, waiting state and receipt (the order id in the URL makes the page resumable from any device) ---------- */
+  var X = {
+    vi: {
+      s1: "Chọn gói", s2: "Thanh toán", s3: "Hoàn tất", stepsLabel: "Các bước đăng ký",
+      payH1: "Thanh toán", payTitle: "Quét mã hoặc chuyển khoản",
+      payLead: function (a) { return "Chuyển đúng " + a + " và giữ nguyên nội dung chuyển khoản. Gói được xác nhận khi Zerone nhận được tiền."; },
+      waiting: "Đang chờ nhận tiền…", checkNow: "Kiểm tra ngay", holdUntil: function (t) { return "Đơn được giữ đến " + t; },
+      noBankH1: "Đơn đã được ghi nhận", noBank: "Zerone sẽ liên hệ với bạn để hướng dẫn thanh toán. Gói chỉ được kích hoạt sau khi Zerone xác nhận đã nhận tiền.",
+      okH1: "Thanh toán thành công", okLead: "Zerone đã nhận được tiền. Cảm ơn bạn đã tin tưởng.",
+      rPlan: "Gói đăng ký", rAmt: "Số tiền", rRef: "Mã thanh toán", rPaid: "Thanh toán lúc", rThru: "Có hiệu lực đến", rNext: "Kỳ thanh toán tiếp theo",
+      nextH: "Bước tiếp theo", nextTxt: "Zerone sẽ liên hệ để kích hoạt Professional Space của bạn. Chứng từ thanh toán sẽ được gửi riêng.",
+      print: "In biên nhận", home: "Về trang chủ",
+      expH1: "Đơn đã hết hạn", expTxt: "Đơn này không còn được giữ. Nếu bạn đã chuyển khoản, hãy liên hệ contact@zerone.vn kèm mã thanh toán. Nếu chưa, bạn có thể chọn gói lại.",
+      again: "Chọn lại gói"
+    },
+    en: {
+      s1: "Choose plan", s2: "Payment", s3: "Done", stepsLabel: "Subscription steps",
+      payH1: "Payment", payTitle: "Scan the code or transfer",
+      payLead: function (a) { return "Transfer exactly " + a + " and keep the transfer content unchanged. Your plan is confirmed when Zerone receives the money."; },
+      waiting: "Waiting for your payment…", checkNow: "Check now", holdUntil: function (t) { return "Order held until " + t; },
+      noBankH1: "Your order is recorded", noBank: "Zerone will contact you with payment instructions. The plan activates only after Zerone confirms the money was received.",
+      okH1: "Payment successful", okLead: "Zerone has received your payment. Thank you for your trust.",
+      rPlan: "Plan", rAmt: "Amount", rRef: "Payment reference", rPaid: "Paid at", rThru: "Valid until", rNext: "Next payment",
+      nextH: "What happens next", nextTxt: "Zerone will contact you to activate your Professional Space. Payment documents will be sent separately.",
+      print: "Print receipt", home: "Back to home",
+      expH1: "This order has expired", expTxt: "This order is no longer held. If you already transferred the money, contact contact@zerone.vn with your payment reference. If not, you can choose a plan again.",
+      again: "Choose a plan again"
+    }
+  }[LANG];
+
+  function stepper(active) {
+    var names = [X.s1, X.s2, X.s3];
+    return "<ol class=\"co-steps\" aria-label=\"" + X.stepsLabel + "\">" + names.map(function (n, i) {
+      var cls = i + 1 < active ? "is-done" : i + 1 === active ? "is-active" : "";
+      return "<li class=\"" + cls + "\"" + (i + 1 === active ? " aria-current=\"step\"" : "") + "><span class=\"n\">" + (i + 1 < active ? "✓" : i + 1) + "</span><span class=\"t\">" + n + "</span></li>";
+    }).join("") + "</ol>";
+  }
+  var BANKS = { VPB: "VPBank", VCB: "Vietcombank", TCB: "Techcombank", MB: "MB Bank", ACB: "ACB", BIDV: "BIDV", CTG: "VietinBank" };
   function planLabel(c) { return c === "monthly" ? L.monthly : c === "annual" ? L.annual : L.six; }
-  function payBox(s) {
+  function row(k, v, copy) { return "<div class=\"co-row\"><dt>" + k + "</dt><dd>" + esc(v) + (copy ? " <button type=\"button\" class=\"co-copy\" data-copy=\"" + esc(copy) + "\">" + L.copy + "</button>" : "") + "</dd></div>"; }
+  function whenText(iso) { var d = new Date(iso); return d.toLocaleTimeString(LANG === "vi" ? "vi-VN" : "en-GB", { hour: "2-digit", minute: "2-digit" }) + " " + fmtDate(d); }
+
+  function payScreen(s) {
     var b = s.bank, amt = s.pay_now.amount_vnd;
     var qr = "https://img.vietqr.io/image/" + encodeURIComponent(b.code) + "-" + encodeURIComponent(b.account_no) + "-compact2.png?amount=" + amt +
       "&addInfo=" + encodeURIComponent(s.payment_reference) + "&accountName=" + encodeURIComponent(b.account_name);
-    function row(k, v, copy) { return "<div class=\"co-row\"><dt>" + k + "</dt><dd>" + esc(v) + (copy ? " <button type=\"button\" class=\"co-copy\" data-copy=\"" + esc(copy) + "\">" + L.copy + "</button>" : "") + "</dd></div>"; }
-    return "<h2>" + L.payTitle + "</h2><img class=\"co-qr\" src=\"" + qr + "\" alt=\"" + L.qrAlt + "\" width=\"220\" height=\"220\" referrerpolicy=\"no-referrer\">" +
-      "<dl class=\"co-rows\" style=\"text-align:left\">" + row(L.sumPlan, planLabel(s.plan)) + row(L.payBank, b.code) + row(L.payAcct, b.account_no, b.account_no) + row(L.payName, b.account_name) +
-      row(L.payAmount, vnd(amt), String(amt)) + row(L.payRef, s.payment_reference, s.payment_reference) + "</dl><p class=\"co-note\">" + L.payNote + "</p>";
+    return "<h1>" + X.payH1 + "</h1>" + stepper(2) +
+      "<div class=\"pay-wrap\"><div class=\"co-card pay-qr\"><img class=\"co-qr\" src=\"" + qr + "\" alt=\"" + L.qrAlt + "\" width=\"240\" height=\"240\" referrerpolicy=\"no-referrer\">" +
+      "<p class=\"pay-wait\"><span class=\"spin\" aria-hidden=\"true\"></span>" + X.waiting + "</p>" +
+      "<p class=\"pay-hold\">" + X.holdUntil(whenText(s.expires_at)) + "</p>" +
+      "<button type=\"button\" class=\"btn-ghost\" id=\"pay-check\">" + X.checkNow + "</button></div>" +
+      "<div class=\"co-card pay-details\"><h2>" + X.payTitle + "</h2><p class=\"co-note\" style=\"margin:0 0 8px\">" + X.payLead(vnd(amt)) + "</p>" +
+      "<dl class=\"co-rows\">" + row(L.sumPlan, planLabel(s.plan)) + row(L.payBank, BANKS[b.code] || b.code) + row(L.payAcct, b.account_no, b.account_no) + row(L.payName, b.account_name) +
+      row(L.payAmount, vnd(amt), String(amt)) + row(L.payRef, s.payment_reference, s.payment_reference) + "</dl></div></div>";
+  }
+  function receiptScreen(s) {
+    var inst = s.instalments || [], paid = inst.filter(function (i) { return i.status === "paid"; }), last = paid[paid.length - 1] || {};
+    var nextDue = inst.filter(function (i) { return i.status === "due"; })[0];
+    return "<div class=\"co-done ok\"><div class=\"ok-mark\" aria-hidden=\"true\"><svg viewBox=\"0 0 24 24\" width=\"34\" height=\"34\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.6\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M5 12.5l4.2 4.2L19 7\"/></svg></div>" +
+      "<h1>" + X.okH1 + "</h1><p class=\"ok-lead\">" + X.okLead + "</p>" + stepper(3) +
+      "<div class=\"co-card receipt\"><dl class=\"co-rows\">" + row(L.sumPlan, planLabel(s.plan)) + row(X.rAmt, vnd(last.amount_vnd || 0)) + row(X.rRef, s.payment_reference) +
+      (last.paid_at ? row(X.rPaid, whenText(last.paid_at)) : "") + (last.covers_to ? row(X.rThru, fmtDate(new Date(last.covers_to))) : "") +
+      (nextDue ? row(X.rNext, fmtDate(new Date(nextDue.due_on)) + " · " + vnd(nextDue.amount_vnd)) : "") + "</dl></div>" +
+      "<div class=\"co-next\"><h2>" + X.nextH + "</h2><p>" + X.nextTxt + "</p></div>" +
+      "<div class=\"co-actions\"><button type=\"button\" class=\"btn\" id=\"rec-print\">" + X.print + "</button><a class=\"btn-ghost\" href=\"index.html\">" + X.home + "</a></div></div>";
   }
   function bindCopy() {
     document.querySelectorAll(".co-copy").forEach(function (b) {
       b.addEventListener("click", function () {
         var v = b.getAttribute("data-copy");
-        function done() { var t = b.textContent; b.textContent = L.copied; setTimeout(function () { b.textContent = L.copy; }, 1500); }
+        function done() { b.textContent = L.copied; setTimeout(function () { b.textContent = L.copy; }, 1500); }
         try { navigator.clipboard.writeText(v).then(done, function () {}); } catch (e) {}
       });
     });
   }
+
   function renderDone(orderId) {
-    state.view = "done";
-    root.innerHTML = "<div class=\"co-done\"><h1>" + L.doneTitle + "</h1><div id=\"co-status\" aria-live=\"polite\"></div></div>";
-    entered(L.doneTitle);
+    state.view = "done"; state.order = orderId; persist();
+    root.innerHTML = "<h1>" + X.payH1 + "</h1><p class=\"co-loading\" aria-live=\"polite\">…</p>";
+    var last = null, timer = null;
+    function again() { return state.view === "done" && state.order === orderId; }
     function load() {
+      clearTimeout(timer);
       rpc("get_order_status", { p_order: orderId }).then(function (s) {
-        if (!s) { state.order = null; persist(); renderPlans(); return; }
-        var msg = s.status === "paid" ? L.donePaid : s.status === "expired" ? L.doneExpired : L.donePending;
-        var due = (s.instalments || []).filter(function (i) { return i.status === "due"; });
-        var html;
-        if (s.status === "pending" && s.bank && s.pay_now) html = payBox(s);
-        else html = "<p>" + L.doneRef + "</p><div class=\"ref\">" + esc(s.payment_reference) + "</div><p>" + msg + "</p>";
-        if (s.status === "paid" && due.length) html += "<p><strong>" + L.due + "</strong><br>" + due.map(function (i) { return fmtDate(new Date(i.due_on)) + " · " + vnd(i.amount_vnd); }).join("<br>") + "</p>";
-        if (s.status === "expired") html += "<p><a class=\"btn\" href=\"plans.html\" id=\"co-new\">" + L.doneNew + "</a></p>";
-        el("co-status").innerHTML = html;
-        bindCopy();
-        var nb = el("co-new"); if (nb) nb.addEventListener("click", function () { state.order = null; persist(); });
-        if (s.status === "pending") setTimeout(function () { if (state.view === "done") load(); }, 8000);
-      }).catch(function () { el("co-status").innerHTML = "<p>" + L.offline + "</p><p><button class=\"btn\" type=\"button\" id=\"co-retry\">" + L.retry + "</button></p>"; var rb = el("co-retry"); if (rb) rb.addEventListener("click", load); });
+        if (!again()) return;
+        if (!s) { state.order = null; persist(); history.replaceState(null, "", location.pathname); renderPlans(); return; }
+        var kind = s.status === "paid" ? "paid" : s.status === "expired" ? "expired" : (s.bank && s.pay_now) ? "pay" : "nobank";
+        if (kind !== last) {
+          last = kind;
+          if (kind === "paid") root.innerHTML = receiptScreen(s);
+          else if (kind === "pay") root.innerHTML = payScreen(s);
+          else if (kind === "expired") root.innerHTML = "<div class=\"co-done\"><h1>" + X.expH1 + "</h1><p>" + X.expTxt + "</p><p><a class=\"btn\" href=\"plans.html\" id=\"co-new\">" + X.again + "</a></p></div>";
+          else root.innerHTML = "<div class=\"co-done\"><h1>" + X.noBankH1 + "</h1>" + stepper(2) + "<p>" + L.doneRef + "</p><div class=\"ref\">" + esc(s.payment_reference) + "</div><p>" + X.noBank + "</p></div>";
+          entered(kind === "paid" ? X.okH1 : kind === "expired" ? X.expH1 : kind === "pay" ? X.payH1 : X.noBankH1);
+          bindCopy();
+          var nb = el("co-new"); if (nb) nb.addEventListener("click", function () { state.order = null; persist(); });
+          var pr = el("rec-print"); if (pr) pr.addEventListener("click", function () { window.print(); });
+          var ck = el("pay-check"); if (ck) ck.addEventListener("click", function () { ck.disabled = true; setTimeout(function () { ck.disabled = false; }, 1500); load(); });
+        }
+        if (kind === "pay" || kind === "nobank") timer = setTimeout(load, kind === "pay" ? 4000 : 10000);
+      }).catch(function () {
+        if (!again()) return;
+        if (!last) root.innerHTML = "<h1>" + X.payH1 + "</h1><p>" + L.offline + "</p><p><button class=\"btn\" type=\"button\" id=\"co-retry\">" + L.retry + "</button></p>";
+        var rb = el("co-retry"); if (rb) rb.addEventListener("click", load);
+        timer = setTimeout(load, 8000);
+      });
     }
     load();
   }
 
-  window.addEventListener("popstate", function () { window.scrollTo(0, 0); if (location.hash === "#checkout") renderCheckout(); else if (location.hash === "#order" && state.order) renderDone(state.order); else renderPlans(); });
-  if (location.hash === "#order" && state.order && API.url) renderDone(state.order);
+  function orderFromHash() {
+    var m = location.hash.match(/^#order\/([0-9a-f-]{36})$/i);
+    return m ? m[1] : (location.hash === "#order" ? state.order : null);
+  }
+  window.addEventListener("popstate", function () {
+    window.scrollTo(0, 0);
+    if (location.hash === "#checkout") renderCheckout();
+    else if (orderFromHash() && API.url) renderDone(orderFromHash());
+    else renderPlans();
+  });
+  if (orderFromHash() && API.url) renderDone(orderFromHash());
   else if (location.hash === "#checkout") renderCheckout();
   else renderPlans();
 })();
