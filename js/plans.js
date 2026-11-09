@@ -5,6 +5,9 @@
   var LANG = document.documentElement.lang === "vi" ? "vi" : "en";
   var API = window.ZERONE_API || {};
   var MONTHLY = 590000;
+  /* The versions of the documents this page links to (docs/legal, built by scripts/build-legal-site.mjs). The server refuses an order
+     made against any other version, so what is shown and what is recorded cannot drift apart. */
+  var TERMS_VERSION = "terms-ds-2026-11-09-v1", PRIVACY_VERSION = "privacy-ds-2026-11-09-v1";
   var PLANS = {
     monthly: { months: 1, periods: 1, price: MONTHLY, committed: false },
     term_6m: { months: 6, periods: 1, price: 3300000, committed: true },
@@ -24,15 +27,18 @@
       sumSetupFree: "Miễn phí", sumVat: "VAT", sumVatIncl: function (p) { return "đã gồm trong giá (" + p + "%)"; },
       sumVatAdd: function (p) { return p + "% cộng thêm"; }, sumVatNone: "Không cộng thêm", finalPrice: "Giá niêm yết là số tiền cuối cùng bạn thanh toán.", sumTotal: "Thanh toán hôm nay",
       sumCommit: function (m) { return "Tổng cam kết " + m + " tháng"; }, sumNext: "Kỳ thanh toán tiếp theo", nextNone: function (m) { return "Không có kỳ nào trong " + m + " tháng. Khi hết hạn, bạn gia hạn nếu muốn."; },
-      nextMonthly: "Sau mỗi tháng, khi bạn chủ động thanh toán", noAuto: "Zerone không tự động trừ tiền. Mỗi kỳ tiếp theo bạn tự thanh toán trước ngày đến hạn; Zerone nhắc bạn trước hạn.",
+      nextMonthly: "Sau mỗi tháng, khi bạn chủ động thanh toán", sumTerm: "Thời hạn gói",
+      termMonths: function (m) { return m + " tháng"; },
+      termNote: function (m) { return "Thời hạn " + m + " tháng, tính từ ngày Zerone ghi nhận đã nhận đủ tiền."; },
+      renewNote: "Không tự động trừ tiền. Muốn tiếp tục, bạn thanh toán thời hạn tiếp theo trước ngày hết hạn. Bạn có thể dừng gia hạn bất cứ lúc nào và dùng đến hết thời hạn đã thanh toán.",
       monthlyTerms: "Theo tháng, không cam kết năm.", onceTerms: function (m) { return m + " tháng, thanh toán một lần."; },
       preview: "Bản xem trước: giá và điều khoản chưa được phê duyệt chính thức và chưa nhận thanh toán thật.",
       fVertical: "Lĩnh vực", vHealth: "Y khoa", vMental: "Sức khỏe tinh thần", vVet: "Thú y", fName: "Họ và tên", fPractice: "Phòng khám / tên hành nghề (không bắt buộc)",
       fMethod: "Liên hệ qua", mEmail: "Email", mPhone: "Điện thoại", mZalo: "Zalo", fContact: "Thông tin liên hệ",
-      cConsent: "Tôi đồng ý để Zerone liên hệ với tôi về đơn đăng ký này.",
-      cTerms: "Tôi đã đọc và đồng ý với <a href=\"terms.html\" target=\"_blank\" rel=\"noopener\">Điều khoản</a> và <a href=\"privacy.html\" target=\"_blank\" rel=\"noopener\">Chính sách riêng tư</a>.",
+      cAccept: "Tôi đăng ký cho mục đích hành nghề hoặc kinh doanh của mình, đã đọc và đồng ý với <a href=\"doctor-space-terms.html\" target=\"_blank\" rel=\"noopener\">Điều khoản Doctor Space</a> và <a href=\"doctor-space-privacy.html\" target=\"_blank\" rel=\"noopener\">Chính sách quyền riêng tư</a>, và đồng ý để Zerone liên hệ với tôi về đơn này.",
+      errOutdated: "Điều khoản vừa được cập nhật. Vui lòng tải lại trang rồi thử lại.",
       place: "Tạo đơn đăng ký", placing: "Đang tạo đơn…", mailBtn: "Gửi yêu cầu qua email",
-      errGeneric: "Chưa tạo được đơn. Vui lòng thử lại hoặc liên hệ contact@zerone.vn.", errRate: "Bạn thao tác quá nhanh. Vui lòng thử lại sau ít phút.", errFields: "Vui lòng điền họ tên, thông tin liên hệ và đồng ý hai ô bên dưới.",
+      errGeneric: "Chưa tạo được đơn. Vui lòng thử lại hoặc liên hệ contact@zerone.vn.", errRate: "Bạn thao tác quá nhanh. Vui lòng thử lại sau ít phút.", errFields: "Vui lòng điền họ tên, thông tin liên hệ và đánh dấu ô đồng ý.",
       doneTitle: "Đơn đăng ký đã được tạo", doneRef: "Mã thanh toán của bạn",
       donePending: "Đơn đang chờ thanh toán. Gói chỉ được kích hoạt sau khi Zerone xác nhận đã nhận tiền. Zerone sẽ liên hệ với bạn để hướng dẫn thanh toán.",
       donePaid: "Đã nhận thanh toán. Cảm ơn bạn. Zerone sẽ liên hệ để kích hoạt Professional Space của bạn.",
@@ -55,15 +61,18 @@
       sumSetupFree: "Free", sumVat: "VAT", sumVatIncl: function (p) { return "included in the price (" + p + "%)"; },
       sumVatAdd: function (p) { return p + "% added"; }, sumVatNone: "None added", finalPrice: "The listed price is the final amount you pay.", sumTotal: "Due today",
       sumCommit: function (m) { return m + "-month commitment total"; }, sumNext: "Next payment", nextNone: function (m) { return "None within the " + m + " months. At the end you renew only if you wish."; },
-      nextMonthly: "After each month, when you choose to pay", noAuto: "Zerone never charges you automatically. You pay each later instalment yourself before its due date, and Zerone reminds you beforehand.",
+      nextMonthly: "After each month, when you choose to pay", sumTerm: "Plan term",
+      termMonths: function (m) { return m + (m === 1 ? " month" : " months"); },
+      termNote: function (m) { return m + "-month term, counted from the day Zerone records full receipt of your payment."; },
+      renewNote: "No automatic charge. To continue, you pay the next term before the end date. You can stop renewing at any time and keep using the service until the end of the term you paid.",
       monthlyTerms: "Monthly, no annual commitment.", onceTerms: function (m) { return m + " months, paid once."; },
       preview: "Preview: prices and terms are not yet officially approved and no real payment is taken.",
       fVertical: "Field", vHealth: "Healthcare", vMental: "Mental health", vVet: "Veterinary", fName: "Full name", fPractice: "Practice name (optional)",
       fMethod: "Contact via", mEmail: "Email", mPhone: "Phone", mZalo: "Zalo", fContact: "Contact details",
-      cConsent: "I agree that Zerone may contact me about this subscription.",
-      cTerms: "I have read and accept the <a href=\"terms.html\" target=\"_blank\" rel=\"noopener\">Terms</a> and <a href=\"privacy.html\" target=\"_blank\" rel=\"noopener\">Privacy Policy</a>.",
+      cAccept: "I subscribe for my own professional or business purposes, I have read and accept the <a href=\"doctor-space-terms.html\" target=\"_blank\" rel=\"noopener\">Doctor Space Terms</a> and the <a href=\"doctor-space-privacy.html\" target=\"_blank\" rel=\"noopener\">Privacy Policy</a>, and I agree that Zerone may contact me about this order.",
+      errOutdated: "The terms were just updated. Please reload the page and try again.",
       place: "Create subscription order", placing: "Creating order…", mailBtn: "Send request by email",
-      errGeneric: "We could not create the order. Please try again or contact contact@zerone.vn.", errRate: "Too many attempts. Please try again in a few minutes.", errFields: "Please fill in your name and contact details and tick both boxes.",
+      errGeneric: "We could not create the order. Please try again or contact contact@zerone.vn.", errRate: "Too many attempts. Please try again in a few minutes.", errFields: "Please fill in your name and contact details and tick the agreement box.",
       doneTitle: "Your order has been created", doneRef: "Your payment reference",
       donePending: "Your order is awaiting payment. The plan activates only after Zerone confirms the payment was received. Zerone will contact you with payment instructions.",
       donePaid: "Payment received. Thank you. Zerone will contact you to activate your Professional Space.",
@@ -173,21 +182,17 @@
     fillCheckout(localQuote(code));
   }
   function fillCheckout(q) {
-    var now = new Date(), perLabel = q.plan === "monthly" ? L.monthlyTerms : L.onceTerms(q.commitment_months);
+    var now = new Date(), months = q.months_per_period * q.periods;
     var rows = [[L.sumPlan, planName(q)], [L.sumSchedule, q.plan === "monthly" ? (LANG === "vi" ? "Hàng tháng" : "Monthly") : (LANG === "vi" ? "Một lần" : "Once")],
-      [L.sumPeriod, vnd(q.period_price_vnd)],
+      [L.sumPeriod, vnd(q.period_price_vnd)], [L.sumTerm, L.termMonths(months)],
       [L.sumSetup, q.setup_fee_vnd > 0 ? vnd(q.setup_fee_vnd) : q.setup_fee_waived ? L.sumSetupFree : vnd(0)],
       [L.sumVat, q.vat_rate_pct > 0 ? vnd(q.vat_vnd) + " · " + (q.prices_include_vat ? L.sumVatIncl(q.vat_rate_pct) : L.sumVatAdd(q.vat_rate_pct)) : L.sumVatNone]];
     var html = "<button type=\"button\" class=\"co-back\" id=\"co-back\">← " + L.back + "</button><dl class=\"co-rows\">" +
       rows.map(function (r) { return "<div class=\"co-row\"><dt>" + r[0] + "</dt><dd>" + esc(r[1]) + "</dd></div>"; }).join("") +
       "<div class=\"co-row is-total\"><dt>" + L.sumTotal + "</dt><dd>" + vnd(q.payable_now_vnd) + "</dd></div>";
     if (q.commitment_total_vnd) html += "<div class=\"co-row\"><dt>" + L.sumCommit(q.commitment_months) + "</dt><dd>" + vnd(q.commitment_total_vnd) + "</dd></div>";
-    var next;
-    if (q.plan === "monthly") next = fmtDate(addMonths(now, 1)) + " · " + vnd(q.period_price_vnd) + "<br><small>" + L.nextMonthly + "</small>";
-    else if (q.periods > 1) next = fmtDate(addMonths(now, q.months_per_period)) + " · " + vnd(q.period_price_vnd * (q.prices_include_vat ? 1 : 1 + q.vat_rate_pct / 100));
-    else next = L.nextNone(q.commitment_months);
-    html += "<div class=\"co-row\"><dt>" + L.sumNext + "</dt><dd>" + next + "</dd></div></dl>" +
-      "<p class=\"co-note\">" + L.finalPrice + " " + perLabel + " " + L.noAuto + "</p>";
+    if (q.plan === "monthly") html += "<div class=\"co-row\"><dt>" + L.sumNext + "</dt><dd>" + fmtDate(addMonths(now, 1)) + " · " + vnd(q.period_price_vnd) + "<br><small>" + L.nextMonthly + "</small></dd></div>";
+    html += "</dl><p class=\"co-note\">" + L.finalPrice + " " + L.termNote(months) + " " + L.renewNote + "</p>";
     el("co-summary").innerHTML = html;
     el("co-back").addEventListener("click", function () { history.back(); });
     if (!el("co-form")) renderForm(q);
@@ -203,8 +208,7 @@
       "<label class=\"f\">" + L.fPractice + "<input type=\"text\" name=\"practice\" autocomplete=\"organization\" maxlength=\"120\"></label>" +
       "<div class=\"co-two\"><label class=\"f\">" + L.fMethod + "<select name=\"method\"><option value=\"email\">" + L.mEmail + "</option><option value=\"phone\">" + L.mPhone + "</option><option value=\"zalo\">" + L.mZalo + "</option></select></label>" +
       "<label class=\"f\">" + L.fContact + "<input type=\"text\" name=\"contact\" autocomplete=\"email\" maxlength=\"120\"></label></div>" +
-      "<label class=\"chk\"><input type=\"checkbox\" name=\"consent\"><span>" + L.cConsent + "</span></label>" +
-      "<label class=\"chk\"><input type=\"checkbox\" name=\"terms\"><span>" + L.cTerms + "</span></label>" +
+      "<label class=\"chk\"><input type=\"checkbox\" name=\"accept\"><span>" + L.cAccept + "</span></label>" +
       "<p class=\"co-err\" id=\"co-err\" role=\"alert\"></p>" +
       "<button class=\"btn\" type=\"submit\" id=\"co-submit\">" + (api ? L.place : L.mailBtn) + "</button></form>";
     var form = el("co-form");
@@ -214,7 +218,7 @@
   }
   function submit(form, q, api) {
     var v = function (k) { return (form.elements[k].value || "").trim(); }, err = el("co-err");
-    if (v("name").length < 2 || v("contact").length < 5 || !form.elements.consent.checked || !form.elements.terms.checked) { err.textContent = L.errFields; return; }
+    if (v("name").length < 2 || v("contact").length < 5 || !form.elements.accept.checked) { err.textContent = L.errFields; return; }
     err.textContent = "";
     if (!api) {   /* no payment backend configured: the existing email path */
       var body = [planName(q) + " · " + vnd(q.payable_now_vnd), v("name"), v("practice"), v("method") + ": " + v("contact")].join("\n");
@@ -223,9 +227,10 @@
     }
     var btn = el("co-submit"); btn.disabled = true; btn.textContent = L.placing;
     rpc("create_subscription_order", { p_plan: q.plan, p_vertical: v("vertical"), p_name: v("name"), p_practice: v("practice") || null,
-      p_contact_method: v("method"), p_contact: v("contact"), p_consent: true, p_notice: null, p_terms_accepted: true })
+      p_contact_method: v("method"), p_contact: v("contact"), p_accepted: true, p_terms_version: TERMS_VERSION,
+      p_privacy_version: PRIVACY_VERSION, p_locale: LANG, p_business_use: true })
       .then(function (r) { track("order_created"); state.order = r.order_id; persist(); history.replaceState({ v: "done" }, "", "#order/" + r.order_id); renderDone(r.order_id); })
-      .catch(function (e) { btn.disabled = false; btn.textContent = L.place; err.textContent = (e.name === "TypeError") ? L.offline : (e.status === 429 || /rate_limited/.test(e.message)) ? L.errRate : L.errGeneric; });
+      .catch(function (e) { btn.disabled = false; btn.textContent = L.place; err.textContent = (e.name === "TypeError") ? L.offline : /terms_outdated|privacy_outdated/.test(e.message) ? L.errOutdated : (e.status === 429 || /rate_limited/.test(e.message)) ? L.errRate : L.errGeneric; });
   }
 
   /* ---------- payment screen, waiting state and receipt (the order id in the URL makes the page resumable from any device) ---------- */
