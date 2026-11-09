@@ -232,6 +232,8 @@
   var X = {
     vi: {
       s1: "Chọn gói", s2: "Thanh toán", s3: "Hoàn tất", stepsLabel: "Các bước đăng ký",
+      issueMismatch: function (a) { return "Zerone đã nhận khoản chuyển " + a + " nhưng không khớp số tiền của đơn nên chưa được ghi nhận. Vui lòng liên hệ contact@zerone.vn kèm mã thanh toán để được hỗ trợ."; },
+      issueFailed: "Giao dịch gần nhất chưa thành công, đơn chưa được ghi nhận thanh toán. Bạn có thể chuyển khoản lại hoặc liên hệ contact@zerone.vn.",
       payH1: "Thanh toán", payTitle: "Quét mã hoặc chuyển khoản",
       payLead: function (a) { return "Chuyển đúng " + a + " và giữ nguyên nội dung chuyển khoản. Gói được xác nhận khi Zerone nhận được tiền."; },
       waiting: "Đang chờ nhận tiền…", checkNow: "Kiểm tra ngay", holdUntil: function (t) { return "Đơn được giữ đến " + t; },
@@ -245,6 +247,8 @@
     },
     en: {
       s1: "Choose plan", s2: "Payment", s3: "Done", stepsLabel: "Subscription steps",
+      issueMismatch: function (a) { return "Zerone received a transfer of " + a + " but it does not match the order amount, so it was not recorded. Please contact contact@zerone.vn with your payment reference."; },
+      issueFailed: "The latest transaction did not succeed and no payment was recorded for this order. You can transfer again or contact contact@zerone.vn.",
       payH1: "Payment", payTitle: "Scan the code or transfer",
       payLead: function (a) { return "Transfer exactly " + a + " and keep the transfer content unchanged. Your plan is confirmed when Zerone receives the money."; },
       waiting: "Waiting for your payment…", checkNow: "Check now", holdUntil: function (t) { return "Order held until " + t; },
@@ -274,7 +278,9 @@
     var b = s.bank, amt = s.pay_now.amount_vnd;
     var qr = "https://img.vietqr.io/image/" + encodeURIComponent(b.code) + "-" + encodeURIComponent(b.account_no) + "-compact2.png?amount=" + amt +
       "&addInfo=" + encodeURIComponent(s.payment_reference) + "&accountName=" + encodeURIComponent(b.account_name);
-    return "<h1>" + X.payH1 + "</h1>" + stepper(2) +
+    var is = s.payment_issue;
+    var issue = is ? "<div class=\"co-issue\" role=\"alert\">" + (is.outcome === "amount_mismatch" ? X.issueMismatch(vnd(is.amount_vnd)) : X.issueFailed) + "</div>" : "";
+    return "<h1>" + X.payH1 + "</h1>" + stepper(2) + issue +
       "<div class=\"pay-wrap\"><div class=\"co-card pay-qr\"><img class=\"co-qr\" src=\"" + qr + "\" alt=\"" + L.qrAlt + "\" width=\"240\" height=\"240\" referrerpolicy=\"no-referrer\">" +
       "<p class=\"pay-wait\"><span class=\"spin\" aria-hidden=\"true\"></span>" + X.waiting + "</p>" +
       "<p class=\"pay-hold\">" + X.holdUntil(whenText(s.expires_at)) + "</p>" +
@@ -314,20 +320,20 @@
       rpc("get_order_status", { p_order: orderId }).then(function (s) {
         if (!again()) return;
         if (!s) { state.order = null; persist(); history.replaceState(null, "", location.pathname); renderPlans(); return; }
-        var kind = s.status === "paid" ? "paid" : s.status === "expired" ? "expired" : (s.bank && s.pay_now) ? "pay" : "nobank";
+        var kind = s.status === "paid" ? "paid" : s.status === "expired" ? "expired" : (s.bank && s.pay_now) ? (s.payment_issue ? "pay!" + s.payment_issue.at : "pay") : "nobank";
         if (kind !== last) {
           last = kind;
           if (kind === "paid") root.innerHTML = receiptScreen(s);
-          else if (kind === "pay") root.innerHTML = payScreen(s);
+          else if (kind.indexOf("pay") === 0) root.innerHTML = payScreen(s);
           else if (kind === "expired") root.innerHTML = "<div class=\"co-done\"><h1>" + X.expH1 + "</h1><p>" + X.expTxt + "</p><p><a class=\"btn\" href=\"plans.html\" id=\"co-new\">" + X.again + "</a></p></div>";
           else root.innerHTML = "<div class=\"co-done\"><h1>" + X.noBankH1 + "</h1>" + stepper(2) + "<p>" + L.doneRef + "</p><div class=\"ref\">" + esc(s.payment_reference) + "</div><p>" + X.noBank + "</p></div>";
-          entered(kind === "paid" ? X.okH1 : kind === "expired" ? X.expH1 : kind === "pay" ? X.payH1 : X.noBankH1);
+          entered(kind === "paid" ? X.okH1 : kind === "expired" ? X.expH1 : kind.indexOf("pay") === 0 ? X.payH1 : X.noBankH1);
           bindCopy();
           var nb = el("co-new"); if (nb) nb.addEventListener("click", function () { state.order = null; persist(); });
           var pr = el("rec-print"); if (pr) pr.addEventListener("click", function () { window.print(); });
           var ck = el("pay-check"); if (ck) ck.addEventListener("click", function () { ck.disabled = true; setTimeout(function () { ck.disabled = false; }, 1500); load(); });
         }
-        if (kind === "pay" || kind === "nobank") timer = setTimeout(load, kind === "pay" ? 4000 : 10000);
+        if (kind.indexOf("pay") === 0 || kind === "nobank") timer = setTimeout(load, kind.indexOf("pay") === 0 ? 4000 : 10000);
       }).catch(function () {
         if (!again()) return;
         if (!last) root.innerHTML = "<h1>" + X.payH1 + "</h1><p>" + L.offline + "</p><p><button class=\"btn\" type=\"button\" id=\"co-retry\">" + L.retry + "</button></p>";

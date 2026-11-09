@@ -133,3 +133,4 @@
   .receipt { box-shadow: none; border: 1px solid #999; background: #fff; }
 }
 .receipt .co-rows, .co-done .receipt .co-rows { background: none; border: 0; box-shadow: none; -webkit-backdrop-filter: none; backdrop-filter: none; padding: 0; border-radius: 0; }
+.co-issue { max-width: 940px; margin: -6px auto 18px; padding: 12px 16px; border: 1px solid #e0b4b6; background: #fbeeee; border-radius: 12px; color: #5e0f13; font-size: .92rem; line-height: 1.5; }
