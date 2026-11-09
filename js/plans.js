@@ -39,6 +39,9 @@
       donePending: "Đơn đang chờ thanh toán. Gói chỉ được kích hoạt sau khi Zerone xác nhận đã nhận tiền. Zerone sẽ liên hệ với bạn để hướng dẫn thanh toán.",
       donePaid: "Đã nhận thanh toán. Cảm ơn bạn. Zerone sẽ liên hệ để kích hoạt Professional Space của bạn.",
       doneExpired: "Đơn đã hết hạn. Bạn có thể tạo đơn mới.", doneNew: "Chọn lại gói",
+      payTitle: "Chuyển khoản để hoàn tất", payBank: "Ngân hàng", payAcct: "Số tài khoản", payName: "Chủ tài khoản", payAmount: "Số tiền", payRef: "Nội dung chuyển khoản",
+      payNote: "Vui lòng nhập đúng số tiền và nội dung chuyển khoản. Gói được kích hoạt khi Zerone xác nhận đã nhận tiền; trang này tự cập nhật.", copy: "Sao chép", copied: "Đã chép", qrAlt: "Mã QR chuyển khoản",
+      retry: "Thử lại", offline: "Chưa kết nối được. Kiểm tra mạng rồi thử lại.",
       due: "Hạn thanh toán các kỳ", mailSubject: "Đăng ký Professional Space", currency: "đ"
     },
     en: {
@@ -68,6 +71,9 @@
       donePending: "Your order is awaiting payment. The plan activates only after Zerone confirms the payment was received. Zerone will contact you with payment instructions.",
       donePaid: "Payment received. Thank you. Zerone will contact you to activate your Professional Space.",
       doneExpired: "This order has expired. You can start a new one.", doneNew: "Choose a plan again",
+      payTitle: "Pay by bank transfer", payBank: "Bank", payAcct: "Account number", payName: "Account name", payAmount: "Amount", payRef: "Transfer reference",
+      payNote: "Please transfer the exact amount with the reference. The plan activates when Zerone confirms the money was received; this page updates by itself.", copy: "Copy", copied: "Copied", qrAlt: "Bank transfer QR code",
+      retry: "Try again", offline: "Could not connect. Check your connection and try again.",
       due: "Instalment due dates", mailSubject: "Professional Space subscription", currency: "đ"
     }
   };
@@ -103,9 +109,22 @@
 
   var root = el("plans-root");
 
+  /* Funnel steps go to the same anonymous website ledger as the rest of the journey: no personal data, once per step per visit. */
+  var SID = (function () { try { var s = sessionStorage.getItem("zplan_sid"); if (!s) { s = ""; for (var i = 0; i < 24; i++) s += Math.floor(Math.random() * 16).toString(16); sessionStorage.setItem("zplan_sid", s); } return s; } catch (e) { return "0123456789abcdef01234567"; } })();
+  var SRC = (function () { var s = new URLSearchParams(location.search).get("src"); return s && /^[a-z0-9_-]{1,40}$/.test(s) ? s : "site-plans"; })();
+  function track(kind) {
+    if (!API.url) return;
+    try { fetch(API.url + "/rest/v1/rpc/track_preview_event", { method: "POST", keepalive: true, referrerPolicy: "no-referrer", headers: { "Content-Type": "application/json", apikey: API.key, Authorization: "Bearer " + API.key }, body: JSON.stringify({ p_kind: kind, p_session: SID, p_source: SRC }) }).catch(function () {}); } catch (e) {}
+  }
+  var BASE_TITLE = document.title;
+  function entered(title) {   /* a view change: new title, focus on the heading so keyboard and screen-reader users land at the top */
+    document.title = title ? title + " — Zerone" : BASE_TITLE;
+    var h = root.querySelector("h1"); if (h) { h.setAttribute("tabindex", "-1"); try { h.focus({ preventScroll: true }); } catch (e) {} }
+  }
+
   /* ---------- plan selection ---------- */
   function renderPlans() {
-    state.view = "plans";
+    state.view = "plans"; document.title = BASE_TITLE;
     var feats = "<p class=\"plan-feat-h\">" + L.included + "</p><ul class=\"plan-feat\">" + L.feats.map(function (f) { return "<li>" + f + "</li>"; }).join("") + "</ul>";
     var tp = PLANS["term_" + state.term + "m"], sv = saving("term_" + state.term + "m");
     function card(key, name, sub, price, per, note, extra) {
@@ -134,7 +153,8 @@
     root.querySelectorAll("input[name=term]").forEach(function (r) {
       r.addEventListener("change", function () { state.term = parseInt(r.value, 10); state.plan = "term"; persist(); renderPlans(); var n = root.querySelector("input[name=term]:checked"); if (n) n.focus(); });
     });
-    el("plan-continue").addEventListener("click", function () { persist(); history.pushState({ v: "checkout" }, "", "#checkout"); renderCheckout(); window.scrollTo(0, 0); });
+    if (!renderPlans.seen) { renderPlans.seen = true; track("plans_viewed"); }
+    el("plan-continue").addEventListener("click", function () { track("plan_selected"); persist(); history.pushState({ v: "checkout" }, "", "#checkout"); renderCheckout(); window.scrollTo(0, 0); });
   }
   function select(key) {
     if (state.plan === key) return;
@@ -160,7 +180,9 @@
   }
   function renderCheckout() {
     state.view = "checkout";
+    track("checkout_started");
     root.innerHTML = "<h1>" + L.coTitle + "</h1><div class=\"co-wrap\"><div class=\"co-card\" id=\"co-summary\"></div><div class=\"co-card\" id=\"co-formbox\"></div></div>";
+    entered(L.coTitle);
     var code = planCode();
     getQuote(code).then(function (q) { if (state.view === "checkout") fillCheckout(q); });
     fillCheckout(localQuote(code));
@@ -217,31 +239,53 @@
     var btn = el("co-submit"); btn.disabled = true; btn.textContent = L.placing;
     rpc("create_subscription_order", { p_plan: q.plan, p_vertical: v("vertical"), p_name: v("name"), p_practice: v("practice") || null,
       p_contact_method: v("method"), p_contact: v("contact"), p_consent: true, p_notice: null, p_terms_accepted: true })
-      .then(function (r) { state.order = r.order_id; persist(); history.replaceState({ v: "done" }, "", "#order"); renderDone(r.order_id); })
-      .catch(function (e) { btn.disabled = false; btn.textContent = L.place; err.textContent = (e.status === 429 || /rate_limited/.test(e.message)) ? L.errRate : L.errGeneric; });
+      .then(function (r) { track("order_created"); state.order = r.order_id; persist(); history.replaceState({ v: "done" }, "", "#order"); renderDone(r.order_id); })
+      .catch(function (e) { btn.disabled = false; btn.textContent = L.place; err.textContent = (e.name === "TypeError") ? L.offline : (e.status === 429 || /rate_limited/.test(e.message)) ? L.errRate : L.errGeneric; });
   }
 
   /* ---------- order status (also the page an interrupted buyer returns to) ---------- */
+  function payBox(s) {
+    var b = s.bank, amt = s.pay_now.amount_vnd;
+    var qr = "https://img.vietqr.io/image/" + encodeURIComponent(b.code) + "-" + encodeURIComponent(b.account_no) + "-compact2.png?amount=" + amt +
+      "&addInfo=" + encodeURIComponent(s.payment_reference) + "&accountName=" + encodeURIComponent(b.account_name);
+    function row(k, v, copy) { return "<div class=\"co-row\"><dt>" + k + "</dt><dd>" + esc(v) + (copy ? " <button type=\"button\" class=\"co-copy\" data-copy=\"" + esc(copy) + "\">" + L.copy + "</button>" : "") + "</dd></div>"; }
+    return "<h2>" + L.payTitle + "</h2><img class=\"co-qr\" src=\"" + qr + "\" alt=\"" + L.qrAlt + "\" width=\"220\" height=\"220\" referrerpolicy=\"no-referrer\">" +
+      "<dl class=\"co-rows\" style=\"text-align:left\">" + row(L.payBank, b.code) + row(L.payAcct, b.account_no, b.account_no) + row(L.payName, b.account_name) +
+      row(L.payAmount, vnd(amt), String(amt)) + row(L.payRef, s.payment_reference, s.payment_reference) + "</dl><p class=\"co-note\">" + L.payNote + "</p>";
+  }
+  function bindCopy() {
+    document.querySelectorAll(".co-copy").forEach(function (b) {
+      b.addEventListener("click", function () {
+        var v = b.getAttribute("data-copy");
+        function done() { var t = b.textContent; b.textContent = L.copied; setTimeout(function () { b.textContent = L.copy; }, 1500); }
+        try { navigator.clipboard.writeText(v).then(done, function () {}); } catch (e) {}
+      });
+    });
+  }
   function renderDone(orderId) {
     state.view = "done";
-    root.innerHTML = "<div class=\"co-done\"><h1>" + L.doneTitle + "</h1><div id=\"co-status\"></div></div>";
+    root.innerHTML = "<div class=\"co-done\"><h1>" + L.doneTitle + "</h1><div id=\"co-status\" aria-live=\"polite\"></div></div>";
+    entered(L.doneTitle);
     function load() {
       rpc("get_order_status", { p_order: orderId }).then(function (s) {
         if (!s) { state.order = null; persist(); renderPlans(); return; }
         var msg = s.status === "paid" ? L.donePaid : s.status === "expired" ? L.doneExpired : L.donePending;
         var due = (s.instalments || []).filter(function (i) { return i.status === "due"; });
-        var html = "<p>" + L.doneRef + "</p><div class=\"ref\">" + esc(s.payment_reference) + "</div><p>" + msg + "</p>";
+        var html;
+        if (s.status === "pending" && s.bank && s.pay_now) html = payBox(s);
+        else html = "<p>" + L.doneRef + "</p><div class=\"ref\">" + esc(s.payment_reference) + "</div><p>" + msg + "</p>";
         if (s.status === "paid" && due.length) html += "<p><strong>" + L.due + "</strong><br>" + due.map(function (i) { return fmtDate(new Date(i.due_on)) + " · " + vnd(i.amount_vnd); }).join("<br>") + "</p>";
         if (s.status === "expired") html += "<p><a class=\"btn\" href=\"plans.html\" id=\"co-new\">" + L.doneNew + "</a></p>";
         el("co-status").innerHTML = html;
+        bindCopy();
         var nb = el("co-new"); if (nb) nb.addEventListener("click", function () { state.order = null; persist(); });
         if (s.status === "pending") setTimeout(function () { if (state.view === "done") load(); }, 8000);
-      }).catch(function () { el("co-status").innerHTML = "<p>" + L.errGeneric + "</p>"; });
+      }).catch(function () { el("co-status").innerHTML = "<p>" + L.offline + "</p><p><button class=\"btn\" type=\"button\" id=\"co-retry\">" + L.retry + "</button></p>"; var rb = el("co-retry"); if (rb) rb.addEventListener("click", load); });
     }
     load();
   }
 
-  window.addEventListener("popstate", function () { if (location.hash === "#checkout") renderCheckout(); else if (location.hash === "#order" && state.order) renderDone(state.order); else renderPlans(); });
+  window.addEventListener("popstate", function () { window.scrollTo(0, 0); if (location.hash === "#checkout") renderCheckout(); else if (location.hash === "#order" && state.order) renderDone(state.order); else renderPlans(); });
   if (location.hash === "#order" && state.order && API.url) renderDone(state.order);
   else if (location.hash === "#checkout") renderCheckout();
   else renderPlans();
