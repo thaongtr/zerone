@@ -147,3 +147,6 @@ body .proof-band .proof-step.proof-out {
   border: 1px solid rgba(255,255,255,.92);
   box-shadow: 0 22px 48px rgba(10,24,52,.26), inset 1.5px 1.5px 0 #fff, inset -1px -1px 0 rgba(255,255,255,.6);
 }
+/* proof-band step labels use the brand burgundy (same as every other eyebrow) */
+body .proof-band .proof-tag { color: var(--sc-bur); font-weight: 700; }
+body .proof-band .proof-out .proof-tag { color: var(--sc-bur); }
