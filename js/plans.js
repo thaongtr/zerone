@@ -4,6 +4,7 @@
 (function () {
   var LANG = document.documentElement.lang === "vi" ? "vi" : "en";
   var API = window.ZERONE_API || {};
+  var PAY = window.ZERONE_PAY || {};   /* online methods that are registered and switched on; card (AppotaPay) and recurring stay off until Zerone enables them */
   var MONTHLY = 500000;   /* listed prices exclude VAT; VAT is added at checkout (founder decision 2026-11-10) */
   var VAT_PCT = Number((window.ZERONE_PRICING || {}).vat_rate_pct); if (!(VAT_PCT >= 0)) VAT_PCT = 8;
   /* The versions of the documents this page links to (docs/legal, built by scripts/build-legal-site.mjs). The server refuses an order
@@ -16,18 +17,25 @@
   };
   var T = {
     vi: {
-      title: "Chọn gói phù hợp", exVat: "Chưa gồm VAT", cont: "Tiếp tục", back: "Quay lại chọn gói",
-      monthly: "Theo tháng", monthlyPer: "tháng", monthlyNote: "Thanh toán hàng tháng. Hủy gia hạn bất kỳ lúc nào.",
+      title: "Chọn gói phù hợp", exVat: "Chưa gồm VAT",
+      pmTitle: "Phương thức thanh toán", pmOn: "Khả dụng", pmOff: "Chưa khả dụng",
+      pmMail: "Gửi yêu cầu qua email",
+      pmOrder: "Đặt đơn, Zerone hướng dẫn thanh toán",
+      pmBank: "Chuyển khoản ngân hàng / quét mã QR",
+      pmCard: "Thẻ Visa/Mastercard (cổng AppotaPay)",
+      pmRec: "Thanh toán định kỳ tự động",
+      policiesMore: "Xem thêm: <a href=\"chinh-sach-gia.html\" target=\"_blank\" rel=\"noopener\">Chính sách về giá</a> · <a href=\"chinh-sach-thanh-toan.html\" target=\"_blank\" rel=\"noopener\">Chính sách thanh toán</a> · <a href=\"cung-cap-dich-vu-cham-dut-hoan-tien.html\" target=\"_blank\" rel=\"noopener\">Chấm dứt & hoàn tiền</a> · <a href=\"giai-quyet-khieu-nai.html\" target=\"_blank\" rel=\"noopener\">Giải quyết khiếu nại</a>", cont: "Tiếp tục", back: "Quay lại chọn gói",
+      monthly: "Theo tháng", monthlyPer: "tháng", monthlyNote: "Thanh toán theo từng tháng. Dừng gia hạn bất kỳ lúc nào.",
       six: "6 tháng", sixPer: "6 tháng",
       sixNote: function (pm, sv, pct) { return "Tiết kiệm " + pct + "% so với gói tháng."; },
       annual: "12 tháng", annualPer: "năm",
       annualNote: function (pm, sv, pct) { return "Tiết kiệm " + pct + "% so với gói tháng."; },
       included: "Bao gồm:",
-      feats: ["Hồ sơ chuyên môn", "QR & đường dẫn riêng", "Tiếp nhận yêu cầu đặt lịch", "Workspace quản lý lịch hẹn", "Cập nhật hồ sơ & thông tin dịch vụ", "Duy trì nền tảng & hỗ trợ kỹ thuật"],
+      feats: ["Hồ sơ chuyên môn", "QR & đường dẫn riêng", "Tiếp nhận yêu cầu đặt lịch (mở khi Zerone thông báo sẵn sàng)", "Workspace quản lý lịch hẹn", "Cập nhật hồ sơ & thông tin dịch vụ", "Duy trì nền tảng & hỗ trợ kỹ thuật"],
       coTitle: "Xác nhận đăng ký", sumPlan: "Gói đăng ký", sumSchedule: "Lịch thanh toán", sumPeriod: "Giá mỗi kỳ (chưa gồm VAT)", sumSetup: "Phí thiết lập",
       sumSetupFree: "Miễn phí", sumVat: "VAT", sumVatIncl: function (p) { return "đã gồm trong giá (" + p + "%)"; },
-      sumVatAdd: function (p) { return p + "% cộng thêm"; }, sumVatNone: "Không cộng thêm", finalPrice: "Giá niêm yết chưa gồm VAT. VAT được cộng thêm ở bước thanh toán; số tiền thanh toán và mã QR là tổng đã gồm VAT.", sumTotal: "Thanh toán hôm nay (đã gồm VAT)",
-      sumCommit: function (m) { return "Tổng cam kết " + m + " tháng (chưa gồm VAT)"; }, sumNext: "Kỳ thanh toán tiếp theo", nextNone: function (m) { return "Không có kỳ nào trong " + m + " tháng. Khi hết hạn, bạn gia hạn nếu muốn."; },
+      sumVatAdd: function (p) { return p + "% cộng thêm"; }, sumVatNone: "Không cộng thêm", finalPrice: "Giá niêm yết chưa gồm VAT. VAT được cộng thêm ở bước thanh toán; số tiền thanh toán và mã QR là tổng đã gồm VAT.", sumTotal: "Tổng số tiền thanh toán (đã gồm VAT)",
+      sumCommit: function (m) { return "Tổng giá gói " + m + " tháng (chưa gồm VAT)"; }, sumNext: "Kỳ thanh toán tiếp theo", nextNone: function (m) { return "Không có kỳ nào trong " + m + " tháng. Khi hết hạn, bạn gia hạn nếu muốn."; },
       nextMonthly: "Sau mỗi tháng, khi bạn chủ động thanh toán", sumTerm: "Thời hạn gói",
       termMonths: function (m) { return m + " tháng"; },
       termNote: function (m) { return "Thời hạn " + m + " tháng, tính từ ngày Zerone ghi nhận đã nhận đủ tiền."; },
@@ -50,18 +58,25 @@
       due: "Hạn thanh toán các kỳ", mailSubject: "Đăng ký Professional Space", currency: "đ"
     },
     en: {
-      title: "Find the plan for you", exVat: "Excl. VAT", cont: "Continue", back: "Back to plans",
+      title: "Find the plan for you", exVat: "Excl. VAT",
+      pmTitle: "Payment method", pmOn: "Available", pmOff: "Not available",
+      pmMail: "Send a request by email",
+      pmOrder: "Place the order; Zerone sends payment instructions",
+      pmBank: "Bank transfer / QR code",
+      pmCard: "Visa/Mastercard (AppotaPay gateway)",
+      pmRec: "Automatic recurring payment",
+      policiesMore: "See also (Vietnamese): <a href=\"vi/chinh-sach-gia.html\" target=\"_blank\" rel=\"noopener\">Pricing</a> · <a href=\"vi/chinh-sach-thanh-toan.html\" target=\"_blank\" rel=\"noopener\">Payment</a> · <a href=\"vi/cung-cap-dich-vu-cham-dut-hoan-tien.html\" target=\"_blank\" rel=\"noopener\">Termination &amp; refunds</a> · <a href=\"vi/giai-quyet-khieu-nai.html\" target=\"_blank\" rel=\"noopener\">Complaints</a>", cont: "Continue", back: "Back to plans",
       monthly: "Monthly", monthlyPer: "month", monthlyNote: "Pay monthly. Stop renewing any time.",
       six: "6 months", sixPer: "6 months",
       sixNote: function (pm, sv, pct) { return "Save " + pct + "% compared with the monthly plan."; },
       annual: "12 months", annualPer: "year",
       annualNote: function (pm, sv, pct) { return "Save " + pct + "% compared with the monthly plan."; },
       included: "Includes:",
-      feats: ["Professional profile", "Your own QR & link", "Appointment-request intake", "Workspace to manage appointments", "Profile & service updates", "Platform upkeep & technical support"],
+      feats: ["Professional profile", "Your own QR & link", "Appointment-request intake (switched on when Zerone announces it is ready)", "Workspace to manage appointments", "Profile & service updates", "Platform upkeep & technical support"],
       coTitle: "Confirm your subscription", sumPlan: "Plan", sumSchedule: "Payment schedule", sumPeriod: "Price per period (excl. VAT)", sumSetup: "Setup fee",
       sumSetupFree: "Free", sumVat: "VAT", sumVatIncl: function (p) { return "included in the price (" + p + "%)"; },
-      sumVatAdd: function (p) { return p + "% added"; }, sumVatNone: "None added", finalPrice: "Listed prices exclude VAT. VAT is added at checkout; the amount you pay and the QR code show the total including VAT.", sumTotal: "Due today (incl. VAT)",
-      sumCommit: function (m) { return m + "-month commitment total (excl. VAT)"; }, sumNext: "Next payment", nextNone: function (m) { return "None within the " + m + " months. At the end you renew only if you wish."; },
+      sumVatAdd: function (p) { return p + "% added"; }, sumVatNone: "None added", finalPrice: "Listed prices exclude VAT. VAT is added at checkout; the amount you pay and the QR code show the total including VAT.", sumTotal: "Total to pay (incl. VAT)",
+      sumCommit: function (m) { return m + "-month plan price (excl. VAT)"; }, sumNext: "Next payment", nextNone: function (m) { return "None within the " + m + " months. At the end you renew only if you wish."; },
       nextMonthly: "After each month, when you choose to pay", sumTerm: "Plan term",
       termMonths: function (m) { return m + (m === 1 ? " month" : " months"); },
       termNote: function (m) { return m + "-month term, counted from the day Zerone records full receipt of your payment."; },
@@ -202,6 +217,20 @@
     var bn = el("co-banner"); if (bn) bn.hidden = !!q.approved;
     currentQuote = q;
   }
+  /* Every method Zerone plans to offer is listed; only those that really work can be chosen, the rest show their status. */
+  function methodsHtml(q, api) {
+    var bankOn = !!(api && q.approved);
+    var rows = [
+      !bankOn ? ["assisted", api ? L.pmOrder : L.pmMail, true] : null,
+      ["bank", L.pmBank, bankOn],
+      ["card", L.pmCard, !!PAY.card],
+      ["recurring", L.pmRec, !!PAY.recurring]
+    ].filter(Boolean);
+    var firstOn = rows.filter(function (r) { return r[2]; })[0];
+    return "<fieldset class=\"co-pay\"><legend>" + L.pmTitle + "</legend>" + rows.map(function (r) {
+      return "<label class=\"pm" + (r[2] ? "" : " is-off") + "\"><input type=\"radio\" name=\"pay\" value=\"" + r[0] + "\"" + (r[2] ? "" : " disabled") + (firstOn && firstOn[0] === r[0] ? " checked" : "") + "><span class=\"pm-main\"><b>" + r[1] + "</b></span><span class=\"pm-status " + (r[2] ? "s-on" : "s-off") + "\">" + (r[2] ? L.pmOn : L.pmOff) + "</span></label>";
+    }).join("") + "</fieldset>";
+  }
   function renderForm(q) {
     var f = state.form, box = el("co-formbox"), api = !!API.url;
     var banner = "<p id=\"co-banner\"" + (q.approved ? " hidden" : "") + " class=\"co-note\" style=\"margin:0 0 14px;padding:10px 12px;border:1px solid #d9c9a3;background:#fbf6e8;border-radius:10px;color:#5b4a1a\">" + L.preview + "</p>";
@@ -211,7 +240,9 @@
       "<label class=\"f\">" + L.fPractice + "<input type=\"text\" name=\"practice\" autocomplete=\"organization\" maxlength=\"120\"></label>" +
       "<div class=\"co-two\"><label class=\"f\">" + L.fMethod + "<select name=\"method\"><option value=\"email\">" + L.mEmail + "</option><option value=\"phone\">" + L.mPhone + "</option><option value=\"zalo\">" + L.mZalo + "</option></select></label>" +
       "<label class=\"f\">" + L.fContact + "<input type=\"text\" name=\"contact\" autocomplete=\"email\" maxlength=\"120\"></label></div>" +
+      methodsHtml(q, api) +
       "<label class=\"chk\"><input type=\"checkbox\" name=\"accept\"><span>" + L.cAccept + "</span></label>" +
+      "<p class=\"co-note\">" + L.policiesMore + "</p>" +
       "<p class=\"co-err\" id=\"co-err\" role=\"alert\"></p>" +
       "<button class=\"btn\" type=\"submit\" id=\"co-submit\">" + (api ? L.place : L.mailBtn) + "</button></form>";
     var form = el("co-form");

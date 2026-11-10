@@ -15,9 +15,14 @@ const T = {
     home: "Zerone home", menu: "Menu",
     foot: {
       desc: "Healthcare Experience & Innovation.",
-      explore: "Explore", touch: "Get in touch", legal: "Privacy", terms: "Terms",
+      explore: "Explore", touch: "Get in touch", legal: "Consulting site privacy", terms: "Consulting site terms",
       city: "Ho Chi Minh City, Vietnam",
-      addr: "L18 Vincom Center Đồng Khởi, 72 Lê Thánh Tôn, Phường Sài Gòn, Ho Chi Minh City, Vietnam, 70000",
+      addr: "L18-11-13, Floor 18, Vincom Center Dong Khoi, 72 Le Thanh Ton, Sai Gon Ward, Ho Chi Minh City, Vietnam",
+      policies: "Policies & Legal", policiesNote: "Policies are published in Vietnamese.",
+      coName: "CÔNG TY TNHH ZERONE", coId: "Tax / enterprise code: 0318035131, first issued 11/09/2023",
+      coSeat: "Registered office: L18-11-13, Floor 18, Vincom Center Dong Khoi, 72 Le Thanh Ton, Sai Gon Ward, Ho Chi Minh City",
+      coRep: "Legal representative: Nguyễn Trần Linh Thảo",
+      coContact: "Email: contact@zerone.vn · Hotline: 0901 456 711 · Zalo OA: zalo.me/1458646250790074597",
       rights: "All rights reserved.",
       approach: "Approach", work: "Case study", about: "About", faq: "FAQ", contact: "Contact",
     },
@@ -40,9 +45,14 @@ const T = {
     home: "Trang chủ Zerone", menu: "Menu",
     foot: {
       desc: "Trải nghiệm & Đổi mới trong chăm sóc sức khỏe.",
-      explore: "Khám phá", touch: "Kết nối", legal: "Chính sách bảo mật", terms: "Điều khoản sử dụng",
+      explore: "Khám phá", touch: "Kết nối", legal: "Bảo mật website tư vấn", terms: "Điều khoản website tư vấn",
       city: "Thành phố Hồ Chí Minh, Việt Nam",
-      addr: "L18 Vincom Center Đồng Khởi, 72 Lê Thánh Tôn, Phường Sài Gòn, TP. Hồ Chí Minh, Việt Nam, 70000",
+      addr: "L18-11-13, Tầng 18, Tòa nhà Vincom Center Đồng Khởi, 72 Lê Thánh Tôn, Phường Sài Gòn, TP. Hồ Chí Minh, Việt Nam",
+      policies: "Chính sách & Pháp lý", policiesNote: "",
+      coName: "CÔNG TY TNHH ZERONE", coId: "MST/Mã số doanh nghiệp: 0318035131, cấp ngày 11/09/2023",
+      coSeat: "Trụ sở: L18-11-13, Tầng 18, Tòa nhà Vincom Center Đồng Khởi, 72 Lê Thánh Tôn, Phường Sài Gòn, TP. Hồ Chí Minh",
+      coRep: "Người đại diện theo pháp luật: Nguyễn Trần Linh Thảo",
+      coContact: "Email: contact@zerone.vn · Hotline: 0901 456 711 · Zalo OA: zalo.me/1458646250790074597",
       rights: "Bảo lưu mọi quyền.",
       approach: "Phương pháp", work: "Dự án điển hình", about: "Giới thiệu", faq: "Câu hỏi thường gặp", contact: "Liên hệ",
     },
@@ -182,6 +192,25 @@ function socialLinks() {
   return `<nav class="f3-social" aria-label="${groupLabel}"><ul>${items}</ul></nav>`;
 }
 
+/* Policies required on the home screen of an e-commerce website (Decree 248/2026/ND-CP art. 4, art. 17 para 1 point a).
+   Published in Vietnamese under /vi/; the English pages link to the same documents. */
+const POLICIES = [
+  ["dieu-khoan-quyen-nghia-vu", "Terms of use", "Điều khoản sử dụng"],
+  ["chinh-sach-bao-mat-thong-tin", "Privacy policy", "Chính sách bảo mật"],
+  ["chinh-sach-gia", "Pricing policy", "Chính sách về giá"],
+  ["chinh-sach-thanh-toan", "Payment policy", "Chính sách thanh toán"],
+  ["dieu-kien-cung-cap-dich-vu", "Service conditions and limits", "Điều kiện cung cấp dịch vụ"],
+  ["cung-cap-dich-vu-cham-dut-hoan-tien", "Service delivery, termination and refunds", "Cung cấp dịch vụ, chấm dứt & hoàn tiền"],
+  ["giai-quyet-khieu-nai", "Complaint handling", "Giải quyết khiếu nại"],
+  ["ho-tro-truc-tuyen", "Online support", "Hỗ trợ trực tuyến"],
+  ["thong-tin-doanh-nghiep", "Company information", "Thông tin doanh nghiệp"],
+];
+function policyLinks() {
+  const dir = LANG === "vi" ? "" : "vi/";
+  const label = LANG === "vi" ? 2 : 1;
+  return POLICIES.map((p) => `<li><a href="${dir}${p[0]}.html"${LANG === "vi" ? "" : ' hreflang="vi" lang="vi"'}>${p[label]}</a></li>`).join("");
+}
+
 function footer() {
   const f = L.foot;
   return `
@@ -205,6 +234,18 @@ function footer() {
             <a href="contact.html">${L.book}</a>
             <a href="contact.html">${f.contact}</a>
           </div>
+        </div>
+        <nav class="f3-policies" aria-label="${f.policies}">
+          <b>${f.policies}</b>
+          <ul>${policyLinks()}</ul>
+          ${f.policiesNote ? `<small>${f.policiesNote}</small>` : ""}
+        </nav>
+        <div class="f3-company">
+          <b>${f.coName}</b>
+          <span>${f.coId}</span>
+          <span>${f.coSeat}</span>
+          <span>${f.coRep}</span>
+          <span>${f.coContact}</span>
         </div>
         ${socialLinks()}
         <div class="f3-bottom">
