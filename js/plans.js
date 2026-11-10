@@ -16,11 +16,11 @@
   var T = {
     vi: {
       title: "Chọn gói phù hợp", cont: "Tiếp tục", back: "Quay lại chọn gói",
-      monthly: "Theo tháng", monthlyPer: "tháng", monthlyNote: "Thanh toán hàng tháng. Không cam kết năm.",
-      six: "6 tháng · Thanh toán một lần", sixPer: "6 tháng",
-      sixNote: function (pm, sv) { return "Tương đương " + pm + "/tháng. Cam kết 6 tháng. Tiết kiệm " + sv + " so với thanh toán hàng tháng."; },
-      annual: "12 tháng · Thanh toán một lần", annualPer: "năm",
-      annualNote: function (pm) { return "Tặng 2 tháng, tương đương " + pm + "/tháng. Cam kết 12 tháng."; },
+      monthly: "Theo tháng", monthlyPer: "tháng", monthlyNote: "Thanh toán hàng tháng. Hủy gia hạn bất kỳ lúc nào.",
+      six: "6 tháng", sixPer: "6 tháng",
+      sixNote: function (pm, sv) { return "Tiết kiệm " + sv + " so với gói tháng."; },
+      annual: "12 tháng", annualPer: "năm",
+      annualNote: function (pm) { return "Tiết kiệm tương đương 2 tháng."; },
       included: "Bao gồm:",
       feats: ["Hồ sơ chuyên môn", "QR & đường dẫn riêng", "Tiếp nhận yêu cầu đặt lịch", "Workspace quản lý lịch hẹn", "Cập nhật hồ sơ & thông tin dịch vụ", "Duy trì nền tảng & hỗ trợ kỹ thuật"],
       coTitle: "Xác nhận đăng ký", sumPlan: "Gói đăng ký", sumSchedule: "Lịch thanh toán", sumPeriod: "Giá mỗi kỳ", sumSetup: "Phí thiết lập",
@@ -50,11 +50,11 @@
     },
     en: {
       title: "Find the plan for you", cont: "Continue", back: "Back to plans",
-      monthly: "Monthly", monthlyPer: "month", monthlyNote: "Billed monthly. No annual commitment.",
-      six: "6 months · Pay once", sixPer: "6 months",
-      sixNote: function (pm, sv) { return "Equal to " + pm + "/month. 6-month commitment. Save " + sv + " compared with paying monthly."; },
-      annual: "12 months · Pay once", annualPer: "year",
-      annualNote: function (pm) { return "2 months free, equal to " + pm + "/month. 12-month commitment."; },
+      monthly: "Monthly", monthlyPer: "month", monthlyNote: "Pay monthly. Stop renewing any time.",
+      six: "6 months", sixPer: "6 months",
+      sixNote: function (pm, sv) { return "Save " + sv + " compared with the monthly plan."; },
+      annual: "12 months", annualPer: "year",
+      annualNote: function (pm) { return "Save the equivalent of 2 months."; },
       included: "Includes:",
       feats: ["Professional profile", "Your own QR & link", "Appointment-request intake", "Workspace to manage appointments", "Profile & service updates", "Platform upkeep & technical support"],
       coTitle: "Confirm your subscription", sumPlan: "Plan", sumSchedule: "Payment schedule", sumPeriod: "Price per period", sumSetup: "Setup fee",
@@ -139,7 +139,7 @@
         "<span class=\"plan-mark\" aria-hidden=\"true\"></span>" +
         "<h2 class=\"plan-name\" id=\"pn-" + key + "\">" + name + "</h2>" + (sub ? "<p class=\"plan-sub\">" + sub + "</p>" : "") +
         "<p class=\"plan-price\">" + vnd(price) + " <small>/ " + per + "</small></p>" +
-        "<p class=\"plan-period\" id=\"pp-" + key + "\">" + note + "</p>" + (extra || "<div class=\"plan-slot\"></div>") + feats + "</div>";
+        "<p class=\"plan-period" + (key === "annual" ? " plan-save" : "") + "\" id=\"pp-" + key + "\">" + note + "</p>" + (extra || "<div class=\"plan-slot\"></div>") + feats + "</div>";
     }
     root.innerHTML = "<h1>" + L.title + "</h1>" +
       "<fieldset class=\"plan-grid\" aria-label=\"" + L.title + "\">" +
@@ -221,7 +221,7 @@
     if (v("name").length < 2 || v("contact").length < 5 || !form.elements.accept.checked) { err.textContent = L.errFields; return; }
     err.textContent = "";
     if (!api) {   /* no payment backend configured: the existing email path */
-      var body = [planName(q) + " · " + vnd(q.payable_now_vnd), v("name"), v("practice"), v("method") + ": " + v("contact")].join("\n");
+      var body = [planName(q) + " · " + vnd(q.payable_now_vnd), v("name"), v("practice"), v("method") + ": " + v("contact"), (SRC !== "site-plans" ? "src: " + SRC : "")].filter(Boolean).join("\n");
       location.href = "mailto:contact@zerone.vn?subject=" + encodeURIComponent(L.mailSubject) + "&body=" + encodeURIComponent(body);
       return;
     }

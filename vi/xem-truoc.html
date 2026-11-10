@@ -310,6 +310,8 @@
             <p>Bạn đã xem xong hành trình mô phỏng (đặt lịch thật qua Zerone chưa mở). Bước tiếp theo là của bạn:</p>
             <button type="button" class="btn" id="ds-claim"><span>Claim Your Space</span> <span aria-hidden="true">→</span></button>
             <p class="ds-cta-note">Gửi yêu cầu để Zerone hướng dẫn bạn xác minh chuyên môn và tạo hồ sơ.</p>
+            <a class="btn ghost" id="ds-plans" href="plans.html?src=preview">Chọn gói sử dụng</a>
+            <p class="ds-cta-note">Xem ba gói Doctor Space và gửi yêu cầu đăng ký.</p>
             <button type="button" class="btn ghost" id="ds-talk">Talk to Zerone</button>
             <p class="ds-cta-note">Để lại cách liên hệ, Founder của Zerone sẽ trao đổi với bạn.</p>
           </div>
@@ -763,6 +765,7 @@
           if (dlg.showModal) dlg.showModal(); else dlg.setAttribute("open", ""); $("ds-mopen").focus();
         }
         $("ds-claim").addEventListener("click", function () { open("claim", this); });
+        $("ds-plans").addEventListener("click", function () { try { var z = JSON.parse(sessionStorage.getItem("zplan") || "null") || {}; z.form = z.form || {}; if (state.name && !z.form.name) z.form.name = state.name; sessionStorage.setItem("zplan", JSON.stringify(z)); } catch (e) {} });
         $("ds-talk").addEventListener("click", function () { open("talk", this); });
         $("ds-dclose").addEventListener("click", close); $("ds-ddone").addEventListener("click", close);
         dlg.addEventListener("click", function (e) { if (e.target === dlg) close(); });
