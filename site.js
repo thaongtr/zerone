@@ -14,7 +14,7 @@ const T = {
     langBtn: "VI", langRow: "Tiếng Việt", langTitle: "Xem bằng tiếng Việt",
     home: "Zerone home", menu: "Menu",
     foot: {
-      desc: "Healthcare brand and patient experience consultancy.",
+      desc: "Healthcare Experience & Innovation.",
       explore: "Explore", touch: "Get in touch", legal: "Privacy", terms: "Terms",
       city: "Ho Chi Minh City, Vietnam",
       rights: "All rights reserved.",
@@ -38,7 +38,7 @@ const T = {
     langBtn: "EN", langRow: "English", langTitle: "View in English",
     home: "Trang chủ Zerone", menu: "Menu",
     foot: {
-      desc: "Tư vấn thương hiệu y tế và trải nghiệm người bệnh.",
+      desc: "Trải nghiệm & Đổi mới trong chăm sóc sức khỏe.",
       explore: "Khám phá", touch: "Kết nối", legal: "Chính sách bảo mật", terms: "Điều khoản sử dụng",
       city: "Thành phố Hồ Chí Minh, Việt Nam",
       rights: "Bảo lưu mọi quyền.",
