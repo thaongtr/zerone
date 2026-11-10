@@ -4,29 +4,30 @@
 (function () {
   var LANG = document.documentElement.lang === "vi" ? "vi" : "en";
   var API = window.ZERONE_API || {};
-  var MONTHLY = 590000;
+  var MONTHLY = 500000;   /* listed prices exclude VAT; VAT is added at checkout (founder decision 2026-11-10) */
+  var VAT_PCT = Number((window.ZERONE_PRICING || {}).vat_rate_pct); if (!(VAT_PCT >= 0)) VAT_PCT = 8;
   /* The versions of the documents this page links to (docs/legal, built by scripts/build-legal-site.mjs). The server refuses an order
      made against any other version, so what is shown and what is recorded cannot drift apart. */
-  var TERMS_VERSION = "terms-ds-2026-11-09-v1", PRIVACY_VERSION = "privacy-ds-2026-11-09-v1";
+  var TERMS_VERSION = "terms-ds-2026-11-10-v2", PRIVACY_VERSION = "privacy-ds-2026-11-09-v1";
   var PLANS = {
     monthly: { months: 1, periods: 1, price: MONTHLY, committed: false },
-    term_6m: { months: 6, periods: 1, price: 3300000, committed: true },
-    annual: { months: 12, periods: 1, price: 5900000, committed: true }   /* two months free: 10 x 590.000 */
+    term_6m: { months: 6, periods: 1, price: 2700000, committed: true },   /* 10% off six monthly payments */
+    annual: { months: 12, periods: 1, price: 4500000, committed: true }   /* three months free: 9 x 500.000 */
   };
   var T = {
     vi: {
-      title: "Chọn gói phù hợp", cont: "Tiếp tục", back: "Quay lại chọn gói",
+      title: "Chọn gói phù hợp", exVat: "Chưa gồm VAT", cont: "Tiếp tục", back: "Quay lại chọn gói",
       monthly: "Theo tháng", monthlyPer: "tháng", monthlyNote: "Thanh toán hàng tháng. Hủy gia hạn bất kỳ lúc nào.",
       six: "6 tháng", sixPer: "6 tháng",
-      sixNote: function (pm, sv) { return "Tiết kiệm " + sv + " so với gói tháng."; },
+      sixNote: function (pm, sv, pct) { return "Tiết kiệm " + pct + "% so với gói tháng."; },
       annual: "12 tháng", annualPer: "năm",
-      annualNote: function (pm) { return "Tiết kiệm tương đương 2 tháng."; },
+      annualNote: function (pm, sv, pct) { return "Tiết kiệm " + pct + "% so với gói tháng."; },
       included: "Bao gồm:",
       feats: ["Hồ sơ chuyên môn", "QR & đường dẫn riêng", "Tiếp nhận yêu cầu đặt lịch", "Workspace quản lý lịch hẹn", "Cập nhật hồ sơ & thông tin dịch vụ", "Duy trì nền tảng & hỗ trợ kỹ thuật"],
-      coTitle: "Xác nhận đăng ký", sumPlan: "Gói đăng ký", sumSchedule: "Lịch thanh toán", sumPeriod: "Giá mỗi kỳ", sumSetup: "Phí thiết lập",
+      coTitle: "Xác nhận đăng ký", sumPlan: "Gói đăng ký", sumSchedule: "Lịch thanh toán", sumPeriod: "Giá mỗi kỳ (chưa gồm VAT)", sumSetup: "Phí thiết lập",
       sumSetupFree: "Miễn phí", sumVat: "VAT", sumVatIncl: function (p) { return "đã gồm trong giá (" + p + "%)"; },
-      sumVatAdd: function (p) { return p + "% cộng thêm"; }, sumVatNone: "Không cộng thêm", finalPrice: "Giá niêm yết là số tiền cuối cùng bạn thanh toán.", sumTotal: "Thanh toán hôm nay",
-      sumCommit: function (m) { return "Tổng cam kết " + m + " tháng"; }, sumNext: "Kỳ thanh toán tiếp theo", nextNone: function (m) { return "Không có kỳ nào trong " + m + " tháng. Khi hết hạn, bạn gia hạn nếu muốn."; },
+      sumVatAdd: function (p) { return p + "% cộng thêm"; }, sumVatNone: "Không cộng thêm", finalPrice: "Giá niêm yết chưa gồm VAT. VAT được cộng thêm ở bước thanh toán; số tiền thanh toán và mã QR là tổng đã gồm VAT.", sumTotal: "Thanh toán hôm nay (đã gồm VAT)",
+      sumCommit: function (m) { return "Tổng cam kết " + m + " tháng (chưa gồm VAT)"; }, sumNext: "Kỳ thanh toán tiếp theo", nextNone: function (m) { return "Không có kỳ nào trong " + m + " tháng. Khi hết hạn, bạn gia hạn nếu muốn."; },
       nextMonthly: "Sau mỗi tháng, khi bạn chủ động thanh toán", sumTerm: "Thời hạn gói",
       termMonths: function (m) { return m + " tháng"; },
       termNote: function (m) { return "Thời hạn " + m + " tháng, tính từ ngày Zerone ghi nhận đã nhận đủ tiền."; },
@@ -49,18 +50,18 @@
       due: "Hạn thanh toán các kỳ", mailSubject: "Đăng ký Professional Space", currency: "đ"
     },
     en: {
-      title: "Find the plan for you", cont: "Continue", back: "Back to plans",
+      title: "Find the plan for you", exVat: "Excl. VAT", cont: "Continue", back: "Back to plans",
       monthly: "Monthly", monthlyPer: "month", monthlyNote: "Pay monthly. Stop renewing any time.",
       six: "6 months", sixPer: "6 months",
-      sixNote: function (pm, sv) { return "Save " + sv + " compared with the monthly plan."; },
+      sixNote: function (pm, sv, pct) { return "Save " + pct + "% compared with the monthly plan."; },
       annual: "12 months", annualPer: "year",
-      annualNote: function (pm) { return "Save the equivalent of 2 months."; },
+      annualNote: function (pm, sv, pct) { return "Save " + pct + "% compared with the monthly plan."; },
       included: "Includes:",
       feats: ["Professional profile", "Your own QR & link", "Appointment-request intake", "Workspace to manage appointments", "Profile & service updates", "Platform upkeep & technical support"],
-      coTitle: "Confirm your subscription", sumPlan: "Plan", sumSchedule: "Payment schedule", sumPeriod: "Price per period", sumSetup: "Setup fee",
+      coTitle: "Confirm your subscription", sumPlan: "Plan", sumSchedule: "Payment schedule", sumPeriod: "Price per period (excl. VAT)", sumSetup: "Setup fee",
       sumSetupFree: "Free", sumVat: "VAT", sumVatIncl: function (p) { return "included in the price (" + p + "%)"; },
-      sumVatAdd: function (p) { return p + "% added"; }, sumVatNone: "None added", finalPrice: "The listed price is the final amount you pay.", sumTotal: "Due today",
-      sumCommit: function (m) { return m + "-month commitment total"; }, sumNext: "Next payment", nextNone: function (m) { return "None within the " + m + " months. At the end you renew only if you wish."; },
+      sumVatAdd: function (p) { return p + "% added"; }, sumVatNone: "None added", finalPrice: "Listed prices exclude VAT. VAT is added at checkout; the amount you pay and the QR code show the total including VAT.", sumTotal: "Due today (incl. VAT)",
+      sumCommit: function (m) { return m + "-month commitment total (excl. VAT)"; }, sumNext: "Next payment", nextNone: function (m) { return "None within the " + m + " months. At the end you renew only if you wish."; },
       nextMonthly: "After each month, when you choose to pay", sumTerm: "Plan term",
       termMonths: function (m) { return m + (m === 1 ? " month" : " months"); },
       termNote: function (m) { return m + "-month term, counted from the day Zerone records full receipt of your payment."; },
@@ -95,10 +96,11 @@
   function localQuote(code) {
     var p = PLANS[code];
     return { plan: code, months_per_period: p.months, periods: p.periods, committed: p.committed, period_price_vnd: p.price, setup_fee_vnd: 0,
-      setup_fee_waived: false, vat_rate_pct: 0, prices_include_vat: true, vat_vnd: 0, payable_now_vnd: p.price,
+      setup_fee_waived: false, vat_rate_pct: VAT_PCT, prices_include_vat: false, vat_vnd: Math.round(p.price * VAT_PCT / 100), payable_now_vnd: p.price + Math.round(p.price * VAT_PCT / 100),
       commitment_months: p.committed ? p.months * p.periods : null, commitment_total_vnd: p.committed ? p.price * p.periods : null, per_month_vnd: Math.round(p.price / p.months), saving_vs_monthly_vnd: p.committed ? saving(code) : null, approved: false };
   }
   function saving(code) { var p = PLANS[code]; return MONTHLY * p.months * p.periods - p.price * p.periods; }
+  function savingPct(code) { var p = PLANS[code]; return Math.round(saving(code) / (MONTHLY * p.months * p.periods) * 100); }   /* share saved against paying monthly, on listed prices */
   function perMonth(code) { var p = PLANS[code]; return Math.round(p.price / p.months); }
 
   /* ---------- state (kept for the session so Back never loses the choice or the typed details) ---------- */
@@ -138,14 +140,14 @@
         "<input class=\"plan-radio\" type=\"radio\" name=\"plan\" value=\"" + key + "\" id=\"plan-" + key + "\" aria-labelledby=\"pn-" + key + "\"" + (sel ? " checked" : "") + ">" +
         "<span class=\"plan-mark\" aria-hidden=\"true\"></span>" +
         "<h2 class=\"plan-name\" id=\"pn-" + key + "\">" + name + "</h2>" + (sub ? "<p class=\"plan-sub\">" + sub + "</p>" : "") +
-        "<p class=\"plan-price\">" + vnd(price) + " <small>/ " + per + "</small></p>" +
+        "<p class=\"plan-price\">" + vnd(price) + " <small>/ " + per + "</small><small class=\"plan-vat\">" + L.exVat + "</small></p>" +
         "<p class=\"plan-period" + (key === "annual" ? " plan-save" : "") + "\" id=\"pp-" + key + "\">" + note + "</p>" + (extra || "<div class=\"plan-slot\"></div>") + feats + "</div>";
     }
     root.innerHTML = "<h1>" + L.title + "</h1>" +
       "<fieldset class=\"plan-grid\" aria-label=\"" + L.title + "\">" +
       card("monthly", L.monthly, "", PLANS.monthly.price, L.monthlyPer, L.monthlyNote) +
-      card("term_6m", L.six, "", PLANS.term_6m.price, L.sixPer, L.sixNote(vnd(perMonth("term_6m")), vnd(saving("term_6m")))) +
-      card("annual", L.annual, "", PLANS.annual.price, L.annualPer, L.annualNote(vnd(perMonth("annual")))) +
+      card("term_6m", L.six, "", PLANS.term_6m.price, L.sixPer, L.sixNote(vnd(perMonth("term_6m")), vnd(saving("term_6m")), savingPct("term_6m"))) +
+      card("annual", L.annual, "", PLANS.annual.price, L.annualPer, L.annualNote(vnd(perMonth("annual")), vnd(saving("annual")), savingPct("annual"))) +
       "</fieldset><div class=\"plans-cta\"><button class=\"btn\" type=\"button\" id=\"plan-continue\">" + L.cont + "</button></div>";
     root.querySelectorAll(".plan-card").forEach(function (c) {
       c.addEventListener("click", function (e) { select(c.getAttribute("data-plan")); });
@@ -171,6 +173,7 @@
     return fetch(API.url + "/rest/v1/rpc/" + fn, { method: "POST", headers: { "Content-Type": "application/json", apikey: API.key, Authorization: "Bearer " + API.key }, body: JSON.stringify(body) })
       .then(function (r) { return r.json().then(function (j) { if (!r.ok) { var e = new Error((j && (j.message || j.hint)) || "error"); e.status = r.status; throw e; } return j; }); });
   }
+  function laterPayable(q) { return q.period_price_vnd + (q.prices_include_vat ? 0 : Math.round(q.period_price_vnd * q.vat_rate_pct / 100)); }
   function planName(q) { return q.plan === "monthly" ? L.monthly : q.plan === "annual" ? L.annual : L.six; }
   function renderCheckout() {
     state.view = "checkout"; state.order = null; persist();   /* a new purchase starts here: an older order amount is never shown */
@@ -191,7 +194,7 @@
       rows.map(function (r) { return "<div class=\"co-row\"><dt>" + r[0] + "</dt><dd>" + esc(r[1]) + "</dd></div>"; }).join("") +
       "<div class=\"co-row is-total\"><dt>" + L.sumTotal + "</dt><dd>" + vnd(q.payable_now_vnd) + "</dd></div>";
     if (q.commitment_total_vnd) html += "<div class=\"co-row\"><dt>" + L.sumCommit(q.commitment_months) + "</dt><dd>" + vnd(q.commitment_total_vnd) + "</dd></div>";
-    if (q.plan === "monthly") html += "<div class=\"co-row\"><dt>" + L.sumNext + "</dt><dd>" + fmtDate(addMonths(now, 1)) + " · " + vnd(q.period_price_vnd) + "<br><small>" + L.nextMonthly + "</small></dd></div>";
+    if (q.plan === "monthly") html += "<div class=\"co-row\"><dt>" + L.sumNext + "</dt><dd>" + fmtDate(addMonths(now, 1)) + " · " + vnd(laterPayable(q)) + "<br><small>" + L.nextMonthly + "</small></dd></div>";
     html += "</dl><p class=\"co-note\">" + L.finalPrice + " " + L.termNote(months) + " " + L.renewNote + "</p>";
     el("co-summary").innerHTML = html;
     el("co-back").addEventListener("click", function () { history.back(); });
