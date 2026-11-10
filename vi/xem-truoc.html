@@ -765,7 +765,7 @@
           if (dlg.showModal) dlg.showModal(); else dlg.setAttribute("open", ""); $("ds-mopen").focus();
         }
         $("ds-claim").addEventListener("click", function () { open("claim", this); });
-        $("ds-plans").addEventListener("click", function () { try { var z = JSON.parse(sessionStorage.getItem("zplan") || "null") || {}; z.form = z.form || {}; if (state.name && !z.form.name) z.form.name = state.name; sessionStorage.setItem("zplan", JSON.stringify(z)); } catch (e) {} });
+        $("ds-plans").addEventListener("click", function () { try { var z = JSON.parse(sessionStorage.getItem("zplan") || "null") || {}; z.form = z.form || {}; if (state.name && !z.form.name) z.form.name = state.name; if (state.work && !z.form.practice) z.form.practice = state.work; sessionStorage.setItem("zplan", JSON.stringify(z)); } catch (e) {} });
         $("ds-talk").addEventListener("click", function () { open("talk", this); });
         $("ds-dclose").addEventListener("click", close); $("ds-ddone").addEventListener("click", close);
         dlg.addEventListener("click", function (e) { if (e.target === dlg) close(); });
