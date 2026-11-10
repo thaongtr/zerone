@@ -100,3 +100,50 @@ body .space-try:focus-visible { outline: 2px solid var(--sc-bur); outline-offset
 #zerone-space h2, #zerone-space .lede, #zerone-space .space-note, .space-reach span, .space-reach b, .what-two h3, .what-two p, .what-two .num, .section.mist:has(a[href$="#training"]) h2, .section.mist:has(a[href$="#training"]) .work-card h3, .section.mist:has(a[href$="#training"]) .work-card p { text-wrap: balance; }
 .space-reach b { display: flex; flex-wrap: wrap; align-items: center; gap: .15rem .45rem; }
 .reach-tag { margin-left: 0; white-space: nowrap; }
+
+/* ---------- Liquid glass v2: clearer, more translucent, with a specular rim (additive; remove this block to go back) ---------- */
+:root {
+  --lg-fill:
+    radial-gradient(120% 90% at 0% 0%, rgba(255,255,255,.58), rgba(255,255,255,0) 56%),
+    linear-gradient(135deg, rgba(255,255,255,.34) 0%, rgba(255,255,255,.10) 46%, rgba(255,255,255,.06) 60%, rgba(255,255,255,.22) 100%);
+  --lg-edge: 1px solid rgba(255,255,255,.66);
+  --lg-shadow:
+    0 22px 48px rgba(52,72,120,.14), 0 2px 6px rgba(52,72,120,.06),
+    inset 1.5px 1.5px 0 rgba(255,255,255,.95), inset -1px -1px 0 rgba(255,255,255,.5), inset 0 0 28px rgba(255,255,255,.32);
+  --lg-blur: blur(22px) saturate(1.55) brightness(1.04);
+  --glass-fill: var(--lg-fill);
+  --glass-edge: var(--lg-edge);
+  --glass-shadow: var(--lg-shadow);
+  --sc-blur: var(--lg-blur);
+}
+body .card, body .work-card, body .cap, body .stat, body .pp-card, body .contact-card, body .cs-step, body .cs-points li, body .pp-areas-grid li,
+body .section .work-card, body .section.mist .work-card, body .section .pp-card, body .section.mist .card, body .section.mist .cap, body .needs .work-card {
+  background: var(--lg-fill); border: var(--lg-edge); box-shadow: var(--lg-shadow);
+  -webkit-backdrop-filter: var(--lg-blur); backdrop-filter: var(--lg-blur);
+}
+@media (hover: hover) {
+  body .work-card:hover, body .pp-card:hover, body .contact-card:hover, body .card:hover { box-shadow: 0 28px 60px rgba(52,72,120,.18), 0 2px 8px rgba(52,72,120,.07), inset 1.5px 1.5px 0 #fff, inset -1px -1px 0 rgba(255,255,255,.6), inset 0 0 32px rgba(255,255,255,.4); }
+}
+/* nav: frosted tray with a lit rim; pills keep their legibility but let a little light through */
+body .site-nav { background: rgba(255,255,255,.22); border: 1px solid rgba(255,255,255,.7); -webkit-backdrop-filter: blur(22px) saturate(1.6); backdrop-filter: blur(22px) saturate(1.6); box-shadow: 0 14px 36px rgba(52,72,120,.16), inset 1px 1px 0 rgba(255,255,255,.95), inset -1px -1px 0 rgba(255,255,255,.4); }
+body .site-nav .brand, body .site-nav a.nav-link { background: rgba(255,255,255,.7); box-shadow: inset 1px 1px 0 rgba(255,255,255,.95), inset 0 0 0 1px rgba(255,255,255,.35); }
+body .site-nav a.nav-link.is-active, body .site-nav a.nav-link:hover { background: rgba(214,228,248,.72); }
+/* dark proof band: glass cards read as lit glass over the photo gradient */
+body .proof-band .proof-step {
+  background: radial-gradient(120% 90% at 0% 0%, rgba(255,255,255,.26), rgba(255,255,255,0) 58%), linear-gradient(135deg, rgba(255,255,255,.16), rgba(255,255,255,.05) 60%, rgba(255,255,255,.1));
+  border: 1px solid rgba(255,255,255,.42);
+  box-shadow: 0 22px 48px rgba(10,24,52,.22), inset 1.5px 1.5px 0 rgba(255,255,255,.6), inset -1px -1px 0 rgba(255,255,255,.18), inset 0 0 26px rgba(255,255,255,.1);
+  -webkit-backdrop-filter: blur(22px) saturate(1.5); backdrop-filter: blur(22px) saturate(1.5);
+}
+/* closing CTA glass panel and Trust Translation pills share the same rim */
+body .cta-card.is-blue .cta-glass { background: radial-gradient(120% 90% at 0% 0%, rgba(255,255,255,.3), rgba(255,255,255,0) 58%), linear-gradient(135deg, rgba(255,255,255,.18), rgba(255,255,255,.06)); border: 1px solid rgba(255,255,255,.5); box-shadow: 0 24px 54px rgba(10,24,52,.22), inset 1.5px 1.5px 0 rgba(255,255,255,.7), inset -1px -1px 0 rgba(255,255,255,.2); -webkit-backdrop-filter: blur(22px) saturate(1.5); backdrop-filter: blur(22px) saturate(1.5); }
+body .zt-card { background: var(--lg-fill); border: var(--lg-edge); box-shadow: var(--lg-shadow); -webkit-backdrop-filter: var(--lg-blur); backdrop-filter: var(--lg-blur); }
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  body .card, body .work-card, body .cap, body .stat, body .pp-card, body .contact-card, body .cs-step, body .zt-card { background: rgba(255,255,255,.78); }
+}
+/* the highlighted outcome card keeps dark text on a bright pane: lit glass, not dark glass */
+body .proof-band .proof-step.proof-out {
+  background: radial-gradient(120% 90% at 0% 0%, rgba(255,255,255,.98), rgba(255,255,255,.84) 62%), rgba(255,255,255,.88);
+  border: 1px solid rgba(255,255,255,.92);
+  box-shadow: 0 22px 48px rgba(10,24,52,.26), inset 1.5px 1.5px 0 #fff, inset -1px -1px 0 rgba(255,255,255,.6);
+}
