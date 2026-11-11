@@ -19,10 +19,9 @@ const T = {
       city: "Ho Chi Minh City, Vietnam",
       addr: "L18-11-13, Floor 18, Vincom Center Dong Khoi, 72 Le Thanh Ton, Sai Gon Ward, Ho Chi Minh City, Vietnam",
       policies: "Policies & Legal", policiesNote: "Policies are published in Vietnamese.",
-      coName: "CÔNG TY TNHH ZERONE", coId: "Tax / enterprise code: 0318035131, first issued 11/09/2023",
-      coSeat: "Registered office: L18-11-13, Floor 18, Vincom Center Dong Khoi, 72 Le Thanh Ton, Sai Gon Ward, Ho Chi Minh City",
-      coRep: "Legal representative: Nguyễn Trần Linh Thảo",
-      coContact: "Email: contact@zerone.vn · Hotline: 0901 456 711 · Zalo OA: zalo.me/1458646250790074597",
+      coName: "CÔNG TY TNHH ZERONE", coIdL: "Tax / enterprise code", coId: "0318035131 · first issued 11/09/2023", coSeatL: "Registered office", coContactL: "Contact",
+      coSeat: "L18-11-13, Floor 18, Vincom Center Dong Khoi, 72 Le Thanh Ton, Sai Gon Ward, Ho Chi Minh City",
+      coHotline: "Hotline", coZalo: "Zalo OA",
       rights: "All rights reserved.",
       approach: "Approach", work: "Case study", about: "About", faq: "FAQ", contact: "Contact",
     },
@@ -49,10 +48,9 @@ const T = {
       city: "Thành phố Hồ Chí Minh, Việt Nam",
       addr: "L18-11-13, Tầng 18, Tòa nhà Vincom Center Đồng Khởi, 72 Lê Thánh Tôn, Phường Sài Gòn, TP. Hồ Chí Minh, Việt Nam",
       policies: "Chính sách & Pháp lý", policiesNote: "",
-      coName: "CÔNG TY TNHH ZERONE", coId: "MST/Mã số doanh nghiệp: 0318035131, cấp ngày 11/09/2023",
-      coSeat: "Trụ sở: L18-11-13, Tầng 18, Tòa nhà Vincom Center Đồng Khởi, 72 Lê Thánh Tôn, Phường Sài Gòn, TP. Hồ Chí Minh",
-      coRep: "Người đại diện theo pháp luật: Nguyễn Trần Linh Thảo",
-      coContact: "Email: contact@zerone.vn · Hotline: 0901 456 711 · Zalo OA: zalo.me/1458646250790074597",
+      coName: "CÔNG TY TNHH ZERONE", coIdL: "MST / Mã số doanh nghiệp", coId: "0318035131 · cấp ngày 11/09/2023", coSeatL: "Trụ sở", coContactL: "Liên hệ",
+      coSeat: "L18-11-13, Tầng 18, Tòa nhà Vincom Center Đồng Khởi, 72 Lê Thánh Tôn, Phường Sài Gòn, TP. Hồ Chí Minh",
+      coHotline: "Hotline", coZalo: "Zalo OA",
       rights: "Bảo lưu mọi quyền.",
       approach: "Phương pháp", work: "Dự án điển hình", about: "Giới thiệu", faq: "Câu hỏi thường gặp", contact: "Liên hệ",
     },
@@ -240,10 +238,15 @@ function footer() {
         </nav>
         <div class="f3-company">
           <b>${f.coName}</b>
-          <span>${f.coId}</span>
-          <span>${f.coSeat}</span>
-          <span>${f.coRep}</span>
-          <span>${f.coContact}</span>
+          <div class="f3-co-grid">
+            <p><em>${f.coIdL}</em><span>${f.coId}</span></p>
+            <p><em>${f.coSeatL}</em><span>${f.coSeat}</span></p>
+            <p><em>${f.coContactL}</em>
+              <span><a href="mailto:contact@zerone.vn">contact@zerone.vn</a></span>
+              <span>${f.coHotline}: <a href="tel:+84901456711">0901 456 711</a></span>
+              <span>${f.coZalo}: <a href="https://zalo.me/1458646250790074597" target="_blank" rel="noopener">zalo.me/1458646250790074597</a></span>
+            </p>
+          </div>
         </div>
         ${socialLinks()}
         <div class="f3-bottom">

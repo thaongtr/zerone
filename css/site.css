@@ -1931,3 +1931,16 @@ html[lang="vi"] .kicker, html[lang="vi"] .ap-label, html[lang="vi"] .hero-eyebro
 .space-tags li { padding: .5rem 1rem; border-radius: 999px; font-size: .92rem; font-weight: 500; color: var(--ink); background: rgba(255,255,255,.62); border: 1px solid rgba(255,255,255,.9); box-shadow: 0 6px 16px rgba(63,88,115,.08); }
 #zerone-space .space-status { margin: 1.2rem 0 0; max-width: 46ch; font-size: .9rem; line-height: 1.6; color: var(--slate); }
 #zerone-space .space-cta { margin-top: 1.8rem; }
+
+/* footer legal block, tidied: four aligned policy columns; company details in three labelled columns */
+.f3-policies ul { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: .75rem 2rem; }
+.f3-policies a { display: block; line-height: 1.4; }
+.f3-company { display: block; }
+.f3-company b { margin-bottom: .9rem; }
+.f3-co-grid { display: grid; grid-template-columns: 1fr 1.5fr 1.1fr; gap: 1rem 2.4rem; }
+.f3-co-grid p { margin: 0; display: grid; gap: .2rem; align-content: start; font-size: 13px; line-height: 1.55; color: var(--ink); }
+.f3-co-grid em { font-style: normal; font-size: 11px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--slate); margin-bottom: .1rem; }
+.f3-co-grid a { color: var(--ink); text-decoration: none; word-break: break-word; }
+.f3-co-grid a:hover { color: var(--red); text-decoration: underline; text-underline-offset: 3px; }
+@media (max-width: 960px) { .f3-policies ul { grid-template-columns: repeat(2, minmax(0, 1fr)); } .f3-co-grid { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 600px) { .f3-policies ul { grid-template-columns: 1fr; } .f3-co-grid { grid-template-columns: 1fr; gap: .9rem; } }
