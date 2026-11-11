@@ -150,3 +150,32 @@ body .proof-band .proof-step.proof-out {
 /* proof-band step labels use the brand burgundy (same as every other eyebrow) */
 body .proof-band .proof-tag { color: var(--sc-bur); font-weight: 700; }
 body .proof-band .proof-out .proof-tag { color: var(--sc-bur); }
+
+/* ---------- Insight, direction A: keeps the dark photo for the statistic's weight, speaks the site's glass language ----------
+   brand slate-blue tint instead of near-black, a lit glass rim, the same line-and-ring-dot vocabulary as Approach,
+   rose-tinted eyebrow (the burgundy eyebrow, lifted for a dark ground) and the four dimensions on one frosted pane. */
+body .prob2 { box-shadow: 0 34px 80px rgba(36,56,100,.26), inset 0 0 0 1px rgba(255,255,255,.34), inset 1.5px 1.5px 0 rgba(255,255,255,.5); }
+body .prob2::after { content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none; border-radius: inherit; background: radial-gradient(70% 55% at 0% 0%, rgba(255,255,255,.2), rgba(255,255,255,0) 60%); }
+body .prob2-img { filter: saturate(1.08) brightness(1.04); }
+body .prob2-shade { background:
+    radial-gradient(ellipse 62% 86% at 20% 52%, rgba(38,58,92,.8) 0%, rgba(44,66,104,.56) 56%, rgba(63,88,130,0) 100%),
+    linear-gradient(100deg, rgba(52,76,118,.3) 0%, rgba(70,98,150,.12) 60%, rgba(150,176,225,.1) 100%); }
+body .prob2 .kicker { color: #f3c1cb; letter-spacing: .24em; }
+body .prob2-claim { color: rgba(255,255,255,.96); }
+body .prob2-body { color: rgba(255,255,255,.92); }
+
+/* the four dimensions: one frosted pane, ring dots on a burgundy-rose line */
+body .prob2-links { --pad-x: 2.2rem; --pad-y: 1.1rem; padding: var(--pad-y) var(--pad-x) var(--pad-y) 1.8rem; border-radius: 30px; background: linear-gradient(135deg, rgba(255,255,255,.16), rgba(255,255,255,.04) 55%, rgba(255,255,255,.1)), linear-gradient(180deg, rgba(34,52,92,.52), rgba(34,52,92,.4)); border: 1px solid rgba(255,255,255,.46); box-shadow: 0 22px 50px rgba(20,34,64,.28), inset 1.5px 1.5px 0 rgba(255,255,255,.6), inset -1px -1px 0 rgba(255,255,255,.18); -webkit-backdrop-filter: blur(20px) saturate(1.4); backdrop-filter: blur(20px) saturate(1.4); }
+body .prob2-curve { left: 1.8rem; top: var(--pad-y); height: calc(100% - 2 * var(--pad-y)); }
+body .prob2-curve-line { stroke: rgba(255,255,255,.86); stroke-width: 1.3px; }
+body .prob2-dot circle { fill: #fff; }
+body .prob2-dot circle:not(.halo) { stroke: #f3a9b8; stroke-width: 1.6; }
+body .prob2-dot .halo { fill: rgba(243,169,184,.22); }
+body .prob2-links li { text-shadow: none; }
+
+@media (max-width: 860px) {
+  body .prob2-links { --pad-x: 1.4rem; --pad-y: .8rem; padding-left: 1.4rem; justify-self: stretch; }
+  body .prob2-curve { left: 1.4rem; }
+  body .prob2-shade { background: linear-gradient(180deg, rgba(38,58,92,.8) 0%, rgba(44,66,104,.6) 50%, rgba(44,66,104,.42) 62%, rgba(38,58,92,.62) 100%); }
+}
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) { body .prob2-links { background: rgba(38,58,92,.55); } }
