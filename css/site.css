@@ -1925,3 +1925,9 @@ html[lang="vi"] .kicker, html[lang="vi"] .ap-label, html[lang="vi"] .hero-eyebro
 /* homepage: the shared-ambition statement reads as a centred closing line under the map */
 .ttm-tail { text-align: center; padding-top: 3.2rem; padding-bottom: 3.2rem; }
 .ttm-tail .lede { max-width: 60ch; margin: 0 auto; }
+
+/* Zerone Space section, condensed: one message, three tags, one quiet status line */
+.space-tags { list-style: none; margin: 1.5rem 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: .6rem; }
+.space-tags li { padding: .5rem 1rem; border-radius: 999px; font-size: .92rem; font-weight: 500; color: var(--ink); background: rgba(255,255,255,.62); border: 1px solid rgba(255,255,255,.9); box-shadow: 0 6px 16px rgba(63,88,115,.08); }
+#zerone-space .space-status { margin: 1.2rem 0 0; max-width: 46ch; font-size: .9rem; line-height: 1.6; color: var(--slate); }
+#zerone-space .space-cta { margin-top: 1.8rem; }
