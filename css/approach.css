@@ -113,3 +113,13 @@ a.ap2-card { color: inherit; text-decoration: none; cursor: pointer; transition:
 a.ap2-card:focus-visible { outline: 2px solid rgba(143,29,63,.7); outline-offset: 4px; transform: translateY(-2px); }
 a.ap2-card:focus-visible .ap2-arrow { background: var(--sc-bur, #8f1d3f); color: #fff; }
 @media (prefers-reduced-motion: reduce) { a.ap2-card, .ap2-arrow { transition: none; } a.ap2-card:hover, a.ap2-card:focus-visible { transform: none; } a.ap2-card:hover .ap2-arrow { transform: none; } }
+
+/* ---------- the two cards share their rows: label, title, description, value and link line up across both ---------- */
+@media (min-width: 861px) {
+  @supports (grid-template-rows: subgrid) {
+    .ap2-grid { grid-template-rows: auto auto auto auto auto; }
+    a.ap2-card { display: grid; grid-row: span 5; grid-template-rows: subgrid; row-gap: 0; }
+    a.ap2-card .ap2-value { margin-top: 1.1rem; align-self: stretch; }
+    a.ap2-card .ap2-more { margin-top: 1.4rem; align-self: end; }
+  }
+}
