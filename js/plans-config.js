@@ -5,6 +5,6 @@ window.ZERONE_API = { url: "https://wbosrucppdmuypspyyhe.supabase.co", key: "sb_
 /* Listed prices exclude VAT; this rate is only the display fallback (the server quote carries the real one). */
 window.ZERONE_PRICING = { vat_rate_pct: 8 };
 
-/* Online payment methods that are registered and switched on. Everything else is listed on the checkout with the status "not available".
-   card = AppotaPay Visa/Mastercard; recurring = automatic recurring payment. Bank transfer / QR opens by itself when the database approves billing. */
-window.ZERONE_PAY = { card: false, recurring: false };
+/* Payment methods on the checkout: bank transfer / QR and card. Bank transfer / QR opens by itself when the database approves billing.
+   card = Visa/Mastercard through AppotaPay (automatic recurring charging, when offered, is an opt-in inside this method). false = listed as "not available". */
+window.ZERONE_PAY = { card: false };

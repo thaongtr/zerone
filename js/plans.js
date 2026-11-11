@@ -4,7 +4,7 @@
 (function () {
   var LANG = document.documentElement.lang === "vi" ? "vi" : "en";
   var API = window.ZERONE_API || {};
-  var PAY = window.ZERONE_PAY || {};   /* online methods that are registered and switched on; card (AppotaPay) and recurring stay off until Zerone enables them */
+  var PAY = window.ZERONE_PAY || {};   /* online methods that are registered and switched on; card (AppotaPay) stays off until Zerone enables it; recurring charging, when offered, is an opt-in inside the card method */
   var MONTHLY = 500000;   /* listed prices exclude VAT; VAT is added at checkout (founder decision 2026-11-10) */
   var VAT_PCT = Number((window.ZERONE_PRICING || {}).vat_rate_pct); if (!(VAT_PCT >= 0)) VAT_PCT = 8;
   /* The versions of the documents this page links to (docs/legal, built by scripts/build-legal-site.mjs). The server refuses an order
@@ -22,8 +22,7 @@
       pmMail: "Gửi yêu cầu qua email",
       pmOrder: "Đặt đơn, Zerone hướng dẫn thanh toán",
       pmBank: "Chuyển khoản ngân hàng / quét mã QR",
-      pmCard: "Thẻ Visa/Mastercard (cổng AppotaPay)",
-      pmRec: "Thanh toán định kỳ tự động",
+      pmCard: "Thanh toán bằng thẻ Visa/Mastercard (cổng AppotaPay)",
       policiesMore: "Xem thêm: <a href=\"chinh-sach-gia.html\" target=\"_blank\" rel=\"noopener\">Chính sách về giá</a> · <a href=\"chinh-sach-thanh-toan.html\" target=\"_blank\" rel=\"noopener\">Chính sách thanh toán</a> · <a href=\"cung-cap-dich-vu-cham-dut-hoan-tien.html\" target=\"_blank\" rel=\"noopener\">Chấm dứt & hoàn tiền</a> · <a href=\"giai-quyet-khieu-nai.html\" target=\"_blank\" rel=\"noopener\">Giải quyết khiếu nại</a>", cont: "Tiếp tục", back: "Quay lại chọn gói",
       monthly: "Theo tháng", monthlyPer: "tháng", monthlyNote: "Thanh toán theo từng tháng. Dừng gia hạn bất kỳ lúc nào.",
       six: "6 tháng", sixPer: "6 tháng",
@@ -63,8 +62,7 @@
       pmMail: "Send a request by email",
       pmOrder: "Place the order; Zerone sends payment instructions",
       pmBank: "Bank transfer / QR code",
-      pmCard: "Visa/Mastercard (AppotaPay gateway)",
-      pmRec: "Automatic recurring payment",
+      pmCard: "Pay by Visa/Mastercard card (AppotaPay gateway)",
       policiesMore: "See also (Vietnamese): <a href=\"vi/chinh-sach-gia.html\" target=\"_blank\" rel=\"noopener\">Pricing</a> · <a href=\"vi/chinh-sach-thanh-toan.html\" target=\"_blank\" rel=\"noopener\">Payment</a> · <a href=\"vi/cung-cap-dich-vu-cham-dut-hoan-tien.html\" target=\"_blank\" rel=\"noopener\">Termination &amp; refunds</a> · <a href=\"vi/giai-quyet-khieu-nai.html\" target=\"_blank\" rel=\"noopener\">Complaints</a>", cont: "Continue", back: "Back to plans",
       monthly: "Monthly", monthlyPer: "month", monthlyNote: "Pay monthly. Stop renewing any time.",
       six: "6 months", sixPer: "6 months",
@@ -224,8 +222,7 @@
     var rows = [
       !bankOn ? ["assisted", api ? L.pmOrder : L.pmMail, true] : null,
       ["bank", L.pmBank, bankOn],
-      ["card", L.pmCard, !!PAY.card],
-      ["recurring", L.pmRec, !!PAY.recurring]
+      ["card", L.pmCard, !!PAY.card]
     ].filter(Boolean);
     var firstOn = rows.filter(function (r) { return r[2]; })[0];
     return "<legend>" + L.pmTitle + "</legend>" + rows.map(function (r) {
