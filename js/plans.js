@@ -215,6 +215,7 @@
     el("co-back").addEventListener("click", function () { history.back(); });
     if (!el("co-form")) renderForm(q);
     var bn = el("co-banner"); if (bn) bn.hidden = !!q.approved;
+    var mb = el("co-methods"); if (mb) mb.innerHTML = methodsHtml(q, !!API.url);   /* the server quote decides which methods are open */
     currentQuote = q;
   }
   /* Every method Zerone plans to offer is listed; only those that really work can be chosen, the rest show their status. */
@@ -227,9 +228,9 @@
       ["recurring", L.pmRec, !!PAY.recurring]
     ].filter(Boolean);
     var firstOn = rows.filter(function (r) { return r[2]; })[0];
-    return "<fieldset class=\"co-pay\"><legend>" + L.pmTitle + "</legend>" + rows.map(function (r) {
+    return "<legend>" + L.pmTitle + "</legend>" + rows.map(function (r) {
       return "<label class=\"pm" + (r[2] ? "" : " is-off") + "\"><input type=\"radio\" name=\"pay\" value=\"" + r[0] + "\"" + (r[2] ? "" : " disabled") + (firstOn && firstOn[0] === r[0] ? " checked" : "") + "><span class=\"pm-main\"><b>" + r[1] + "</b></span><span class=\"pm-status " + (r[2] ? "s-on" : "s-off") + "\">" + (r[2] ? L.pmOn : L.pmOff) + "</span></label>";
-    }).join("") + "</fieldset>";
+    }).join("");
   }
   function renderForm(q) {
     var f = state.form, box = el("co-formbox"), api = !!API.url;
@@ -240,7 +241,7 @@
       "<label class=\"f\">" + L.fPractice + "<input type=\"text\" name=\"practice\" autocomplete=\"organization\" maxlength=\"120\"></label>" +
       "<div class=\"co-two\"><label class=\"f\">" + L.fMethod + "<select name=\"method\"><option value=\"email\">" + L.mEmail + "</option><option value=\"phone\">" + L.mPhone + "</option><option value=\"zalo\">" + L.mZalo + "</option></select></label>" +
       "<label class=\"f\">" + L.fContact + "<input type=\"text\" name=\"contact\" autocomplete=\"email\" maxlength=\"120\"></label></div>" +
-      methodsHtml(q, api) +
+      "<fieldset class=\"co-pay\" id=\"co-methods\">" + methodsHtml(q, api) + "</fieldset>" +
       "<label class=\"chk\"><input type=\"checkbox\" name=\"accept\"><span>" + L.cAccept + "</span></label>" +
       "<p class=\"co-note\">" + L.policiesMore + "</p>" +
       "<p class=\"co-err\" id=\"co-err\" role=\"alert\"></p>" +
