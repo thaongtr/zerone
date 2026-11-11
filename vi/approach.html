@@ -17,7 +17,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,wght@0,400;0,500;1,400;1,500&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="../css/site.css?v=20261110c" />
     <link rel="stylesheet" href="../css/spatial.css?v=glass3" />
-    <link rel="stylesheet" href="../css/approach.css?v=6" />
+    <link rel="stylesheet" href="../css/approach.css?v=11" />
   </head>
   <body data-page="Approach">
     <div id="chrome-top"></div>
@@ -33,25 +33,25 @@
       <p class="kicker">TRUST TRANSLATION™</p>
       <h2 class="display">Chuyển giá trị chăm sóc thành trải nghiệm.</h2>
       <p class="lede">Chuyển giá trị chuyên môn thành trải nghiệm giúp người bệnh hiểu rõ hơn, chủ động lựa chọn, kết nối và duy trì mối quan hệ chăm sóc phù hợp.</p>
-      <div class="tt2" role="group" aria-label="Chuyên môn và giá trị chăm sóc, được Trust Translation chuyển hóa qua chiến lược, thiết kế trải nghiệm và công nghệ, trở thành hành trình từ khám phá, kết nối, gắn kết đến tiếp nối">
-        <p class="tt2-in">CHUYÊN MÔN &amp; GIÁ TRỊ CHĂM SÓC</p>
-        <span class="tt2-link" aria-hidden="true"></span>
-        <div class="tt2-core">
-          <h3>Trust Translation™</h3>
-          <p class="tt2-pillars"><span>Chiến lược</span><i aria-hidden="true">·</i><span>Thiết kế trải nghiệm</span><i aria-hidden="true">·</i><span>Công nghệ &amp; AI</span></p>
+      <div class="tt3" role="group" aria-label="Chuyên môn và giá trị chăm sóc, được Trust Translation chuyển hóa qua chiến lược, thiết kế trải nghiệm và công nghệ, trở thành hành trình từ khám phá, kết nối, gắn kết đến tiếp nối">
+        <img class="tt3-img" src="../assets/img/care-hands.jpg" alt="" loading="lazy" />
+        <div class="tt3-shade" aria-hidden="true"></div>
+        <div class="tt3-head">
+          <p class="tt3-in">CHUYÊN MÔN &amp; GIÁ TRỊ CHĂM SÓC</p>
+          <p class="tt3-core">Trust Translation™</p>
+          <p class="tt3-pillars">Chiến lược <i aria-hidden="true">·</i> Thiết kế trải nghiệm <i aria-hidden="true">·</i> Công nghệ &amp; AI</p>
         </div>
-        <span class="tt2-link" aria-hidden="true"></span>
-        <div class="tt2-journey">
-          <ol>
-            <li><span class="tt2-n" aria-hidden="true">01</span>Khám phá</li>
-            <li><span class="tt2-n" aria-hidden="true">02</span>Kết nối</li>
-            <li class="is-key"><span class="tt2-n" aria-hidden="true">03</span>Gắn kết</li>
-            <li class="is-key"><span class="tt2-n" aria-hidden="true">04</span>Tiếp nối</li>
-          </ol>
-          <svg class="tt2-loop" viewBox="0 0 200 44" preserveAspectRatio="none" aria-hidden="true"><path d="M170 2 C170 40 30 40 30 8" /><path class="tt2-head" d="M25 14 L30 6 L35 14" /></svg>
-        </div>
-        <p class="tt2-note">Gắn kết và tiếp nối giúp mối quan hệ chăm sóc tiếp diễn sau lần đặt lịch đầu tiên.</p>
+        <svg class="tt3-curve tt3-curve-d" viewBox="0 0 160 100" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" d="M35.2 33 C35.2 40 83.2 36 83.2 39.5" /><path pathLength="1" d="M83.2 53 C83.2 59 35.2 56 35.2 59.5" /><path pathLength="1" d="M35.2 73 C35.2 80 83.2 77 83.2 83.5" /></svg>
+        <svg class="tt3-curve tt3-curve-m" viewBox="0 0 37 100" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" d="M9.6 31 C9.6 36 25.9 34 25.9 38.5" /><path pathLength="1" d="M25.9 49 C25.9 55 9.6 54 9.6 58.5" /><path pathLength="1" d="M9.6 69 C9.6 77 25.9 76 25.9 81.5" /></svg>
+        <ol class="tt3-steps">
+          <li class="tt3-s1"><span class="tt3-n" aria-hidden="true">01</span>Khám phá</li>
+          <li class="tt3-s2"><span class="tt3-n" aria-hidden="true">02</span>Kết nối</li>
+          <li class="tt3-s3 is-key"><span class="tt3-n" aria-hidden="true">03</span>Gắn kết</li>
+          <li class="tt3-s4 is-key"><span class="tt3-n" aria-hidden="true">04</span>Tiếp nối</li>
+        </ol>
+        <i class="tt3-dot tt3-d1" aria-hidden="true"></i><i class="tt3-dot tt3-d2" aria-hidden="true"></i><i class="tt3-dot tt3-d3" aria-hidden="true"></i>
       </div>
+      <p class="tt3-note">Gắn kết và tiếp nối giúp mối quan hệ chăm sóc tiếp diễn sau lần đặt lịch đầu tiên.</p>
     </section>
 
     <section class="section ap2-apps" id="applications">
@@ -118,5 +118,14 @@
     <div id="chrome-bottom"></div>
     <script src="../js/site.js?v=20261111a"></script>
     <script src="../js/journey.js" defer></script>
+    <script>
+      (function () {
+        var el = document.querySelector(".tt3");
+        if (!el) return;
+        if (!("IntersectionObserver" in window) || matchMedia("(prefers-reduced-motion: reduce)").matches) { el.classList.add("is-in"); return; }
+        document.documentElement.classList.add("tt3-js");
+        new IntersectionObserver(function (e, o) { if (e[0].isIntersecting) { el.classList.add("is-in"); o.disconnect(); } }, { threshold: 0.3 }).observe(el);
+      })();
+    </script>
   </body>
 </html>

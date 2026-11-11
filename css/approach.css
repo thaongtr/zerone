@@ -5,26 +5,54 @@
 .ap2-belief h1 { max-width: 16ch; }
 .ap2-belief .lede { max-width: 44ch; }
 
-/* ---------- Trust Translation: expertise -> Trust Translation -> a journey that continues ---------- */
+/* ---------- Trust Translation, human version: a photo of care, one line that carries the journey ---------- */
 .ap2-tt .lede { max-width: 56ch; }
-.tt2 { width: min(100%, 960px); margin: 2.6rem auto 0; display: flex; flex-direction: column; align-items: center; }
-.tt2-in { margin: 0; padding: 14px 34px; border-radius: 999px; background: var(--lg-fill); border: var(--lg-edge); box-shadow: var(--lg-shadow); -webkit-backdrop-filter: var(--lg-blur); backdrop-filter: var(--lg-blur); font-size: var(--fs-eyebrow, .8rem); font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--slate); text-align: center; }
-.tt2-link { position: relative; display: block; width: 1px; height: 44px; background: linear-gradient(180deg, rgba(63,88,115,.12), rgba(63,88,115,.55)); }
-.tt2-link::after { content: ""; position: absolute; left: 50%; bottom: -1px; width: 8px; height: 8px; border-right: 1.4px solid rgba(63,88,115,.6); border-bottom: 1.4px solid rgba(63,88,115,.6); transform: translateX(-50%) rotate(45deg); }
-.tt2-core { width: min(100%, 600px); padding: 2.2rem 2rem 2rem; border-radius: 44px; text-align: center; color: #fff; background: radial-gradient(120% 90% at 20% 0%, #b83a45 0%, #8f1d3f 55%, #781434 100%); box-shadow: 0 24px 54px rgba(125,22,55,.28), inset 1.5px 1.5px 0 rgba(255,255,255,.35), inset -1px -1px 0 rgba(255,255,255,.12); }
-.tt2-core h3 { margin: 0 0 .7rem; font-family: var(--serif); font-style: italic; font-weight: 400; font-size: clamp(2rem, 4.4vw, 3rem); line-height: 1.08; letter-spacing: -.02em; color: #fff; }
-.tt2-pillars { margin: 0; display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: .2rem .7rem; font-size: 1rem; line-height: 1.5; color: rgba(255,255,255,.92); }
-.tt2-pillars i { font-style: normal; opacity: .7; }
-.tt2-journey { position: relative; width: 100%; }
-.tt2-journey ol { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, 1fr); gap: 22px; }
-.tt2-journey li { position: relative; padding: 1.1rem .6rem 1rem; border-radius: 22px; text-align: center; font-family: var(--serif); font-size: clamp(1.15rem, 2vw, 1.5rem); line-height: 1.15; letter-spacing: -.01em; color: var(--ink); background: var(--lg-fill); border: var(--lg-edge); box-shadow: var(--lg-shadow); -webkit-backdrop-filter: var(--lg-blur); backdrop-filter: var(--lg-blur); }
-.tt2-journey li:not(:last-child)::after { content: ""; position: absolute; top: 50%; right: -17px; width: 12px; height: 12px; margin-top: -6px; border-top: 1.4px solid rgba(63,88,115,.55); border-right: 1.4px solid rgba(63,88,115,.55); transform: rotate(45deg); }
-.tt2-n { display: block; margin-bottom: .35rem; font-family: var(--sans); font-size: .72rem; font-weight: 600; letter-spacing: .16em; color: var(--slate); }
-.tt2-journey li.is-key { border-color: rgba(143,29,63,.4); }
-.tt2-journey li.is-key .tt2-n { color: var(--sc-bur, #8f1d3f); }
-.tt2-loop { display: block; width: 50%; height: 46px; margin: 4px 0 0 50%; overflow: visible; }
-.tt2-loop path { fill: none; stroke: rgba(143,29,63,.6); stroke-width: 1.4; stroke-linecap: round; stroke-linejoin: round; vector-effect: non-scaling-stroke; }
-.tt2-note { margin: .9rem 0 0; max-width: 46ch; text-align: center; font-size: var(--fs-small, .9375rem); line-height: 1.6; color: var(--slate); }
+.tt3 { position: relative; isolation: isolate; overflow: hidden; margin: 2.4rem 0 0; min-height: 760px; border-radius: 32px; color: #fff; box-shadow: 0 30px 70px rgba(30,45,80,.22); }
+.tt3-img { position: absolute; inset: 0; z-index: -2; width: 100%; height: 100%; object-fit: cover; object-position: 78% 50%; transform: scaleX(-1); }
+.tt3-shade { position: absolute; inset: 0; z-index: -1; background: linear-gradient(90deg, rgba(18,28,48,.82) 0%, rgba(22,34,58,.66) 38%, rgba(22,34,58,.12) 72%, rgba(22,34,58,0) 100%); }
+.tt3-head { position: absolute; left: 6%; top: 6%; max-width: 46%; }
+.tt3-in { margin: 0 0 .5rem; font-size: var(--fs-eyebrow, .8rem); font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: rgba(255,255,255,.82); }
+.tt3-core { margin: 0; font-family: var(--serif); font-style: italic; font-size: clamp(2rem, 3.6vw, 3rem); line-height: 1.08; letter-spacing: -.02em; color: #fff; text-shadow: 0 2px 22px rgba(10,20,40,.4); }
+.tt3-pillars { margin: .6rem 0 0; font-size: .98rem; line-height: 1.5; color: rgba(255,255,255,.9); }
+.tt3-pillars i { font-style: normal; opacity: .7; padding: 0 .25rem; }
+.tt3-curve { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; }
+.tt3-curve path { fill: none; stroke: rgba(255,255,255,.92); stroke-width: .22; stroke-linecap: round; stroke-dasharray: 1; stroke-dashoffset: 0; }
+.tt3-curve-m { display: none; }
+.tt3-curve-m path { stroke-width: .17; }
+.tt3-steps { list-style: none; margin: 0; padding: 0; }
+.tt3-steps li { position: absolute; font-family: var(--serif); font-size: clamp(2rem, 3.9vw, 3.3rem); line-height: 1.05; letter-spacing: -.02em; color: #fff; text-shadow: 0 2px 24px rgba(10,20,40,.45); white-space: nowrap; }
+.tt3-n { display: block; margin-bottom: .3rem; font-family: var(--sans); font-size: .74rem; font-weight: 600; letter-spacing: .18em; color: rgba(255,255,255,.7); }
+.tt3-steps li.is-key .tt3-n { color: #f3c4cc; }
+.tt3-s1 { left: 6%; top: 22%; } .tt3-s3 { left: 6%; top: 61%; }
+.tt3-s2, .tt3-s4 { right: 44%; text-align: right; } .tt3-s2 { top: 41%; } .tt3-s4 { top: 85%; }
+.tt3-dot { position: absolute; width: 9px; height: 9px; margin: -4.5px 0 0 -4.5px; border-radius: 50%; background: #fff; box-shadow: 0 0 0 5px rgba(255,255,255,.18); }
+.tt3-d1 { left: 22%; top: 33%; } .tt3-d2 { left: 52%; top: 53%; } .tt3-d3 { left: 22%; top: 73%; }
+.tt3-note { margin: 1.2rem 0 0; max-width: 56ch; font-size: var(--fs-small, .9375rem); line-height: 1.6; color: var(--slate); }
+
+@media (max-width: 720px) {
+  .tt3 { min-height: 980px; border-radius: 24px; margin-top: 1.8rem; }
+  .tt3-img { object-position: 52% 50%; }
+  .tt3-shade { background: linear-gradient(180deg, rgba(18,28,48,.84) 0%, rgba(22,34,58,.58) 55%, rgba(22,34,58,.74) 100%); }
+  .tt3-head { left: 7%; right: 7%; top: 5%; max-width: none; }
+  .tt3-curve-d { display: none; } .tt3-curve-m { display: block; }
+  .tt3-steps li { font-size: 2rem; }
+  .tt3-s1 { left: 7%; top: 21%; } .tt3-s3 { left: 7%; top: 60%; }
+  .tt3-s2, .tt3-s4 { right: 8%; left: auto; } .tt3-s2 { top: 40%; } .tt3-s4 { top: 83%; }
+  .tt3-d1 { left: 26%; top: 31%; } .tt3-d2 { left: 70%; top: 49%; } .tt3-d3 { left: 26%; top: 69%; }
+}
+
+/* one-time reveal: line draws segment by segment while each stage appears (~1.8s); static without scripting or with reduced motion */
+@media (prefers-reduced-motion: no-preference) {
+  .tt3-js .tt3:not(.is-in) .tt3-curve path { stroke-dashoffset: 1; }
+  .tt3-js .tt3:not(.is-in) .tt3-steps li, .tt3-js .tt3:not(.is-in) .tt3-dot { opacity: 0; }
+  .tt3-curve path { transition: stroke-dashoffset .6s ease-out; }
+  .tt3-steps li { transition: opacity .6s ease; }
+  .tt3-dot { transition: opacity .4s ease; }
+  .tt3.is-in .tt3-steps .tt3-s1 { transition-delay: .1s; } .tt3.is-in .tt3-curve path:nth-child(1), .tt3.is-in .tt3-d1 { transition-delay: .3s; }
+  .tt3.is-in .tt3-steps .tt3-s2 { transition-delay: .7s; } .tt3.is-in .tt3-curve path:nth-child(2), .tt3.is-in .tt3-d2 { transition-delay: .9s; }
+  .tt3.is-in .tt3-steps .tt3-s3 { transition-delay: 1.3s; } .tt3.is-in .tt3-curve path:nth-child(3), .tt3.is-in .tt3-d3 { transition-delay: 1.5s; }
+  .tt3.is-in .tt3-steps .tt3-s4 { transition-delay: 1.9s; }
+}
 
 /* ---------- Two applications: equal weight ---------- */
 .ap2-grid { margin-top: 2.2rem; display: grid; grid-template-columns: 1fr 1fr; gap: 22px; align-items: stretch; }
@@ -51,21 +79,6 @@ body .ap2-key .ap2-key-gloss { margin: .9rem 0 0; font-size: var(--fs-body, 1.06
   .ap2-grid, .ap2-impact { grid-template-columns: 1fr; }
   .ap2-impact { gap: 1.6rem; }
   .ap2-card { padding: 1.7rem 1.5rem; }
-}
-@media (max-width: 720px) {
-  .tt2 { margin-top: 2rem; }
-  .tt2-in { padding: 12px 22px; font-size: .74rem; letter-spacing: .1em; }
-  .tt2-link { height: 34px; }
-  .tt2-core { padding: 1.7rem 1.3rem; border-radius: 32px; }
-  .tt2-journey ol { grid-template-columns: 1fr; gap: 20px; }
-  .tt2-journey li { display: flex; align-items: center; justify-content: center; gap: .7rem; padding: .9rem 1rem; }
-  .tt2-n { margin: 0; }
-  .tt2-journey li:not(:last-child)::after { top: auto; right: auto; left: 50%; bottom: -15px; margin: 0 0 0 -6px; transform: rotate(135deg); }
-  .tt2-loop { display: none; }
-  .ap2-actions .btn { width: 100%; max-width: 340px; text-align: center; }
-}
-@media (prefers-reduced-motion: no-preference) {
-  .tt2-journey li, .tt2-core, .tt2-in { transition: transform .35s ease; }
 }
 
 /* ---------- Training programme, inside the Consultancy story: glass-framed photo, same type roles as the rest ---------- */
