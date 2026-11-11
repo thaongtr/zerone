@@ -69,11 +69,21 @@ body .ap2-key .ap2-key-gloss { margin: .9rem 0 0; font-size: var(--fs-body, 1.06
 }
 
 /* ---------- Training programme, inside the Consultancy story: glass-framed photo, same type roles as the rest ---------- */
-.ap2-card .ap2-more { align-self: flex-start; margin-top: 1.1rem; font-weight: 600; font-size: .95rem; color: var(--sc-bur, #8f1d3f); text-decoration: none; }
-.ap2-card .ap2-more:hover { text-decoration: underline; text-underline-offset: 4px; }
 .ap2-card .ap2-value { margin-top: 1.1rem; }
 .ap2-training { background: linear-gradient(180deg, rgba(255,255,255,.32), rgba(255,255,255,.06)); }
 .ap2-train-img { position: relative; padding: 10px; border-radius: 34px; background: var(--lg-fill); border: var(--lg-edge); box-shadow: var(--lg-shadow); -webkit-backdrop-filter: var(--lg-blur); backdrop-filter: var(--lg-blur); }
 .ap2-train-img img { border-radius: 26px; }
 .ap2-training .ap-focus li::before { background: var(--sc-bur, #8f1d3f); }
 @media (max-width: 860px) { .ap2-train-img { padding: 8px; border-radius: 26px; } .ap2-train-img img { border-radius: 20px; } }
+
+/* ---------- the two application cards are links: whole card clickable, lift and arrow on hover ---------- */
+a.ap2-card { color: inherit; text-decoration: none; cursor: pointer; transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease; }
+.ap2-more { display: flex; align-items: center; justify-content: space-between; margin-top: 1.4rem; font-weight: 600; font-size: .95rem; color: var(--sc-bur, #8f1d3f); }
+.ap2-arrow { display: inline-grid; place-items: center; width: 40px; height: 40px; border-radius: 50%; font-size: 1.15rem; line-height: 1; color: var(--sc-bur, #8f1d3f); background: rgba(255,255,255,.7); border: 1px solid rgba(143,29,63,.28); transition: transform .25s ease, background .25s ease, color .25s ease; }
+@media (hover: hover) and (pointer: fine) {
+  a.ap2-card:hover { transform: translateY(-4px); border-color: rgba(143,29,63,.32); box-shadow: 0 30px 62px rgba(52,72,120,.2), 0 2px 8px rgba(52,72,120,.07), inset 1.5px 1.5px 0 #fff, inset -1px -1px 0 rgba(255,255,255,.6), inset 0 0 34px rgba(255,255,255,.45); }
+  a.ap2-card:hover .ap2-arrow { transform: translateX(5px); background: var(--sc-bur, #8f1d3f); color: #fff; }
+}
+a.ap2-card:focus-visible { outline: 2px solid rgba(143,29,63,.7); outline-offset: 4px; transform: translateY(-2px); }
+a.ap2-card:focus-visible .ap2-arrow { background: var(--sc-bur, #8f1d3f); color: #fff; }
+@media (prefers-reduced-motion: reduce) { a.ap2-card, .ap2-arrow { transition: none; } a.ap2-card:hover, a.ap2-card:focus-visible { transform: none; } a.ap2-card:hover .ap2-arrow { transform: none; } }
