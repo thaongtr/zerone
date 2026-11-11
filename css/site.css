@@ -1921,3 +1921,7 @@ html[lang="vi"] .kicker, html[lang="vi"] .ap-label, html[lang="vi"] .hero-eyebro
 @media (max-width: 720px) { .zt-section { min-height: 0; padding-bottom: 40px; } }
 
 .ttm-tail .lede strong { font-weight: 600; color: var(--sc-bur, #8f1d3f); }
+
+/* homepage: the shared-ambition statement reads as a centred closing line under the map */
+.ttm-tail { text-align: center; padding-top: 3.2rem; padding-bottom: 3.2rem; }
+.ttm-tail .lede { max-width: 60ch; margin: 0 auto; }
