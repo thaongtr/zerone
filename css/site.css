@@ -1919,3 +1919,5 @@ html[lang="vi"] .kicker, html[lang="vi"] .ap-label, html[lang="vi"] .hero-eyebro
 /* homepage map: no closing tagline, so the section closes right under the diagram */
 .zt-section { min-height: 0; padding-bottom: 56px; }
 @media (max-width: 720px) { .zt-section { min-height: 0; padding-bottom: 40px; } }
+
+.ttm-tail .lede strong { font-weight: 600; color: var(--sc-bur, #8f1d3f); }
