@@ -5,53 +5,66 @@
 .ap2-belief h1 { max-width: 16ch; }
 .ap2-belief .lede { max-width: 44ch; }
 
-/* ---------- Trust Translation, human version: a photo of care, one line that carries the journey ---------- */
+/* ---------- Trust Translation: one photo of care and one continuous line that flows on into the two applications ---------- */
 .ap2-tt .lede { max-width: 56ch; }
-.tt3 { position: relative; isolation: isolate; overflow: hidden; margin: 2.4rem 0 0; min-height: 760px; border-radius: 32px; color: #fff; box-shadow: 0 30px 70px rgba(30,45,80,.22); }
-.tt3-img { position: absolute; inset: 0; z-index: -2; width: 100%; height: 100%; object-fit: cover; object-position: 78% 50%; transform: scaleX(-1); }
-.tt3-shade { position: absolute; inset: 0; z-index: -1; background: linear-gradient(90deg, rgba(18,28,48,.82) 0%, rgba(22,34,58,.66) 38%, rgba(22,34,58,.12) 72%, rgba(22,34,58,0) 100%); }
-.tt3-head { position: absolute; left: 6%; top: 6%; max-width: 46%; }
-.tt3-in { margin: 0 0 .5rem; font-size: var(--fs-eyebrow, .8rem); font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: rgba(255,255,255,.82); }
-.tt3-core { margin: 0; font-family: var(--serif); font-style: italic; font-size: clamp(2rem, 3.6vw, 3rem); line-height: 1.08; letter-spacing: -.02em; color: #fff; text-shadow: 0 2px 22px rgba(10,20,40,.4); }
-.tt3-pillars { margin: .6rem 0 0; font-size: .98rem; line-height: 1.5; color: rgba(255,255,255,.9); }
-.tt3-pillars i { font-style: normal; opacity: .7; padding: 0 .25rem; }
+.tt3 { position: relative; isolation: isolate; overflow: hidden; margin: 2.4rem 0 0; min-height: 720px; border-radius: 32px; color: var(--ink); background: #e3ebf5; box-shadow: 0 30px 70px rgba(52,72,120,.16), inset 0 0 0 1px rgba(255,255,255,.7); }
+.tt3-img { position: absolute; inset: 0; z-index: -1; width: 100%; height: 100%; object-fit: cover; object-position: 50% 62%; }
+.tt3::before { content: ""; position: absolute; inset: 0; z-index: -1; background: linear-gradient(180deg, rgba(240,246,252,.62) 0%, rgba(240,246,252,.18) 46%, rgba(240,246,252,0) 70%); }
+.tt3-head { position: absolute; left: 6%; top: 6%; max-width: 50%; }
+.tt3-in { margin: 0 0 .5rem; font-size: var(--fs-eyebrow, .8rem); font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--slate); }
+.tt3-core { margin: 0; font-family: var(--serif); font-style: italic; font-size: clamp(2rem, 3.6vw, 3rem); line-height: 1.08; letter-spacing: -.02em; color: var(--ink); }
+.tt3-pillars { margin: .55rem 0 0; font-size: .98rem; line-height: 1.5; color: var(--slate); }
+.tt3-pillars i { font-style: normal; opacity: .6; padding: 0 .25rem; }
 .tt3-curve { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; }
-.tt3-curve path { fill: none; stroke: rgba(255,255,255,.92); stroke-width: .22; stroke-linecap: round; stroke-dasharray: 1; stroke-dashoffset: 0; }
+.tt3-curve path, .tt3-drop path, .ap2-fork path { fill: none; stroke: var(--sc-bur, #8f1d3f); stroke-width: 1.6px; stroke-linecap: round; vector-effect: non-scaling-stroke; stroke-dasharray: 4000; stroke-dashoffset: 0; }
 .tt3-curve-m { display: none; }
-.tt3-curve-m path { stroke-width: .17; }
+.tt3-dot { position: absolute; left: var(--dx); top: var(--dy); width: 11px; height: 11px; margin: -5.5px 0 0 -5.5px; border-radius: 50%; background: #fff; border: 2px solid var(--sc-bur, #8f1d3f); box-shadow: 0 0 0 6px rgba(143,29,63,.1); }
 .tt3-steps { list-style: none; margin: 0; padding: 0; }
-.tt3-steps li { position: absolute; font-family: var(--serif); font-size: clamp(2rem, 3.9vw, 3.3rem); line-height: 1.05; letter-spacing: -.02em; color: #fff; text-shadow: 0 2px 24px rgba(10,20,40,.45); white-space: nowrap; }
-.tt3-n { display: block; margin-bottom: .3rem; font-family: var(--sans); font-size: .74rem; font-weight: 600; letter-spacing: .18em; color: rgba(255,255,255,.7); }
-.tt3-steps li.is-key .tt3-n { color: #f3c4cc; }
-.tt3-s1 { left: 6%; top: 22%; } .tt3-s3 { left: 6%; top: 61%; }
-.tt3-s2, .tt3-s4 { right: 44%; text-align: right; } .tt3-s2 { top: 41%; } .tt3-s4 { top: 85%; }
-.tt3-dot { position: absolute; width: 9px; height: 9px; margin: -4.5px 0 0 -4.5px; border-radius: 50%; background: #fff; box-shadow: 0 0 0 5px rgba(255,255,255,.18); }
-.tt3-d1 { left: 22%; top: 33%; } .tt3-d2 { left: 52%; top: 53%; } .tt3-d3 { left: 22%; top: 73%; }
-.tt3-note { margin: 1.2rem 0 0; max-width: 56ch; font-size: var(--fs-small, .9375rem); line-height: 1.6; color: var(--slate); }
+.tt3-s { position: absolute; left: var(--dx); top: var(--dy); font-family: var(--serif); font-size: clamp(2rem, 3.8vw, 3.2rem); line-height: 1.02; letter-spacing: -.02em; color: var(--ink); white-space: nowrap; }
+/* each stage sits beside its dot, on the side the line is not */
+.tt3-s1 { transform: translate(18px, -100%); margin-top: -12px; }
+.tt3-s2 { transform: translate(18px, -100%); margin-top: -12px; }
+.tt3-s3, .tt3-s4 { transform: translate(18px, -100%); margin-top: -12px; }
+/* the drop leaves the photo and the fork lands on the two cards: the same line, still going */
+.tt3-drop { position: relative; display: block; width: 2px; height: 90px; margin: 0 auto; }
+.tt3-drop svg { display: block; width: 2px; height: 100%; overflow: visible; }
+.tt3-drop i, .ap2-fork i { position: absolute; width: 11px; height: 11px; margin: -5.5px 0 0 -5.5px; border-radius: 50%; background: #fff; border: 2px solid var(--sc-bur, #8f1d3f); box-shadow: 0 0 0 6px rgba(143,29,63,.1); }
+.tt3-drop i { left: 50%; bottom: -5px; top: auto; margin-top: 0; }
+.tt3-note { margin: 1rem auto 0; max-width: 52ch; text-align: center; font-size: var(--fs-small, .9375rem); line-height: 1.6; color: var(--slate); }
+.ap2-tt { padding-bottom: 1.5rem; }
+.ap2-apps { padding-top: 1.5rem; }
+.ap2-apps > .kicker, .ap2-apps > .display { text-align: center; }
+.ap2-fork { position: relative; display: block; height: 84px; margin: .6rem 0 0; }
+.ap2-fork svg { display: block; width: 100%; height: 100%; overflow: visible; }
+.ap2-fork i { bottom: -5px; margin-top: 0; }
+.ap2-fd1 { left: 25%; } .ap2-fd2 { left: 75%; }
+.ap2-grid { margin-top: 0; }
 
+@media (max-width: 860px) { .ap2-fork { display: none; } .ap2-apps > .display { margin-bottom: 1.4rem; } .ap2-grid { margin-top: 0; } }
 @media (max-width: 720px) {
-  .tt3 { min-height: 980px; border-radius: 24px; margin-top: 1.8rem; }
-  .tt3-img { object-position: 52% 50%; }
-  .tt3-shade { background: linear-gradient(180deg, rgba(18,28,48,.84) 0%, rgba(22,34,58,.58) 55%, rgba(22,34,58,.74) 100%); }
+  .tt3 { min-height: 1000px; border-radius: 24px; margin-top: 1.8rem; }
+  .tt3-img { object-position: 50% 78%; }
+  .tt3::before { background: linear-gradient(180deg, rgba(240,246,252,.7) 0%, rgba(240,246,252,.25) 55%, rgba(240,246,252,0) 80%); }
   .tt3-head { left: 7%; right: 7%; top: 5%; max-width: none; }
   .tt3-curve-d { display: none; } .tt3-curve-m { display: block; }
-  .tt3-steps li { font-size: 2rem; }
-  .tt3-s1 { left: 7%; top: 21%; } .tt3-s3 { left: 7%; top: 60%; }
-  .tt3-s2, .tt3-s4 { right: 8%; left: auto; } .tt3-s2 { top: 40%; } .tt3-s4 { top: 83%; }
-  .tt3-d1 { left: 26%; top: 31%; } .tt3-d2 { left: 70%; top: 49%; } .tt3-d3 { left: 26%; top: 69%; }
+  .tt3-dot, .tt3-s { left: var(--mx); top: var(--my); }
+  .tt3-s { font-size: 2rem; }
+  .tt3-s1, .tt3-s2, .tt3-s3, .tt3-s4 { transform: translate(16px, -100%); margin-top: -10px; text-align: left; }
+  .tt3-drop { height: 60px; }
 }
 
-/* one-time reveal: line draws segment by segment while each stage appears (~1.8s); static without scripting or with reduced motion */
+/* one-time reveal (~2.8s): the line is drawn once, stage by stage; static without scripting or with reduced motion */
 @media (prefers-reduced-motion: no-preference) {
-  .tt3-js .tt3:not(.is-in) .tt3-curve path { stroke-dashoffset: 1; }
-  .tt3-js .tt3:not(.is-in) .tt3-steps li, .tt3-js .tt3:not(.is-in) .tt3-dot { opacity: 0; }
-  .tt3-curve path { transition: stroke-dashoffset .6s ease-out; }
-  .tt3-steps li { transition: opacity .6s ease; }
-  .tt3-dot { transition: opacity .4s ease; }
-  .tt3.is-in .tt3-steps .tt3-s1 { transition-delay: .1s; } .tt3.is-in .tt3-curve path:nth-child(1), .tt3.is-in .tt3-d1 { transition-delay: .3s; }
-  .tt3.is-in .tt3-steps .tt3-s2 { transition-delay: .7s; } .tt3.is-in .tt3-curve path:nth-child(2), .tt3.is-in .tt3-d2 { transition-delay: .9s; }
-  .tt3.is-in .tt3-steps .tt3-s3 { transition-delay: 1.3s; } .tt3.is-in .tt3-curve path:nth-child(3), .tt3.is-in .tt3-d3 { transition-delay: 1.5s; }
-  .tt3.is-in .tt3-steps .tt3-s4 { transition-delay: 1.9s; }
+  .tt3-js .tt3:not(.is-in) .tt3-curve path { stroke-dashoffset: 4000; }
+  .tt3-js .tt3:not(.is-in) .tt3-dot, .tt3-js .tt3:not(.is-in) .tt3-s { opacity: 0; }
+  .tt3-js .tt3:not(.is-in) ~ .tt3-drop path, .tt3-js .tt3:not(.is-in) ~ .tt3-drop i { opacity: 0; }
+  .tt3-curve path { transition: stroke-dashoffset 2.2s cubic-bezier(.4,0,.2,1) .2s; }
+  .tt3-dot, .tt3-s, .tt3-drop path, .tt3-drop i { transition: opacity .5s ease; }
+  .tt3.is-in .tt3-dot:nth-of-type(1), .tt3.is-in .tt3-s1 { transition-delay: .2s; }
+  .tt3.is-in .tt3-dot:nth-of-type(2), .tt3.is-in .tt3-s2 { transition-delay: .8s; }
+  .tt3.is-in .tt3-dot:nth-of-type(3), .tt3.is-in .tt3-s3 { transition-delay: 1.4s; }
+  .tt3.is-in .tt3-dot:nth-of-type(4), .tt3.is-in .tt3-s4 { transition-delay: 2s; }
+  .tt3.is-in ~ .tt3-drop path, .tt3.is-in ~ .tt3-drop i { transition-delay: 2.4s; }
 }
 
 /* ---------- Two applications: equal weight ---------- */
