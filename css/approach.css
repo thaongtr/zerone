@@ -1,0 +1,69 @@
+/* Approach page: belief, Trust Translation flow, two applications, shared impact.
+   Additive and scoped to .ap2-* / .tt2-*; reuses the glass tokens from spatial.css (--lg-fill, --lg-edge, --lg-shadow, --lg-blur) and the site type scale. */
+
+.ap2-belief { padding-bottom: 1.5rem; }
+.ap2-belief h1 { max-width: 16ch; }
+.ap2-belief .lede { max-width: 44ch; }
+
+/* ---------- Trust Translation: expertise -> Trust Translation -> a journey that continues ---------- */
+.ap2-tt .lede { max-width: 56ch; }
+.tt2 { width: min(100%, 960px); margin: 2.6rem auto 0; display: flex; flex-direction: column; align-items: center; }
+.tt2-in { margin: 0; padding: 14px 34px; border-radius: 999px; background: var(--lg-fill); border: var(--lg-edge); box-shadow: var(--lg-shadow); -webkit-backdrop-filter: var(--lg-blur); backdrop-filter: var(--lg-blur); font-size: var(--fs-eyebrow, .8rem); font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--slate); text-align: center; }
+.tt2-link { position: relative; display: block; width: 1px; height: 44px; background: linear-gradient(180deg, rgba(63,88,115,.12), rgba(63,88,115,.55)); }
+.tt2-link::after { content: ""; position: absolute; left: 50%; bottom: -1px; width: 8px; height: 8px; border-right: 1.4px solid rgba(63,88,115,.6); border-bottom: 1.4px solid rgba(63,88,115,.6); transform: translateX(-50%) rotate(45deg); }
+.tt2-core { width: min(100%, 600px); padding: 2.2rem 2rem 2rem; border-radius: 44px; text-align: center; color: #fff; background: radial-gradient(120% 90% at 20% 0%, #b83a45 0%, #8f1d3f 55%, #781434 100%); box-shadow: 0 24px 54px rgba(125,22,55,.28), inset 1.5px 1.5px 0 rgba(255,255,255,.35), inset -1px -1px 0 rgba(255,255,255,.12); }
+.tt2-core h3 { margin: 0 0 .7rem; font-family: var(--serif); font-style: italic; font-weight: 400; font-size: clamp(2rem, 4.4vw, 3rem); line-height: 1.08; letter-spacing: -.02em; color: #fff; }
+.tt2-pillars { margin: 0; display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: .2rem .7rem; font-size: 1rem; line-height: 1.5; color: rgba(255,255,255,.92); }
+.tt2-pillars i { font-style: normal; opacity: .7; }
+.tt2-journey { position: relative; width: 100%; }
+.tt2-journey ol { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, 1fr); gap: 22px; }
+.tt2-journey li { position: relative; padding: 1.1rem .6rem 1rem; border-radius: 22px; text-align: center; font-family: var(--serif); font-size: clamp(1.15rem, 2vw, 1.5rem); line-height: 1.15; letter-spacing: -.01em; color: var(--ink); background: var(--lg-fill); border: var(--lg-edge); box-shadow: var(--lg-shadow); -webkit-backdrop-filter: var(--lg-blur); backdrop-filter: var(--lg-blur); }
+.tt2-journey li:not(:last-child)::after { content: ""; position: absolute; top: 50%; right: -17px; width: 12px; height: 12px; margin-top: -6px; border-top: 1.4px solid rgba(63,88,115,.55); border-right: 1.4px solid rgba(63,88,115,.55); transform: rotate(45deg); }
+.tt2-n { display: block; margin-bottom: .35rem; font-family: var(--sans); font-size: .72rem; font-weight: 600; letter-spacing: .16em; color: var(--slate); }
+.tt2-journey li.is-key { border-color: rgba(143,29,63,.4); }
+.tt2-journey li.is-key .tt2-n { color: var(--sc-bur, #8f1d3f); }
+.tt2-loop { display: block; width: 50%; height: 46px; margin: 4px 0 0 50%; overflow: visible; }
+.tt2-loop path { fill: none; stroke: rgba(143,29,63,.6); stroke-width: 1.4; stroke-linecap: round; stroke-linejoin: round; vector-effect: non-scaling-stroke; }
+.tt2-note { margin: .9rem 0 0; max-width: 46ch; text-align: center; font-size: var(--fs-small, .9375rem); line-height: 1.6; color: var(--slate); }
+
+/* ---------- Two applications: equal weight ---------- */
+.ap2-grid { margin-top: 2.2rem; display: grid; grid-template-columns: 1fr 1fr; gap: 22px; align-items: stretch; }
+.ap2-card { display: flex; flex-direction: column; padding: 2.2rem 2.2rem 2rem; }
+.ap2-card .num, .ap2-key .num { margin: 0 0 1rem; font-size: var(--fs-eyebrow, .8rem); font-weight: 600; letter-spacing: .14em; color: var(--sc-bur, #8f1d3f); }
+.ap2-card h3 { margin: 0 0 .9rem; font-size: clamp(1.5rem, 2.2vw, 1.9rem); line-height: 1.2; }
+.ap2-card > p:not(.num):not(.ap2-value) { margin: 0; }
+.ap2-value { margin: auto 0 0; padding-top: 1.1rem; border-top: 1px solid rgba(63,88,115,.2); font-weight: 500; color: var(--ink); line-height: 1.55; }
+.ap2-card > p:not(.num):not(.ap2-value) + .ap2-value { margin-top: 1.4rem; }
+
+/* ---------- Shared impact ---------- */
+.ap2-impact { display: grid; grid-template-columns: 1.15fr 1fr; gap: 4vw; align-items: center; }
+.ap2-impact .lede { max-width: 52ch; }
+.ap2-key { padding: 2.4rem 2.2rem; text-align: left; }
+body .ap2-key .ap2-key-term { margin: 0; font-family: var(--serif); font-size: clamp(1.9rem, 3.2vw, 2.7rem); line-height: 1.12; letter-spacing: -.02em; color: var(--ink); }
+body .ap2-key .ap2-key-gloss { margin: .9rem 0 0; font-size: var(--fs-body, 1.0625rem); color: var(--slate); }
+
+/* ---------- Closing call to action: two actions ---------- */
+.ap2-actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 14px; margin: 0; }
+.cta-card .btn.ap2-ghost { background: rgba(255,255,255,.12); color: #fff; border: 1px solid rgba(255,255,255,.7); box-shadow: none; }
+.cta-card .btn.ap2-ghost:hover { background: rgba(255,255,255,.24); color: #fff; }
+
+@media (max-width: 860px) {
+  .ap2-grid, .ap2-impact { grid-template-columns: 1fr; }
+  .ap2-impact { gap: 1.6rem; }
+  .ap2-card { padding: 1.7rem 1.5rem; }
+}
+@media (max-width: 720px) {
+  .tt2 { margin-top: 2rem; }
+  .tt2-in { padding: 12px 22px; font-size: .74rem; letter-spacing: .1em; }
+  .tt2-link { height: 34px; }
+  .tt2-core { padding: 1.7rem 1.3rem; border-radius: 32px; }
+  .tt2-journey ol { grid-template-columns: 1fr; gap: 20px; }
+  .tt2-journey li { display: flex; align-items: center; justify-content: center; gap: .7rem; padding: .9rem 1rem; }
+  .tt2-n { margin: 0; }
+  .tt2-journey li:not(:last-child)::after { top: auto; right: auto; left: 50%; bottom: -15px; margin: 0 0 0 -6px; transform: rotate(135deg); }
+  .tt2-loop { display: none; }
+  .ap2-actions .btn { width: 100%; max-width: 340px; text-align: center; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .tt2-journey li, .tt2-core, .tt2-in { transition: transform .35s ease; }
+}

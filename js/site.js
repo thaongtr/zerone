@@ -95,7 +95,6 @@ function nav(active) {
   const links = [
     ["approach.html", "Approach"],
     ["about.html", "About"],
-    ["faq.html", "FAQ"],
   ];
   const p = L.panel;
   return `
@@ -116,7 +115,6 @@ function nav(active) {
         <a href="approach.html">${p.approach}</a>
         <a href="work.html">${p.work}</a>
         <a href="about.html">${p.about}</a>
-        <a href="faq.html">${p.faq}</a>
         <a href="contact.html">${p.contact}</a>
         <a class="btn" href="contact.html">${L.book}</a>
         ${VI_READY ? `<a class="nav-lang-row" href="${twinHref()}" data-lang="${OTHER}" hreflang="${OTHER}" lang="${OTHER}">${L.langRow}</a>` : ""}
