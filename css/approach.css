@@ -150,3 +150,11 @@ body .ap2-key .ap2-key-gloss { margin-top: .8rem; }
   .tt3-bridge .tt3-note { padding: 0; max-width: 40ch; margin: 0 0 .9rem; text-align: center; }
   .tt3-bridge .tt3-drop { height: 56px; }
 }
+
+/* breathing room between the line's end, the eyebrow and the heading; heading one step lighter */
+.ap2-apps { padding-top: 1.6rem; }
+.ap2-apps > .kicker { margin-top: 1.9rem; margin-bottom: 1rem; }
+body .ap2-apps > .display { font-size: clamp(1.7rem, 2.9vw, 2.45rem); line-height: 1.15; margin-bottom: 0; }
+.ap2-grid { margin-top: 2.6rem; }
+.tt3-bridge .tt3-drop { height: 96px; }
+@media (max-width: 860px) { .ap2-apps > .kicker { margin-top: 1.5rem; } .ap2-grid { margin-top: 1.8rem; } }
