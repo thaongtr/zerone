@@ -77,9 +77,7 @@
 .ap2-card > p:not(.num):not(.ap2-value) + .ap2-value { margin-top: 1.4rem; }
 
 /* ---------- Shared impact ---------- */
-.ap2-impact { display: grid; grid-template-columns: 1.15fr 1fr; gap: 4vw; align-items: center; }
 .ap2-impact .lede { max-width: 52ch; }
-.ap2-key { padding: 2.4rem 2.2rem; text-align: left; }
 body .ap2-key .ap2-key-term { margin: 0; font-family: var(--serif); font-size: clamp(1.9rem, 3.2vw, 2.7rem); line-height: 1.12; letter-spacing: -.02em; color: var(--ink); }
 body .ap2-key .ap2-key-gloss { margin: .9rem 0 0; font-size: var(--fs-body, 1.0625rem); color: var(--slate); }
 
@@ -89,8 +87,7 @@ body .ap2-key .ap2-key-gloss { margin: .9rem 0 0; font-size: var(--fs-body, 1.06
 .cta-card .btn.ap2-ghost:hover { background: rgba(255,255,255,.24); color: #fff; }
 
 @media (max-width: 860px) {
-  .ap2-grid, .ap2-impact { grid-template-columns: 1fr; }
-  .ap2-impact { gap: 1.6rem; }
+  .ap2-grid { grid-template-columns: 1fr; }
   .ap2-card { padding: 1.7rem 1.5rem; }
 }
 
@@ -123,3 +120,25 @@ a.ap2-card:focus-visible .ap2-arrow { background: var(--sc-bur, #8f1d3f); color:
     a.ap2-card .ap2-more { margin-top: 1.4rem; align-self: end; }
   }
 }
+
+/* ---------- Shared impact: the two branches come back together, one statement, then straight into the call to action ---------- */
+.ap2-impact { position: relative; text-align: center; padding-top: 1rem; padding-bottom: 0; }
+.ap2-impact .kicker, .ap2-impact .display { text-align: center; }
+.ap2-impact .display { margin-bottom: 1.2rem; }
+.ap2-impact .lede { max-width: 58ch; margin: 0 auto; }
+.ap2-merge { position: relative; display: block; height: 84px; margin: 0 0 1.4rem; }
+.ap2-merge svg { display: block; width: 100%; height: 100%; overflow: visible; }
+.ap2-merge path, .ap2-out path { fill: none; stroke: var(--sc-bur, #8f1d3f); stroke-width: 1.6px; stroke-linecap: round; vector-effect: non-scaling-stroke; }
+.ap2-merge path { stroke: url(#ap2mg); }
+.ap2-merge i { position: absolute; left: 50%; bottom: -5px; width: 11px; height: 11px; margin-left: -5.5px; border-radius: 50%; background: #fff; border: 2px solid var(--sc-bur, #8f1d3f); box-shadow: 0 0 0 6px rgba(143,29,63,.1); }
+.ap2-key { display: grid; justify-items: center; margin: 2.4rem auto 0; padding: 0; max-width: 980px; }
+.ap2-key .num { display: flex; align-items: center; gap: 1.2rem; width: 100%; margin: 0 0 1.1rem; }
+.ap2-key .num::before, .ap2-key .num::after { content: ""; flex: 1; height: 1px; background: linear-gradient(90deg, transparent, rgba(63,88,115,.32)); }
+.ap2-key .num::after { background: linear-gradient(270deg, transparent, rgba(63,88,115,.32)); }
+body .ap2-key .ap2-key-term { font-size: clamp(1.9rem, 4vw, 3.2rem); line-height: 1.1; }
+body .ap2-key .ap2-key-gloss { margin-top: .8rem; }
+.ap2-out { position: relative; display: block; width: 2px; height: 72px; margin: 2rem auto 0; }
+.ap2-out svg { display: block; width: 2px; height: 100%; overflow: visible; }
+.ap2-out i { position: absolute; left: 50%; bottom: -5px; width: 11px; height: 11px; margin-left: -5.5px; border-radius: 50%; background: #fff; border: 2px solid var(--sc-bur, #8f1d3f); box-shadow: 0 0 0 6px rgba(143,29,63,.1); }
+@media (max-width: 860px) { .ap2-merge { height: 56px; } .ap2-merge svg { display: none; } .ap2-merge::before { content: ""; position: absolute; left: 50%; top: 0; bottom: 0; width: 1.6px; margin-left: -.8px; background: linear-gradient(180deg, rgba(143,29,63,0), #8f1d3f 40%); } .ap2-out { height: 52px; } }
+@media (max-width: 720px) { .ap2-key .num { gap: .8rem; font-size: .74rem; letter-spacing: .1em; } }
