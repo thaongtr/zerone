@@ -1944,3 +1944,11 @@ html[lang="vi"] .kicker, html[lang="vi"] .ap-label, html[lang="vi"] .hero-eyebro
 .f3-co-grid a:hover { color: var(--red); text-decoration: underline; text-underline-offset: 3px; }
 @media (max-width: 960px) { .f3-policies ul { grid-template-columns: repeat(2, minmax(0, 1fr)); } .f3-co-grid { grid-template-columns: 1fr 1fr; } }
 @media (max-width: 600px) { .f3-policies ul { grid-template-columns: 1fr; } .f3-co-grid { grid-template-columns: 1fr; gap: .9rem; } }
+
+/* About, founder: one human line, one short paragraph, three proof points (replaces two paragraphs, four chips and a caption) */
+.pp-intro { margin: 0 0 1.1rem; max-width: 30ch; font-family: var(--serif); font-size: clamp(1.35rem, 2vw, 1.7rem); line-height: 1.3; letter-spacing: -.01em; color: var(--ink); }
+.pp-proof ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 0; }
+.pp-proof li { display: grid; gap: .4rem; padding: 1.15rem 0; border-top: 1px solid rgba(63,88,115,.18); }
+.pp-proof li:last-child { border-bottom: 1px solid rgba(63,88,115,.18); }
+.pp-proof b { font-family: var(--serif); font-weight: 400; font-size: clamp(1.5rem, 2.4vw, 2.1rem); line-height: 1.1; letter-spacing: -.02em; color: var(--sc-bur, #8f1d3f); white-space: nowrap; }
+.pp-proof span { font-size: .98rem; line-height: 1.6; color: var(--slate); }
