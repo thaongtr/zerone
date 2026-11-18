@@ -242,13 +242,27 @@
       .ds-own h2 { margin: 0 0 .1rem; font-family: var(--serif, Newsreader, Georgia, serif); font-weight: 400; font-size: clamp(1.05rem, 1.35vw, 1.45rem); line-height: 1.25; color: var(--ink); }
       .ds-own p { font-size: .84rem; line-height: 1.55; }
       .ds-own .ds-own-tick { margin: 0; font-size: .68rem; letter-spacing: .16em; font-weight: 700; color: var(--bur); }
-      .ds-own-steps { margin: 0 0 .2rem; padding: 0; list-style: none; display: grid; gap: .35rem; counter-reset: s; }
+      .ds-own-steps { margin: 0 0 .2rem; padding: 0; list-style: none; display: grid; gap: .35rem; }
       .ds-own-steps li { position: relative; padding-left: 1.5rem; font-size: .84rem; line-height: 1.45; color: var(--ink); }
       .ds-own-steps li::before { content: ""; position: absolute; left: .1rem; top: .3em; width: .5rem; height: .5rem; border-radius: 50%; border: 1.5px solid var(--bur); background: #fff; }
       .ds-own .ds-own-note { font-size: .76rem; margin-top: .1rem; }
       .ds-own .btn:not(.ghost) { text-decoration: none; justify-content: center; gap: .5em; }
       .ds-own .btn.ghost { justify-content: flex-start; text-align: left; height: auto; min-height: 1.8rem; color: var(--bur); border: 0; background: none; box-shadow: none; text-decoration: underline; text-underline-offset: 3px; font-weight: 500; }
+      .ds-fsub { margin: -.2rem 0 .9rem; font-size: .84rem; line-height: 1.5; color: var(--mute); }
+      .ds-guide { display: none; }
+      .ds[data-state="ready"] .ds-guide { display: block; position: absolute; left: 2%; right: 2%; top: 100%; margin-top: .2rem; text-align: center; z-index: 3; }
+      .ds-launch .ds-title { font-size: clamp(1.7rem, 2.3vw, 2.9rem); }
       .ds-launch[data-end="1"] .ds-lede { display: none; }
+      .ds-guide h2 { margin: 0 0 .15rem; font-family: var(--serif, Newsreader, Georgia, serif); font-weight: 500; font-size: clamp(.95rem, 1.15vw, 1.25rem); color: var(--ink); }
+      .ds-guide p { margin: 0; font-size: .8rem; line-height: 1.5; color: var(--mute); }
+      @media (max-width: 900px) {
+        .ds-launch .ds-title { font-size: clamp(2rem, 7vw, 3rem); }
+        .ds-launch[data-end="1"] .ds-lede { display: block; }
+        .ds-launch .ds-left { order: 1; } .ds-launch .ds-right { order: 2; } .ds-launch .ds-stage { order: 3; scroll-margin-top: 88px; } .ds-launch .ds-end { order: 4; }
+        .ds[data-state="ready"] .ds-guide { position: static; margin-top: .6rem; order: 9; }
+        .ds-launch .ds-stage { flex-wrap: wrap; }
+        .ds-guide { flex-basis: 100%; }
+      }
       .ds-cta-note { margin: -.1rem .3rem .5rem; font-size: .78rem; line-height: 1.45; color: var(--mute); }
       /* ---- adaptive portrait hero (Doctor Profile inside the left screen) ---- */
       .ds-live.ds-profile { padding: 0; background: #f4f7fe; }
@@ -482,35 +496,53 @@
       var sid = (function () { var a = new Uint8Array(12); (window.crypto || window.msCrypto).getRandomValues(a); return Array.prototype.map.call(a, function (b) { return ("0" + b.toString(16)).slice(-2); }).join(""); })();
       var sent = {}, timers = [];
 
-      /* Profile Launch entry (?camp=launch): only wording around the device changes; the device itself is untouched. */
+      /* Profile Launch entry (?camp=launch). Final conversion copy; the device itself is untouched. */
       var LAUNCH = /[?&]camp=launch(&|$)/.test(location.search);
       (function () {
         var plansLink = $("ds-plans"); if (plansLink) plansLink.setAttribute("href", "plans.html?src=" + (SRC || "preview"));
         if (!LAUNCH) return;
         var q = function (s) { return document.querySelector(s); };
-        q(".ds-kicker").textContent = "ZERONE · PROFESSIONAL PROFILE LAUNCH";
-        $("ds-h1").innerHTML = "Chuyên môn của bạn,<br>một <em>không gian<br>xứng đáng.</em>";
-        document.title = "Chuyên môn của bạn, một không gian xứng đáng — Zerone";
-        q(".ds-lede").textContent = "Zerone mời bác sĩ và chuyên gia chăm sóc sức khỏe trải nghiệm hồ sơ chuyên môn cá nhân trên Doctor Space — sẵn sàng phát hành với đường dẫn riêng để người bệnh dễ dàng tìm hiểu và kết nối qua Zalo.";
-        var lis = $("ds-steps").children; lis[0].textContent = "Nhập thông tin"; lis[1].textContent = "Xem hồ sơ"; lis[2].innerHTML = "Trải nghiệm<br>như người bệnh";
-        $("ds-fh").textContent = "Tạo bản xem trước hồ sơ của bạn"; $("ds-gol").textContent = "Xem hồ sơ của tôi";
-        $("ds-end").classList.add("ds-own"); root.classList.add("ds-launch");
-        $("ds-end").innerHTML = '<p class="ds-own-tick">✓ ĐÃ HOÀN THÀNH XEM TRƯỚC</p>' +
-          '<h2>Bước tiếp theo: Phát hành hồ sơ của bạn.</h2>' +
-          '<p>Zerone đồng hành cùng bạn hoàn thiện thông tin, phát hành và duy trì hồ sơ chuyên môn với đường dẫn và QR riêng, thuận tiện chia sẻ qua Zalo và LinkedIn.</p>' +
-          '<ol class="ds-own-steps"><li>Hoàn thiện và xác nhận thông tin chuyên môn</li><li>Phát hành hồ sơ sau khi duyệt</li><li>Duy trì trong thời hạn đăng ký</li></ol>' +
-          '<a class="btn" id="ds-plans" href="plans.html?src=' + (SRC || "preview") + '&camp=launch"><span>Tiếp tục phát hành</span> <span aria-hidden="true">→</span></a>' +
-          '<p class="ds-own-note">Bản xem trước chưa phải hồ sơ đã được xác minh hoặc phát hành. Phần đặt lịch là mô phỏng.</p>' +
+        q(".ds-kicker").textContent = "ZERONE DOCTOR SPACE";
+        $("ds-h1").innerHTML = "Tạo và phát hành<br>hồ sơ chuyên môn<br>của bạn trên <em>Doctor Space.</em>";
+        document.title = "Xem trước hồ sơ Doctor Space của bạn — Zerone";
+        q(".ds-lede").textContent = "Trải nghiệm trước hồ sơ mang tên bạn trên giao diện Zalo Mini App. Khi đăng ký, Zerone hỗ trợ hoàn thiện và phát hành hồ sơ với đường dẫn riêng, giúp người bệnh dễ dàng tìm hiểu và kết nối.";
+        $("ds-fh").textContent = "Xem trước hồ sơ của bạn";
+        var sub = document.createElement("p"); sub.className = "ds-fsub"; sub.textContent = "Nhập một vài thông tin cơ bản để xem hồ sơ của bạn sẽ hiển thị như thế nào.";
+        $("ds-fh").insertAdjacentElement("afterend", sub);
+        $("ds-gol").textContent = "Xem hồ sơ của tôi";
+        var pn = q(".ds-pn"); pn.innerHTML = pn.innerHTML.replace(/^[\s\S]*?(<a href)/, "Thông tin bạn nhập chỉ dùng để tạo bản xem trước trong trình duyệt và không được gửi về Zerone. $1");
+        root.classList.add("ds-launch");
+        /* guidance next to the phone, shown once the personalised preview exists */
+        var guide = document.createElement("div"); guide.className = "ds-guide"; guide.id = "ds-guide";
+        guide.innerHTML = "<h2>Đây là cách người bệnh sẽ xem hồ sơ của bạn.</h2><p>Bạn có thể xem thông tin chuyên môn và thử trải nghiệm gửi yêu cầu đặt lịch ngay trên giao diện mô phỏng.</p>";
+        q(".ds-stage").appendChild(guide);
+        /* next step */
+        $("ds-end").classList.add("ds-own");
+        $("ds-end").innerHTML = '<p class="ds-own-tick">BẢN XEM TRƯỚC CỦA BẠN</p>' +
+          '<h2>Bạn muốn đưa hồ sơ này lên Doctor Space?</h2>' +
+          '<p>Zerone sẽ hỗ trợ hoàn thiện thông tin và phát hành hồ sơ sau khi được bạn xác nhận. Bạn sẽ có đường dẫn và mã QR riêng để chia sẻ qua Zalo, LinkedIn hoặc với người bệnh.</p>' +
+          '<ol class="ds-own-steps"><li>Hoàn thiện và xác nhận thông tin hồ sơ.</li><li>Phát hành hồ sơ và nhận đường dẫn riêng.</li><li>Duy trì, cập nhật hồ sơ trong thời hạn đăng ký.</li></ol>' +
+          '<a class="btn" id="ds-plans" href="plans.html?src=' + (SRC || "preview") + '&camp=launch"><span>Xem chi phí và thời hạn</span> <span aria-hidden="true">→</span></a>' +
+          '<p class="ds-own-note">Bản xem trước chưa phải hồ sơ được công khai.</p>' +
           '<button type="button" class="btn ghost" id="ds-claim">Claim Your Space</button>' +
           '<button type="button" class="btn ghost" id="ds-talk">Talk to Zerone</button>';
-        /* the panel appears as soon as the personalised preview is on screen; the optional booking simulation is not required */
-        function showEnd() { if (root.getAttribute("data-state") === "ready" && root.getAttribute("data-end") !== "1") root.setAttribute("data-end", "1"); }
-        if (window.MutationObserver) new MutationObserver(showEnd).observe(root, { attributes: true, attributeFilter: ["data-state", "data-end"] });
-        showEnd();
-        /* on a phone the single column puts this block last (after device and form), where the visitor is when the simulation ends */
-        var endEl = $("ds-end"), leftEl = q(".ds-left"), gridEl = q(".ds-grid"), mq = window.matchMedia("(max-width: 900px)");
+        var endEl = $("ds-end"), leftEl = q(".ds-left"), gridEl = q(".ds-grid"), stageEl = q(".ds-stage"), mq = window.matchMedia("(max-width: 900px)");
         function placeEnd() { if (mq.matches) { if (endEl.parentNode !== gridEl) gridEl.appendChild(endEl); } else if (endEl.parentNode !== leftEl) leftEl.appendChild(endEl); }
         placeEnd(); if (mq.addEventListener) mq.addEventListener("change", placeEnd); else mq.addListener(placeEnd);
+        /* the next-step block appears as soon as the personalised preview is on screen; the optional booking simulation is not required */
+        var pendingScroll = false;
+        form.addEventListener("submit", function () { pendingScroll = true; }, true);
+        function onState() {
+          if (root.getAttribute("data-state") !== "ready") return;
+          if (root.getAttribute("data-end") !== "1") root.setAttribute("data-end", "1");
+          if (pendingScroll && mq.matches) {   /* phone: bring the personalised preview into view, smoothly unless the visitor prefers reduced motion */
+            pendingScroll = false;
+            stageEl.setAttribute("tabindex", "-1");
+            try { stageEl.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "start" }); stageEl.focus({ preventScroll: true }); } catch (e) {}
+          } else if (pendingScroll) pendingScroll = false;
+        }
+        if (window.MutationObserver) new MutationObserver(onState).observe(root, { attributes: true, attributeFilter: ["data-state", "data-end"] });
+        onState();
       })();
 
       function track(kind) {
@@ -807,7 +839,7 @@
           if (dlg.showModal) dlg.showModal(); else dlg.setAttribute("open", ""); $("ds-mopen").focus();
         }
         $("ds-claim").addEventListener("click", function () { open("claim", this); });
-        $("ds-plans").addEventListener("click", function () { try { var z = JSON.parse(sessionStorage.getItem("zplan") || "null") || {}; z.form = z.form || {}; if (state.name && !z.form.name) z.form.name = state.name; if (state.work && !z.form.practice) z.form.practice = state.work; sessionStorage.setItem("zplan", JSON.stringify(z)); } catch (e) {} });
+        $("ds-plans").addEventListener("click", function () { if (LAUNCH) return; try { var z = JSON.parse(sessionStorage.getItem("zplan") || "null") || {}; z.form = z.form || {}; if (state.name && !z.form.name) z.form.name = state.name; if (state.work && !z.form.practice) z.form.practice = state.work; sessionStorage.setItem("zplan", JSON.stringify(z)); } catch (e) {} });
         $("ds-talk").addEventListener("click", function () { open("talk", this); });
         $("ds-dclose").addEventListener("click", close); $("ds-ddone").addEventListener("click", close);
         dlg.addEventListener("click", function (e) { if (e.target === dlg) close(); });

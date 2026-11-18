@@ -17,23 +17,24 @@
   };
   var T = {
     vi: {
-      title: "Đưa hồ sơ của bạn vào hoạt động.",
-      lede: "Chọn thời hạn để Zerone hoàn thiện, phát hành và duy trì hồ sơ chuyên môn cá nhân trên Doctor Space.",
-      sumTitle: "Hồ sơ chuyên môn cá nhân", sumSub: "Doctor Space · Zalo Mini App",
-      sumFeats: ["Hoàn thiện và phát hành", "Đường dẫn riêng & QR", "Duy trì hiện diện", "Cập nhật & hỗ trợ"],
+      eyebrow: "DOCTOR SPACE", title: "Chọn thời hạn sử dụng hồ sơ của bạn.",
+      lede: "Zerone hỗ trợ hoàn thiện, phát hành và duy trì hồ sơ chuyên môn của bạn trên Doctor Space trong thời hạn đăng ký.",
+      sumTitle: "Hồ sơ chuyên môn cá nhân", sumSub: "Một hồ sơ riêng để giới thiệu chuyên môn, nơi hành nghề và thông tin kết nối, giúp người bệnh dễ dàng tìm hiểu về bạn.",
+      sumFeats: [["Hồ sơ chuyên môn rõ ràng", "Giới thiệu thông tin và lĩnh vực hành nghề của bạn tại một nơi."], ["Dễ dàng chia sẻ", "Đường dẫn và mã QR riêng để gửi qua Zalo, LinkedIn hoặc chia sẻ trực tiếp."], ["Duy trì hồ sơ trực tuyến", "Hồ sơ tiếp tục được hiển thị trong thời hạn đăng ký."], ["Cập nhật thông tin khi cần", "Hỗ trợ cập nhật nội dung hồ sơ theo phạm vi dịch vụ."]],
       sumNote: "Đặt lịch qua Zerone chưa mở; Zerone sẽ thông báo khi sẵn sàng.",
-      durLabel: "Chọn thời hạn duy trì", reco: "KHUYẾN NGHỊ", buyLabel: "Thời hạn đã chọn · Chưa gồm VAT", contPay: "Tiếp tục thanh toán", exVat: "Chưa gồm VAT",
+      durLabel: "Chọn thời hạn sử dụng", reco: "KHUYẾN NGHỊ", saveTag: function (pct) { return "Tiết kiệm " + pct + "%"; }, buyTitle: "Thông tin đăng ký", buyLabel: "Thời hạn đã chọn · Chưa gồm VAT", contPay: "Tiếp tục đăng ký",
+      coLead: "Kiểm tra thông tin và gửi đăng ký. Zerone sẽ liên hệ để hướng dẫn thanh toán và hoàn thiện hồ sơ của bạn.", exVat: "Chưa gồm VAT",
       pmTitle: "Phương thức thanh toán", pmOn: "Khả dụng", pmOff: "Chưa khả dụng",
       pmMail: "Gửi yêu cầu qua email",
       pmOrder: "Đặt đơn, Zerone hướng dẫn thanh toán",
       pmBank: "Chuyển khoản ngân hàng / quét mã QR",
       pmCard: "Thanh toán bằng thẻ Visa/Mastercard",
       policiesMore: "Xem thêm: <a href=\"chinh-sach-gia.html\" target=\"_blank\" rel=\"noopener\">Chính sách về giá</a> · <a href=\"chinh-sach-thanh-toan.html\" target=\"_blank\" rel=\"noopener\">Chính sách thanh toán</a> · <a href=\"cung-cap-dich-vu-cham-dut-hoan-tien.html\" target=\"_blank\" rel=\"noopener\">Chấm dứt & hoàn tiền</a> · <a href=\"giai-quyet-khieu-nai.html\" target=\"_blank\" rel=\"noopener\">Giải quyết khiếu nại</a>", cont: "Tiếp tục", back: "Quay lại chọn gói",
-      monthly: "Theo tháng", monthlyPer: "tháng", monthlyNote: "Thanh toán theo từng tháng. Dừng gia hạn bất kỳ lúc nào.",
+      monthly: "Theo tháng", monthlyPer: "tháng", monthlyNote: "Thanh toán theo tháng.",
       six: "6 tháng", sixPer: "6 tháng",
-      sixNote: function (pm, sv, pct) { return "Tiết kiệm " + pct + "% so với gói tháng."; },
-      annual: "12 tháng", annualPer: "năm",
-      annualNote: function (pm, sv, pct) { return pm + " / tháng quy đổi · Tiết kiệm " + pct + "%"; },
+      sixNote: function (pm, sv, pct) { return "Tiết kiệm " + pct + "%."; },
+      annual: "12 tháng", annualPer: "12 tháng",
+      annualNote: function (pm, sv, pct) { return "Tương đương " + pm + "/tháng. Tiết kiệm " + pct + "% so với thanh toán từng tháng."; },
       included: "Bao gồm:",
       feats: ["Hồ sơ chuyên môn", "QR & đường dẫn riêng", "Tiếp nhận yêu cầu đặt lịch (mở khi Zerone thông báo sẵn sàng)", "Workspace quản lý lịch hẹn", "Cập nhật hồ sơ & thông tin dịch vụ", "Duy trì nền tảng & hỗ trợ kỹ thuật"],
       coTitle: "Xác nhận đăng ký", sumPlan: "Gói đăng ký", sumSchedule: "Lịch thanh toán", sumPeriod: "Giá mỗi kỳ (chưa gồm VAT)", sumSetup: "Phí thiết lập",
@@ -45,12 +46,12 @@
       termNote: function (m) { return "Thời hạn " + m + " tháng, tính từ ngày Zerone ghi nhận đã nhận đủ tiền."; },
       renewNote: "Không tự động trừ tiền. Muốn tiếp tục, bạn thanh toán thời hạn tiếp theo trước ngày hết hạn. Bạn có thể dừng gia hạn bất cứ lúc nào và dùng đến hết thời hạn đã thanh toán.",
       monthlyTerms: "Theo tháng, không cam kết năm.", onceTerms: function (m) { return m + " tháng, thanh toán một lần."; },
-      preview: "Thanh toán trực tuyến chưa mở. Zerone ghi nhận đơn, liên hệ hướng dẫn thanh toán và kích hoạt.",
+      preview: "Sau khi nhận được đăng ký, Zerone sẽ liên hệ hướng dẫn thanh toán. Hồ sơ được phát hành sau khi hoàn tất thanh toán và xác nhận thông tin cần thiết.",
       fVertical: "Lĩnh vực", vHealth: "Y khoa", vMental: "Sức khỏe tinh thần", vVet: "Thú y", fName: "Họ và tên", fPractice: "Phòng khám / tên hành nghề (không bắt buộc)",
       fMethod: "Liên hệ qua", mEmail: "Email", mPhone: "Điện thoại", mZalo: "Zalo", fContact: "Thông tin liên hệ",
       cAccept: "Tôi đăng ký cho mục đích hành nghề hoặc kinh doanh của mình, đã đọc và đồng ý với <a href=\"doctor-space-terms.html\" target=\"_blank\" rel=\"noopener\">Điều khoản Doctor Space</a> và <a href=\"doctor-space-privacy.html\" target=\"_blank\" rel=\"noopener\">Chính sách quyền riêng tư</a>, và đồng ý để Zerone liên hệ với tôi về đơn này.",
       errOutdated: "Điều khoản vừa được cập nhật. Vui lòng tải lại trang rồi thử lại.",
-      place: "Tạo đơn đăng ký", placing: "Đang tạo đơn…", mailBtn: "Gửi yêu cầu qua email",
+      place: "Gửi đăng ký", placing: "Đang tạo đơn…", mailBtn: "Gửi đăng ký",
       errGeneric: "Chưa tạo được đơn. Vui lòng thử lại hoặc liên hệ contact@zerone.vn.", errRate: "Bạn thao tác quá nhanh. Vui lòng thử lại sau ít phút.", errFields: "Vui lòng điền họ tên, thông tin liên hệ và đánh dấu ô đồng ý.",
       doneTitle: "Đơn đăng ký đã được tạo", doneRef: "Mã thanh toán của bạn",
       donePending: "Đơn đang chờ thanh toán. Gói chỉ được kích hoạt sau khi Zerone xác nhận đã nhận tiền. Zerone sẽ liên hệ với bạn để hướng dẫn thanh toán.",
@@ -62,26 +63,27 @@
       due: "Hạn thanh toán các kỳ", mailSubject: "Đăng ký Professional Space", currency: "đ"
     },
     en: {
-      title: "Put your profile into action.",
-      lede: "Choose a term so Zerone can complete, publish and maintain your personal professional profile on Doctor Space.",
-      sumTitle: "Personal professional profile", sumSub: "Doctor Space · Zalo Mini App",
-      sumFeats: ["Completion and publication", "Your own link & QR code", "Ongoing presence", "Updates & support"],
+      eyebrow: "DOCTOR SPACE", title: "Choose how long to use your profile.",
+      lede: "Zerone helps complete, publish and maintain your professional profile on Doctor Space for the term you choose.",
+      sumTitle: "Personal professional profile", sumSub: "One profile of your own to present your expertise, place of practice and contact details, so patients can learn about you more easily.",
+      sumFeats: [["A clear professional profile", "Presents your expertise and field of practice in one place."], ["Easy to share", "Your own link and QR code to send through Zalo, LinkedIn or share directly."], ["Profile kept online", "Your profile stays visible for the term of your registration."], ["Updates when needed", "Help updating your profile content within the scope of the service."]],
       sumNote: "Booking through Zerone is not open yet; Zerone will announce when it is ready.",
-      durLabel: "Choose your term", reco: "RECOMMENDED", buyLabel: "Selected term · Excl. VAT", contPay: "Continue to payment", exVat: "Excl. VAT",
+      durLabel: "Choose your term", reco: "RECOMMENDED", saveTag: function (pct) { return "Save " + pct + "%"; }, buyTitle: "Registration details", buyLabel: "Selected term · Excl. VAT", contPay: "Continue to registration",
+      coLead: "Check your details and submit your registration. Zerone will contact you with payment instructions and to complete your profile.", exVat: "Excl. VAT",
       pmTitle: "Payment method", pmOn: "Available", pmOff: "Not available",
       pmMail: "Send a request by email",
       pmOrder: "Place the order; Zerone sends payment instructions",
       pmBank: "Bank transfer / QR code",
       pmCard: "Pay by Visa/Mastercard card",
       policiesMore: "See also (Vietnamese): <a href=\"vi/chinh-sach-gia.html\" target=\"_blank\" rel=\"noopener\">Pricing</a> · <a href=\"vi/chinh-sach-thanh-toan.html\" target=\"_blank\" rel=\"noopener\">Payment</a> · <a href=\"vi/cung-cap-dich-vu-cham-dut-hoan-tien.html\" target=\"_blank\" rel=\"noopener\">Termination &amp; refunds</a> · <a href=\"vi/giai-quyet-khieu-nai.html\" target=\"_blank\" rel=\"noopener\">Complaints</a>", cont: "Continue", back: "Back to plans",
-      monthly: "Monthly", monthlyPer: "month", monthlyNote: "Pay monthly. Stop renewing any time.",
+      monthly: "Monthly", monthlyPer: "month", monthlyNote: "Pay month by month.",
       six: "6 months", sixPer: "6 months",
-      sixNote: function (pm, sv, pct) { return "Save " + pct + "% compared with the monthly plan."; },
-      annual: "12 months", annualPer: "year",
-      annualNote: function (pm, sv, pct) { return pm + " / month equivalent · Save " + pct + "%"; },
+      sixNote: function (pm, sv, pct) { return "Save " + pct + "%."; },
+      annual: "12 months", annualPer: "12 months",
+      annualNote: function (pm, sv, pct) { return "Equivalent to " + pm + "/month. Save " + pct + "% compared with paying monthly."; },
       included: "Includes:",
       feats: ["Professional profile", "Your own QR & link", "Appointment-request intake (switched on when Zerone announces it is ready)", "Workspace to manage appointments", "Profile & service updates", "Platform upkeep & technical support"],
-      coTitle: "Confirm your subscription", sumPlan: "Plan", sumSchedule: "Payment schedule", sumPeriod: "Price per period (excl. VAT)", sumSetup: "Setup fee",
+      coTitle: "Confirm your registration", sumPlan: "Plan", sumSchedule: "Payment schedule", sumPeriod: "Price per period (excl. VAT)", sumSetup: "Setup fee",
       sumSetupFree: "Free", sumVat: "VAT", sumVatIncl: function (p) { return "included in the price (" + p + "%)"; },
       sumVatAdd: function (p) { return p + "% added"; }, sumVatNone: "None added", finalPrice: "Listed prices exclude VAT. VAT is added at checkout; the amount you pay and the QR code show the total including VAT.", sumTotal: "Total to pay (incl. VAT)",
       sumCommit: function (m) { return m + "-month plan price (excl. VAT)"; }, sumNext: "Next payment", nextNone: function (m) { return "None within the " + m + " months. At the end you renew only if you wish."; },
@@ -90,12 +92,12 @@
       termNote: function (m) { return m + "-month term, counted from the day Zerone records full receipt of your payment."; },
       renewNote: "No automatic charge. To continue, you pay the next term before the end date. You can stop renewing at any time and keep using the service until the end of the term you paid.",
       monthlyTerms: "Monthly, no annual commitment.", onceTerms: function (m) { return m + " months, paid once."; },
-      preview: "Online payment is not open yet. Zerone records your order, then contacts you with payment and activation steps.",
+      preview: "After receiving your registration, Zerone will contact you with payment instructions. Your profile is published once payment is completed and the necessary information is confirmed.",
       fVertical: "Field", vHealth: "Healthcare", vMental: "Mental health", vVet: "Veterinary", fName: "Full name", fPractice: "Practice name (optional)",
       fMethod: "Contact via", mEmail: "Email", mPhone: "Phone", mZalo: "Zalo", fContact: "Contact details",
       cAccept: "I subscribe for my own professional or business purposes, I have read and accept the <a href=\"doctor-space-terms.html\" target=\"_blank\" rel=\"noopener\">Doctor Space Terms</a> and the <a href=\"doctor-space-privacy.html\" target=\"_blank\" rel=\"noopener\">Privacy Policy</a>, and I agree that Zerone may contact me about this order.",
       errOutdated: "The terms were just updated. Please reload the page and try again.",
-      place: "Create subscription order", placing: "Creating order…", mailBtn: "Send request by email",
+      place: "Submit registration", placing: "Creating order…", mailBtn: "Submit registration",
       errGeneric: "We could not create the order. Please try again or contact contact@zerone.vn.", errRate: "Too many attempts. Please try again in a few minutes.", errFields: "Please fill in your name and contact details and tick the agreement box.",
       doneTitle: "Your order has been created", doneRef: "Your payment reference",
       donePending: "Your order is awaiting payment. The plan activates only after Zerone confirms the payment was received. Zerone will contact you with payment instructions.",
@@ -171,15 +173,15 @@
         "<span class=\"plan-mark\" aria-hidden=\"true\"></span>" + (main ? "<p class=\"plan-reco\">" + L.reco + "</p>" : "") +
         "<h2 class=\"plan-name\" id=\"pn-" + key + "\">" + name + "</h2>" +
         "<p class=\"plan-price\">" + vnd(PLANS[key].price) + " <small>/ " + per + "</small><small class=\"plan-vat\">" + L.exVat + "</small></p>" +
-        "<p class=\"plan-period\" id=\"pp-" + key + "\">" + note + "</p></div>";
+        "<p class=\"plan-period\" id=\"pp-" + key + "\">" + note + "</p>" + (key === "annual" ? "<span class=\"plan-save\">" + L.saveTag(savingPct(key)) + "</span>" : "") + "</div>";
     }
     var cur = PLANS[state.plan], curName = state.plan === "monthly" ? L.monthly : state.plan === "annual" ? L.annual : L.six;
-    root.innerHTML = "<h1>" + L.title + "</h1><p class=\"plans-lede\">" + L.lede + "</p>" +
+    root.innerHTML = "<p class=\"plans-eyebrow\">" + L.eyebrow + "</p><h1>" + L.title + "</h1><p class=\"plans-lede\">" + L.lede + "</p>" +
       "<div class=\"plan-summary co-card\"><h2 class=\"ps-title\">" + L.sumTitle + "</h2><p class=\"ps-sub\">" + L.sumSub + "</p>" +
-      "<ul class=\"plan-feat ps-feat\">" + L.sumFeats.map(function (f) { return "<li>" + f + "</li>"; }).join("") + "</ul><p class=\"ps-note\">" + L.sumNote + "</p></div>" +
+      "<ul class=\"plan-feat ps-feat\">" + L.sumFeats.map(function (f) { return "<li><b>" + f[0] + "</b><span>" + f[1] + "</span></li>"; }).join("") + "</ul><p class=\"ps-note\">" + L.sumNote + "</p></div>" +
       "<fieldset class=\"plan-opts\"><legend class=\"plan-opts-label\">" + L.durLabel + "</legend>" + opt("annual", true) +
       "<div class=\"plan-alts\">" + opt("term_6m") + opt("monthly") + "</div></fieldset>" +
-      "<div class=\"plan-buy co-card\"><div class=\"pb-row\"><div><p class=\"pb-label\">" + L.buyLabel + "</p><p class=\"pb-price\">" + vnd(cur.price) + "</p></div><strong class=\"pb-term\">" + curName + "</strong></div>" +
+      "<div class=\"plan-buy co-card\"><h2 class=\"pb-title\">" + L.buyTitle + "</h2><div class=\"pb-row\"><div><p class=\"pb-label\">" + L.buyLabel + "</p><p class=\"pb-price\">" + vnd(cur.price) + "</p></div><strong class=\"pb-term\">" + curName + "</strong></div>" +
       "<button class=\"btn\" type=\"button\" id=\"plan-continue\">" + L.contPay + " <span aria-hidden=\"true\">→</span></button>" +
       "<p class=\"pb-note\">" + L.finalPrice + "</p><p class=\"pb-note\">" + L.renewNote + "</p></div>";
     root.querySelectorAll(".plan-card").forEach(function (c) {
@@ -211,7 +213,7 @@
   function renderCheckout() {
     state.view = "checkout"; state.order = null; persist();   /* a new purchase starts here: an older order amount is never shown */
     track("checkout_started");
-    root.innerHTML = "<h1>" + L.coTitle + "</h1>" + stepper(2) + "<div class=\"co-wrap\"><div class=\"co-card\" id=\"co-summary\"></div><div class=\"co-card\" id=\"co-formbox\"></div></div>";
+    root.innerHTML = "<h1>" + L.coTitle + "</h1><p class=\"co-lead\" id=\"co-lead\">" + L.coLead + "</p>" + stepper(2) + "<div class=\"co-wrap\"><div class=\"co-card\" id=\"co-summary\"></div><div class=\"co-card\" id=\"co-formbox\"></div></div>";
     entered(L.coTitle);
     var code = planCode();
     getQuote(code).then(function (q) { if (state.view === "checkout" && q.plan === planCode()) fillCheckout(q); });
@@ -232,7 +234,7 @@
     el("co-summary").innerHTML = html;
     el("co-back").addEventListener("click", function () { history.back(); });
     if (!el("co-form")) renderForm(q);
-    var bn = el("co-banner"); if (bn) bn.hidden = !!q.approved;
+    var bn = el("co-banner"); if (bn) bn.hidden = !!q.approved; var ld = el("co-lead"); if (ld) ld.hidden = !!q.approved;   /* the "Zerone will contact you" wording only while online payment is not approved */
     var mb = el("co-methods"); if (mb) mb.innerHTML = methodsHtml(q, !!API.url);   /* the server quote decides which methods are open */
     currentQuote = q;
   }
@@ -294,7 +296,7 @@
       payH1: "Thanh toán", payTitle: "Quét mã hoặc chuyển khoản",
       payLead: function (a) { return "Chuyển đúng " + a + " và giữ nguyên nội dung chuyển khoản. Gói được xác nhận khi Zerone nhận được tiền."; },
       waiting: "Đang chờ nhận tiền…", checkNow: "Kiểm tra ngay", holdUntil: function (t) { return "Đơn được giữ đến " + t; },
-      noBankH1: "Đơn đã được ghi nhận", noBank: "Zerone sẽ liên hệ với bạn để hướng dẫn thanh toán. Gói chỉ được kích hoạt sau khi Zerone xác nhận đã nhận tiền.",
+      noBankH1: "Đơn đã được ghi nhận", noBank: "Sau khi nhận được đăng ký, Zerone sẽ liên hệ hướng dẫn thanh toán. Hồ sơ được phát hành sau khi hoàn tất thanh toán và xác nhận thông tin cần thiết.",
       okH1: "Thanh toán thành công", okLead: "Zerone đã nhận được tiền. Cảm ơn bạn đã tin tưởng.",
       rPlan: "Gói đăng ký", rAmt: "Số tiền", rRef: "Mã thanh toán", rPaid: "Thanh toán lúc", rThru: "Có hiệu lực đến", rNext: "Kỳ thanh toán tiếp theo",
       nextH: "Bước tiếp theo", nextTxt: "Zerone sẽ liên hệ để kích hoạt Professional Space của bạn. Chứng từ thanh toán sẽ được gửi riêng.",
@@ -309,7 +311,7 @@
       payH1: "Payment", payTitle: "Scan the code or transfer",
       payLead: function (a) { return "Transfer exactly " + a + " and keep the transfer content unchanged. Your plan is confirmed when Zerone receives the money."; },
       waiting: "Waiting for your payment…", checkNow: "Check now", holdUntil: function (t) { return "Order held until " + t; },
-      noBankH1: "Your order is recorded", noBank: "Zerone will contact you with payment instructions. The plan activates only after Zerone confirms the money was received.",
+      noBankH1: "Your order is recorded", noBank: "After receiving your registration, Zerone will contact you with payment instructions. Your profile is published once payment is completed and the necessary information is confirmed.",
       okH1: "Payment successful", okLead: "Zerone has received your payment. Thank you for your trust.",
       rPlan: "Plan", rAmt: "Amount", rRef: "Payment reference", rPaid: "Paid at", rThru: "Valid until", rNext: "Next payment",
       nextH: "What happens next", nextTxt: "Zerone will contact you to activate your Professional Space. Payment documents will be sent separately.",
