@@ -239,6 +239,12 @@
       .ds-pn p { margin: 0; } .ds-pn a { color: var(--bur); }
       .ds-pn summary { cursor: pointer; color: var(--bur); list-style: none; display: inline; } .ds-pn summary::-webkit-details-marker { display: none; }
       .ds-pn details { display: inline; } .ds-pn details summary::before { content: " · "; color: var(--mute); } .ds-pn details[open] { display: block; margin-top: .25rem; } .ds-pn details[open] summary { display: none; } .ds-pn details p { margin: 0; }
+      .ds-own h2 { margin: 0 0 .1rem; font-family: var(--serif, Newsreader, Georgia, serif); font-weight: 400; font-size: clamp(1.02rem, 1.3vw, 1.4rem); line-height: 1.25; color: var(--ink); }
+      .ds-own p { font-size: .84rem; line-height: 1.55; }
+      .ds-own ul { margin: 0 0 .2rem; padding-left: 1.1rem; font-size: .84rem; line-height: 1.5; color: var(--ink); }
+      .ds-own .ds-own-note { font-size: .76rem; }
+      .ds-own .btn:not(.ghost) { text-decoration: none; justify-content: center; }
+      .ds-own .btn.ghost { justify-content: flex-start; text-align: left; height: auto; min-height: 2rem; color: var(--bur); }
       .ds-cta-note { margin: -.1rem .3rem .5rem; font-size: .78rem; line-height: 1.45; color: var(--mute); }
       /* ---- adaptive portrait hero (Doctor Profile inside the left screen) ---- */
       .ds-live.ds-profile { padding: 0; background: #f4f7fe; }
@@ -405,7 +411,7 @@
             <p class="ds-err" id="ds-fe" role="alert"></p>
             <button class="btn" type="submit" id="ds-go"><span id="ds-gol">Xem trước ngay</span> <span aria-hidden="true">→</span></button>
           </form>
-          <div class="ds-pn">Bản xem trước chạy ngay trên trình duyệt của bạn: tên, nơi làm việc và ảnh <b>không được gửi đi hay lưu lại</b>. <a href="privacy.html">Chính sách bảo mật</a><details><summary>Xem thêm</summary><p>Zerone chỉ đếm ẩn danh các bước bạn bấm (không kèm thông tin cá nhân) và không liên hệ bạn nếu bạn không chọn Claim hoặc để lại thông tin.</p></details></div>
+          <div class="ds-pn">Bản xem trước chạy ngay trên trình duyệt của bạn: tên, nơi làm việc và ảnh <b>không được gửi đi</b>, ảnh không được lưu. Nếu bạn sang bước chọn thời hạn, tên và nơi làm việc chỉ được nhớ tạm trong tab này để điền sẵn đơn đăng ký và tự xóa khi bạn đóng tab. <a href="privacy.html">Chính sách bảo mật</a><details><summary>Xem thêm</summary><p>Zerone chỉ đếm ẩn danh các bước bạn bấm (không kèm thông tin cá nhân) và không liên hệ bạn nếu bạn không chọn Claim hoặc để lại thông tin.</p></details></div>
         </aside>
       </div>
       <dialog class="ds-dialog" id="ds-dialog" aria-labelledby="ds-dt">
@@ -471,6 +477,32 @@
       var SRC = (function () { try { var q = new URLSearchParams(location.search), v = (q.get("src") || q.get("ref") || q.get("utm_campaign") || "").toLowerCase(); return /^[a-z0-9_-]{1,40}$/.test(v) ? v : ""; } catch (e) { return ""; } })();
       var sid = (function () { var a = new Uint8Array(12); (window.crypto || window.msCrypto).getRandomValues(a); return Array.prototype.map.call(a, function (b) { return ("0" + b.toString(16)).slice(-2); }).join(""); })();
       var sent = {}, timers = [];
+
+      /* Profile Launch entry (?camp=launch): only wording around the device changes; the device itself is untouched. */
+      var LAUNCH = /[?&]camp=launch(&|$)/.test(location.search);
+      (function () {
+        var plansLink = $("ds-plans"); if (plansLink) plansLink.setAttribute("href", "plans.html?src=" + (SRC || "preview"));
+        if (!LAUNCH) return;
+        var q = function (s) { return document.querySelector(s); };
+        q(".ds-kicker").textContent = "ZERONE · PROFESSIONAL PROFILE LAUNCH";
+        $("ds-h1").innerHTML = "Chuyên môn của bạn,<br>một <em>không gian<br>xứng đáng.</em>";
+        document.title = "Chuyên môn của bạn, một không gian xứng đáng — Zerone";
+        q(".ds-lede").textContent = "Zerone mời bác sĩ và chuyên gia chăm sóc sức khỏe trải nghiệm hồ sơ chuyên môn cá nhân trên Doctor Space — sẵn sàng phát hành với đường dẫn riêng để người bệnh dễ dàng tìm hiểu và kết nối qua Zalo.";
+        var lis = $("ds-steps").children; lis[0].textContent = "Nhập thông tin"; lis[1].textContent = "Xem hồ sơ"; lis[2].innerHTML = "Trải nghiệm<br>như người bệnh";
+        $("ds-fh").textContent = "Tạo bản xem trước hồ sơ của bạn"; $("ds-gol").textContent = "Xem hồ sơ của tôi";
+        $("ds-end").classList.add("ds-own");
+        $("ds-end").innerHTML = '<h2>Hồ sơ chuyên môn của bạn có thể được phát hành trên Doctor Space.</h2>' +
+          '<p>Zerone đồng hành cùng bạn hoàn thiện thông tin, phát hành và duy trì hồ sơ chuyên môn cá nhân với đường dẫn và QR riêng, thuận tiện chia sẻ qua Zalo, LinkedIn và các kênh kết nối của bạn.</p>' +
+          '<ul><li>Hồ sơ chuyên môn cá nhân với thông tin được xác nhận.</li><li>Đường dẫn và QR riêng để giới thiệu, chia sẻ.</li><li>Duy trì và cập nhật hồ sơ trong thời hạn đăng ký.</li></ul>' +
+          '<p class="ds-own-note">Phần đặt lịch bạn vừa xem là mô phỏng; đặt lịch thật chỉ mở khi Zerone thông báo sẵn sàng.</p>' +
+          '<a class="btn" id="ds-plans" href="plans.html?src=' + (SRC || "preview") + '"><span>Xem chương trình phát hành</span> <span aria-hidden="true">→</span></a>' +
+          '<button type="button" class="btn ghost" id="ds-claim">Gửi yêu cầu xác minh hồ sơ</button>' +
+          '<button type="button" class="btn ghost" id="ds-talk">Trao đổi với Zerone</button>';
+        /* on a phone the single column puts this block last (after device and form), where the visitor is when the simulation ends */
+        var endEl = $("ds-end"), leftEl = q(".ds-left"), gridEl = q(".ds-grid"), mq = window.matchMedia("(max-width: 900px)");
+        function placeEnd() { if (mq.matches) { if (endEl.parentNode !== gridEl) gridEl.appendChild(endEl); } else if (endEl.parentNode !== leftEl) leftEl.appendChild(endEl); }
+        placeEnd(); if (mq.addEventListener) mq.addEventListener("change", placeEnd); else mq.addListener(placeEnd);
+      })();
 
       function track(kind) {
         if (sent[kind]) return; sent[kind] = true;
