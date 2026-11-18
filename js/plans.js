@@ -19,7 +19,7 @@
     vi: {
       eyebrow: "DOCTOR SPACE", title: "Chọn thời hạn sử dụng hồ sơ của bạn.",
       lede: "Zerone hỗ trợ hoàn thiện, phát hành và duy trì hồ sơ chuyên môn của bạn trên Doctor Space trong thời hạn đăng ký.",
-      sumTitle: "Hồ sơ chuyên môn cá nhân", sumSub: "Một hồ sơ riêng để giới thiệu chuyên môn, nơi hành nghề và thông tin kết nối, giúp người bệnh dễ dàng tìm hiểu về bạn.",
+      sumTitle: "Hồ sơ chuyên môn cá nhân", sumSub: "",
       sumFeats: [["Hồ sơ chuyên môn rõ ràng", "Giới thiệu thông tin và lĩnh vực hành nghề của bạn tại một nơi."], ["Dễ dàng chia sẻ", "Đường dẫn và mã QR riêng để gửi qua Zalo, LinkedIn hoặc chia sẻ trực tiếp."], ["Duy trì hồ sơ trực tuyến", "Hồ sơ tiếp tục được hiển thị trong thời hạn đăng ký."], ["Cập nhật thông tin khi cần", "Hỗ trợ cập nhật nội dung hồ sơ theo phạm vi dịch vụ."]],
       sumNote: "Đặt lịch qua Zerone chưa mở; Zerone sẽ thông báo khi sẵn sàng.",
       durLabel: "Chọn thời hạn sử dụng", reco: "KHUYẾN NGHỊ", saveTag: function (pct) { return "Tiết kiệm " + pct + "%"; }, buyTitle: "Thông tin đăng ký", buyLabel: "Thời hạn đã chọn · Chưa gồm VAT", contPay: "Tiếp tục đăng ký",
@@ -34,7 +34,7 @@
       six: "6 tháng", sixPer: "6 tháng",
       sixNote: function (pm, sv, pct) { return "Tiết kiệm " + pct + "%."; },
       annual: "12 tháng", annualPer: "12 tháng",
-      annualNote: function (pm, sv, pct) { return "Tương đương " + pm + "/tháng. Tiết kiệm " + pct + "% so với thanh toán từng tháng."; },
+      annualNote: function (pm, sv, pct) { return "Tương đương " + pm + "/tháng."; },
       included: "Bao gồm:",
       feats: ["Hồ sơ chuyên môn", "QR & đường dẫn riêng", "Tiếp nhận yêu cầu đặt lịch (mở khi Zerone thông báo sẵn sàng)", "Workspace quản lý lịch hẹn", "Cập nhật hồ sơ & thông tin dịch vụ", "Duy trì nền tảng & hỗ trợ kỹ thuật"],
       coTitle: "Xác nhận đăng ký", sumPlan: "Gói đăng ký", sumSchedule: "Lịch thanh toán", sumPeriod: "Giá mỗi kỳ (chưa gồm VAT)", sumSetup: "Phí thiết lập",
@@ -65,7 +65,7 @@
     en: {
       eyebrow: "DOCTOR SPACE", title: "Choose how long to use your profile.",
       lede: "Zerone helps complete, publish and maintain your professional profile on Doctor Space for the term you choose.",
-      sumTitle: "Personal professional profile", sumSub: "One profile of your own to present your expertise, place of practice and contact details, so patients can learn about you more easily.",
+      sumTitle: "Personal professional profile", sumSub: "",
       sumFeats: [["A clear professional profile", "Presents your expertise and field of practice in one place."], ["Easy to share", "Your own link and QR code to send through Zalo, LinkedIn or share directly."], ["Profile kept online", "Your profile stays visible for the term of your registration."], ["Updates when needed", "Help updating your profile content within the scope of the service."]],
       sumNote: "Booking through Zerone is not open yet; Zerone will announce when it is ready.",
       durLabel: "Choose your term", reco: "RECOMMENDED", saveTag: function (pct) { return "Save " + pct + "%"; }, buyTitle: "Registration details", buyLabel: "Selected term · Excl. VAT", contPay: "Continue to registration",
@@ -80,7 +80,7 @@
       six: "6 months", sixPer: "6 months",
       sixNote: function (pm, sv, pct) { return "Save " + pct + "%."; },
       annual: "12 months", annualPer: "12 months",
-      annualNote: function (pm, sv, pct) { return "Equivalent to " + pm + "/month. Save " + pct + "% compared with paying monthly."; },
+      annualNote: function (pm, sv, pct) { return "Equivalent to " + pm + "/month."; },
       included: "Includes:",
       feats: ["Professional profile", "Your own QR & link", "Appointment-request intake (switched on when Zerone announces it is ready)", "Workspace to manage appointments", "Profile & service updates", "Platform upkeep & technical support"],
       coTitle: "Confirm your registration", sumPlan: "Plan", sumSchedule: "Payment schedule", sumPeriod: "Price per period (excl. VAT)", sumSetup: "Setup fee",
@@ -177,7 +177,7 @@
     }
     var cur = PLANS[state.plan], curName = state.plan === "monthly" ? L.monthly : state.plan === "annual" ? L.annual : L.six;
     root.innerHTML = "<p class=\"plans-eyebrow\">" + L.eyebrow + "</p><h1>" + L.title + "</h1><p class=\"plans-lede\">" + L.lede + "</p>" +
-      "<div class=\"plan-summary co-card\"><h2 class=\"ps-title\">" + L.sumTitle + "</h2><p class=\"ps-sub\">" + L.sumSub + "</p>" +
+      "<div class=\"plan-summary co-card\"><h2 class=\"ps-title\">" + L.sumTitle + "</h2>" + (L.sumSub ? "<p class=\"ps-sub\">" + L.sumSub + "</p>" : "") +
       "<ul class=\"plan-feat ps-feat\">" + L.sumFeats.map(function (f) { return "<li><b>" + f[0] + "</b><span>" + f[1] + "</span></li>"; }).join("") + "</ul><p class=\"ps-note\">" + L.sumNote + "</p></div>" +
       "<fieldset class=\"plan-opts\"><legend class=\"plan-opts-label\">" + L.durLabel + "</legend>" + opt("annual", true) +
       "<div class=\"plan-alts\">" + opt("term_6m") + opt("monthly") + "</div></fieldset>" +

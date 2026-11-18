@@ -250,16 +250,14 @@
       .ds-own .btn.ghost { justify-content: flex-start; text-align: left; height: auto; min-height: 1.8rem; color: var(--bur); border: 0; background: none; box-shadow: none; text-decoration: underline; text-underline-offset: 3px; font-weight: 500; }
       .ds-fsub { margin: -.2rem 0 .9rem; font-size: .84rem; line-height: 1.5; color: var(--mute); }
       .ds-guide { display: none; }
-      .ds[data-state="ready"] .ds-guide { display: block; position: absolute; left: 2%; right: 2%; top: 100%; margin-top: .2rem; text-align: center; z-index: 3; }
-      .ds-launch .ds-title { font-size: clamp(1.7rem, 2.3vw, 2.9rem); }
-      .ds-launch[data-end="1"] .ds-lede { display: none; }
-      .ds-guide h2 { margin: 0 0 .15rem; font-family: var(--serif, Newsreader, Georgia, serif); font-weight: 500; font-size: clamp(.95rem, 1.15vw, 1.25rem); color: var(--ink); }
-      .ds-guide p { margin: 0; font-size: .8rem; line-height: 1.5; color: var(--mute); }
+      .ds[data-state="ready"] .ds-guide { display: block; position: absolute; left: 0; right: 0; top: 100%; text-align: center; z-index: 3; pointer-events: none; }
+      .ds-guide.is-off, .ds[data-state="ready"] .ds-guide.is-off { display: none; }
+      .ds-guide p { margin: 0; font-size: .82rem; line-height: 1.5; color: var(--mute); }
       @media (max-width: 900px) {
         .ds-launch .ds-title { font-size: clamp(2rem, 7vw, 3rem); }
         .ds-launch[data-end="1"] .ds-lede { display: block; }
         .ds-launch .ds-left { order: 1; } .ds-launch .ds-right { order: 2; } .ds-launch .ds-stage { order: 3; scroll-margin-top: 88px; } .ds-launch .ds-end { order: 4; }
-        .ds[data-state="ready"] .ds-guide { position: static; margin-top: .6rem; order: 9; }
+        .ds[data-state="ready"] .ds-guide { position: static; margin-top: .8rem; order: 9; }
         .ds-launch .ds-stage { flex-wrap: wrap; }
         .ds-guide { flex-basis: 100%; }
       }
@@ -503,27 +501,24 @@
         if (!LAUNCH) return;
         var q = function (s) { return document.querySelector(s); };
         q(".ds-kicker").textContent = "ZERONE DOCTOR SPACE";
-        $("ds-h1").innerHTML = "Tạo và phát hành<br>hồ sơ chuyên môn<br>của bạn trên <em>Doctor Space.</em>";
+        $("ds-h1").innerHTML = "Hồ sơ chuyên môn của bạn<br>trên <em>Doctor Space.</em>";
         document.title = "Xem trước hồ sơ Doctor Space của bạn — Zerone";
-        q(".ds-lede").textContent = "Trải nghiệm trước hồ sơ mang tên bạn trên giao diện Zalo Mini App. Khi đăng ký, Zerone hỗ trợ hoàn thiện và phát hành hồ sơ với đường dẫn riêng, giúp người bệnh dễ dàng tìm hiểu và kết nối.";
-        $("ds-fh").textContent = "Xem trước hồ sơ của bạn";
-        var sub = document.createElement("p"); sub.className = "ds-fsub"; sub.textContent = "Nhập một vài thông tin cơ bản để xem hồ sơ của bạn sẽ hiển thị như thế nào.";
-        $("ds-fh").insertAdjacentElement("afterend", sub);
+        q(".ds-lede").textContent = "Xem trước cách người bệnh nhìn thấy bạn trên Zalo.";
+        $("ds-fh").textContent = "Tạo bản xem trước";
+        $("ds-steps").style.display = "none";   /* no step indicator: the product is understood through interaction */
         $("ds-gol").textContent = "Xem hồ sơ của tôi";
         var pn = q(".ds-pn"); pn.innerHTML = pn.innerHTML.replace(/^[\s\S]*?(<a href)/, "Thông tin bạn nhập chỉ dùng để tạo bản xem trước trong trình duyệt và không được gửi về Zerone. $1");
         root.classList.add("ds-launch");
         /* guidance next to the phone, shown once the personalised preview exists */
         var guide = document.createElement("div"); guide.className = "ds-guide"; guide.id = "ds-guide";
-        guide.innerHTML = "<h2>Đây là cách người bệnh sẽ xem hồ sơ của bạn.</h2><p>Bạn có thể xem thông tin chuyên môn và thử trải nghiệm gửi yêu cầu đặt lịch ngay trên giao diện mô phỏng.</p>";
+        guide.innerHTML = "<p>Thử xem hồ sơ như người bệnh.</p>";
         q(".ds-stage").appendChild(guide);
         /* next step */
         $("ds-end").classList.add("ds-own");
-        $("ds-end").innerHTML = '<p class="ds-own-tick">BẢN XEM TRƯỚC CỦA BẠN</p>' +
-          '<h2>Bạn muốn đưa hồ sơ này lên Doctor Space?</h2>' +
-          '<p>Zerone sẽ hỗ trợ hoàn thiện thông tin và phát hành hồ sơ sau khi được bạn xác nhận. Bạn sẽ có đường dẫn và mã QR riêng để chia sẻ qua Zalo, LinkedIn hoặc với người bệnh.</p>' +
-          '<ol class="ds-own-steps"><li>Hoàn thiện và xác nhận thông tin hồ sơ.</li><li>Phát hành hồ sơ và nhận đường dẫn riêng.</li><li>Duy trì, cập nhật hồ sơ trong thời hạn đăng ký.</li></ol>' +
+        $("ds-end").innerHTML = '<h2>Muốn sử dụng hồ sơ này?</h2>' +
+          '<p>Zerone hỗ trợ hoàn thiện và đưa hồ sơ của bạn lên Doctor Space.</p>' +
           '<a class="btn" id="ds-plans" href="plans.html?src=' + (SRC || "preview") + '&camp=launch"><span>Xem chi phí và thời hạn</span> <span aria-hidden="true">→</span></a>' +
-          '<p class="ds-own-note">Bản xem trước chưa phải hồ sơ được công khai.</p>' +
+          '<p class="ds-own-note">Hồ sơ được phát hành sau khi xác nhận thông tin và hoàn tất đăng ký, thanh toán.</p>' +
           '<button type="button" class="btn ghost" id="ds-claim">Claim Your Space</button>' +
           '<button type="button" class="btn ghost" id="ds-talk">Talk to Zerone</button>';
         var endEl = $("ds-end"), leftEl = q(".ds-left"), gridEl = q(".ds-grid"), stageEl = q(".ds-stage"), mq = window.matchMedia("(max-width: 900px)");
@@ -531,9 +526,21 @@
         placeEnd(); if (mq.addEventListener) mq.addEventListener("change", placeEnd); else mq.addListener(placeEnd);
         /* the next-step block appears as soon as the personalised preview is on screen; the optional booking simulation is not required */
         var pendingScroll = false;
-        form.addEventListener("submit", function () { pendingScroll = true; }, true);
+        form.addEventListener("submit", function () { pendingScroll = true; hintDone = false; guide.classList.remove("is-off"); }, true);
+        var hintDone = false;
+        function placeGuide() {   /* desktop: below the device frame and its reflection, never over the controls; phone: normal flow under the device */
+          var shell = q(".ds-shell"); if (!shell || mq.matches) { guide.style.top = ""; return; }
+          var sr = stageEl.getBoundingClientRect(), hr = shell.getBoundingClientRect();
+          guide.style.top = Math.round(hr.bottom - sr.top + 30) + "px";
+        }
+        function dismissHint() { if (!hintDone) { hintDone = true; guide.classList.add("is-off"); } }
+        stageEl.addEventListener("pointerdown", dismissHint, true);
+        stageEl.addEventListener("keydown", dismissHint, true);
+        window.addEventListener("resize", placeGuide);
         function onState() {
           if (root.getAttribute("data-state") !== "ready") return;
+          $("ds-gol").textContent = "Cập nhật hồ sơ";
+          if (!hintDone) placeGuide();
           if (root.getAttribute("data-end") !== "1") root.setAttribute("data-end", "1");
           if (pendingScroll && mq.matches) {   /* phone: bring the personalised preview into view, smoothly unless the visitor prefers reduced motion */
             pendingScroll = false;
