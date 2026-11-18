@@ -239,12 +239,16 @@
       .ds-pn p { margin: 0; } .ds-pn a { color: var(--bur); }
       .ds-pn summary { cursor: pointer; color: var(--bur); list-style: none; display: inline; } .ds-pn summary::-webkit-details-marker { display: none; }
       .ds-pn details { display: inline; } .ds-pn details summary::before { content: " · "; color: var(--mute); } .ds-pn details[open] { display: block; margin-top: .25rem; } .ds-pn details[open] summary { display: none; } .ds-pn details p { margin: 0; }
-      .ds-own h2 { margin: 0 0 .1rem; font-family: var(--serif, Newsreader, Georgia, serif); font-weight: 400; font-size: clamp(1.02rem, 1.3vw, 1.4rem); line-height: 1.25; color: var(--ink); }
+      .ds-own h2 { margin: 0 0 .1rem; font-family: var(--serif, Newsreader, Georgia, serif); font-weight: 400; font-size: clamp(1.05rem, 1.35vw, 1.45rem); line-height: 1.25; color: var(--ink); }
       .ds-own p { font-size: .84rem; line-height: 1.55; }
-      .ds-own ul { margin: 0 0 .2rem; padding-left: 1.1rem; font-size: .84rem; line-height: 1.5; color: var(--ink); }
-      .ds-own .ds-own-note { font-size: .76rem; }
-      .ds-own .btn:not(.ghost) { text-decoration: none; justify-content: center; }
-      .ds-own .btn.ghost { justify-content: flex-start; text-align: left; height: auto; min-height: 2rem; color: var(--bur); }
+      .ds-own .ds-own-tick { margin: 0; font-size: .68rem; letter-spacing: .16em; font-weight: 700; color: var(--bur); }
+      .ds-own-steps { margin: 0 0 .2rem; padding: 0; list-style: none; display: grid; gap: .35rem; counter-reset: s; }
+      .ds-own-steps li { position: relative; padding-left: 1.5rem; font-size: .84rem; line-height: 1.45; color: var(--ink); }
+      .ds-own-steps li::before { content: ""; position: absolute; left: .1rem; top: .3em; width: .5rem; height: .5rem; border-radius: 50%; border: 1.5px solid var(--bur); background: #fff; }
+      .ds-own .ds-own-note { font-size: .76rem; margin-top: .1rem; }
+      .ds-own .btn:not(.ghost) { text-decoration: none; justify-content: center; gap: .5em; }
+      .ds-own .btn.ghost { justify-content: flex-start; text-align: left; height: auto; min-height: 1.8rem; color: var(--bur); border: 0; background: none; box-shadow: none; text-decoration: underline; text-underline-offset: 3px; font-weight: 500; }
+      .ds-launch[data-end="1"] .ds-lede { display: none; }
       .ds-cta-note { margin: -.1rem .3rem .5rem; font-size: .78rem; line-height: 1.45; color: var(--mute); }
       /* ---- adaptive portrait hero (Doctor Profile inside the left screen) ---- */
       .ds-live.ds-profile { padding: 0; background: #f4f7fe; }
@@ -490,14 +494,19 @@
         q(".ds-lede").textContent = "Zerone mời bác sĩ và chuyên gia chăm sóc sức khỏe trải nghiệm hồ sơ chuyên môn cá nhân trên Doctor Space — sẵn sàng phát hành với đường dẫn riêng để người bệnh dễ dàng tìm hiểu và kết nối qua Zalo.";
         var lis = $("ds-steps").children; lis[0].textContent = "Nhập thông tin"; lis[1].textContent = "Xem hồ sơ"; lis[2].innerHTML = "Trải nghiệm<br>như người bệnh";
         $("ds-fh").textContent = "Tạo bản xem trước hồ sơ của bạn"; $("ds-gol").textContent = "Xem hồ sơ của tôi";
-        $("ds-end").classList.add("ds-own");
-        $("ds-end").innerHTML = '<h2>Hồ sơ chuyên môn của bạn có thể được phát hành trên Doctor Space.</h2>' +
-          '<p>Zerone đồng hành cùng bạn hoàn thiện thông tin, phát hành và duy trì hồ sơ chuyên môn cá nhân với đường dẫn và QR riêng, thuận tiện chia sẻ qua Zalo, LinkedIn và các kênh kết nối của bạn.</p>' +
-          '<ul><li>Hồ sơ chuyên môn cá nhân với thông tin được xác nhận.</li><li>Đường dẫn và QR riêng để giới thiệu, chia sẻ.</li><li>Duy trì và cập nhật hồ sơ trong thời hạn đăng ký.</li></ul>' +
-          '<p class="ds-own-note">Phần đặt lịch bạn vừa xem là mô phỏng; đặt lịch thật chỉ mở khi Zerone thông báo sẵn sàng.</p>' +
-          '<a class="btn" id="ds-plans" href="plans.html?src=' + (SRC || "preview") + '"><span>Xem chương trình phát hành</span> <span aria-hidden="true">→</span></a>' +
-          '<button type="button" class="btn ghost" id="ds-claim">Gửi yêu cầu xác minh hồ sơ</button>' +
-          '<button type="button" class="btn ghost" id="ds-talk">Trao đổi với Zerone</button>';
+        $("ds-end").classList.add("ds-own"); root.classList.add("ds-launch");
+        $("ds-end").innerHTML = '<p class="ds-own-tick">✓ ĐÃ HOÀN THÀNH XEM TRƯỚC</p>' +
+          '<h2>Bước tiếp theo: Phát hành hồ sơ của bạn.</h2>' +
+          '<p>Zerone đồng hành cùng bạn hoàn thiện thông tin, phát hành và duy trì hồ sơ chuyên môn với đường dẫn và QR riêng, thuận tiện chia sẻ qua Zalo và LinkedIn.</p>' +
+          '<ol class="ds-own-steps"><li>Hoàn thiện và xác nhận thông tin chuyên môn</li><li>Phát hành hồ sơ sau khi duyệt</li><li>Duy trì trong thời hạn đăng ký</li></ol>' +
+          '<a class="btn" id="ds-plans" href="plans.html?src=' + (SRC || "preview") + '&camp=launch"><span>Tiếp tục phát hành</span> <span aria-hidden="true">→</span></a>' +
+          '<p class="ds-own-note">Bản xem trước chưa phải hồ sơ đã được xác minh hoặc phát hành. Phần đặt lịch là mô phỏng.</p>' +
+          '<button type="button" class="btn ghost" id="ds-claim">Claim Your Space</button>' +
+          '<button type="button" class="btn ghost" id="ds-talk">Talk to Zerone</button>';
+        /* the panel appears as soon as the personalised preview is on screen; the optional booking simulation is not required */
+        function showEnd() { if (root.getAttribute("data-state") === "ready" && root.getAttribute("data-end") !== "1") root.setAttribute("data-end", "1"); }
+        if (window.MutationObserver) new MutationObserver(showEnd).observe(root, { attributes: true, attributeFilter: ["data-state", "data-end"] });
+        showEnd();
         /* on a phone the single column puts this block last (after device and form), where the visitor is when the simulation ends */
         var endEl = $("ds-end"), leftEl = q(".ds-left"), gridEl = q(".ds-grid"), mq = window.matchMedia("(max-width: 900px)");
         function placeEnd() { if (mq.matches) { if (endEl.parentNode !== gridEl) gridEl.appendChild(endEl); } else if (endEl.parentNode !== leftEl) leftEl.appendChild(endEl); }

@@ -17,9 +17,12 @@
   };
   var T = {
     vi: {
-      title: "Lựa chọn thời hạn phát hành hồ sơ",
-      intro: ["Bạn nhận: hồ sơ chuyên môn cá nhân với đường dẫn và QR riêng.", "Zerone chuẩn bị và phát hành hồ sơ sau khi thông tin của bạn được xác nhận.", "Trong thời hạn đã chọn, Zerone duy trì và cập nhật hồ sơ cho bạn.", "Sau khi thanh toán, Zerone liên hệ để hoàn thiện thông tin và phát hành."],
-      reco: "Khuyến nghị", scope: "Phí đăng ký là cho các dịch vụ nêu trên trong thời hạn bạn chọn, không phải quyền sở hữu vĩnh viễn nền tảng.", exVat: "Chưa gồm VAT",
+      title: "Đưa hồ sơ của bạn vào hoạt động.",
+      lede: "Chọn thời hạn để Zerone hoàn thiện, phát hành và duy trì hồ sơ chuyên môn cá nhân trên Doctor Space.",
+      sumTitle: "Hồ sơ chuyên môn cá nhân", sumSub: "Doctor Space · Zalo Mini App",
+      sumFeats: ["Hoàn thiện và phát hành", "Đường dẫn riêng & QR", "Duy trì hiện diện", "Cập nhật & hỗ trợ"],
+      sumNote: "Đặt lịch qua Zerone chưa mở; Zerone sẽ thông báo khi sẵn sàng.",
+      durLabel: "Chọn thời hạn duy trì", reco: "KHUYẾN NGHỊ", buyLabel: "Thời hạn đã chọn · Chưa gồm VAT", contPay: "Tiếp tục thanh toán", exVat: "Chưa gồm VAT",
       pmTitle: "Phương thức thanh toán", pmOn: "Khả dụng", pmOff: "Chưa khả dụng",
       pmMail: "Gửi yêu cầu qua email",
       pmOrder: "Đặt đơn, Zerone hướng dẫn thanh toán",
@@ -30,7 +33,7 @@
       six: "6 tháng", sixPer: "6 tháng",
       sixNote: function (pm, sv, pct) { return "Tiết kiệm " + pct + "% so với gói tháng."; },
       annual: "12 tháng", annualPer: "năm",
-      annualNote: function (pm, sv, pct) { return "Tiết kiệm " + pct + "% so với gói tháng."; },
+      annualNote: function (pm, sv, pct) { return pm + " / tháng quy đổi · Tiết kiệm " + pct + "%"; },
       included: "Bao gồm:",
       feats: ["Hồ sơ chuyên môn", "QR & đường dẫn riêng", "Tiếp nhận yêu cầu đặt lịch (mở khi Zerone thông báo sẵn sàng)", "Workspace quản lý lịch hẹn", "Cập nhật hồ sơ & thông tin dịch vụ", "Duy trì nền tảng & hỗ trợ kỹ thuật"],
       coTitle: "Xác nhận đăng ký", sumPlan: "Gói đăng ký", sumSchedule: "Lịch thanh toán", sumPeriod: "Giá mỗi kỳ (chưa gồm VAT)", sumSetup: "Phí thiết lập",
@@ -59,9 +62,12 @@
       due: "Hạn thanh toán các kỳ", mailSubject: "Đăng ký Professional Space", currency: "đ"
     },
     en: {
-      title: "Choose how long to publish your profile",
-      intro: ["You receive: a personal professional profile with your own link and QR code.", "Zerone prepares and publishes your profile once your information is verified.", "During the term you choose, Zerone maintains and updates your profile.", "After payment, Zerone contacts you to complete your details and publish."],
-      reco: "Recommended", scope: "The fee covers the services above for the term you choose. It is not permanent ownership of the platform.", exVat: "Excl. VAT",
+      title: "Put your profile into action.",
+      lede: "Choose a term so Zerone can complete, publish and maintain your personal professional profile on Doctor Space.",
+      sumTitle: "Personal professional profile", sumSub: "Doctor Space · Zalo Mini App",
+      sumFeats: ["Completion and publication", "Your own link & QR code", "Ongoing presence", "Updates & support"],
+      sumNote: "Booking through Zerone is not open yet; Zerone will announce when it is ready.",
+      durLabel: "Choose your term", reco: "RECOMMENDED", buyLabel: "Selected term · Excl. VAT", contPay: "Continue to payment", exVat: "Excl. VAT",
       pmTitle: "Payment method", pmOn: "Available", pmOff: "Not available",
       pmMail: "Send a request by email",
       pmOrder: "Place the order; Zerone sends payment instructions",
@@ -72,7 +78,7 @@
       six: "6 months", sixPer: "6 months",
       sixNote: function (pm, sv, pct) { return "Save " + pct + "% compared with the monthly plan."; },
       annual: "12 months", annualPer: "year",
-      annualNote: function (pm, sv, pct) { return "Save " + pct + "% compared with the monthly plan."; },
+      annualNote: function (pm, sv, pct) { return pm + " / month equivalent · Save " + pct + "%"; },
       included: "Includes:",
       feats: ["Professional profile", "Your own QR & link", "Appointment-request intake (switched on when Zerone announces it is ready)", "Workspace to manage appointments", "Profile & service updates", "Platform upkeep & technical support"],
       coTitle: "Confirm your subscription", sumPlan: "Plan", sumSchedule: "Payment schedule", sumPeriod: "Price per period (excl. VAT)", sumSetup: "Setup fee",
@@ -129,6 +135,12 @@
     else if (p === "6m" || p === "term_6m" || p === "term" || p === "term_3m") state.plan = "term_6m";
     else if (p === "12m" || p === "annual") state.plan = "annual";
   })();
+  (function launchDefault() {
+    var explicit = false;
+    try { var sv = JSON.parse(sessionStorage.getItem("zplan") || "null"); if (sv && PLANS[sv.plan]) explicit = true; } catch (e) {}
+    if (new URLSearchParams(location.search).get("plan")) explicit = true;
+    if (!explicit && new URLSearchParams(location.search).get("camp") === "launch") state.plan = "annual";
+  })();
   function persist() { try { sessionStorage.setItem("zplan", JSON.stringify({ plan: state.plan, form: state.form, order: state.order })); } catch (e) {} }
   function planCode() { return state.plan; }
 
@@ -150,23 +162,26 @@
   /* ---------- plan selection ---------- */
   function renderPlans() {
     state.view = "plans"; document.title = BASE_TITLE;
-    var feats = "<p class=\"plan-feat-h\">" + L.included + "</p><ul class=\"plan-feat\">" + L.feats.map(function (f) { return "<li>" + f + "</li>"; }).join("") + "</ul>";
-    function card(key, name, sub, price, per, note, extra) {
-      var sel = state.plan === key;
-      return "<div class=\"plan-card" + (sel ? " is-selected" : "") + "\" data-plan=\"" + key + "\">" +
+    function opt(key, main) {
+      var sel = state.plan === key, name = key === "monthly" ? L.monthly : key === "annual" ? L.annual : L.six,
+          per = key === "monthly" ? L.monthlyPer : key === "annual" ? L.annualPer : L.sixPer,
+          note = key === "monthly" ? L.monthlyNote : key === "annual" ? L.annualNote(vnd(perMonth(key)), vnd(saving(key)), savingPct(key)) : L.sixNote(vnd(perMonth(key)), vnd(saving(key)), savingPct(key));
+      return "<div class=\"plan-card plan-opt" + (main ? " plan-main" : "") + (sel ? " is-selected" : "") + "\" data-plan=\"" + key + "\">" +
         "<input class=\"plan-radio\" type=\"radio\" name=\"plan\" value=\"" + key + "\" id=\"plan-" + key + "\" aria-labelledby=\"pn-" + key + "\"" + (sel ? " checked" : "") + ">" +
-        "<span class=\"plan-mark\" aria-hidden=\"true\"></span>" +
-        "<h2 class=\"plan-name\" id=\"pn-" + key + "\">" + name + "</h2>" + (key === "annual" ? "<span class=\"plan-reco\">" + L.reco + "</span>" : "") + (sub ? "<p class=\"plan-sub\">" + sub + "</p>" : "") +
-        "<p class=\"plan-price\">" + vnd(price) + " <small>/ " + per + "</small><small class=\"plan-vat\">" + L.exVat + "</small></p>" +
-        "<p class=\"plan-period" + (key === "annual" ? " plan-save" : "") + "\" id=\"pp-" + key + "\">" + note + "</p>" + (extra || "<div class=\"plan-slot\"></div>") + feats + "</div>";
+        "<span class=\"plan-mark\" aria-hidden=\"true\"></span>" + (main ? "<p class=\"plan-reco\">" + L.reco + "</p>" : "") +
+        "<h2 class=\"plan-name\" id=\"pn-" + key + "\">" + name + "</h2>" +
+        "<p class=\"plan-price\">" + vnd(PLANS[key].price) + " <small>/ " + per + "</small><small class=\"plan-vat\">" + L.exVat + "</small></p>" +
+        "<p class=\"plan-period\" id=\"pp-" + key + "\">" + note + "</p></div>";
     }
-    root.innerHTML = "<h1>" + L.title + "</h1>" +
-      "<ul class=\"plans-intro\">" + L.intro.map(function (t) { return "<li>" + t + "</li>"; }).join("") + "</ul>" +
-      "<fieldset class=\"plan-grid\" aria-label=\"" + L.title + "\">" +
-      card("monthly", L.monthly, "", PLANS.monthly.price, L.monthlyPer, L.monthlyNote) +
-      card("term_6m", L.six, "", PLANS.term_6m.price, L.sixPer, L.sixNote(vnd(perMonth("term_6m")), vnd(saving("term_6m")), savingPct("term_6m"))) +
-      card("annual", L.annual, "", PLANS.annual.price, L.annualPer, L.annualNote(vnd(perMonth("annual")), vnd(saving("annual")), savingPct("annual"))) +
-      "</fieldset><p class=\"plans-scope\">" + L.scope + "</p><div class=\"plans-cta\"><button class=\"btn\" type=\"button\" id=\"plan-continue\">" + L.cont + "</button></div>";
+    var cur = PLANS[state.plan], curName = state.plan === "monthly" ? L.monthly : state.plan === "annual" ? L.annual : L.six;
+    root.innerHTML = "<h1>" + L.title + "</h1><p class=\"plans-lede\">" + L.lede + "</p>" +
+      "<div class=\"plan-summary co-card\"><h2 class=\"ps-title\">" + L.sumTitle + "</h2><p class=\"ps-sub\">" + L.sumSub + "</p>" +
+      "<ul class=\"plan-feat ps-feat\">" + L.sumFeats.map(function (f) { return "<li>" + f + "</li>"; }).join("") + "</ul><p class=\"ps-note\">" + L.sumNote + "</p></div>" +
+      "<fieldset class=\"plan-opts\"><legend class=\"plan-opts-label\">" + L.durLabel + "</legend>" + opt("annual", true) +
+      "<div class=\"plan-alts\">" + opt("term_6m") + opt("monthly") + "</div></fieldset>" +
+      "<div class=\"plan-buy co-card\"><div class=\"pb-row\"><div><p class=\"pb-label\">" + L.buyLabel + "</p><p class=\"pb-price\">" + vnd(cur.price) + "</p></div><strong class=\"pb-term\">" + curName + "</strong></div>" +
+      "<button class=\"btn\" type=\"button\" id=\"plan-continue\">" + L.contPay + " <span aria-hidden=\"true\">→</span></button>" +
+      "<p class=\"pb-note\">" + L.finalPrice + "</p><p class=\"pb-note\">" + L.renewNote + "</p></div>";
     root.querySelectorAll(".plan-card").forEach(function (c) {
       c.addEventListener("click", function (e) { select(c.getAttribute("data-plan")); });
     });
