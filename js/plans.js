@@ -23,7 +23,7 @@
       vBooking: "Tính năng đặt lịch qua Zerone hiện chưa mở. Chúng tôi sẽ thông báo khi tính năng sẵn sàng.",
       choose: "Chọn thời hạn sử dụng Doctor Space", chooseDesc: "Lựa chọn thời hạn phù hợp. Quyền lợi Doctor Space không thay đổi giữa các kỳ hạn.", rec: "Ưu đãi tốt nhất", equiv: function (pm, pct) { return "Tiết kiệm " + pct + "% so với thanh toán hằng tháng"; },
       save: function (pct) { return "Tiết kiệm " + pct + "%"; }, saveShort: function (pct) { return "Tiết kiệm " + pct + "%"; }, monthlyShort: "Thanh toán theo tháng",
-      subTitle: "Gói Doctor Space của Bác sĩ", subSel: "Thời hạn đã chọn", contSub: "Tiếp tục", previewFor: "Hồ sơ của bạn",
+      subTitle: "Gói Doctor Space của Bác sĩ", subSel: "Thời hạn đã chọn", contSub: "Tiếp tục", previewFor: "Hồ sơ của bạn", cap: "Giao diện và số liệu minh họa trên Zalo", stats: [["1.100+", "bệnh nhân tin tưởng"], ["2,4K", "người theo dõi"], ["860", "lượt chia sẻ"]], qrLabel: "Zerone trên Zalo", qrAria: "Mở Zerone Mini App trên Zalo",
       exVat: "Chưa bao gồm VAT",
       pmTitle: "Phương thức thanh toán", pmOn: "Khả dụng", pmOff: "Chưa khả dụng",
       pmMail: "Gửi yêu cầu qua email",
@@ -70,7 +70,7 @@
       vBooking: "Appointment booking through Zerone is not yet available. We'll notify you when it's ready.",
       choose: "Choose your Doctor Space subscription term", chooseDesc: "Choose the term that works best for you. All options include the same Doctor Space features.", rec: "Best Value", equiv: function (pm, pct) { return "Save " + pct + "% compared with monthly billing"; },
       save: function (pct) { return "Save " + pct + "%"; }, saveShort: function (pct) { return "Save " + pct + "%"; }, monthlyShort: "Pay month by month",
-      subTitle: "Your Doctor Space subscription", subSel: "Selected term", contSub: "Continue", previewFor: "Your profile",
+      subTitle: "Your Doctor Space subscription", subSel: "Selected term", contSub: "Continue", previewFor: "Your profile", cap: "Illustrative view and figures on Zalo", stats: [["1,100+", "patients trust"], ["2.4K", "followers"], ["860", "times shared"]], qrLabel: "Zerone on Zalo", qrAria: "Open the Zerone Mini App on Zalo",
       exVat: "Excl. VAT",
       pmTitle: "Payment method", pmOn: "Available", pmOff: "Not available",
       pmMail: "Send a request by email",
@@ -160,41 +160,88 @@
   /* ---------- plan selection ---------- */
   function esc(t) { return String(t).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", "\"": "&quot;" }[c]; }); }
   /* One product (a published, maintained professional profile), one decision (the term). The value is introduced once, above the price. */
+  /* ---------- plan selection: product-first hero on a dark scene; pricing, benefits and footer stay in the same scene ---------- */
+  var ICONS = {
+    search: '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6"/><path d="M20 20l-4.2-4.2"/></svg>',
+    share: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 14a4 4 0 0 0 5.7 0l2.6-2.6a4 4 0 0 0-5.7-5.7l-1 1"/><path d="M14 10a4 4 0 0 0-5.7 0l-2.6 2.6a4 4 0 0 0 5.7 5.7l1-1"/></svg>',
+    qr: '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4" width="6" height="6" rx="1"/><rect x="14" y="4" width="6" height="6" rx="1"/><rect x="4" y="14" width="6" height="6" rx="1"/><path d="M14 14h2v2h-2zM18 14h2v2h-2zM14 18h2v2h-2zM18 18h2v2h-2z"/></svg>',
+    users: '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="3"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/><path d="M16 5.2a3 3 0 0 1 0 5.6M18 14.6c1.8 1 3 3 3 5.4"/></svg>',
+    userplus: '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10" cy="8" r="3"/><path d="M4 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/><path d="M19 8v6M16 11h6"/></svg>',
+    send: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 3L3 10.5l7 2.5 2.5 7L21 3z"/><path d="M10 13l11-10"/></svg>',
+    pin: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>'
+  };
+  function setDark(on) {
+    try {
+      var b = document.body; b.classList.toggle("dx-on", !!on);
+      ["a", "b", "c", "d", "e"].forEach(function (k) { b.classList.remove("dx-t-" + k); }); b.classList.remove("dx-t-light");
+      /* staging colour-way preview: ?theme=a|b|c; no parameter keeps the midnight scene */
+      if (on) { var th = new URLSearchParams(location.search).get("theme"); if (th === "a" || th === "b" || th === "c" || th === "d") b.classList.add("dx-t-" + th, "dx-t-light"); else if (th !== "dark") b.classList.add("dx-t-d", "dx-t-e", "dx-t-light"); }
+    } catch (e) {}
+  }
+  function planLabelNow() { return state.plan === "annual" ? L.annual : state.plan === "term_6m" ? L.six : L.monthly; }
   function renderPlans() {
-    state.view = "plans"; document.title = BASE_TITLE;
-    var pv = state.preview && state.preview.name ? "<p class=\"term-for\"><span>" + L.previewFor + "</span> " + esc(state.preview.name) + (state.preview.spec ? " · " + esc(state.preview.spec) : "") + "</p>" : "";
-    var items = L.vItems.map(function (it) { return "<li><b>" + it[0] + "</b><span>" + it[1] + "</span></li>"; }).join("");
-    function mark(sel) { return "<span class=\"plan-mark\" aria-hidden=\"true\"></span>"; }
-    function radio(key, sel) { return "<input class=\"plan-radio\" type=\"radio\" name=\"plan\" value=\"" + key + "\" id=\"plan-" + key + "\" aria-labelledby=\"pn-" + key + "\"" + (sel ? " checked" : "") + ">"; }
-    var A = state.plan === "annual", S = state.plan === "term_6m", M = state.plan === "monthly";
-    var big = "<div class=\"term-card term-main" + (A ? " is-selected" : "") + "\" data-plan=\"annual\">" + radio("annual", A) + mark() +
-      "<p class=\"term-rec\">" + L.rec + "</p><h3 class=\"term-name\" id=\"pn-annual\">" + L.annual + "</h3>" +
-      "<p class=\"term-price\">" + vnd(PLANS.annual.price) + " <small>/ " + L.annual + "</small></p><p class=\"term-vat\">" + L.exVat + "</p>" +
-      "<p class=\"term-note\">" + L.equiv(vnd(perMonth("annual")), savingPct("annual")) + "</p></div>";
-    function small(key, name, price, per, note, sel) {
-      return "<div class=\"term-card" + (sel ? " is-selected" : "") + "\" data-plan=\"" + key + "\">" + radio(key, sel) + mark() +
-        "<h3 class=\"term-name\" id=\"pn-" + key + "\">" + name + "</h3><p class=\"term-price sm\">" + vnd(price) + " <small>/ " + per + "</small></p><p class=\"term-vat\">" + L.exVat + "</p><p class=\"term-note\">" + note + "</p></div>";
+    state.view = "plans"; document.title = BASE_TITLE; setDark(true);
+    var P = LANG === "vi" ? "../" : "";
+    var pv = state.preview && state.preview.name ? "<p class=\"dx-for\"><span>" + L.previewFor + "</span> " + esc(state.preview.name) + (state.preview.spec ? " · " + esc(state.preview.spec) : "") + "</p>" : "";
+    var it = L.vItems, ic = [ICONS.search, ICONS.share, ICONS.qr, ICONS.pin];
+    function benVisual(i) {
+      if (i === 0) return "<img src=\"" + P + "assets/img/zerone-space-profile.png\" alt=\"\" width=\"780\" height=\"1600\" loading=\"lazy\" decoding=\"async\">";
+      if (i === 1) return "<div class=\"dx-av\"><i>" + ICONS.users + "</i><i class=\"hot\">" + ICONS.send + "</i><i>" + ICONS.users + "</i></div>";
+      if (i === 2) return "<div class=\"dx-qt\"><img src=\"" + P + "assets/img/zerone-mini-app-qr.svg\" alt=\"\" width=\"96\" height=\"96\" loading=\"lazy\"></div>";
+      return "<svg class=\"dx-map\" viewBox=\"0 0 220 120\" aria-hidden=\"true\"><g fill=\"none\" stroke=\"rgba(255,255,255,.2)\" stroke-width=\"1\"><path d=\"M0 30h220M0 60h220M0 90h220M44 0v120M110 0v120M176 0v120\"/></g><path d=\"M0 96C50 90 70 54 112 58s70 30 108 8\" fill=\"none\" stroke=\"rgba(255,255,255,.55)\" stroke-width=\"1.5\" stroke-dasharray=\"4 5\"/><circle cx=\"112\" cy=\"58\" r=\"22\" fill=\"rgba(255,255,255,.1)\" stroke=\"rgba(255,255,255,.4)\"/><path d=\"M112 74s11-9.5 11-19a11 11 0 1 0-22 0c0 9.5 11 19 11 19z\" fill=\"#fff\"/><circle cx=\"112\" cy=\"55\" r=\"4\" fill=\"#16243b\"/></svg>";
     }
-    var sel = state.plan, selName = sel === "annual" ? L.annual : sel === "term_6m" ? L.six : L.monthly, selPer = sel === "monthly" ? L.monthlyPer : (sel === "annual" ? L.annual : L.six);
-    root.innerHTML = "<p class=\"term-kicker\">" + L.kicker + "</p><h1>" + L.title + "</h1><p class=\"term-lead\">" + L.lead + "</p>" + pv +
-      "<section class=\"term-value\" aria-labelledby=\"tv-h\"><h2 id=\"tv-h\">" + L.vTitle + "</h2>" + (L.vIntro ? "<p>" + L.vIntro + "</p>" : "") + "<ul>" + items + "</ul><p class=\"term-booking\">" + L.vBooking + "</p></section>" +
-      "<fieldset class=\"term-set\"><legend>" + L.choose + "</legend><p class=\"term-choosedesc\">" + L.chooseDesc + "</p>" + big +
-      "<div class=\"term-pair\">" + small("term_6m", L.six, PLANS.term_6m.price, L.sixPer, L.saveShort(savingPct("term_6m")), S) + small("monthly", L.monthly, PLANS.monthly.price, L.monthlyPer, L.monthlyShort, M) + "</div></fieldset>" +
-      "<section class=\"term-sum\" aria-live=\"polite\"><h2>" + L.subTitle + "</h2><p class=\"term-sumlab\">" + L.subSel + " · " + L.exVat + "</p>" +
-      "<div class=\"term-sumrow\"><strong>" + vnd(PLANS[sel].price) + "</strong><span>" + selName + "</span></div>" +
-      "<button class=\"btn\" type=\"button\" id=\"plan-continue\">" + L.contSub + " <span aria-hidden=\"true\">→</span></button>" +
-      "<p class=\"term-fine\">" + L.finalPrice + "</p><p class=\"term-fine\">" + L.renewNote + "</p></section>";
-    root.querySelectorAll(".term-card").forEach(function (c) {
-      c.addEventListener("click", function () { select(c.getAttribute("data-plan")); });
-    });
+    function fc(i) { return "<li class=\"dx-fc c" + (i + 1) + "\"><span class=\"dx-fci\" aria-hidden=\"true\">" + ic[i] + "</span><span class=\"dx-fct\">" + it[i][1] + "</span></li>"; }
+    function ben(i) { return "<article class=\"dx-b dx-rv\"><div class=\"dx-bv v" + i + "\" aria-hidden=\"true\">" + benVisual(i) + "</div><div class=\"dx-btx\"><span class=\"dx-bn\" aria-hidden=\"true\">0" + (i + 1) + "</span><h3>" + it[i][0] + "</h3><p>" + it[i][1] + "</p></div></article>"; }
+    function opt(key, name, price, per, note, tag) {
+      var sel = state.plan === key;
+      return "<label class=\"dx-opt" + (key === "annual" ? " is-feat" : "") + (sel ? " is-selected" : "") + "\" data-plan=\"" + key + "\">" +
+        "<input class=\"dx-radio\" type=\"radio\" name=\"plan\" value=\"" + key + "\" id=\"plan-" + key + "\" aria-labelledby=\"pn-" + key + "\"" + (sel ? " checked" : "") + ">" +
+        "<span class=\"dx-mk\" aria-hidden=\"true\"></span>" + (tag ? "<span class=\"dx-tag\">" + tag + "</span>" : "") +
+        "<span class=\"dx-nm\" id=\"pn-" + key + "\">" + name + "</span>" +
+        "<span class=\"dx-pr\">" + vnd(price) + " <small>/ " + per + "</small></span><span class=\"dx-vat\">" + L.exVat + "</span><span class=\"dx-nt\">" + note + "</span></label>";
+    }
+    root.innerHTML = "<div class=\"dx\">" +
+      "<div class=\"dx-scene\" aria-hidden=\"true\"><i class=\"dx-light l1\"></i><i class=\"dx-light l2\"></i></div>" +
+      "<section class=\"dx-hero dx-wrap\"><i class=\"dx-pin l\" aria-hidden=\"true\"></i><i class=\"dx-pin r\" aria-hidden=\"true\"></i><div class=\"dx-copy\"><p class=\"dx-eyebrow\">" + L.kicker + "</p><h1>" + L.title + "</h1><p class=\"dx-sub\">" + L.lead + "</p>" + pv + "</div>" +
+        "<div class=\"dx-stage\">" +
+          "<div class=\"dx-slab\" aria-hidden=\"true\"><div class=\"dx-slab-screen\">" +
+            "<div class=\"dx-seg s1\"><img src=\"" + P + "assets/img/zerone-space-profile.png\" alt=\"\" width=\"780\" height=\"1600\" decoding=\"async\"></div>" +
+            "<ul class=\"dx-stats\"><li><b>" + L.stats[0][0] + "</b><span>" + L.stats[0][1] + "</span></li><li><b>" + L.stats[1][0] + "</b><span>" + L.stats[1][1] + "</span></li><li><b>" + L.stats[2][0] + "</b><span>" + L.stats[2][1] + "</span></li></ul>" +
+            "<div class=\"dx-seg s2\"><img src=\"" + P + "assets/img/zerone-space-profile.png\" alt=\"\" width=\"780\" height=\"1600\" decoding=\"async\"></div>" +
+          "</div></div>" +
+          "<ul class=\"dx-fcs\" aria-label=\"" + L.vTitle + "\">" + fc(0) + fc(1) + fc(2) + fc(3) + "</ul>" +
+          "<a class=\"dx-qr\" href=\"https://zalo.me/s/569313129406318197/\" target=\"_blank\" rel=\"noopener\" aria-label=\"" + L.qrAria + "\"><img src=\"" + P + "assets/img/zerone-mini-app-qr.svg\" alt=\"\" width=\"96\" height=\"96\"><span>" + L.qrLabel + "</span></a>" +
+          "<p class=\"dx-cap\" aria-hidden=\"true\">" + L.cap + "</p></div></section>" +
+      "<section class=\"dx-pricing dx-wrap\" id=\"dx-term\"><div class=\"dx-th\"><h2>" + L.choose + "</h2><p>" + L.chooseDesc + "</p></div>" +
+        "<fieldset class=\"dx-opts\" aria-label=\"" + L.choose + "\">" +
+          opt("annual", L.annual, PLANS.annual.price, L.annual, L.equiv(vnd(perMonth("annual")), savingPct("annual")), L.rec) +
+          opt("term_6m", L.six, PLANS.term_6m.price, L.sixPer, L.saveShort(savingPct("term_6m"))) +
+          opt("monthly", L.monthly, PLANS.monthly.price, L.monthlyPer, L.monthlyShort) +
+        "</fieldset>" +
+        "<div class=\"dx-sum\" aria-live=\"polite\"><div class=\"dx-sumgrid\"><div><h3>" + L.subTitle + "</h3><p class=\"dx-sumlab\">" + L.subSel + " · " + L.exVat + "</p>" +
+          "<p class=\"dx-sumrow\"><strong id=\"dx-sump\">" + vnd(PLANS[state.plan].price) + "</strong><span id=\"dx-sumn\">" + planLabelNow() + "</span></p></div>" +
+          "<button class=\"btn\" type=\"button\" id=\"plan-continue\">" + L.contSub + " <span aria-hidden=\"true\">→</span></button></div>" +
+          "<p class=\"dx-fine\">" + L.finalPrice + "</p><p class=\"dx-fine\">" + L.renewNote + "</p></div></section>" +
+      "</div>";
     root.querySelectorAll("input[name=plan]").forEach(function (r) { r.addEventListener("change", function () { select(r.value); }); });
+    /* the supporting row fades in once; nothing is hidden when motion is reduced or observers are missing */
+    var rv = root.querySelectorAll(".dx-rv");
+    if ("IntersectionObserver" in window && !(window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches)) {
+      root.classList.add("dx-anim");
+      var io = new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } }); }, { threshold: 0.1 });
+      rv.forEach(function (n) { io.observe(n); });
+    } else rv.forEach(function (n) { n.classList.add("in"); });
     if (!renderPlans.seen) { renderPlans.seen = true; track("plans_viewed"); }
     el("plan-continue").addEventListener("click", function () { track("plan_selected"); persist(); history.pushState({ v: "checkout" }, "", "#checkout"); renderCheckout(); window.scrollTo(0, 0); });
   }
+  /* choosing a term updates the selection and the summary in place (no re-render, so the page never jumps) */
+  function paintSel() {
+    root.querySelectorAll(".dx-opt").forEach(function (o) { var on = o.getAttribute("data-plan") === state.plan; o.classList.toggle("is-selected", on); var r = o.querySelector("input"); if (r) r.checked = on; });
+    var p = el("dx-sump"), n = el("dx-sumn"); if (p) p.textContent = vnd(PLANS[state.plan].price); if (n) n.textContent = planLabelNow();
+  }
   function select(key) {
     if (state.plan === key) return;
-    state.plan = key; persist(); renderPlans();
-    var r = el("plan-" + key); if (r) { try { r.focus({ preventScroll: true }); } catch (e) { r.focus(); } }
+    state.plan = key; persist(); paintSel();
   }
 
   /* ---------- checkout ---------- */
@@ -211,6 +258,7 @@
   function laterPayable(q) { return q.period_price_vnd + (q.prices_include_vat ? 0 : Math.round(q.period_price_vnd * q.vat_rate_pct / 100)); }
   function planName(q) { return q.plan === "monthly" ? L.monthly : q.plan === "annual" ? L.annual : L.six; }
   function renderCheckout() {
+    setDark(false);
     state.view = "checkout"; state.order = null; persist();   /* a new purchase starts here: an older order amount is never shown */
     track("checkout_started");
     root.innerHTML = "<h1>" + L.coTitle + "</h1>" + stepper(2) + "<div class=\"co-wrap\"><div class=\"co-card\" id=\"co-summary\"></div><div class=\"co-card\" id=\"co-formbox\"></div></div>";
@@ -370,6 +418,7 @@
   }
 
   function renderDone(orderId) {
+    setDark(false);
     state.view = "done"; state.order = orderId; persist();
     root.innerHTML = "<h1>" + X.payH1 + "</h1><p class=\"co-loading\" aria-live=\"polite\">…</p>";
     var last = null, timer = null;
