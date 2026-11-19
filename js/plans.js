@@ -17,21 +17,21 @@
   };
   var T = {
     vi: {
-      title: "Chọn thời hạn sử dụng hồ sơ của bạn.", kicker: "Doctor Space", lead: "Zerone hỗ trợ hoàn thiện, phát hành và duy trì hồ sơ chuyên môn của bạn trên Doctor Space trong thời hạn đăng ký.",
-      vTitle: "Hồ sơ chuyên môn cá nhân", vIntro: "Một hồ sơ riêng để giới thiệu chuyên môn, nơi hành nghề và thông tin kết nối, giúp người bệnh dễ dàng tìm hiểu về bạn.",
-      vItems: [["Hồ sơ chuyên môn rõ ràng", "Giới thiệu thông tin và lĩnh vực hành nghề của bạn tại một nơi."], ["Dễ dàng chia sẻ", "Đường dẫn và mã QR riêng để gửi qua Zalo, LinkedIn hoặc chia sẻ trực tiếp."], ["Duy trì hồ sơ trực tuyến", "Hồ sơ tiếp tục được hiển thị trong thời hạn đăng ký."], ["Cập nhật thông tin khi cần", "Hỗ trợ cập nhật nội dung hồ sơ theo phạm vi dịch vụ."]],
-      vBooking: "Đặt lịch qua Zerone chưa mở; Zerone sẽ thông báo khi sẵn sàng.",
-      choose: "Chọn thời hạn sử dụng", rec: "Khuyến nghị", equiv: function (pm, pct) { return "Tương đương " + pm + "/tháng. Tiết kiệm " + pct + "% so với thanh toán từng tháng."; },
-      save: function (pct) { return "Tiết kiệm " + pct + "%"; }, saveShort: function (pct) { return "Tiết kiệm " + pct + "%."; }, monthlyShort: "Thanh toán theo tháng.",
-      subTitle: "Thông tin đăng ký", subSel: "Thời hạn đã chọn", contSub: "Tiếp tục đăng ký", previewFor: "Hồ sơ của bạn",
-      exVat: "Chưa gồm VAT",
+      title: "Phát hành không gian chuyên môn riêng của Bác sĩ trên Zalo", kicker: "Doctor Space", lead: "Giới thiệu đầy đủ chuyên môn, dịch vụ và nơi thăm khám, để người bệnh dễ dàng tìm hiểu và kết nối với Bác sĩ trên Zalo.",
+      vTitle: "Không gian chuyên môn riêng trên Zalo", vIntro: "Mở rộng từ Professional Profile cơ bản sang Doctor Space, nơi thông tin chuyên môn và hoạt động thăm khám của Bác sĩ được giới thiệu đầy đủ hơn đến người bệnh.",
+      vItems: [["Hồ sơ chuyên môn đầy đủ hơn", "Giới thiệu chuyên khoa, kinh nghiệm và dịch vụ chuyên môn của Bác sĩ."], ["Đường dẫn và mã QR riêng", "Thuận tiện chia sẻ Doctor Space qua Zalo và các kênh kết nối với người bệnh."], ["Thông tin thăm khám rõ ràng", "Giúp người bệnh dễ dàng tìm hiểu nơi Bác sĩ đang hành nghề và các dịch vụ chăm sóc phù hợp."], ["Hỗ trợ cập nhật hồ sơ", "Zerone hỗ trợ cập nhật thông tin chuyên môn khi cần, trong phạm vi dịch vụ."]],
+      vBooking: "Tính năng đặt lịch qua Zerone hiện chưa mở. Chúng tôi sẽ thông báo khi tính năng sẵn sàng.",
+      choose: "Chọn thời hạn sử dụng Doctor Space", chooseDesc: "Lựa chọn thời hạn phù hợp. Quyền lợi Doctor Space không thay đổi giữa các kỳ hạn.", rec: "Ưu đãi tốt nhất", equiv: function (pm, pct) { return "Tiết kiệm " + pct + "% so với thanh toán hằng tháng"; },
+      save: function (pct) { return "Tiết kiệm " + pct + "%"; }, saveShort: function (pct) { return "Tiết kiệm " + pct + "%"; }, monthlyShort: "Thanh toán theo tháng",
+      subTitle: "Gói Doctor Space của Bác sĩ", subSel: "Thời hạn đã chọn", contSub: "Tiếp tục", previewFor: "Hồ sơ của bạn",
+      exVat: "Chưa bao gồm VAT",
       pmTitle: "Phương thức thanh toán", pmOn: "Khả dụng", pmOff: "Chưa khả dụng",
       pmMail: "Gửi yêu cầu qua email",
       pmOrder: "Đặt đơn, Zerone hướng dẫn thanh toán",
       pmBank: "Chuyển khoản ngân hàng / quét mã QR",
       pmCard: "Thanh toán bằng thẻ Visa/Mastercard",
       policiesMore: "Xem thêm: <a href=\"chinh-sach-gia.html\" target=\"_blank\" rel=\"noopener\">Chính sách về giá</a> · <a href=\"chinh-sach-thanh-toan.html\" target=\"_blank\" rel=\"noopener\">Chính sách thanh toán</a> · <a href=\"cung-cap-dich-vu-cham-dut-hoan-tien.html\" target=\"_blank\" rel=\"noopener\">Chấm dứt & hoàn tiền</a> · <a href=\"giai-quyet-khieu-nai.html\" target=\"_blank\" rel=\"noopener\">Giải quyết khiếu nại</a>", cont: "Tiếp tục", back: "Quay lại chọn gói",
-      monthly: "Theo tháng", monthlyPer: "tháng", monthlyNote: "Thanh toán theo từng tháng. Dừng gia hạn bất kỳ lúc nào.",
+      monthly: "Hằng tháng", monthlyPer: "tháng", monthlyNote: "Thanh toán theo từng tháng. Dừng gia hạn bất kỳ lúc nào.",
       six: "6 tháng", sixPer: "6 tháng",
       sixNote: function (pm, sv, pct) { return "Tiết kiệm " + pct + "% so với gói tháng."; },
       annual: "12 tháng", annualPer: "năm",
@@ -64,13 +64,13 @@
       due: "Hạn thanh toán các kỳ", mailSubject: "Đăng ký Professional Space", currency: "đ"
     },
     en: {
-      title: "Choose how long to keep your profile.", kicker: "Doctor Space", lead: "Zerone helps you complete, publish and maintain your professional profile on Doctor Space for the term you choose.",
-      vTitle: "Personal professional profile", vIntro: "One profile of your own to present your expertise, where you practise and how to reach you, so patients can learn about you easily.",
-      vItems: [["A clear professional profile", "Your practice information and field of work in one place."], ["Easy to share", "Your own link and QR code to send by Zalo, LinkedIn or share in person."], ["Your profile stays online", "Your profile remains visible for the term you subscribe to."], ["Updates when needed", "Help updating your profile content, within the scope of the service."]],
-      vBooking: "Booking through Zerone is not open yet; Zerone will tell you when it is ready.",
-      choose: "Choose your term", rec: "Recommended", equiv: function (pm, pct) { return "Equivalent to " + pm + "/month. Save " + pct + "% compared with paying monthly."; },
-      save: function (pct) { return "Save " + pct + "%"; }, saveShort: function (pct) { return "Save " + pct + "%."; }, monthlyShort: "Pay month by month.",
-      subTitle: "Your subscription", subSel: "Selected term", contSub: "Continue", previewFor: "Your profile",
+      title: "Launch your own professional space on Zalo", kicker: "Doctor Space", lead: "Present your expertise, services and practice locations in one dedicated space, making it easier for patients to learn about you and connect on Zalo.",
+      vTitle: "Your dedicated professional space on Zalo", vIntro: "Go beyond your basic Professional Profile with Doctor Space, where patients can explore a more complete picture of your expertise and practice.",
+      vItems: [["A more complete professional profile", "Present your specialties, experience and professional services in greater detail."], ["Your own link & QR code", "Easily share your Doctor Space through Zalo and other patient communication channels."], ["Clear practice information", "Help patients find your practice locations and learn about the care you provide."], ["Ongoing profile support", "Zerone helps keep your professional information up to date within the scope of your subscription."]],
+      vBooking: "Appointment booking through Zerone is not yet available. We'll notify you when it's ready.",
+      choose: "Choose your Doctor Space subscription term", chooseDesc: "Choose the term that works best for you. All options include the same Doctor Space features.", rec: "Best Value", equiv: function (pm, pct) { return "Save " + pct + "% compared with monthly billing"; },
+      save: function (pct) { return "Save " + pct + "%"; }, saveShort: function (pct) { return "Save " + pct + "%"; }, monthlyShort: "Pay month by month",
+      subTitle: "Your Doctor Space subscription", subSel: "Selected term", contSub: "Continue", previewFor: "Your profile",
       exVat: "Excl. VAT",
       pmTitle: "Payment method", pmOn: "Available", pmOff: "Not available",
       pmMail: "Send a request by email",
@@ -170,7 +170,7 @@
     var big = "<div class=\"term-card term-main" + (A ? " is-selected" : "") + "\" data-plan=\"annual\">" + radio("annual", A) + mark() +
       "<p class=\"term-rec\">" + L.rec + "</p><h3 class=\"term-name\" id=\"pn-annual\">" + L.annual + "</h3>" +
       "<p class=\"term-price\">" + vnd(PLANS.annual.price) + " <small>/ " + L.annual + "</small></p><p class=\"term-vat\">" + L.exVat + "</p>" +
-      "<p class=\"term-note\">" + L.equiv(vnd(perMonth("annual")), savingPct("annual")) + "</p><span class=\"plan-save\">" + L.save(savingPct("annual")) + "</span></div>";
+      "<p class=\"term-note\">" + L.equiv(vnd(perMonth("annual")), savingPct("annual")) + "</p></div>";
     function small(key, name, price, per, note, sel) {
       return "<div class=\"term-card" + (sel ? " is-selected" : "") + "\" data-plan=\"" + key + "\">" + radio(key, sel) + mark() +
         "<h3 class=\"term-name\" id=\"pn-" + key + "\">" + name + "</h3><p class=\"term-price sm\">" + vnd(price) + " <small>/ " + per + "</small></p><p class=\"term-vat\">" + L.exVat + "</p><p class=\"term-note\">" + note + "</p></div>";
@@ -178,7 +178,7 @@
     var sel = state.plan, selName = sel === "annual" ? L.annual : sel === "term_6m" ? L.six : L.monthly, selPer = sel === "monthly" ? L.monthlyPer : (sel === "annual" ? L.annual : L.six);
     root.innerHTML = "<p class=\"term-kicker\">" + L.kicker + "</p><h1>" + L.title + "</h1><p class=\"term-lead\">" + L.lead + "</p>" + pv +
       "<section class=\"term-value\" aria-labelledby=\"tv-h\"><h2 id=\"tv-h\">" + L.vTitle + "</h2><p>" + L.vIntro + "</p><ul>" + items + "</ul><p class=\"term-booking\">" + L.vBooking + "</p></section>" +
-      "<fieldset class=\"term-set\"><legend>" + L.choose + "</legend>" + big +
+      "<fieldset class=\"term-set\"><legend>" + L.choose + "</legend><p class=\"term-choosedesc\">" + L.chooseDesc + "</p>" + big +
       "<div class=\"term-pair\">" + small("term_6m", L.six, PLANS.term_6m.price, L.sixPer, L.saveShort(savingPct("term_6m")), S) + small("monthly", L.monthly, PLANS.monthly.price, L.monthlyPer, L.monthlyShort, M) + "</div></fieldset>" +
       "<section class=\"term-sum\" aria-live=\"polite\"><h2>" + L.subTitle + "</h2><p class=\"term-sumlab\">" + L.subSel + " · " + L.exVat + "</p>" +
       "<div class=\"term-sumrow\"><strong>" + vnd(PLANS[sel].price) + "</strong><span>" + selName + "</span></div>" +
@@ -194,7 +194,7 @@
   function select(key) {
     if (state.plan === key) return;
     state.plan = key; persist(); renderPlans();
-    var r = el("plan-" + key); if (r) r.focus();
+    var r = el("plan-" + key); if (r) { try { r.focus({ preventScroll: true }); } catch (e) { r.focus(); } }
   }
 
   /* ---------- checkout ---------- */
@@ -221,7 +221,7 @@
   }
   function fillCheckout(q) {
     var now = new Date(), months = q.months_per_period * q.periods;
-    var rows = [[L.sumPlan, planName(q)], [L.sumSchedule, q.plan === "monthly" ? (LANG === "vi" ? "Hàng tháng" : "Monthly") : (LANG === "vi" ? "Một lần" : "Once")],
+    var rows = [[L.sumPlan, planName(q)], [L.sumSchedule, q.plan === "monthly" ? (LANG === "vi" ? "Hằng tháng" : "Monthly") : (LANG === "vi" ? "Một lần" : "Once")],
       [L.sumPeriod, vnd(q.period_price_vnd)], [L.sumTerm, L.termMonths(months)],
       [L.sumSetup, q.setup_fee_vnd > 0 ? vnd(q.setup_fee_vnd) : q.setup_fee_waived ? L.sumSetupFree : vnd(0)],
       [L.sumVat, q.vat_rate_pct > 0 ? vnd(q.vat_vnd) + " · " + (q.prices_include_vat ? L.sumVatIncl(q.vat_rate_pct) : L.sumVatAdd(q.vat_rate_pct)) : L.sumVatNone]];

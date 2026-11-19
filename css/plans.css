@@ -211,3 +211,16 @@ body[data-page="Plans"]::before { opacity: .45; }
   .term-pair { grid-template-columns: 1fr; }
   .term-price { font-size: 2rem; }
 }
+
+/* ---------- 2026-11-19: copy update (longer hero line, section description, clear of the floating navigation) ---------- */
+.plans-page h1 { max-width: 760px; margin-left: auto; margin-right: auto; font-size: clamp(1.8rem, 3.6vw, 2.5rem); text-wrap: balance; }
+.term-lead { max-width: 640px; text-wrap: pretty; }
+.term-choosedesc { margin: -4px 0 14px; font-size: .92rem; line-height: 1.5; color: var(--slate); }
+.term-set legend { margin-bottom: 4px; }
+.term-main .term-note { font-weight: 600; color: var(--ink); }
+.plans-page h1, .term-value, .term-set, .term-sum, .term-for { scroll-margin-top: 120px; }
+@media (max-width: 880px) { .plans-page h1, .term-value, .term-set, .term-sum, .term-for { scroll-margin-top: 104px; } }
+/* content scrolling under the floating navigation fades out instead of colliding with it (this page only; the navigation itself is untouched) */
+body[data-page="Plans"]::after { content: ""; position: fixed; left: 0; right: 0; top: 0; height: 92px; z-index: 40; pointer-events: none; background: linear-gradient(to bottom, rgba(236, 242, 252, .92), rgba(236, 242, 252, 0)); -webkit-backdrop-filter: blur(7px); backdrop-filter: blur(7px); -webkit-mask-image: linear-gradient(to bottom, #000 55%, transparent); mask-image: linear-gradient(to bottom, #000 55%, transparent); }
+@media (max-width: 880px) { body[data-page="Plans"]::after { height: 84px; } }
+@media print { body[data-page="Plans"]::after { display: none; } }
