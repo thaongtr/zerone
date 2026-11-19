@@ -224,3 +224,5 @@ body[data-page="Plans"]::before { opacity: .45; }
 body[data-page="Plans"]::after { content: ""; position: fixed; left: 0; right: 0; top: 0; height: 92px; z-index: 40; pointer-events: none; background: linear-gradient(to bottom, rgba(236, 242, 252, .92), rgba(236, 242, 252, 0)); -webkit-backdrop-filter: blur(7px); backdrop-filter: blur(7px); -webkit-mask-image: linear-gradient(to bottom, #000 55%, transparent); mask-image: linear-gradient(to bottom, #000 55%, transparent); }
 @media (max-width: 880px) { body[data-page="Plans"]::after { height: 84px; } }
 @media print { body[data-page="Plans"]::after { display: none; } }
+
+.term-value h2 + ul { margin-top: 16px; }

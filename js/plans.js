@@ -17,9 +17,9 @@
   };
   var T = {
     vi: {
-      title: "Phát hành không gian chuyên môn riêng của Bác sĩ trên Zalo", kicker: "Doctor Space", lead: "Giới thiệu đầy đủ chuyên môn, dịch vụ và nơi thăm khám, để người bệnh dễ dàng tìm hiểu và kết nối với Bác sĩ trên Zalo.",
-      vTitle: "Không gian chuyên môn riêng trên Zalo", vIntro: "Mở rộng từ Professional Profile cơ bản sang Doctor Space, nơi thông tin chuyên môn và hoạt động thăm khám của Bác sĩ được giới thiệu đầy đủ hơn đến người bệnh.",
-      vItems: [["Hồ sơ chuyên môn đầy đủ hơn", "Giới thiệu chuyên khoa, kinh nghiệm và dịch vụ chuyên môn của Bác sĩ."], ["Đường dẫn và mã QR riêng", "Thuận tiện chia sẻ Doctor Space qua Zalo và các kênh kết nối với người bệnh."], ["Thông tin thăm khám rõ ràng", "Giúp người bệnh dễ dàng tìm hiểu nơi Bác sĩ đang hành nghề và các dịch vụ chăm sóc phù hợp."], ["Hỗ trợ cập nhật hồ sơ", "Zerone hỗ trợ cập nhật thông tin chuyên môn khi cần, trong phạm vi dịch vụ."]],
+      title: "Phát hành không gian chuyên môn riêng của Bác sĩ trên Zalo", kicker: "Doctor Space", lead: "Hiện diện chuyên nghiệp trên Zalo, nơi hàng triệu người Việt dùng mỗi ngày, mở ra thêm một cách để người bệnh tìm hiểu và kết nối với Bác sĩ.",
+      vTitle: "Doctor Space kết nối Bác sĩ và người bệnh như thế nào?", vIntro: "",
+      vItems: [["Tìm hiểu và lựa chọn Bác sĩ phù hợp", "Xem chuyên khoa, kinh nghiệm, thế mạnh và các dịch vụ chăm sóc của Bác sĩ."], ["Giới thiệu Bác sĩ cho người thân, bạn bè", "Dễ dàng chia sẻ hồ sơ Bác sĩ qua Zalo để người quen tìm hiểu và kết nối khi cần."], ["Dễ dàng tìm lại Bác sĩ sau khi thăm khám", "Người bệnh có thể quét QR tại phòng khám, mở hồ sơ trên Zalo và lưu lại đường dẫn cho những lần cần chăm sóc tiếp theo."], ["Biết Bác sĩ đang thăm khám ở đâu", "Xem địa chỉ và thông tin liên hệ của các cơ sở Bác sĩ đang hành nghề."]],
       vBooking: "Tính năng đặt lịch qua Zerone hiện chưa mở. Chúng tôi sẽ thông báo khi tính năng sẵn sàng.",
       choose: "Chọn thời hạn sử dụng Doctor Space", chooseDesc: "Lựa chọn thời hạn phù hợp. Quyền lợi Doctor Space không thay đổi giữa các kỳ hạn.", rec: "Ưu đãi tốt nhất", equiv: function (pm, pct) { return "Tiết kiệm " + pct + "% so với thanh toán hằng tháng"; },
       save: function (pct) { return "Tiết kiệm " + pct + "%"; }, saveShort: function (pct) { return "Tiết kiệm " + pct + "%"; }, monthlyShort: "Thanh toán theo tháng",
@@ -64,9 +64,9 @@
       due: "Hạn thanh toán các kỳ", mailSubject: "Đăng ký Professional Space", currency: "đ"
     },
     en: {
-      title: "Launch your own professional space on Zalo", kicker: "Doctor Space", lead: "Present your expertise, services and practice locations in one dedicated space, making it easier for patients to learn about you and connect on Zalo.",
-      vTitle: "Your dedicated professional space on Zalo", vIntro: "Go beyond your basic Professional Profile with Doctor Space, where patients can explore a more complete picture of your expertise and practice.",
-      vItems: [["A more complete professional profile", "Present your specialties, experience and professional services in greater detail."], ["Your own link & QR code", "Easily share your Doctor Space through Zalo and other patient communication channels."], ["Clear practice information", "Help patients find your practice locations and learn about the care you provide."], ["Ongoing profile support", "Zerone helps keep your professional information up to date within the scope of your subscription."]],
+      title: "Launch your own professional space on Zalo", kicker: "Doctor Space", lead: "A professional presence on Zalo, where millions of people in Vietnam spend time every day, opening one more way for patients to learn about you and connect.",
+      vTitle: "How does Doctor Space connect doctors and patients?", vIntro: "",
+      vItems: [["Learn about and choose the right doctor", "See the doctor's specialty, experience, strengths and care services."], ["Introduce the doctor to family and friends", "Easily share the doctor's profile through Zalo so people you know can learn more and connect when needed."], ["Easy to find the doctor again after a visit", "Patients can scan the QR code at the practice, open the profile on Zalo and save the link for future care."], ["Know where the doctor practises", "See the address and contact details of the practices where the doctor works."]],
       vBooking: "Appointment booking through Zerone is not yet available. We'll notify you when it's ready.",
       choose: "Choose your Doctor Space subscription term", chooseDesc: "Choose the term that works best for you. All options include the same Doctor Space features.", rec: "Best Value", equiv: function (pm, pct) { return "Save " + pct + "% compared with monthly billing"; },
       save: function (pct) { return "Save " + pct + "%"; }, saveShort: function (pct) { return "Save " + pct + "%"; }, monthlyShort: "Pay month by month",
@@ -177,7 +177,7 @@
     }
     var sel = state.plan, selName = sel === "annual" ? L.annual : sel === "term_6m" ? L.six : L.monthly, selPer = sel === "monthly" ? L.monthlyPer : (sel === "annual" ? L.annual : L.six);
     root.innerHTML = "<p class=\"term-kicker\">" + L.kicker + "</p><h1>" + L.title + "</h1><p class=\"term-lead\">" + L.lead + "</p>" + pv +
-      "<section class=\"term-value\" aria-labelledby=\"tv-h\"><h2 id=\"tv-h\">" + L.vTitle + "</h2><p>" + L.vIntro + "</p><ul>" + items + "</ul><p class=\"term-booking\">" + L.vBooking + "</p></section>" +
+      "<section class=\"term-value\" aria-labelledby=\"tv-h\"><h2 id=\"tv-h\">" + L.vTitle + "</h2>" + (L.vIntro ? "<p>" + L.vIntro + "</p>" : "") + "<ul>" + items + "</ul><p class=\"term-booking\">" + L.vBooking + "</p></section>" +
       "<fieldset class=\"term-set\"><legend>" + L.choose + "</legend><p class=\"term-choosedesc\">" + L.chooseDesc + "</p>" + big +
       "<div class=\"term-pair\">" + small("term_6m", L.six, PLANS.term_6m.price, L.sixPer, L.saveShort(savingPct("term_6m")), S) + small("monthly", L.monthly, PLANS.monthly.price, L.monthlyPer, L.monthlyShort, M) + "</div></fieldset>" +
       "<section class=\"term-sum\" aria-live=\"polite\"><h2>" + L.subTitle + "</h2><p class=\"term-sumlab\">" + L.subSel + " · " + L.exVat + "</p>" +
