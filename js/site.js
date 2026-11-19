@@ -73,6 +73,9 @@ const faqs = L.faqs;
 function twinHref() {
   var file = (location.pathname.split("/").pop() || "index.html");
   if (file.indexOf(".") === -1) file = "index.html";
+  /* pages whose file name differs between the two languages */
+  if (LANG === "vi" && file === "xem-truoc.html") file = "preview.html";
+  else if (LANG === "en" && file === "preview.html") file = "xem-truoc.html";
   return LANG === "vi" ? "../" + file : "vi/" + file;
 }
 

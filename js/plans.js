@@ -17,7 +17,14 @@
   };
   var T = {
     vi: {
-      title: "Chọn gói phù hợp", exVat: "Chưa gồm VAT",
+      title: "Chọn thời hạn sử dụng hồ sơ của bạn.", kicker: "Doctor Space", lead: "Zerone hỗ trợ hoàn thiện, phát hành và duy trì hồ sơ chuyên môn của bạn trên Doctor Space trong thời hạn đăng ký.",
+      vTitle: "Hồ sơ chuyên môn cá nhân", vIntro: "Một hồ sơ riêng để giới thiệu chuyên môn, nơi hành nghề và thông tin kết nối, giúp người bệnh dễ dàng tìm hiểu về bạn.",
+      vItems: [["Hồ sơ chuyên môn rõ ràng", "Giới thiệu thông tin và lĩnh vực hành nghề của bạn tại một nơi."], ["Dễ dàng chia sẻ", "Đường dẫn và mã QR riêng để gửi qua Zalo, LinkedIn hoặc chia sẻ trực tiếp."], ["Duy trì hồ sơ trực tuyến", "Hồ sơ tiếp tục được hiển thị trong thời hạn đăng ký."], ["Cập nhật thông tin khi cần", "Hỗ trợ cập nhật nội dung hồ sơ theo phạm vi dịch vụ."]],
+      vBooking: "Đặt lịch qua Zerone chưa mở; Zerone sẽ thông báo khi sẵn sàng.",
+      choose: "Chọn thời hạn sử dụng", rec: "Khuyến nghị", equiv: function (pm, pct) { return "Tương đương " + pm + "/tháng. Tiết kiệm " + pct + "% so với thanh toán từng tháng."; },
+      save: function (pct) { return "Tiết kiệm " + pct + "%"; }, saveShort: function (pct) { return "Tiết kiệm " + pct + "%."; }, monthlyShort: "Thanh toán theo tháng.",
+      subTitle: "Thông tin đăng ký", subSel: "Thời hạn đã chọn", contSub: "Tiếp tục đăng ký", previewFor: "Hồ sơ của bạn",
+      exVat: "Chưa gồm VAT",
       pmTitle: "Phương thức thanh toán", pmOn: "Khả dụng", pmOff: "Chưa khả dụng",
       pmMail: "Gửi yêu cầu qua email",
       pmOrder: "Đặt đơn, Zerone hướng dẫn thanh toán",
@@ -57,7 +64,14 @@
       due: "Hạn thanh toán các kỳ", mailSubject: "Đăng ký Professional Space", currency: "đ"
     },
     en: {
-      title: "Find the plan for you", exVat: "Excl. VAT",
+      title: "Choose how long to keep your profile.", kicker: "Doctor Space", lead: "Zerone helps you complete, publish and maintain your professional profile on Doctor Space for the term you choose.",
+      vTitle: "Personal professional profile", vIntro: "One profile of your own to present your expertise, where you practise and how to reach you, so patients can learn about you easily.",
+      vItems: [["A clear professional profile", "Your practice information and field of work in one place."], ["Easy to share", "Your own link and QR code to send by Zalo, LinkedIn or share in person."], ["Your profile stays online", "Your profile remains visible for the term you subscribe to."], ["Updates when needed", "Help updating your profile content, within the scope of the service."]],
+      vBooking: "Booking through Zerone is not open yet; Zerone will tell you when it is ready.",
+      choose: "Choose your term", rec: "Recommended", equiv: function (pm, pct) { return "Equivalent to " + pm + "/month. Save " + pct + "% compared with paying monthly."; },
+      save: function (pct) { return "Save " + pct + "%"; }, saveShort: function (pct) { return "Save " + pct + "%."; }, monthlyShort: "Pay month by month.",
+      subTitle: "Your subscription", subSel: "Selected term", contSub: "Continue", previewFor: "Your profile",
+      exVat: "Excl. VAT",
       pmTitle: "Payment method", pmOn: "Available", pmOff: "Not available",
       pmMail: "Send a request by email",
       pmOrder: "Place the order; Zerone sends payment instructions",
@@ -117,15 +131,15 @@
   function perMonth(code) { var p = PLANS[code]; return Math.round(p.price / p.months); }
 
   /* ---------- state (kept for the session so Back never loses the choice or the typed details) ---------- */
-  var state = { plan: "term_6m", view: "plans", form: {}, order: null };
-  try { var saved = JSON.parse(sessionStorage.getItem("zplan") || "null"); if (saved) { state.plan = PLANS[saved.plan] ? saved.plan : state.plan; state.form = saved.form || {}; state.order = saved.order || null; } } catch (e) {}
+  var state = { plan: "annual", view: "plans", form: {}, order: null };
+  try { var saved = JSON.parse(sessionStorage.getItem("zplan") || "null"); if (saved) { state.plan = PLANS[saved.plan] ? saved.plan : state.plan; state.form = saved.form || {}; state.order = saved.order || null; state.preview = saved.preview || null; } } catch (e) {}
   (function fromUrl() {
     var p = new URLSearchParams(location.search).get("plan");
     if (p === "monthly") state.plan = "monthly";
     else if (p === "6m" || p === "term_6m" || p === "term" || p === "term_3m") state.plan = "term_6m";
     else if (p === "12m" || p === "annual") state.plan = "annual";
   })();
-  function persist() { try { sessionStorage.setItem("zplan", JSON.stringify({ plan: state.plan, form: state.form, order: state.order })); } catch (e) {} }
+  function persist() { try { sessionStorage.setItem("zplan", JSON.stringify({ plan: state.plan, form: state.form, order: state.order, preview: state.preview || null })); } catch (e) {} }
   function planCode() { return state.plan; }
 
   var root = el("plans-root");
@@ -144,26 +158,34 @@
   }
 
   /* ---------- plan selection ---------- */
+  function esc(t) { return String(t).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", "\"": "&quot;" }[c]; }); }
+  /* One product (a published, maintained professional profile), one decision (the term). The value is introduced once, above the price. */
   function renderPlans() {
     state.view = "plans"; document.title = BASE_TITLE;
-    var feats = "<p class=\"plan-feat-h\">" + L.included + "</p><ul class=\"plan-feat\">" + L.feats.map(function (f) { return "<li>" + f + "</li>"; }).join("") + "</ul>";
-    function card(key, name, sub, price, per, note, extra) {
-      var sel = state.plan === key;
-      return "<div class=\"plan-card" + (sel ? " is-selected" : "") + "\" data-plan=\"" + key + "\">" +
-        "<input class=\"plan-radio\" type=\"radio\" name=\"plan\" value=\"" + key + "\" id=\"plan-" + key + "\" aria-labelledby=\"pn-" + key + "\"" + (sel ? " checked" : "") + ">" +
-        "<span class=\"plan-mark\" aria-hidden=\"true\"></span>" +
-        "<h2 class=\"plan-name\" id=\"pn-" + key + "\">" + name + "</h2>" + (sub ? "<p class=\"plan-sub\">" + sub + "</p>" : "") +
-        "<p class=\"plan-price\">" + vnd(price) + " <small>/ " + per + "</small><small class=\"plan-vat\">" + L.exVat + "</small></p>" +
-        "<p class=\"plan-period" + (key === "annual" ? " plan-save" : "") + "\" id=\"pp-" + key + "\">" + note + "</p>" + (extra || "<div class=\"plan-slot\"></div>") + feats + "</div>";
+    var pv = state.preview && state.preview.name ? "<p class=\"term-for\"><span>" + L.previewFor + "</span> " + esc(state.preview.name) + (state.preview.spec ? " · " + esc(state.preview.spec) : "") + "</p>" : "";
+    var items = L.vItems.map(function (it) { return "<li><b>" + it[0] + "</b><span>" + it[1] + "</span></li>"; }).join("");
+    function mark(sel) { return "<span class=\"plan-mark\" aria-hidden=\"true\"></span>"; }
+    function radio(key, sel) { return "<input class=\"plan-radio\" type=\"radio\" name=\"plan\" value=\"" + key + "\" id=\"plan-" + key + "\" aria-labelledby=\"pn-" + key + "\"" + (sel ? " checked" : "") + ">"; }
+    var A = state.plan === "annual", S = state.plan === "term_6m", M = state.plan === "monthly";
+    var big = "<div class=\"term-card term-main" + (A ? " is-selected" : "") + "\" data-plan=\"annual\">" + radio("annual", A) + mark() +
+      "<p class=\"term-rec\">" + L.rec + "</p><h3 class=\"term-name\" id=\"pn-annual\">" + L.annual + "</h3>" +
+      "<p class=\"term-price\">" + vnd(PLANS.annual.price) + " <small>/ " + L.annual + "</small></p><p class=\"term-vat\">" + L.exVat + "</p>" +
+      "<p class=\"term-note\">" + L.equiv(vnd(perMonth("annual")), savingPct("annual")) + "</p><span class=\"plan-save\">" + L.save(savingPct("annual")) + "</span></div>";
+    function small(key, name, price, per, note, sel) {
+      return "<div class=\"term-card" + (sel ? " is-selected" : "") + "\" data-plan=\"" + key + "\">" + radio(key, sel) + mark() +
+        "<h3 class=\"term-name\" id=\"pn-" + key + "\">" + name + "</h3><p class=\"term-price sm\">" + vnd(price) + " <small>/ " + per + "</small></p><p class=\"term-vat\">" + L.exVat + "</p><p class=\"term-note\">" + note + "</p></div>";
     }
-    root.innerHTML = "<h1>" + L.title + "</h1>" +
-      "<fieldset class=\"plan-grid\" aria-label=\"" + L.title + "\">" +
-      card("monthly", L.monthly, "", PLANS.monthly.price, L.monthlyPer, L.monthlyNote) +
-      card("term_6m", L.six, "", PLANS.term_6m.price, L.sixPer, L.sixNote(vnd(perMonth("term_6m")), vnd(saving("term_6m")), savingPct("term_6m"))) +
-      card("annual", L.annual, "", PLANS.annual.price, L.annualPer, L.annualNote(vnd(perMonth("annual")), vnd(saving("annual")), savingPct("annual"))) +
-      "</fieldset><div class=\"plans-cta\"><button class=\"btn\" type=\"button\" id=\"plan-continue\">" + L.cont + "</button></div>";
-    root.querySelectorAll(".plan-card").forEach(function (c) {
-      c.addEventListener("click", function (e) { select(c.getAttribute("data-plan")); });
+    var sel = state.plan, selName = sel === "annual" ? L.annual : sel === "term_6m" ? L.six : L.monthly, selPer = sel === "monthly" ? L.monthlyPer : (sel === "annual" ? L.annual : L.six);
+    root.innerHTML = "<p class=\"term-kicker\">" + L.kicker + "</p><h1>" + L.title + "</h1><p class=\"term-lead\">" + L.lead + "</p>" + pv +
+      "<section class=\"term-value\" aria-labelledby=\"tv-h\"><h2 id=\"tv-h\">" + L.vTitle + "</h2><p>" + L.vIntro + "</p><ul>" + items + "</ul><p class=\"term-booking\">" + L.vBooking + "</p></section>" +
+      "<fieldset class=\"term-set\"><legend>" + L.choose + "</legend>" + big +
+      "<div class=\"term-pair\">" + small("term_6m", L.six, PLANS.term_6m.price, L.sixPer, L.saveShort(savingPct("term_6m")), S) + small("monthly", L.monthly, PLANS.monthly.price, L.monthlyPer, L.monthlyShort, M) + "</div></fieldset>" +
+      "<section class=\"term-sum\" aria-live=\"polite\"><h2>" + L.subTitle + "</h2><p class=\"term-sumlab\">" + L.subSel + " · " + L.exVat + "</p>" +
+      "<div class=\"term-sumrow\"><strong>" + vnd(PLANS[sel].price) + "</strong><span>" + selName + "</span></div>" +
+      "<button class=\"btn\" type=\"button\" id=\"plan-continue\">" + L.contSub + " <span aria-hidden=\"true\">→</span></button>" +
+      "<p class=\"term-fine\">" + L.finalPrice + "</p><p class=\"term-fine\">" + L.renewNote + "</p></section>";
+    root.querySelectorAll(".term-card").forEach(function (c) {
+      c.addEventListener("click", function () { select(c.getAttribute("data-plan")); });
     });
     root.querySelectorAll("input[name=plan]").forEach(function (r) { r.addEventListener("change", function () { select(r.value); }); });
     if (!renderPlans.seen) { renderPlans.seen = true; track("plans_viewed"); }

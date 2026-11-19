@@ -182,7 +182,8 @@
 
       /* end-of-journey actions */
       .ds-end { margin-top: 1.4rem; display: none; gap: .6rem; width: min(100%, 22vw); min-width: 15rem; }
-      .ds[data-end="1"] .ds-end { display: grid; animation: ds-in .5s ease both; }
+      .ds[data-cta="1"] .ds-intro { display: none; }
+      .ds[data-cta="1"] .ds-end { display: grid; animation: ds-in .5s ease both; }
       .ds-end .btn { margin-top: 0; height: 2.8rem; font-size: .92rem; padding: 0 1.4rem; }
       .ds-end .btn.ghost { padding: 0; }
       .ds-end p { margin: 0 0 .2rem; font-size: .82rem; color: var(--mute); }
@@ -239,7 +240,21 @@
       .ds-pn p { margin: 0; } .ds-pn a { color: var(--bur); }
       .ds-pn summary { cursor: pointer; color: var(--bur); list-style: none; display: inline; } .ds-pn summary::-webkit-details-marker { display: none; }
       .ds-pn details { display: inline; } .ds-pn details summary::before { content: " · "; color: var(--mute); } .ds-pn details[open] { display: block; margin-top: .25rem; } .ds-pn details[open] summary { display: none; } .ds-pn details p { margin: 0; }
-      .ds-cta-note { margin: -.1rem .3rem .5rem; font-size: .78rem; line-height: 1.45; color: var(--mute); }
+      .ds[data-cta="1"] .ds-end { padding: clamp(1.1rem, 2.4vh, 1.7rem) clamp(1rem, 1.6vw, 1.6rem); border-radius: 26px; background: linear-gradient(160deg, rgba(255,255,255,.78), rgba(255,255,255,.5)); border: 1px solid rgba(143,29,63,.38); box-shadow: 0 18px 44px rgba(143,29,63,.14), inset 0 1px 0 rgba(255,255,255,.9); -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px); width: min(100%, 25vw); gap: .7rem; }
+      .ds-end .btn { height: clamp(3rem, 5.6vh, 3.5rem); font-size: 1.02rem; font-weight: 700; padding: 0 1.5rem; justify-content: space-between; width: 100%; }
+      .ds-end .ds-next { font-size: .8rem; line-height: 1.45; color: #2f3b63; margin: 0; }
+      .ds[data-cta="1"] #ds-go { background: rgba(255,255,255,.75); color: var(--bur); border: 1px solid rgba(143,29,63,.45); box-shadow: none; }
+      .ds-end .ds-kicker { font-size: clamp(.64rem, .82vw, .9rem); color: #1a2a55; margin: 0 0 .3rem; }
+      .ds-endh { font-family: var(--serif); font-weight: 500; font-size: clamp(1.7rem, 2.5vw, 2.7rem); line-height: 1.08; letter-spacing: -.01em; margin: 0 0 .25rem; color: var(--ink); }
+      .ds-end .ds-endp { font-size: clamp(.9rem, 1.05vw, 1.05rem); line-height: 1.55; color: #2a3560; margin: 0 0 .3rem; }
+      .ds-end .ds-disc { font-size: .78rem; color: var(--mute); margin: .35rem 0 0; }
+      @media (max-width: 900px) {
+        /* phones: the publish step sits right after the phone, before the form; the intro is replaced, not stacked */
+        .ds-left { display: contents; }
+        .ds-intro { order: 1; } .ds-stage { order: 2; } .ds-end { order: 3; margin-top: 0; } .ds-right { order: 4; }
+        .ds-end .ds-endh { font-size: 1.7rem; }
+        .ds[data-cta="1"] .ds-end { width: 100%; }
+      }
       /* ---- adaptive portrait hero (Doctor Profile inside the left screen) ---- */
       .ds-live.ds-profile { padding: 0; background: #f4f7fe; }
       .ds-pt { position: absolute; left: 0; top: 0; width: 332px; height: 336px; overflow: hidden; background: linear-gradient(160deg, #cfdbf3, #e9eefa); touch-action: none; cursor: grab; outline-offset: -3px; }
@@ -271,7 +286,7 @@
 
   <body data-page="Preview">
     <div id="chrome-top"></div>
-    <main class="ds" id="ds" data-state="idle" data-end="0">
+    <main class="ds" id="ds" data-state="idle" data-cta="0">
       <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
         <defs>
           <linearGradient id="dsBg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f4f8ff"/><stop offset=".55" stop-color="#e2ebfb"/><stop offset="1" stop-color="#d7def4"/></linearGradient>
@@ -298,22 +313,23 @@
       </svg>
       <div class="ds-grid">
         <section class="ds-left" aria-labelledby="ds-h1">
-          <p class="ds-kicker">Interactive Preview</p>
-          <h1 class="ds-title" id="ds-h1">Doctor Space<br>của bạn,<br>qua <em>góc nhìn<br>bệnh nhân.</em></h1>
-          <p class="ds-lede">Tạo bản xem trước hồ sơ chuyên môn và khám phá cách bệnh nhân tìm hiểu, kết nối và đặt lịch với bạn trên Zerone.</p>
+          <div class="ds-intro" id="ds-intro">
+          <p class="ds-kicker">Doctor Space</p>
+          <h1 class="ds-title" id="ds-h1">Xem bệnh nhân<br>sẽ thấy bạn<br><em>như thế nào.</em></h1>
+          <p class="ds-lede">Nhập tên và chuyên môn để xem hồ sơ của bạn và cách bệnh nhân gửi yêu cầu đặt lịch.</p>
           <ol class="ds-steps" id="ds-steps" aria-label="Các bước">
             <li aria-current="step">Nhập thông tin</li>
-            <li>Xem trước</li>
-            <li>Trải nghiệm<br>đặt lịch</li>
+            <li>Xem hồ sơ</li>
+            <li>Thử<br>đặt lịch</li>
           </ol>
+          </div>
           <div class="ds-end" id="ds-end">
-            <p>Bạn đã xem xong hành trình mô phỏng (đặt lịch thật qua Zerone chưa mở). Bước tiếp theo là của bạn:</p>
-            <button type="button" class="btn" id="ds-claim"><span>Claim Your Space</span> <span aria-hidden="true">→</span></button>
-            <p class="ds-cta-note">Gửi yêu cầu để Zerone hướng dẫn bạn xác minh chuyên môn và tạo hồ sơ.</p>
-            <a class="btn ghost" id="ds-plans" href="plans.html?src=preview">Chọn gói sử dụng</a>
-            <p class="ds-cta-note">Xem ba gói Doctor Space và gửi yêu cầu đăng ký.</p>
-            <button type="button" class="btn ghost" id="ds-talk">Talk to Zerone</button>
-            <p class="ds-cta-note">Để lại cách liên hệ, Founder của Zerone sẽ trao đổi với bạn.</p>
+            <p class="ds-kicker">ĐÃ TẠO BẢN XEM TRƯỚC</p>
+            <h2 class="ds-endh">Bạn muốn phát hành hồ sơ này?</h2>
+            <p class="ds-endp">Zerone hỗ trợ hoàn thiện và phát hành hồ sơ của bạn trên Doctor Space, với đường dẫn và QR riêng để chia sẻ.</p>
+            <a class="btn" id="ds-plans" href="plans.html?src=preview"><span>Phát hành hồ sơ này</span> <span aria-hidden="true">→</span></a>
+            <p class="ds-next">Bước tiếp theo: chọn thời gian sử dụng. Chưa thanh toán ở bước này.</p>
+            <p class="ds-disc">Bản xem trước chưa phải hồ sơ được công khai.</p>
           </div>
         </section>
 
@@ -368,7 +384,7 @@
                 </div>
                 <div class="ds-crease" aria-hidden="true"></div>
                 <img class="ds-shell" src="../assets/doctor-space/foldable-shell.png" alt="" />
-                <p class="ds-caption" id="ds-caption">Nhập thông tin để xem bản hiển thị Doctor Space của bạn</p>
+                <p class="ds-caption" id="ds-caption">Nhập tên và chuyên môn để bắt đầu</p>
                 <div class="ds-dots" aria-hidden="true"><i></i><i class="on"></i><i></i></div>
               </div>
             </div>
@@ -378,7 +394,7 @@
 
         <aside class="ds-right">
           <form class="ds-card" id="ds-form" novalidate aria-labelledby="ds-fh">
-            <h2 id="ds-fh">Xem trước Doctor Space</h2>
+            <h2 id="ds-fh">Tạo bản xem trước</h2>
             <label for="ds-n">Họ và tên <span aria-hidden="true">*</span></label>
             <input type="text" id="ds-n" name="n" maxlength="80" autocomplete="off" placeholder="VD: BS. Nguyễn Minh An" aria-describedby="ds-ne" />
             <p class="ds-err" id="ds-ne" role="alert"></p>
@@ -405,7 +421,7 @@
             <p class="ds-err" id="ds-fe" role="alert"></p>
             <button class="btn" type="submit" id="ds-go"><span id="ds-gol">Xem trước ngay</span> <span aria-hidden="true">→</span></button>
           </form>
-          <div class="ds-pn">Bản xem trước chạy ngay trên trình duyệt của bạn: tên, nơi làm việc và ảnh <b>không được gửi đi hay lưu lại</b>. <a href="privacy.html">Chính sách bảo mật</a><details><summary>Xem thêm</summary><p>Zerone chỉ đếm ẩn danh các bước bạn bấm (không kèm thông tin cá nhân) và không liên hệ bạn nếu bạn không chọn Claim hoặc để lại thông tin.</p></details></div>
+          <div class="ds-pn">Chạy ngay trên trình duyệt: tên, nơi làm việc và ảnh <b>không được gửi đi hay lưu lại</b>. <a href="privacy.html">Chính sách bảo mật</a><details><summary>Xem thêm</summary><p>Zerone chỉ đếm ẩn danh các bước bạn bấm (không kèm thông tin cá nhân) và không liên hệ bạn nếu bạn không chọn Claim hoặc để lại thông tin.</p></details></div>
         </aside>
       </div>
       <dialog class="ds-dialog" id="ds-dialog" aria-labelledby="ds-dt">
@@ -450,7 +466,7 @@
       <div class="ds-live-region" id="ds-live" role="status" aria-live="polite"></div>
     </main>
     <div id="chrome-bottom"></div>
-    <script src="../js/site.js?v=20261111j"></script>
+    <script src="../js/site.js?v=20261118b"></script>
     <script src="../js/journey.js" defer></script>
 
     <script>
@@ -622,7 +638,7 @@
         var sw = el("div", "ds-brand"); sw.appendChild(el("span", "ds-tag", "Mô phỏng")); sw.style.marginBottom = ".4rem"; s.appendChild(sw);
         if (step === 0) {
           s.appendChild(el("h3", "ds-h", "Hành trình của bệnh nhân")); s.appendChild(path);
-          s.appendChild(el("p", "ds-sim", "Nhấn “Yêu cầu đặt lịch” trên hồ sơ bên trái để xem bệnh nhân gửi yêu cầu."));
+          s.appendChild(el("p", "ds-sim", "Nhấn “Yêu cầu đặt lịch” trên hồ sơ để xem bệnh nhân gửi yêu cầu."));
           setStepper(1);
         } else if (step === 1) {
           s.appendChild(el("h3", "ds-h", "Yêu cầu đặt lịch")); s.appendChild(el("p", "ds-label", "Ngày mong muốn"));
@@ -640,9 +656,12 @@
           s.appendChild(el("h3", "ds-h", "Phòng khám đã xác nhận")); s.appendChild(el("p", "ds-sub", state.day + " · " + state.time));
           var d = el("div", "ds-block"); d.appendChild(el("b", null, "Đây là mô phỏng")); d.appendChild(document.createTextNode("Không có lịch hẹn nào được tạo và không có thông báo nào được gửi đến bất kỳ cơ sở nào.")); s.appendChild(d);
           var again = el("button", "ds-mini ghost", "Xem lại hành trình"); again.type = "button"; again.addEventListener("click", function () { state.day = state.time = null; go(0); }); s.appendChild(again);
-          setStepper(2); track("booking_simulated"); root.setAttribute("data-end", "1"); announce("Phòng khám đã xác nhận trong mô phỏng. Bạn có thể chọn Claim Your Space hoặc Talk to Zerone.");
+          setStepper(2); track("booking_simulated"); announce("Phòng khám đã xác nhận trong mô phỏng.");
         }
       }
+
+      /* carry the typed profile to the plan page (browser session only) */
+      function carryPlans() { try { var z = JSON.parse(sessionStorage.getItem("zplan") || "null") || {}; z.form = z.form || {}; if (state.name && !z.form.name) z.form.name = state.name; if (state.work && !z.form.practice) z.form.practice = state.work; z.preview = state.sample ? null : { name: state.name, spec: state.spec, work: state.work || "" }; sessionStorage.setItem("zplan", JSON.stringify(z)); } catch (e) {} }
 
       /* ---------- validate and generate ---------- */
       function validate() {
@@ -656,10 +675,12 @@
       function generate(v, sample) {
         clearTimers(); track("started");
         state.name = v.name; state.spec = v.spec; state.work = v.work; state.sample = !!sample; state.day = state.time = null;
-        root.setAttribute("data-end", "0"); root.setAttribute("data-state", "processing");
+        root.setAttribute("data-state", "processing");
         $("ds-caption").textContent = "Đang dựng Doctor Space của bạn…"; $("ds-go").disabled = true; $("ds-gol").textContent = "Đang dựng…"; setStepper(1);
         later(function () {
-          renderProfile(); go(0); root.setAttribute("data-state", "ready"); $("ds-go").disabled = false; $("ds-gol").textContent = "Cập nhật xem trước";
+          renderProfile(); go(0); root.setAttribute("data-state", "ready");
+          /* personalised preview only (never the sample): the left column becomes the publish step, linked to Plans with the same non-sensitive source */
+          root.setAttribute("data-cta", sample ? "0" : "1"); $("ds-plans").href = "plans.html?src=" + encodeURIComponent(SRC || "preview"); $("ds-go").disabled = false; $("ds-gol").textContent = "Cập nhật xem trước";
           if (!sample) track("generated");
           announce("Doctor Space của bạn đã sẵn sàng. Nhấn Yêu cầu đặt lịch để xem hành trình bệnh nhân.");
           if (window.matchMedia("(max-width: 1100px)").matches) $("ds-duo").scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "center" });
@@ -765,9 +786,9 @@
           var cp = $("ds-mcopy"); cp.textContent = "Sao chép địa chỉ email"; cp.onclick = function () { var done = function () { cp.textContent = "Đã sao chép"; }; try { navigator.clipboard.writeText("contact@zerone.vn").then(done, function () { window.prompt("Sao chép địa chỉ email:", "contact@zerone.vn"); }); } catch (e) { window.prompt("Sao chép địa chỉ email:", "contact@zerone.vn"); } };
           if (dlg.showModal) dlg.showModal(); else dlg.setAttribute("open", ""); $("ds-mopen").focus();
         }
-        $("ds-claim").addEventListener("click", function () { open("claim", this); });
-        $("ds-plans").addEventListener("click", function () { try { var z = JSON.parse(sessionStorage.getItem("zplan") || "null") || {}; z.form = z.form || {}; if (state.name && !z.form.name) z.form.name = state.name; if (state.work && !z.form.practice) z.form.practice = state.work; sessionStorage.setItem("zplan", JSON.stringify(z)); } catch (e) {} });
-        $("ds-talk").addEventListener("click", function () { open("talk", this); });
+        if ($("ds-claim")) $("ds-claim").addEventListener("click", function () { open("claim", this); });
+                $("ds-plans").addEventListener("click", carryPlans);
+        if ($("ds-talk")) $("ds-talk").addEventListener("click", function () { open("talk", this); });
         $("ds-dclose").addEventListener("click", close); $("ds-ddone").addEventListener("click", close);
         dlg.addEventListener("click", function (e) { if (e.target === dlg) close(); });
         $("ds-k1").addEventListener("change", function () { $("ds-dgo").disabled = !this.checked; });

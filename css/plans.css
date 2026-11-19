@@ -163,3 +163,51 @@ body[data-page="Plans"]::before { opacity: .45; }
 .co-pay .s-on { color: #1d6b3a; background: #e3f3e8; }
 .co-pay .s-off { color: #5b636d; background: #e9edf3; }
 .co-pay .co-note { margin: 4px 2px 0; }
+/* ---------- 2026-11-18: one product, one decision (the term) ---------- */
+.plans-page .term-kicker { margin: 0 0 14px; text-align: center; font-size: .8rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--sc-bur, var(--red)); }
+.plans-page h1 { margin-bottom: 16px; }
+.term-lead { max-width: 560px; margin: 0 auto 28px; text-align: center; color: var(--slate); line-height: 1.55; }
+.term-for { max-width: 720px; margin: 0 auto 18px; text-align: center; font-size: .92rem; color: var(--ink); }
+.term-for span { display: inline-block; margin-right: 6px; padding: 3px 10px; border-radius: 999px; background: rgba(138, 26, 30, .07); color: var(--sc-bur, var(--red)); font-weight: 600; font-size: .8rem; }
+.term-value, .term-sum, .term-set { max-width: 720px; margin-left: auto; margin-right: auto; }
+.term-value, .term-sum { background: #fff; border: 1px solid #d3d9e3; border-radius: 24px; padding: 28px 30px; box-shadow: 0 1px 2px rgba(20, 33, 63, .05); }
+.plans-page .term-value h2, .plans-page .term-sum h2 { font-size: 1.35rem; margin: 0 0 6px; }
+.term-value > p { margin: 0 0 18px; color: var(--slate); line-height: 1.55; font-size: .95rem; }
+.term-value ul { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 16px 28px; }
+.term-value li { position: relative; padding-left: 26px; display: grid; gap: 2px; }
+.term-value li::before { content: ""; position: absolute; left: 2px; top: .38em; width: 12px; height: 7px; border-left: 2px solid var(--sc-bur, var(--red)); border-bottom: 2px solid var(--sc-bur, var(--red)); transform: rotate(-45deg) scale(.9); }
+.term-value li b { font-size: .95rem; color: var(--ink); font-weight: 600; }
+.term-value li span { font-size: .9rem; color: var(--slate); line-height: 1.45; }
+.plans-page .term-value .term-booking { margin: 20px 0 0; font-size: .85rem; }
+.term-set { border: 0; padding: 0; margin-top: 28px; margin-bottom: 0; min-width: 0; }
+.term-set legend { padding: 0; margin: 0 0 12px; font-weight: 600; font-size: .95rem; color: var(--ink); }
+.term-card { position: relative; background: #fff; border: 1px solid #d3d9e3; border-radius: 22px; padding: 24px 26px; cursor: pointer; transition: border-color .15s, box-shadow .15s; }
+.term-card:hover { border-color: #aab3c2; }
+.term-card.is-selected { border: 1.5px solid var(--sc-bur, var(--red)); box-shadow: 0 0 0 1px var(--sc-bur, var(--red)); }
+.term-card:has(.plan-radio:focus-visible) { outline: 2px solid var(--sc-bur, var(--red)); outline-offset: 3px; }
+.term-card .plan-mark { top: 22px; right: 22px; }
+.term-card.is-selected .plan-mark { border-color: var(--sc-bur, var(--red)); }
+.term-card.is-selected .plan-mark::after { content: ""; position: absolute; inset: 4px; border-radius: 50%; background: var(--sc-bur, var(--red)); }
+.term-main { padding: 28px 30px 26px; }
+.term-rec { margin: 0 0 8px; font-size: .72rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--sc-bur, var(--red)); }
+.plans-page .term-name { font-family: var(--sans); font-size: 1.05rem; font-weight: 600; margin: 0 40px 0 0; color: var(--ink); letter-spacing: 0; }
+.term-price { margin: 16px 0 0; font-size: 2.3rem; font-weight: 700; letter-spacing: -.01em; line-height: 1.1; color: var(--ink); }
+.term-price small { font-size: .95rem; font-weight: 500; color: var(--slate); letter-spacing: 0; }
+.term-price.sm { margin-top: 12px; font-size: 1.45rem; }
+.term-vat { margin: 4px 0 0; font-size: .85rem; font-weight: 500; color: var(--slate); }
+.term-note { margin: 10px 0 0; font-size: .9rem; color: var(--slate); line-height: 1.45; }
+.term-main .plan-save { display: inline-block; margin-top: 10px; }
+.term-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 14px; }
+.term-sum { margin-top: 28px; }
+.term-sumlab { margin: 0; font-size: .88rem; color: var(--slate); }
+.term-sumrow { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; margin: 6px 0 18px; }
+.term-sumrow strong { font-size: 1.9rem; letter-spacing: -.01em; }
+.term-sumrow span { font-weight: 600; color: var(--ink); }
+.term-sum .btn { width: 100%; font-size: 1rem; }
+.term-fine { margin: 14px 0 0; font-size: .82rem; color: var(--slate); line-height: 1.5; }
+@media (max-width: 880px) {
+  .term-value, .term-sum { padding: 22px 20px; }
+  .term-value ul { grid-template-columns: 1fr; }
+  .term-pair { grid-template-columns: 1fr; }
+  .term-price { font-size: 2rem; }
+}
