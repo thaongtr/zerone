@@ -519,7 +519,7 @@
         if (b[0] === 0x52 && b[1] === 0x49 && b[2] === 0x46 && b[3] === 0x46 && b[8] === 0x57 && b[9] === 0x45 && b[10] === 0x42 && b[11] === 0x50) return "webp";
         return null;
       }
-      function clearPhoto() { if (state.photo) URL.revokeObjectURL(state.photo); state.photo = null; fileEl.value = ""; paintPick(); $("ds-fe").textContent = ""; }
+      function clearPhoto() { if (state.photo) URL.revokeObjectURL(state.photo); state.photo = null; state.thumb = null; fileEl.value = ""; paintPick(); $("ds-fe").textContent = ""; }
       function paintPick() {
         var f = $("ds-pickface"); f.textContent = "";
         if (state.photo) { var i = el("img"); i.src = state.photo; i.alt = "Ảnh chân dung đã chọn"; f.appendChild(i); }
@@ -541,7 +541,7 @@
               URL.revokeObjectURL(url);
               findFace(c).then(function (f) {
                 var port = c.height >= c.width, fx = f ? f.x : .5, fy = f ? f.y : (port ? .3 : .4);
-                c.toBlob(function (blob) { if (state.photo) URL.revokeObjectURL(state.photo); state.photo = URL.createObjectURL(blob); state.pw = c.width; state.ph = c.height; state.fx = fx; state.fy = fy; state.zoom = 1; state.auto = { fx: fx, fy: fy }; paintPick(); res(); }, "image/jpeg", .92);
+                c.toBlob(function (blob) { if (state.photo) URL.revokeObjectURL(state.photo); state.photo = URL.createObjectURL(blob); try { var k = Math.min(1, 520 / c.width), t = document.createElement("canvas"); t.width = Math.round(c.width * k); t.height = Math.round(c.height * k); t.getContext("2d").drawImage(c, 0, 0, t.width, t.height); state.thumb = t.toDataURL("image/jpeg", .8); } catch (e) { state.thumb = null; } state.pw = c.width; state.ph = c.height; state.fx = fx; state.fy = fy; state.zoom = 1; state.auto = { fx: fx, fy: fy }; paintPick(); res(); }, "image/jpeg", .92);
               });
             };
             img.onerror = function () { URL.revokeObjectURL(url); err.textContent = heicTried ? "Trình duyệt này chưa đọc được ảnh HEIC. Vui lòng chọn ảnh JPG hoặc PNG (trên iPhone: Cài đặt > Máy ảnh > Định dạng > Tương thích nhất)." : "Không đọc được ảnh này. Vui lòng thử ảnh khác."; fileEl.value = ""; res(); };
@@ -661,7 +661,7 @@
       }
 
       /* carry the typed profile to the plan page (browser session only) */
-      function carryPlans() { try { var z = JSON.parse(sessionStorage.getItem("zplan") || "null") || {}; z.form = z.form || {}; if (state.name && !z.form.name) z.form.name = state.name; if (state.work && !z.form.practice) z.form.practice = state.work; z.preview = state.sample ? null : { name: state.name, spec: state.spec, work: state.work || "" }; sessionStorage.setItem("zplan", JSON.stringify(z)); } catch (e) {} }
+      function carryPlans() { try { var z = JSON.parse(sessionStorage.getItem("zplan") || "null") || {}; z.form = z.form || {}; if (state.name && !z.form.name) z.form.name = state.name; if (state.work && !z.form.practice) z.form.practice = state.work; z.preview = state.sample ? null : { name: state.name, spec: state.spec, work: state.work || "", photo: state.thumb || "", fx: state.fx, fy: state.fy }; sessionStorage.setItem("zplan", JSON.stringify(z)); } catch (e) {} }
 
       /* ---------- validate and generate ---------- */
       function validate() {

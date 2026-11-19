@@ -23,7 +23,7 @@
       vBooking: "Tính năng đặt lịch qua Zerone hiện chưa mở. Chúng tôi sẽ thông báo khi tính năng sẵn sàng.",
       choose: "Chọn thời hạn sử dụng Doctor Space", chooseDesc: "Lựa chọn thời hạn phù hợp. Quyền lợi Doctor Space không thay đổi giữa các kỳ hạn.", rec: "Ưu đãi tốt nhất", equiv: function (pm, pct) { return "Tiết kiệm " + pct + "% so với thanh toán hằng tháng"; },
       save: function (pct) { return "Tiết kiệm " + pct + "%"; }, saveShort: function (pct) { return "Tiết kiệm " + pct + "%"; }, monthlyShort: "Thanh toán theo tháng",
-      subTitle: "Gói Doctor Space của Bác sĩ", subSel: "Thời hạn đã chọn", contSub: "Tiếp tục", previewFor: "Hồ sơ của bạn", cap: "Giao diện và số liệu minh họa trên Zalo", stats: [["1.100+", "bệnh nhân tin tưởng"], ["2,4K", "người theo dõi"], ["860", "lượt chia sẻ"]], qrLabel: "Zerone trên Zalo", qrAria: "Mở Zerone Mini App trên Zalo",
+      subTitle: "Gói Doctor Space của Bác sĩ", subSel: "Thời hạn đã chọn", contSub: "Tiếp tục", previewFor: "Hồ sơ của bạn", cap: "Giao diện và số liệu minh họa trên Zalo", cap2: "Giao diện minh họa trên Zalo", stats: [["1.100+", "bệnh nhân tin tưởng"], ["2,4K", "người theo dõi"], ["860", "lượt chia sẻ"]], qrLabel: "Zerone trên Zalo", pf: { tag: "Tim mạch", name: "BS. Nguyễn Minh An", bio: "Chăm sóc tim mạch toàn diện và cá nhân hóa, cho cuộc sống khỏe mạnh và lâu dài hơn.", cells: [["Chuyên sâu", "Nội khoa"], ["Hồ sơ chuyên môn", "Đào tạo & hành nghề"], ["Nơi thăm khám", "Xem địa điểm"]], tabs: ["Tổng quan", "Chuyên môn", "Đào tạo & Công tác"], about: "Giới thiệu", svc: "Dịch vụ chăm sóc" }, qrAria: "Mở Zerone Mini App trên Zalo",
       exVat: "Chưa bao gồm VAT",
       pmTitle: "Phương thức thanh toán", pmOn: "Khả dụng", pmOff: "Chưa khả dụng",
       pmMail: "Gửi yêu cầu qua email",
@@ -70,7 +70,7 @@
       vBooking: "Appointment booking through Zerone is not yet available. We'll notify you when it's ready.",
       choose: "Choose your Doctor Space subscription term", chooseDesc: "Choose the term that works best for you. All options include the same Doctor Space features.", rec: "Best Value", equiv: function (pm, pct) { return "Save " + pct + "% compared with monthly billing"; },
       save: function (pct) { return "Save " + pct + "%"; }, saveShort: function (pct) { return "Save " + pct + "%"; }, monthlyShort: "Pay month by month",
-      subTitle: "Your Doctor Space subscription", subSel: "Selected term", contSub: "Continue", previewFor: "Your profile", cap: "Illustrative view and figures on Zalo", stats: [["1,100+", "patients trust"], ["2.4K", "followers"], ["860", "times shared"]], qrLabel: "Zerone on Zalo", qrAria: "Open the Zerone Mini App on Zalo",
+      subTitle: "Your Doctor Space subscription", subSel: "Selected term", contSub: "Continue", previewFor: "Your profile", cap: "Illustrative view and figures on Zalo", cap2: "Illustrative view on Zalo", stats: [["1,100+", "patients trust"], ["2.4K", "followers"], ["860", "times shared"]], qrLabel: "Zerone on Zalo", pf: { tag: "Cardiology", name: "Dr. Nguyen Minh An", bio: "Comprehensive, personalised cardiac care for a healthier, longer life.", cells: [["Focus", "Internal medicine"], ["Professional profile", "Training & practice"], ["Practice locations", "View locations"]], tabs: ["Overview", "Expertise", "Training & Practice"], about: "About", svc: "Care services" }, qrAria: "Open the Zerone Mini App on Zalo",
       exVat: "Excl. VAT",
       pmTitle: "Payment method", pmOn: "Available", pmOff: "Not available",
       pmMail: "Send a request by email",
@@ -165,6 +165,9 @@
     search: '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6"/><path d="M20 20l-4.2-4.2"/></svg>',
     share: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 14a4 4 0 0 0 5.7 0l2.6-2.6a4 4 0 0 0-5.7-5.7l-1 1"/><path d="M14 10a4 4 0 0 0-5.7 0l-2.6 2.6a4 4 0 0 0 5.7 5.7l1-1"/></svg>',
     qr: '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4" width="6" height="6" rx="1"/><rect x="14" y="4" width="6" height="6" rx="1"/><rect x="4" y="14" width="6" height="6" rx="1"/><path d="M14 14h2v2h-2zM18 14h2v2h-2zM14 18h2v2h-2zM18 18h2v2h-2z"/></svg>',
+    back: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>',
+    heart: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/></svg>',
+    upload: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15V4M8 8l4-4 4 4M5 14v5h14v-5"/></svg>',
     users: '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="3"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/><path d="M16 5.2a3 3 0 0 1 0 5.6M18 14.6c1.8 1 3 3 3 5.4"/></svg>',
     userplus: '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10" cy="8" r="3"/><path d="M4 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/><path d="M19 8v6M16 11h6"/></svg>',
     send: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 3L3 10.5l7 2.5 2.5 7L21 3z"/><path d="M10 13l11-10"/></svg>',
@@ -183,6 +186,7 @@
     state.view = "plans"; document.title = BASE_TITLE; setDark(true);
     var P = LANG === "vi" ? "../" : "";
     var pv = state.preview && state.preview.name ? "<p class=\"dx-for\"><span>" + L.previewFor + "</span> " + esc(state.preview.name) + (state.preview.spec ? " · " + esc(state.preview.spec) : "") + "</p>" : "";
+    var own = state.preview && state.preview.name ? state.preview : null;
     var it = L.vItems, ic = [ICONS.search, ICONS.share, ICONS.qr, ICONS.pin];
     function benVisual(i) {
       if (i === 0) return "<img src=\"" + P + "assets/img/zerone-space-profile.png\" alt=\"\" width=\"780\" height=\"1600\" loading=\"lazy\" decoding=\"async\">";
@@ -205,13 +209,19 @@
       "<section class=\"dx-hero dx-wrap\"><i class=\"dx-pin l\" aria-hidden=\"true\"></i><i class=\"dx-pin r\" aria-hidden=\"true\"></i><div class=\"dx-copy\"><p class=\"dx-eyebrow\">" + L.kicker + "</p><h1>" + L.title + "</h1><p class=\"dx-sub\">" + L.lead + "</p>" + pv + "</div>" +
         "<div class=\"dx-stage\">" +
           "<div class=\"dx-slab\" aria-hidden=\"true\"><div class=\"dx-slab-screen\">" +
-            "<div class=\"dx-seg s1\"><img src=\"" + P + "assets/img/zerone-space-profile.png\" alt=\"\" width=\"780\" height=\"1600\" decoding=\"async\"></div>" +
-            "<ul class=\"dx-stats\"><li><b>" + L.stats[0][0] + "</b><span>" + L.stats[0][1] + "</span></li><li><b>" + L.stats[1][0] + "</b><span>" + L.stats[1][1] + "</span></li><li><b>" + L.stats[2][0] + "</b><span>" + L.stats[2][1] + "</span></li></ul>" +
-            "<div class=\"dx-seg s2\"><img src=\"" + P + "assets/img/zerone-space-profile.png\" alt=\"\" width=\"780\" height=\"1600\" decoding=\"async\"></div>" +
+            "<div class=\"dx-ph" + (own && own.photo ? " u" : "") + "\">" + (own && own.photo ? "<img src=\"" + esc(own.photo) + "\" alt=\"\" data-fx=\"" + (own.fx == null ? .5 : +own.fx) + "\" data-fy=\"" + (own.fy == null ? .3 : +own.fy) + "\">" : "<img src=\"" + P + "assets/img/zerone-space-profile.png\" alt=\"\" width=\"780\" height=\"1600\" decoding=\"async\"><i class=\"dx-cover\"></i>") +
+              (own && own.photo ? "<i class=\"dx-pbtn l\">" + ICONS.back + "</i><i class=\"dx-pbtn r2\">" + ICONS.heart + "</i><i class=\"dx-pbtn r\">" + ICONS.upload + "</i>" : "") +
+              "<span class=\"dx-ptag\">" + esc(own && own.spec ? own.spec : L.pf.tag) + "</span><div class=\"dx-pt\"><b class=\"dx-pname\">" + esc(own ? own.name : L.pf.name) + "</b>" + (own ? (own.work ? "<span class=\"dx-pbio\">" + esc(own.work) + "</span>" : "") : "<span class=\"dx-pbio\">" + L.pf.bio + "</span>") + "</div></div>" +
+            (own ? "" : "<ul class=\"dx-stats\"><li><b>" + L.stats[0][0] + "</b><span>" + L.stats[0][1] + "</span></li><li><b>" + L.stats[1][0] + "</b><span>" + L.stats[1][1] + "</span></li><li><b>" + L.stats[2][0] + "</b><span>" + L.stats[2][1] + "</span></li></ul>") +
+            "<ul class=\"dx-pcells\"><li><b>" + L.pf.cells[0][0] + "</b><span>" + esc(own && own.spec ? own.spec : L.pf.cells[0][1]) + "</span></li><li><b>" + L.pf.cells[1][0] + "</b><span>" + L.pf.cells[1][1] + "</span></li><li><b>" + L.pf.cells[2][0] + "</b><span>" + L.pf.cells[2][1] + "</span></li></ul>" +
+            "<div class=\"dx-ptabs\"><span class=\"on\">" + L.pf.tabs[0] + "</span><span>" + L.pf.tabs[1] + "</span><span>" + L.pf.tabs[2] + "</span></div>" +
+            "<div class=\"dx-pcard\"><b>" + L.pf.about + "</b><i class=\"sk w1\"></i><i class=\"sk w2\"></i><i class=\"sk w3\"></i></div>" +
+            "<div class=\"dx-pcard\"><b>" + L.pf.svc + "</b><div class=\"dx-prow\"><i class=\"dot\"></i><span><i class=\"sk w2\"></i><i class=\"sk w4\"></i></span></div><div class=\"dx-prow\"><i class=\"dot\"></i><span><i class=\"sk w1\"></i><i class=\"sk w4\"></i></span></div></div>" +
+            "<i class=\"dx-home\"></i>" +
           "</div></div>" +
           "<ul class=\"dx-fcs\" aria-label=\"" + L.vTitle + "\">" + fc(0) + fc(1) + fc(2) + fc(3) + "</ul>" +
           "<a class=\"dx-qr\" href=\"https://zalo.me/s/569313129406318197/\" target=\"_blank\" rel=\"noopener\" aria-label=\"" + L.qrAria + "\"><img src=\"" + P + "assets/img/zerone-mini-app-qr.svg\" alt=\"\" width=\"96\" height=\"96\"><span>" + L.qrLabel + "</span></a>" +
-          "<p class=\"dx-cap\" aria-hidden=\"true\">" + L.cap + "</p></div></section>" +
+          "<p class=\"dx-cap\" aria-hidden=\"true\">" + (own ? L.cap2 : L.cap) + "</p></div></section>" +
       "<section class=\"dx-pricing dx-wrap\" id=\"dx-term\"><div class=\"dx-th\"><h2>" + L.choose + "</h2><p>" + L.chooseDesc + "</p></div>" +
         "<fieldset class=\"dx-opts\" aria-label=\"" + L.choose + "\">" +
           opt("annual", L.annual, PLANS.annual.price, L.annual, L.equiv(vnd(perMonth("annual")), savingPct("annual")), L.rec) +
@@ -223,6 +233,13 @@
           "<button class=\"btn\" type=\"button\" id=\"plan-continue\">" + L.contSub + " <span aria-hidden=\"true\">→</span></button></div>" +
           "<p class=\"dx-fine\">" + L.finalPrice + "</p><p class=\"dx-fine\">" + L.renewNote + "</p></div></section>" +
       "</div>";
+    root.querySelectorAll(".dx-ph.u img").forEach(function (im) {
+      function fit() { var box = im.parentNode, W = box.clientWidth, H = box.clientHeight, nw = im.naturalWidth, nh = im.naturalHeight; if (!W || !H || !nw) return;
+        var k = Math.max(W / nw, H / nh), w = nw * k, h = nh * k, fx = +im.getAttribute("data-fx"), fy = +im.getAttribute("data-fy");
+        var l = Math.min(0, Math.max(W - w, W / 2 - fx * w)), t = Math.min(0, Math.max(H - h, H * .44 - fy * h));
+        im.style.width = (w / W * 100) + "%"; im.style.height = (h / H * 100) + "%"; im.style.left = (l / W * 100) + "%"; im.style.top = (t / H * 100) + "%"; }
+      if (im.complete) fit(); else im.addEventListener("load", fit);
+    });
     root.querySelectorAll("input[name=plan]").forEach(function (r) { r.addEventListener("change", function () { select(r.value); }); });
     /* the supporting row fades in once; nothing is hidden when motion is reduced or observers are missing */
     var rv = root.querySelectorAll(".dx-rv");
