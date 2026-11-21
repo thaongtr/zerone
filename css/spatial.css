@@ -175,3 +175,38 @@ body .pov-foot p { color: #fff; }
 body .pov-by span { letter-spacing: .16em; font-weight: 700; }
 body .pov-link { text-decoration: underline; text-underline-offset: 4px; text-decoration-thickness: 1px; }
 @media (max-width: 860px) { body .pov { background: linear-gradient(160deg, #36597d 0%, #43668b 70%, #4e7396 100%); } }
+
+/* ---------- Home: Liquid Glass treatment for the proof cards and the founder card ----------
+   Translucent body that blurs and saturates what is behind it, a hard specular rim (bright top-left, softer bottom-right), a thin lens edge,
+   an upper-edge highlight, a faint diagonal mirror streak and a cool bounce light along the lower edge. Highlights hug the edges so the text
+   area stays dark enough for white type (AA). Light blobs are added behind the cards so the glass has something to refract. */
+body .proof-band::after {
+  background:
+    radial-gradient(34% 46% at 18% 78%, rgba(176,214,255,.55), rgba(176,214,255,0) 72%),
+    radial-gradient(30% 44% at 55% 62%, rgba(255,255,255,.32), rgba(255,255,255,0) 72%),
+    radial-gradient(34% 50% at 90% 85%, rgba(150,198,250,.42), rgba(150,198,250,0) 72%),
+    linear-gradient(105deg, rgba(255,255,255,0) 18%, rgba(255,255,255,.12) 29%, rgba(255,255,255,0) 40%, rgba(255,255,255,.07) 54%, rgba(255,255,255,0) 66%),
+    linear-gradient(112deg, rgba(52,88,124,.9) 0%, rgba(66,104,141,.86) 40%, rgba(79,117,153,.84) 72%, rgba(84,121,157,.86) 100%);
+}
+body .proof-band .proof-step:not(.proof-out) {
+  position: relative;
+  background:
+    radial-gradient(80% 22px at 34% 0%, rgba(255,255,255,.55), rgba(255,255,255,0)),
+    radial-gradient(70% 26px at 68% 100%, rgba(160,208,255,.34), rgba(160,208,255,0)),
+    linear-gradient(115deg, rgba(255,255,255,0) 40%, rgba(255,255,255,.11) 48%, rgba(255,255,255,0) 57%),
+    rgba(18,46,80,.5);
+  -webkit-backdrop-filter: blur(30px) saturate(2) brightness(1.12); backdrop-filter: blur(30px) saturate(2) brightness(1.12);
+  border: 1px solid rgba(255,255,255,.5);
+  box-shadow: 0 28px 60px rgba(6,22,46,.42), 0 2px 8px rgba(6,22,46,.22),
+    inset 2px 2px 1px rgba(255,255,255,.8), inset -1.5px -1.5px 1px rgba(255,255,255,.38), inset 0 0 34px rgba(255,255,255,.1), inset 0 -26px 40px -24px rgba(130,184,245,.34);
+}
+body .proof-band .proof-step:not(.proof-out)::before, body .proof-band .proof-step.proof-out::before, body .pov::before {
+  content: ""; position: absolute; inset: 0; border-radius: inherit; padding: 1px; pointer-events: none; z-index: 2;
+  background: linear-gradient(135deg, rgba(255,255,255,.95) 0%, rgba(255,255,255,.12) 28%, rgba(255,255,255,.08) 70%, rgba(255,255,255,.65) 100%);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor; mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
+}
+body .proof-band .proof-step.proof-out { position: relative; box-shadow: 0 28px 60px rgba(6,22,46,.36), inset 2px 2px 1px #fff, inset -1.5px -1.5px 1px rgba(255,255,255,.7), inset 0 -22px 34px -22px rgba(150,196,245,.45); }
+body .pov { box-shadow: 0 34px 76px rgba(40,72,108,.4), 0 2px 8px rgba(40,72,108,.2), inset 2px 2px 1px rgba(255,255,255,.7), inset -1.5px -1.5px 1px rgba(255,255,255,.3), inset 0 -30px 44px -28px rgba(130,184,245,.3); }
+body .pov::after { content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none; z-index: 2;
+  background: radial-gradient(60% 26px at 30% 0%, rgba(255,255,255,.4), rgba(255,255,255,0)), linear-gradient(115deg, rgba(255,255,255,0) 22%, rgba(255,255,255,.08) 31%, rgba(255,255,255,0) 40%); }
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) { body .proof-band .proof-step:not(.proof-out) { background: rgba(26,58,94,.78); } }
