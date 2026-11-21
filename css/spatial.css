@@ -152,15 +152,26 @@ body .proof-band .proof-tag { color: var(--sc-bur); font-weight: 700; }
 body .proof-band .proof-out .proof-tag { color: var(--sc-bur); }
 
 /* ---------- Home: the dark proof band and the founder card move to the steel-blue family of the plans page ----------
-   Only background colour and overlay change (same hues as the plans page: #5c83a7 / #7b9ebf / #a6c0d6); text, layout, content and glass effects stay.
-   The text side is the deeper end of each gradient so white type keeps its contrast. */
+   Background colour, overlay and TEXT COLOUR only; layout, content and glass effects stay. Hues follow the plans page (#5c83a7 / #7b9ebf),
+   taken a step deeper wherever text sits, so every text colour meets WCAG AA (4.5:1 for body and label text) against the lightest point of its background.
+   Rose and burgundy label colours are not used on these blue grounds (they measured about 2.8:1 and 1.5:1); labels are white and differ by weight and spacing instead. */
+body .proof-band { background: #42688d; }
 body .proof-band::after {
   background:
-    linear-gradient(105deg, rgba(255,255,255,0) 18%, rgba(255,255,255,.16) 29%, rgba(255,255,255,0) 40%, rgba(255,255,255,.1) 54%, rgba(255,255,255,0) 66%),
-    linear-gradient(112deg, rgba(58,96,132,.95) 0%, rgba(92,131,167,.92) 36%, rgba(123,158,191,.9) 68%, rgba(138,172,203,.92) 100%);
+    linear-gradient(105deg, rgba(255,255,255,0) 18%, rgba(255,255,255,.12) 29%, rgba(255,255,255,0) 40%, rgba(255,255,255,.07) 54%, rgba(255,255,255,0) 66%),
+    linear-gradient(112deg, rgba(52,88,124,.97) 0%, rgba(66,104,141,.95) 40%, rgba(79,117,153,.94) 72%, rgba(84,121,157,.95) 100%);
 }
-body .proof-band { background: #5c83a7; }
-body .proof-band .proof-step:not(.proof-out) { background: rgba(26,58,94,.3); border-color: rgba(255,255,255,.34); }
-body .pov { background: linear-gradient(250deg, #3f6489 0%, #54799d 60%, #6f93b6 100%); box-shadow: 0 30px 70px rgba(63,100,137,.3), inset 0 1px 0 rgba(255,255,255,.28); }
-body .pov-photo::after { background: linear-gradient(90deg, transparent 70%, rgba(92,131,167,.4)); }
-@media (max-width: 860px) { body .pov { background: linear-gradient(160deg, #3f6489 0%, #54799d 70%, #6a8fb2 100%); } }
+body .proof-band .kicker { color: #fff; }
+body .proof-band .lede { color: #fff; }
+body .proof-band .proof-step:not(.proof-out) { background: rgba(22,50,84,.34); border-color: rgba(255,255,255,.38); }
+body .proof-band .proof-step:not(.proof-out) p { color: #fff; }
+body .proof-band .proof-step:not(.proof-out) .proof-tag { color: #fff; }
+body .proof-band .proof-step > .arrow, body .proof-band .proof-arrow { color: #fff; }
+body .pov { --pov-accent: #fff; background: linear-gradient(250deg, #36597d 0%, #43668b 55%, #4e7396 100%); box-shadow: 0 30px 70px rgba(54,89,125,.32), inset 0 1px 0 rgba(255,255,255,.26); }
+body .pov-photo::after { background: linear-gradient(90deg, transparent 70%, rgba(70,105,142,.4)); }
+body .pov .kicker { color: #fff; }
+body .pov-text p.pov-end { color: #fff; }
+body .pov-foot p { color: #fff; }
+body .pov-by span { letter-spacing: .16em; font-weight: 700; }
+body .pov-link { text-decoration: underline; text-underline-offset: 4px; text-decoration-thickness: 1px; }
+@media (max-width: 860px) { body .pov { background: linear-gradient(160deg, #36597d 0%, #43668b 70%, #4e7396 100%); } }
