@@ -211,3 +211,8 @@ body .pov-link:hover { color: #0b1019; }
 @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) { body .proof-band .proof-step:not(.proof-out) { background: rgba(255,255,255,.78); } body .pov-body { background: rgba(255,255,255,.78); } }
 body .pov-text p.pov-lead { color: #0b1019; }
 body .pov-text p.pov-copy { color: rgba(12,26,44,.86); }
+/* proof flow connector: a small frosted-glass disc with a burgundy chevron (same glass and accent as the cards), instead of a thin black line arrow */
+body .proof-band .proof-arrow { width: 42px; height: 42px; border-radius: 50%; background: rgba(255,255,255,.58); border: 1px solid rgba(255,255,255,.88);
+  box-shadow: 0 10px 24px rgba(20,45,80,.2), inset 0 1px 0 rgba(255,255,255,.95); -webkit-backdrop-filter: blur(14px) saturate(1.4); backdrop-filter: blur(14px) saturate(1.4); }
+body .proof-band .proof-arrow::before { display: none; }
+body .proof-band .proof-arrow::after { right: auto; top: 50%; left: 50%; width: 9px; height: 9px; border-top: 2px solid #8f1d3f; border-right: 2px solid #8f1d3f; transform: translate(-70%, -50%) rotate(45deg); }
