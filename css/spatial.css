@@ -151,62 +151,63 @@ body .proof-band .proof-step.proof-out {
 body .proof-band .proof-tag { color: var(--sc-bur); font-weight: 700; }
 body .proof-band .proof-out .proof-tag { color: var(--sc-bur); }
 
-/* ---------- Home: the dark proof band and the founder card move to the steel-blue family of the plans page ----------
-   Background colour, overlay and TEXT COLOUR only; layout, content and glass effects stay. Hues follow the plans page (#5c83a7 / #7b9ebf),
-   taken a step deeper wherever text sits, so every text colour meets WCAG AA (4.5:1 for body and label text) against the lightest point of its background.
-   Rose and burgundy label colours are not used on these blue grounds (they measured about 2.8:1 and 1.5:1); labels are white and differ by weight and spacing instead. */
-body .proof-band { background: #42688d; }
+/* ---------- Home: proof band and founder card follow the plans page ("dx" light theme) ----------
+   What makes the plans page feel finished is ONE logic, applied everywhere: a single hazy steel-blue gradient (#5c83a7 > #7b9ebf > #a6c0d6 > #8aaccb) with white
+   diagonal light streaks and a faint burgundy glow, frosted LIGHT glass cards (white 50%, 1px white edge, soft blue shadow, top highlight) carrying dark ink text,
+   burgundy as the only accent, and one dark navy "featured" card. The two homepage blocks now use the same logic. Text colours were recomputed for AA:
+   ink on the frosted cards (about 10:1), burgundy labels on frosted glass (about 5:1), white on the dark card, white only for the large headline. */
+body .proof-band { background: #7b9ebf; }
+body .proof-band::before { opacity: 0; }
 body .proof-band::after {
   background:
-    linear-gradient(105deg, rgba(255,255,255,0) 18%, rgba(255,255,255,.12) 29%, rgba(255,255,255,0) 40%, rgba(255,255,255,.07) 54%, rgba(255,255,255,0) 66%),
-    linear-gradient(112deg, rgba(52,88,124,.97) 0%, rgba(66,104,141,.95) 40%, rgba(79,117,153,.94) 72%, rgba(84,121,157,.95) 100%);
+    radial-gradient(40% 55% at 6% 100%, rgba(150,30,70,.22), rgba(150,30,70,0) 72%),
+    radial-gradient(44% 60% at 96% 0%, rgba(110,150,230,.3), rgba(110,150,230,0) 72%),
+    linear-gradient(105deg, rgba(255,255,255,0) 18%, rgba(255,255,255,.2) 29%, rgba(255,255,255,0) 40%, rgba(255,255,255,.13) 54%, rgba(255,255,255,0) 66%),
+    linear-gradient(112deg, #628aaf 0%, #7b9ebf 36%, #a6c0d6 64%, #8aaccb 100%);
 }
-body .proof-band .kicker { color: #fff; }
-body .proof-band .lede { color: #fff; }
-body .proof-band .proof-step:not(.proof-out) { background: rgba(22,50,84,.34); border-color: rgba(255,255,255,.38); }
-body .proof-band .proof-step:not(.proof-out) p { color: #fff; }
-body .proof-band .proof-step:not(.proof-out) .proof-tag { color: #fff; }
-body .proof-band .proof-step > .arrow, body .proof-band .proof-arrow { color: #fff; }
-body .pov { --pov-accent: #fff; background: linear-gradient(250deg, #36597d 0%, #43668b 55%, #4e7396 100%); box-shadow: 0 30px 70px rgba(54,89,125,.32), inset 0 1px 0 rgba(255,255,255,.26); }
-body .pov-photo::after { background: linear-gradient(90deg, transparent 70%, rgba(70,105,142,.4)); }
-body .pov .kicker { color: #fff; }
-body .pov-text p.pov-end { color: #fff; }
-body .pov-foot p { color: #fff; }
-body .pov-by span { letter-spacing: .16em; font-weight: 700; }
-body .pov-link { text-decoration: underline; text-underline-offset: 4px; text-decoration-thickness: 1px; }
-@media (max-width: 860px) { body .pov { background: linear-gradient(160deg, #36597d 0%, #43668b 70%, #4e7396 100%); } }
-
-/* ---------- Home: Liquid Glass treatment for the proof cards and the founder card ----------
-   Translucent body that blurs and saturates what is behind it, a hard specular rim (bright top-left, softer bottom-right), a thin lens edge,
-   an upper-edge highlight, a faint diagonal mirror streak and a cool bounce light along the lower edge. Highlights hug the edges so the text
-   area stays dark enough for white type (AA). Light blobs are added behind the cards so the glass has something to refract. */
-body .proof-band::after {
-  background:
-    radial-gradient(34% 46% at 18% 78%, rgba(176,214,255,.55), rgba(176,214,255,0) 72%),
-    radial-gradient(30% 44% at 55% 62%, rgba(255,255,255,.32), rgba(255,255,255,0) 72%),
-    radial-gradient(34% 50% at 90% 85%, rgba(150,198,250,.42), rgba(150,198,250,0) 72%),
-    linear-gradient(105deg, rgba(255,255,255,0) 18%, rgba(255,255,255,.12) 29%, rgba(255,255,255,0) 40%, rgba(255,255,255,.07) 54%, rgba(255,255,255,0) 66%),
-    linear-gradient(112deg, rgba(52,88,124,.9) 0%, rgba(66,104,141,.86) 40%, rgba(79,117,153,.84) 72%, rgba(84,121,157,.86) 100%);
-}
+body .proof-band .kicker { color: #0b1019; }
+body .proof-band .display { color: #fff; text-shadow: 0 1px 24px rgba(20,45,80,.25); }
+body .proof-band .lede { color: rgba(11,16,25,.88); }
 body .proof-band .proof-step:not(.proof-out) {
   position: relative;
-  background:
-    radial-gradient(80% 22px at 34% 0%, rgba(255,255,255,.55), rgba(255,255,255,0)),
-    radial-gradient(70% 26px at 68% 100%, rgba(160,208,255,.34), rgba(160,208,255,0)),
-    linear-gradient(115deg, rgba(255,255,255,0) 40%, rgba(255,255,255,.11) 48%, rgba(255,255,255,0) 57%),
-    rgba(18,46,80,.5);
-  -webkit-backdrop-filter: blur(30px) saturate(2) brightness(1.12); backdrop-filter: blur(30px) saturate(2) brightness(1.12);
-  border: 1px solid rgba(255,255,255,.5);
-  box-shadow: 0 28px 60px rgba(6,22,46,.42), 0 2px 8px rgba(6,22,46,.22),
-    inset 2px 2px 1px rgba(255,255,255,.8), inset -1.5px -1.5px 1px rgba(255,255,255,.38), inset 0 0 34px rgba(255,255,255,.1), inset 0 -26px 40px -24px rgba(130,184,245,.34);
+  background: radial-gradient(80% 22px at 34% 0%, rgba(255,255,255,.7), rgba(255,255,255,0)), rgba(255,255,255,.5);
+  border: 1px solid rgba(255,255,255,.85);
+  box-shadow: 0 18px 40px rgba(20,45,80,.16), inset 0 1px 0 rgba(255,255,255,.9), inset 0 -22px 34px -26px rgba(120,170,230,.4);
+  -webkit-backdrop-filter: blur(22px) saturate(1.4); backdrop-filter: blur(22px) saturate(1.4);
 }
-body .proof-band .proof-step:not(.proof-out)::before, body .proof-band .proof-step.proof-out::before, body .pov::before {
-  content: ""; position: absolute; inset: 0; border-radius: inherit; padding: 1px; pointer-events: none; z-index: 2;
-  background: linear-gradient(135deg, rgba(255,255,255,.95) 0%, rgba(255,255,255,.12) 28%, rgba(255,255,255,.08) 70%, rgba(255,255,255,.65) 100%);
-  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor; mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
+body .proof-band .proof-step:not(.proof-out) h3 { color: #0b1019; }
+body .proof-band .proof-step:not(.proof-out) p { color: rgba(12,26,44,.82); }
+body .proof-band .proof-step:not(.proof-out) .proof-tag { color: #8f1d3f; }
+body .proof-band .proof-step.proof-out {
+  position: relative; background: rgba(8,12,20,.84); border: 1px solid rgba(255,255,255,.34);
+  box-shadow: 0 24px 54px rgba(10,28,50,.42), inset 0 1px 0 rgba(255,255,255,.28);
+  -webkit-backdrop-filter: blur(22px) saturate(1.3); backdrop-filter: blur(22px) saturate(1.3);
 }
-body .proof-band .proof-step.proof-out { position: relative; box-shadow: 0 28px 60px rgba(6,22,46,.36), inset 2px 2px 1px #fff, inset -1.5px -1.5px 1px rgba(255,255,255,.7), inset 0 -22px 34px -22px rgba(150,196,245,.45); }
-body .pov { box-shadow: 0 34px 76px rgba(40,72,108,.4), 0 2px 8px rgba(40,72,108,.2), inset 2px 2px 1px rgba(255,255,255,.7), inset -1.5px -1.5px 1px rgba(255,255,255,.3), inset 0 -30px 44px -28px rgba(130,184,245,.3); }
-body .pov::after { content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none; z-index: 2;
-  background: radial-gradient(60% 26px at 30% 0%, rgba(255,255,255,.4), rgba(255,255,255,0)), linear-gradient(115deg, rgba(255,255,255,0) 22%, rgba(255,255,255,.08) 31%, rgba(255,255,255,0) 40%); }
-@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) { body .proof-band .proof-step:not(.proof-out) { background: rgba(26,58,94,.78); } }
+body .proof-band .proof-out .proof-tag { color: #c4daff; }
+body .proof-band .proof-out h3 { color: #fff; }
+body .proof-band .proof-out li { color: rgba(255,255,255,.9); }
+body .proof-band .proof-out li::marker { color: #c4daff; }
+body .proof-band .proof-out li::before { background: #c4daff; }
+body .proof-band .proof-arrow::before { background: #0b1019; }
+body .proof-band .proof-arrow::after { border-color: #0b1019; }
+body .proof-band .proof-step::before { content: none; }
+
+body .pov { --pov-accent: #8f1d3f; background: linear-gradient(112deg, #5c83a7 0%, #7b9ebf 36%, #a6c0d6 64%, #8aaccb 100%); box-shadow: 0 30px 70px rgba(20,45,80,.28), inset 0 1px 0 rgba(255,255,255,.7); }
+body .pov::before { content: ""; position: absolute; inset: 0; z-index: 0; pointer-events: none; background: linear-gradient(105deg, rgba(255,255,255,0) 18%, rgba(255,255,255,.2) 29%, rgba(255,255,255,0) 40%, rgba(255,255,255,.13) 54%, rgba(255,255,255,0) 66%); padding: 0; -webkit-mask: none; mask: none; }
+body .pov::after { content: none; }
+body .pov-photo::after { background: linear-gradient(90deg, transparent 80%, rgba(92,131,167,.25)); }
+body .pov-body { background: rgba(255,255,255,.52); border-left: 1px solid rgba(255,255,255,.85); -webkit-backdrop-filter: blur(22px) saturate(1.4); backdrop-filter: blur(22px) saturate(1.4); box-shadow: inset 0 1px 0 rgba(255,255,255,.9); }
+body .pov .kicker { color: #8f1d3f; }
+body .pov-text p, body .pov-text strong { color: #0b1019; }
+body .pov-text p.pov-end { color: rgba(12,26,44,.82); }
+body .pov-key { color: #8f1d3f !important; }
+body .pov-by { border-top-color: rgba(12,26,44,.2); }
+body .pov-by b { color: #0b1019; }
+body .pov-by span { color: #8f1d3f; letter-spacing: .16em; font-weight: 700; }
+body .pov-foot p { color: rgba(12,26,44,.82); }
+body .pov-link { color: #8f1d3f; text-decoration: underline; text-underline-offset: 4px; text-decoration-thickness: 1px; }
+body .pov-link:hover { color: #0b1019; }
+@media (max-width: 860px) { body .pov { background: linear-gradient(160deg, #5c83a7 0%, #7b9ebf 40%, #a6c0d6 100%); } body .pov-body { border-left: 0; } }
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) { body .proof-band .proof-step:not(.proof-out) { background: rgba(255,255,255,.78); } body .pov-body { background: rgba(255,255,255,.78); } }
+body .pov-text p.pov-lead { color: #0b1019; }
+body .pov-text p.pov-copy { color: rgba(12,26,44,.86); }
