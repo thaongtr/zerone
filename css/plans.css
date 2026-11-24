@@ -238,7 +238,7 @@ body.dx-on { background: #0a1020; }
 body.dx-on::before { display: none; }
 body.dx-on[data-page="Plans"]::after { background: none; height: 84px; }
 .plans-page:has(.dx) { max-width: none; padding: 0; }
-.dx { --dx-w: #fff; --dx-w2: rgba(255, 255, 255, .74); --dx-w3: rgba(255, 255, 255, .54); --dx-ice: 196, 218, 255; --dx-cta: #971132; position: relative; isolation: isolate; overflow: hidden; text-align: left; color: var(--dx-w); background: linear-gradient(180deg, #0a1020 0%, #0d1530 52%, #0a1020 100%); }
+.dx { --dx-w: #fff; --dx-w2: rgba(255, 255, 255, .74); --dx-w3: rgba(255, 255, 255, .54); --dx-ice: 196, 218, 255; --dx-cta: #ad1839; position: relative; isolation: isolate; overflow: hidden; text-align: left; color: var(--dx-w); background: linear-gradient(180deg, #0a1020 0%, #0d1530 52%, #0a1020 100%); }
 .dx *, .dx *::before, .dx *::after { box-sizing: border-box; }
 .dx-wrap { position: relative; z-index: 1; max-width: 1180px; margin: 0 auto; padding: 0 clamp(20px, 4vw, 48px); }
 .dx-anim .dx-rv:not(.in) { opacity: 0; transform: translateY(12px); }
@@ -363,7 +363,7 @@ body.dx-t-light { background: var(--t-page); }
 body.dx-t-a { --t-page: #f3f8fb; --t-bg: linear-gradient(180deg, #a9cddd 0%, #cde3ec 34%, #eef6fa 70%, #f6fafc 100%); --t-ink: 15, 34, 56; --t-l1: radial-gradient(closest-side, rgba(255, 255, 255, .9), rgba(255, 255, 255, 0)); --t-l2: radial-gradient(closest-side, rgba(139, 26, 56, .12), rgba(139, 26, 56, 0)); }
 body.dx-t-b { --t-page: #e9eff5; --t-bg: linear-gradient(180deg, #7e9fbd 0%, #a4bdd2 36%, #dbe6ef 72%, #eaf0f6 100%); --t-ink: 11, 26, 46; --t-l1: radial-gradient(closest-side, rgba(255, 255, 255, .6), rgba(255, 255, 255, 0)); --t-l2: radial-gradient(closest-side, rgba(139, 26, 56, .16), rgba(139, 26, 56, 0)); }
 body.dx-t-c { --t-page: #eceef2; --t-bg: linear-gradient(180deg, #d4d8df 0%, #e2e5eb 46%, #eef0f4 100%); --t-ink: 20, 27, 43; --t-l1: radial-gradient(closest-side, rgba(255, 255, 255, .85), rgba(255, 255, 255, 0)); --t-l2: radial-gradient(closest-side, rgba(196, 40, 88, .85), rgba(232, 108, 140, .38) 48%, rgba(232, 108, 140, 0)); }
-body.dx-t-light .dx { --dx-w: rgb(var(--t-ink)); --dx-w2: rgba(var(--t-ink), .72); --dx-w3: rgba(var(--t-ink), .54); --dx-ice: 139, 26, 56; --dx-cta: #971132; background: var(--t-bg); }
+body.dx-t-light .dx { --dx-w: rgb(var(--t-ink)); --dx-w2: rgba(var(--t-ink), .72); --dx-w3: rgba(var(--t-ink), .54); --dx-ice: 139, 26, 56; --dx-cta: #ad1839; background: var(--t-bg); }
 body.dx-t-light .dx-light.l1 { background: var(--t-l1); }
 body.dx-t-light .dx-light.l2 { background: var(--t-l2); }
 body.dx-t-c .dx-light.l2 { left: -16%; top: 520px; width: 1000px; height: 1000px; filter: blur(18px); }
@@ -383,7 +383,7 @@ body.dx-t-light .f3-card { border-top-color: rgba(var(--t-ink), .12); }
 body.dx-t-light .f3-company, body.dx-t-light .f3-bottom { border-top-color: rgba(var(--t-ink), .09); }
 body.dx-t-light .f3-policies b, body.dx-t-light .f3-company b { color: rgba(var(--t-ink), .45); }
 body.dx-t-light .f3-policies a, body.dx-t-light .f3-company a { color: rgba(var(--t-ink), .72); }
-body.dx-t-light .f3-policies a:hover, body.dx-t-light .f3-company a:hover { color: #971132; }
+body.dx-t-light .f3-policies a:hover, body.dx-t-light .f3-company a:hover { color: #ad1839; }
 body.dx-t-light .f3-policies small, body.dx-t-light .f3-company, body.dx-t-light .f3-company em, body.dx-t-light .f3-company span, body.dx-t-light .f3-bottom, body.dx-t-light .f3-bottom a { color: rgba(var(--t-ink), .58); }
 
 /* ====================================================================================================

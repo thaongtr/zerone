@@ -17,9 +17,9 @@ body .tt3-core { font-weight: 400; }
 .tt3-pillars { margin: .7rem 0 0; font-size: .92rem; line-height: 1.5; color: var(--slate); }
 .tt3-pillars i { font-style: normal; opacity: .6; padding: 0 .25rem; }
 .tt3-curve { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; }
-.tt3-curve path, .tt3-drop path { fill: none; stroke: var(--sc-bur, #971132); stroke-width: 1.6px; stroke-linecap: round; vector-effect: non-scaling-stroke; stroke-dasharray: 4000; stroke-dashoffset: 0; }
+.tt3-curve path, .tt3-drop path { fill: none; stroke: var(--sc-bur, #ad1839); stroke-width: 1.6px; stroke-linecap: round; vector-effect: non-scaling-stroke; stroke-dasharray: 4000; stroke-dashoffset: 0; }
 .tt3-curve-m { display: none; }
-.tt3-dot { position: absolute; left: var(--dx); top: var(--dy); width: 11px; height: 11px; margin: -5.5px 0 0 -5.5px; border-radius: 50%; background: #fff; border: 2px solid var(--sc-bur, #971132); box-shadow: 0 0 0 6px rgba(143,29,63,.1); }
+.tt3-dot { position: absolute; left: var(--dx); top: var(--dy); width: 11px; height: 11px; margin: -5.5px 0 0 -5.5px; border-radius: 50%; background: #fff; border: 2px solid var(--sc-bur, #ad1839); box-shadow: 0 0 0 6px rgba(143,29,63,.1); }
 .tt3-steps { list-style: none; margin: 0; padding: 0; }
 .tt3-s { position: absolute; left: var(--dx); top: var(--dy); font-family: var(--serif); font-size: clamp(1.45rem, 2.5vw, 2.1rem); line-height: 1.05; letter-spacing: -.015em; color: var(--ink); white-space: nowrap; }
 /* each stage sits beside its dot, on the side the line is not */
@@ -29,7 +29,7 @@ body .tt3-core { font-weight: 400; }
 /* the drop leaves the photo and the fork lands on the two cards: the same line, still going */
 .tt3-drop { position: relative; display: block; width: 2px; height: 90px; margin: 0 auto; }
 .tt3-drop svg { display: block; width: 2px; height: 100%; overflow: visible; }
-.tt3-drop i { position: absolute; width: 11px; height: 11px; margin: -5.5px 0 0 -5.5px; border-radius: 50%; background: #fff; border: 2px solid var(--sc-bur, #971132); box-shadow: 0 0 0 6px rgba(143,29,63,.1); }
+.tt3-drop i { position: absolute; width: 11px; height: 11px; margin: -5.5px 0 0 -5.5px; border-radius: 50%; background: #fff; border: 2px solid var(--sc-bur, #ad1839); box-shadow: 0 0 0 6px rgba(143,29,63,.1); }
 .tt3-drop i { left: 50%; bottom: -5px; top: auto; margin-top: 0; }
 .tt3-note { margin: 1rem auto 0; max-width: 52ch; text-align: center; font-size: var(--fs-small, .9375rem); line-height: 1.6; color: var(--slate); }
 .ap2-tt { padding-bottom: 0; }
@@ -67,7 +67,7 @@ body .tt3-core { font-weight: 400; }
 /* ---------- Two applications: equal weight ---------- */
 .ap2-grid { margin-top: 2.2rem; display: grid; grid-template-columns: 1fr 1fr; gap: 22px; align-items: stretch; }
 .ap2-card { display: flex; flex-direction: column; padding: 2.2rem 2.2rem 2rem; }
-.ap2-card .num, .ap2-key .num { margin: 0 0 1rem; font-size: var(--fs-eyebrow, .8rem); font-weight: 600; letter-spacing: .14em; color: var(--sc-bur, #971132); }
+.ap2-card .num, .ap2-key .num { margin: 0 0 1rem; font-size: var(--fs-eyebrow, .8rem); font-weight: 600; letter-spacing: .14em; color: var(--sc-bur, #ad1839); }
 .ap2-card h3 { margin: 0 0 .9rem; font-size: clamp(1.5rem, 2.2vw, 1.9rem); line-height: 1.2; }
 .ap2-card > p:not(.num):not(.ap2-value) { margin: 0; }
 .ap2-value { margin: auto 0 0; padding-top: 1.1rem; border-top: 1px solid rgba(63,88,115,.2); font-weight: 500; color: var(--ink); line-height: 1.55; }
@@ -93,19 +93,19 @@ body .ap2-key .ap2-key-gloss { margin: .9rem 0 0; font-size: var(--fs-body, 1.06
 .ap2-training { background: linear-gradient(180deg, rgba(255,255,255,.32), rgba(255,255,255,.06)); }
 .ap2-train-img { position: relative; padding: 10px; border-radius: 34px; background: var(--lg-fill); border: var(--lg-edge); box-shadow: var(--lg-shadow); -webkit-backdrop-filter: var(--lg-blur); backdrop-filter: var(--lg-blur); }
 .ap2-train-img img { border-radius: 26px; }
-.ap2-training .ap-focus li::before { background: var(--sc-bur, #971132); }
+.ap2-training .ap-focus li::before { background: var(--sc-bur, #ad1839); }
 @media (max-width: 860px) { .ap2-train-img { padding: 8px; border-radius: 26px; } .ap2-train-img img { border-radius: 20px; } }
 
 /* ---------- the two application cards are links: whole card clickable, lift and arrow on hover ---------- */
 a.ap2-card { color: inherit; text-decoration: none; cursor: pointer; transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease; }
-.ap2-more { display: flex; align-items: center; justify-content: space-between; margin-top: 1.4rem; font-weight: 600; font-size: .95rem; color: var(--sc-bur, #971132); }
-.ap2-arrow { display: inline-grid; place-items: center; width: 40px; height: 40px; border-radius: 50%; font-size: 1.15rem; line-height: 1; color: var(--sc-bur, #971132); background: rgba(255,255,255,.7); border: 1px solid rgba(143,29,63,.28); transition: transform .25s ease, background .25s ease, color .25s ease; }
+.ap2-more { display: flex; align-items: center; justify-content: space-between; margin-top: 1.4rem; font-weight: 600; font-size: .95rem; color: var(--sc-bur, #ad1839); }
+.ap2-arrow { display: inline-grid; place-items: center; width: 40px; height: 40px; border-radius: 50%; font-size: 1.15rem; line-height: 1; color: var(--sc-bur, #ad1839); background: rgba(255,255,255,.7); border: 1px solid rgba(143,29,63,.28); transition: transform .25s ease, background .25s ease, color .25s ease; }
 @media (hover: hover) and (pointer: fine) {
   a.ap2-card:hover { transform: translateY(-4px); border-color: rgba(143,29,63,.32); box-shadow: 0 30px 62px rgba(52,72,120,.2), 0 2px 8px rgba(52,72,120,.07), inset 1.5px 1.5px 0 #fff, inset -1px -1px 0 rgba(255,255,255,.6), inset 0 0 34px rgba(255,255,255,.45); }
-  a.ap2-card:hover .ap2-arrow { transform: translateX(5px); background: var(--sc-bur, #971132); color: #fff; }
+  a.ap2-card:hover .ap2-arrow { transform: translateX(5px); background: var(--sc-bur, #ad1839); color: #fff; }
 }
 a.ap2-card:focus-visible { outline: 2px solid rgba(143,29,63,.7); outline-offset: 4px; transform: translateY(-2px); }
-a.ap2-card:focus-visible .ap2-arrow { background: var(--sc-bur, #971132); color: #fff; }
+a.ap2-card:focus-visible .ap2-arrow { background: var(--sc-bur, #ad1839); color: #fff; }
 @media (prefers-reduced-motion: reduce) { a.ap2-card, .ap2-arrow { transition: none; } a.ap2-card:hover, a.ap2-card:focus-visible { transform: none; } a.ap2-card:hover .ap2-arrow { transform: none; } }
 
 /* ---------- the two cards share their rows: label, title, description, value and link line up across both ---------- */
@@ -125,9 +125,9 @@ a.ap2-card:focus-visible .ap2-arrow { background: var(--sc-bur, #971132); color:
 .ap2-impact .lede { max-width: 58ch; margin: 0 auto; }
 .ap2-merge { position: relative; display: block; height: 84px; margin: 0 0 1.4rem; }
 .ap2-merge svg { display: block; width: 100%; height: 100%; overflow: visible; }
-.ap2-merge path, .ap2-out path { fill: none; stroke: var(--sc-bur, #971132); stroke-width: 1.6px; stroke-linecap: round; vector-effect: non-scaling-stroke; }
+.ap2-merge path, .ap2-out path { fill: none; stroke: var(--sc-bur, #ad1839); stroke-width: 1.6px; stroke-linecap: round; vector-effect: non-scaling-stroke; }
 .ap2-merge path { stroke: url(#ap2mg); }
-.ap2-merge i { position: absolute; left: 50%; bottom: -5px; width: 11px; height: 11px; margin-left: -5.5px; border-radius: 50%; background: #fff; border: 2px solid var(--sc-bur, #971132); box-shadow: 0 0 0 6px rgba(143,29,63,.1); }
+.ap2-merge i { position: absolute; left: 50%; bottom: -5px; width: 11px; height: 11px; margin-left: -5.5px; border-radius: 50%; background: #fff; border: 2px solid var(--sc-bur, #ad1839); box-shadow: 0 0 0 6px rgba(143,29,63,.1); }
 .ap2-key { display: grid; justify-items: center; margin: 2.4rem auto 0; padding: 0; max-width: 980px; }
 .ap2-key .num { display: flex; align-items: center; gap: 1.2rem; width: 100%; margin: 0 0 1.1rem; }
 .ap2-key .num::before, .ap2-key .num::after { content: ""; flex: 1; height: 1px; background: linear-gradient(90deg, transparent, rgba(63,88,115,.32)); }
@@ -136,8 +136,8 @@ body .ap2-key .ap2-key-term { font-size: clamp(1.9rem, 4vw, 3.2rem); line-height
 body .ap2-key .ap2-key-gloss { margin-top: .8rem; }
 .ap2-out { position: relative; display: block; width: 2px; height: 72px; margin: 2rem auto 0; }
 .ap2-out svg { display: block; width: 2px; height: 100%; overflow: visible; }
-.ap2-out i { position: absolute; left: 50%; bottom: -5px; width: 11px; height: 11px; margin-left: -5.5px; border-radius: 50%; background: #fff; border: 2px solid var(--sc-bur, #971132); box-shadow: 0 0 0 6px rgba(143,29,63,.1); }
-@media (max-width: 860px) { .ap2-merge { height: 56px; } .ap2-merge svg { display: none; } .ap2-merge::before { content: ""; position: absolute; left: 50%; top: 0; bottom: 0; width: 1.6px; margin-left: -.8px; background: linear-gradient(180deg, rgba(143,29,63,0), #971132 40%); } .ap2-out { height: 52px; } }
+.ap2-out i { position: absolute; left: 50%; bottom: -5px; width: 11px; height: 11px; margin-left: -5.5px; border-radius: 50%; background: #fff; border: 2px solid var(--sc-bur, #ad1839); box-shadow: 0 0 0 6px rgba(143,29,63,.1); }
+@media (max-width: 860px) { .ap2-merge { height: 56px; } .ap2-merge svg { display: none; } .ap2-merge::before { content: ""; position: absolute; left: 50%; top: 0; bottom: 0; width: 1.6px; margin-left: -.8px; background: linear-gradient(180deg, rgba(143,29,63,0), #ad1839 40%); } .ap2-out { height: 52px; } }
 @media (max-width: 720px) { .ap2-key .num { gap: .8rem; font-size: .74rem; letter-spacing: .1em; } }
 
 /* the line leaves the photo, lands right above the next section's heading; its note sits beside it */
@@ -160,7 +160,7 @@ body .ap2-apps > .display { font-size: clamp(1.7rem, 2.9vw, 2.45rem); line-heigh
 @media (max-width: 860px) { .ap2-apps > .kicker { margin-top: 1.5rem; } .ap2-grid { margin-top: 1.8rem; } }
 
 /* shared impact, simplified: one headline, the core value as a single quiet accent line */
-.ap2-key-line { margin: 1.8rem auto 0; font-family: var(--serif); font-style: italic; font-size: clamp(1.3rem, 2vw, 1.7rem); line-height: 1.2; letter-spacing: -.01em; color: var(--sc-bur, #971132); }
+.ap2-key-line { margin: 1.8rem auto 0; font-family: var(--serif); font-style: italic; font-size: clamp(1.3rem, 2vw, 1.7rem); line-height: 1.2; letter-spacing: -.01em; color: var(--sc-bur, #ad1839); }
 .ap2-impact .display { font-size: clamp(1.8rem, 3.2vw, 2.7rem); }
 .ap2-out { margin-top: 2.4rem; }
 
