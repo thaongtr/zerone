@@ -216,3 +216,33 @@ body .proof-band .proof-arrow { width: 42px; height: 42px; border-radius: 50%; b
   box-shadow: 0 10px 24px rgba(20,45,80,.2), inset 0 1px 0 rgba(255,255,255,.95); -webkit-backdrop-filter: blur(14px) saturate(1.4); backdrop-filter: blur(14px) saturate(1.4); }
 body .proof-band .proof-arrow::before { display: none; }
 body .proof-band .proof-arrow::after { right: auto; top: 50%; left: 50%; width: 9px; height: 9px; border-top: 2px solid #8f1d3f; border-right: 2px solid #8f1d3f; transform: translate(-70%, -50%) rotate(45deg); }
+
+/* ---------- Clean, clear atmosphere + a raised Care Continuity hub ----------
+   Sky: the same blue-white family, but cleaner and clearer: near-white ground, one soft diagonal band of light, a grey-blue shade in the corners
+   and a single pale blue lift at the far edge (instead of several saturated blobs). Hub: the burgundy circle is embossed (top specular, lower shade,
+   cast shadow) with warm light peeking out from behind its top and bottom edges. */
+html { background: #eef3fb; }
+body::before {
+  background:
+    linear-gradient(118deg, rgba(255,255,255,0) 34%, rgba(255,255,255,.92) 49%, rgba(255,255,255,0) 64%),
+    radial-gradient(60vw 56vh at 0% 0%, rgba(196,209,232,.55), rgba(196,209,232,0) 70%),
+    radial-gradient(54vw 60vh at 100% 100%, rgba(160,182,228,.4), rgba(160,182,228,0) 72%),
+    linear-gradient(112deg, #f6f9fe 0%, #edf2fb 48%, #e1e9f7 100%);
+}
+body .zt-section {
+  background:
+    linear-gradient(118deg, rgba(255,255,255,0) 30%, rgba(255,255,255,.95) 49%, rgba(255,255,255,0) 66%),
+    radial-gradient(ellipse 46% 62% at 0% 6%, rgba(200,213,236,.7), transparent 75%),
+    radial-gradient(ellipse 52% 72% at 100% 98%, rgba(176,196,232,.7), transparent 75%),
+    linear-gradient(119deg, #eaf0fa 0%, #f8fafe 47%, #e1e9f6 100%);
+}
+body .zt-hub {
+  border: 1px solid rgba(255,255,255,.55);
+  background: radial-gradient(110% 80% at 30% 10%, rgba(255,255,255,.3), rgba(255,255,255,0) 46%), linear-gradient(145deg, #c23a4d 0%, #a41c2c 44%, #82101e 100%);
+  box-shadow:
+    0 -16px 34px -8px rgba(255,170,105,.62),           /* warm light behind the top edge */
+    0 30px 44px -6px rgba(255,160,98,.6),               /* warm light behind the bottom edge */
+    0 34px 40px -18px rgba(96,14,32,.5),               /* cast shadow */
+    0 0 0 14px rgba(255,255,255,.5), 0 0 0 15px rgba(255,255,255,.9),
+    inset 0 3px 2px rgba(255,255,255,.55), inset 0 -18px 30px rgba(70,8,22,.38);
+}
