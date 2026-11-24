@@ -168,3 +168,13 @@ body .ap2-apps > .display { font-size: clamp(1.7rem, 2.9vw, 2.45rem); line-heigh
 
 /* indicators note under the two applications (it describes how consultancy work is measured) */
 .ap2-indicators { max-width: 70ch; margin: 1.6rem auto 0; text-align: center; font-size: var(--fs-small, .9375rem); line-height: 1.6; color: var(--slate); }
+
+/* Applications: no headline. The kicker is a small label on the line coming from the method above; the line forks to the two cards. */
+.ap2-apps > .kicker { display: table; margin: 1.4rem auto 0; padding: .45rem 1.1rem; border-radius: 999px; background: rgba(255,255,255,.55); border: 1px solid rgba(255,255,255,.9); box-shadow: 0 8px 20px rgba(63,88,115,.1), inset 0 1px 0 #fff; color: var(--sc-bur, #ad1839); }
+.ap2-fork { position: relative; height: 64px; margin: 0 auto; max-width: 1224px; }
+.ap2-fork svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+.ap2-fork path { fill: none; stroke: var(--sc-bur, #ad1839); stroke-width: 1.6px; stroke-linecap: round; vector-effect: non-scaling-stroke; }
+.ap2-fork i { position: absolute; bottom: -5px; width: 11px; height: 11px; margin-left: -5.5px; border-radius: 50%; background: #fff; border: 2px solid var(--sc-bur, #ad1839); box-shadow: 0 0 0 6px rgba(143,29,63,.1); }
+.ap2-fork i.a { left: 25%; } .ap2-fork i.b { left: 75%; }
+.ap2-apps .ap2-grid { margin-top: 1.2rem; }
+@media (max-width: 860px) { .ap2-fork { height: 44px; } .ap2-fork svg { display: none; } .ap2-fork::before { content: ""; position: absolute; left: 50%; top: 0; bottom: 0; width: 1.6px; margin-left: -.8px; background: var(--sc-bur, #ad1839); } .ap2-fork i.a { left: 50%; } .ap2-fork i.b { display: none; } }
