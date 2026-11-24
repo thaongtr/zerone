@@ -330,3 +330,51 @@ body .zt-hub {
     -8px 14px 16px -6px rgba(40,54,88,.34),
     inset 0 3px 2px rgba(255,255,255,.5), inset 0 -18px 30px rgba(70,8,22,.36);
 }
+
+/* ---------- Care Continuity hub, take 3: the lighting model of the Actome reference ----------
+   What the reference does: no ring or plate around the object; one directional light from the upper right; a long, soft cast shadow to the lower left;
+   and warm light that leaks between the object and the surface ONLY at the top-centre and bottom-centre of the rim, white-hot at the edge and
+   fading wide. Here the glow is built from offset, negatively-spread shadows (so it can only appear at the top and bottom centre) in two layers: a tight
+   bright rim light and a wide soft bloom. */
+body .zt-hub::before { content: none; }
+body .zt-hub {
+  border: 0;
+  box-shadow:
+    0 -7px 9px -4px rgba(255,226,190,.95),               /* tight bright rim light, top */
+    0 -26px 44px -14px rgba(255,160,92,.72),             /* wide warm bloom, top */
+    0 8px 10px -5px rgba(255,214,170,.95),                /* tight bright rim light, bottom */
+    0 34px 56px -16px rgba(255,150,84,.78),              /* wide warm bloom, bottom */
+    -46px 58px 56px -22px rgba(52,64,98,.5),             /* long soft cast shadow, lower left */
+    -90px 100px 120px -50px rgba(52,64,98,.26),          /* ambient shadow */
+    inset 0 3px 2px rgba(255,255,255,.5), inset 0 -18px 30px rgba(70,8,22,.36);
+}
+@media (max-width: 800px) { body .zt-hub { box-shadow: 0 -6px 8px -4px rgba(255,226,190,.95), 0 -20px 34px -12px rgba(255,160,92,.7), 0 7px 9px -5px rgba(255,214,170,.95), 0 26px 44px -14px rgba(255,150,84,.75), -30px 40px 40px -16px rgba(52,64,98,.5), inset 0 3px 2px rgba(255,255,255,.5), inset 0 -18px 30px rgba(70,8,22,.36); } }
+/* the section sky gets the same single light direction: a lighter diagonal band, greyer shade on the lower left where the shadow falls */
+body .zt-section {
+  background:
+    linear-gradient(118deg, rgba(255,255,255,0) 30%, rgba(255,255,255,.96) 49%, rgba(255,255,255,0) 66%),
+    radial-gradient(ellipse 44% 58% at 12% 92%, rgba(176,190,216,.6), transparent 75%),
+    radial-gradient(ellipse 46% 62% at 0% 6%, rgba(200,213,236,.7), transparent 75%),
+    radial-gradient(ellipse 52% 72% at 100% 98%, rgba(176,196,232,.7), transparent 75%),
+    linear-gradient(119deg, #e9eff9 0%, #f9fbff 47%, #e1e9f6 100%);
+}
+
+/* hub, take 4: one light direction (upper right). The shadow is the silhouette of the sphere stepped away to the lower left, tight and darker at the
+   contact and fading with distance (a long cast shadow, not a smudge); the sphere itself is lit on its upper-right edge and shaded on its lower-left. */
+body .zt-hub, body .zt-hub:not(#z) {
+  box-shadow:
+    0 -7px 9px -4px rgba(255,226,190,.95), 0 -26px 44px -14px rgba(255,160,92,.62),
+    0 8px 10px -5px rgba(255,214,170,.9), 0 30px 50px -16px rgba(255,150,84,.6),
+    -6px 8px 10px -2px rgba(40,52,84,.46),
+    -16px 20px 18px -4px rgba(40,52,84,.34),
+    -30px 37px 30px -8px rgba(40,52,84,.24),
+    -48px 58px 46px -12px rgba(40,52,84,.16),
+    -70px 84px 70px -18px rgba(40,52,84,.09),
+    inset -3px 3px 2px rgba(255,255,255,.5), inset 12px -16px 30px rgba(70,8,22,.4);
+}
+@media (max-width: 800px) {
+  body .zt-hub, body .zt-hub:not(#z) { box-shadow:
+    0 -6px 8px -4px rgba(255,226,190,.95), 0 -20px 34px -12px rgba(255,160,92,.6), 0 7px 9px -5px rgba(255,214,170,.9), 0 24px 40px -14px rgba(255,150,84,.58),
+    -5px 7px 9px -2px rgba(40,52,84,.46), -12px 16px 14px -4px rgba(40,52,84,.34), -24px 30px 24px -8px rgba(40,52,84,.22), -38px 46px 36px -10px rgba(40,52,84,.13),
+    inset -3px 3px 2px rgba(255,255,255,.5), inset 10px -13px 26px rgba(70,8,22,.4); }
+}
