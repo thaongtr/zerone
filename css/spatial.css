@@ -10,7 +10,7 @@
 
 :root {
   --serif: "Newsreader", Georgia, "Times New Roman", serif;             /* same family as the Interactive Preview display type */
-  --sc-ink: #14213f; --sc-slate: #4d5a78; --sc-bur: #8f1d3f; --sc-bur-hi: #b12b52; --sc-bur-lo: #781434;
+  --sc-ink: #14213f; --sc-slate: #4d5a78; --sc-bur: #971132; --sc-bur-hi: #b12b52; --sc-bur-lo: #781434;
   --glass-fill: linear-gradient(160deg, rgba(255,255,255,.74), rgba(255,255,255,.40));
   --glass-edge: 1px solid rgba(255,255,255,.88);
   --glass-shadow: 0 18px 44px rgba(63,88,115,.12), inset 0 1px 0 rgba(255,255,255,.95);
@@ -177,7 +177,7 @@ body .proof-band .proof-step:not(.proof-out) {
 }
 body .proof-band .proof-step:not(.proof-out) h3 { color: #0b1019; }
 body .proof-band .proof-step:not(.proof-out) p { color: rgba(12,26,44,.82); }
-body .proof-band .proof-step:not(.proof-out) .proof-tag { color: #8f1d3f; }
+body .proof-band .proof-step:not(.proof-out) .proof-tag { color: #971132; }
 body .proof-band .proof-step.proof-out {
   position: relative; background: rgba(8,12,20,.84); border: 1px solid rgba(255,255,255,.34);
   box-shadow: 0 24px 54px rgba(10,28,50,.42), inset 0 1px 0 rgba(255,255,255,.28);
@@ -192,20 +192,20 @@ body .proof-band .proof-arrow::before { background: #0b1019; }
 body .proof-band .proof-arrow::after { border-color: #0b1019; }
 body .proof-band .proof-step::before { content: none; }
 
-body .pov { --pov-accent: #8f1d3f; background: linear-gradient(112deg, #5c83a7 0%, #7b9ebf 36%, #a6c0d6 64%, #8aaccb 100%); box-shadow: 0 30px 70px rgba(20,45,80,.28), inset 0 1px 0 rgba(255,255,255,.7); }
+body .pov { --pov-accent: #971132; background: linear-gradient(112deg, #5c83a7 0%, #7b9ebf 36%, #a6c0d6 64%, #8aaccb 100%); box-shadow: 0 30px 70px rgba(20,45,80,.28), inset 0 1px 0 rgba(255,255,255,.7); }
 body .pov::before { content: ""; position: absolute; inset: 0; z-index: 0; pointer-events: none; background: linear-gradient(105deg, rgba(255,255,255,0) 18%, rgba(255,255,255,.2) 29%, rgba(255,255,255,0) 40%, rgba(255,255,255,.13) 54%, rgba(255,255,255,0) 66%); padding: 0; -webkit-mask: none; mask: none; }
 body .pov::after { content: none; }
 body .pov-photo::after { background: linear-gradient(90deg, transparent 80%, rgba(92,131,167,.25)); }
 body .pov-body { background: rgba(255,255,255,.52); border-left: 1px solid rgba(255,255,255,.85); -webkit-backdrop-filter: blur(22px) saturate(1.4); backdrop-filter: blur(22px) saturate(1.4); box-shadow: inset 0 1px 0 rgba(255,255,255,.9); }
-body .pov .kicker { color: #8f1d3f; }
+body .pov .kicker { color: #971132; }
 body .pov-text p, body .pov-text strong { color: #0b1019; }
 body .pov-text p.pov-end { color: rgba(12,26,44,.82); }
-body .pov-key { color: #8f1d3f !important; }
+body .pov-key { color: #971132 !important; }
 body .pov-by { border-top-color: rgba(12,26,44,.2); }
 body .pov-by b { color: #0b1019; }
-body .pov-by span { color: #8f1d3f; letter-spacing: .16em; font-weight: 700; }
+body .pov-by span { color: #971132; letter-spacing: .16em; font-weight: 700; }
 body .pov-foot p { color: rgba(12,26,44,.82); }
-body .pov-link { color: #8f1d3f; text-decoration: underline; text-underline-offset: 4px; text-decoration-thickness: 1px; }
+body .pov-link { color: #971132; text-decoration: underline; text-underline-offset: 4px; text-decoration-thickness: 1px; }
 body .pov-link:hover { color: #0b1019; }
 @media (max-width: 860px) { body .pov { background: linear-gradient(160deg, #5c83a7 0%, #7b9ebf 40%, #a6c0d6 100%); } body .pov-body { border-left: 0; } }
 @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) { body .proof-band .proof-step:not(.proof-out) { background: rgba(255,255,255,.78); } body .pov-body { background: rgba(255,255,255,.78); } }
@@ -215,7 +215,7 @@ body .pov-text p.pov-copy { color: rgba(12,26,44,.86); }
 body .proof-band .proof-arrow { width: 42px; height: 42px; border-radius: 50%; background: rgba(255,255,255,.58); border: 1px solid rgba(255,255,255,.88);
   box-shadow: 0 10px 24px rgba(20,45,80,.2), inset 0 1px 0 rgba(255,255,255,.95); -webkit-backdrop-filter: blur(14px) saturate(1.4); backdrop-filter: blur(14px) saturate(1.4); }
 body .proof-band .proof-arrow::before { display: none; }
-body .proof-band .proof-arrow::after { right: auto; top: 50%; left: 50%; width: 9px; height: 9px; border-top: 2px solid #8f1d3f; border-right: 2px solid #8f1d3f; transform: translate(-70%, -50%) rotate(45deg); }
+body .proof-band .proof-arrow::after { right: auto; top: 50%; left: 50%; width: 9px; height: 9px; border-top: 2px solid #971132; border-right: 2px solid #971132; transform: translate(-70%, -50%) rotate(45deg); }
 
 /* ---------- Clean, clear atmosphere + a raised Care Continuity hub ----------
    Sky: the same blue-white family, but cleaner and clearer: near-white ground, one soft diagonal band of light, a grey-blue shade in the corners
@@ -397,3 +397,16 @@ body .zt-hub, body .zt-hub:not(#z) {
     -5px 7px 9px -2px rgba(40,52,84,.46), -12px 16px 14px -4px rgba(40,52,84,.34), -24px 30px 24px -8px rgba(40,52,84,.22), -38px 46px 36px -10px rgba(40,52,84,.13),
     inset -3px 3px 2px rgba(255,255,255,.5), inset 10px -13px 26px rgba(70,8,22,.4); }
 }
+
+/* ---------- One burgundy for the whole site: #47001c (deep) to #971132 (bright), diagonal ----------
+   Tokens first (text accents, labels, links follow automatically), then every burgundy fill: primary buttons, the nav Contact pill, the plans CTA,
+   the conversation CTA glass and the Care Continuity sphere. White text on the whole range measures 8.6:1 to 16:1. */
+:root { --red: #971132; --red-dark: #47001c; --sc-bur: #971132; --sc-bur-hi: #b0193f; --sc-bur-lo: #47001c; --bur-1: #47001c; --bur-2: #971132; --bur-grad: linear-gradient(135deg, #47001c 0%, #971132 100%); --bur-grad-hover: linear-gradient(135deg, #5b0624 0%, #ab1539 100%); }
+body .btn:not(.btn-dark):not(.btn-lime):not(.ghost):not(.hero-btn-main):not(.hero-btn-ghost):not(.btn-convo) { background: var(--bur-grad); box-shadow: 0 12px 26px rgba(71,0,28,.34), inset 0 1px 0 rgba(255,255,255,.22); }
+body .btn:not(.btn-dark):not(.btn-lime):not(.ghost):not(.hero-btn-main):not(.hero-btn-ghost):not(.btn-convo):hover { background: var(--bur-grad-hover); box-shadow: 0 16px 30px rgba(71,0,28,.4), inset 0 1px 0 rgba(255,255,255,.26); }
+body .nav-cta, body .site-nav a.nav-cta { background: var(--bur-grad) !important; }
+body .nav-cta:hover, body .site-nav a.nav-cta:hover { background: var(--bur-grad-hover) !important; }
+body .dx-sum .btn, body.dx-t-light .dx-sum .btn { background: var(--bur-grad); box-shadow: 0 10px 26px rgba(71,0,28,.34); }
+body .dx-sum .btn:hover, body.dx-t-light .dx-sum .btn:hover { background: var(--bur-grad-hover); }
+body .btn.btn-convo:not(#cv) { background: linear-gradient(180deg, rgba(255,255,255,.3) 0%, rgba(255,255,255,.06) 44%, rgba(255,255,255,0) 56%), linear-gradient(135deg, rgba(71,0,28,.96) 0%, rgba(151,17,50,.96) 100%); box-shadow: 0 16px 28px -14px rgba(40,0,16,.6), 0 12px 30px rgba(205,226,255,.32), inset 0 1.5px 1px rgba(255,255,255,.7), inset 0 -1px 1px rgba(255,255,255,.28), inset 0 -12px 18px -10px rgba(255,120,160,.3); }
+body .zt-hub { background: linear-gradient(122deg, rgba(255,255,255,0) 26%, rgba(255,255,255,.2) 40%, rgba(255,255,255,.04) 50%, rgba(255,255,255,0) 58%), radial-gradient(110% 80% at 70% 8%, rgba(255,255,255,.22), rgba(255,255,255,0) 46%), linear-gradient(45deg, #47001c 0%, #971132 100%); }
