@@ -545,3 +545,18 @@ body .zt-hub:not(#z)::before {
   -webkit-mask: radial-gradient(closest-side, transparent 69.2%, #000 70.4%, rgba(0,0,0,.7) 75%, transparent 84%);
   mask: radial-gradient(closest-side, transparent 69.2%, #000 70.4%, rgba(0,0,0,.7) 75%, transparent 84%);
 }
+
+/* hub rim light, clean version: one precise crescent that hugs the lower-right edge (consistent thickness, tapered ends, centred at 135 degrees),
+   plus a faint soft echo of the same arc behind it. Nothing else glows. */
+body .zt-hub:not(#z)::before {
+  inset: -4%; filter: blur(.6px); z-index: -1;
+  background: conic-gradient(from 0deg at 50% 50%, rgba(255,255,255,0) 0deg, rgba(255,255,255,0) 104deg, rgba(190,218,255,.9) 122deg, #fff 135deg, rgba(190,218,255,.9) 148deg, rgba(255,255,255,0) 166deg, rgba(255,255,255,0) 360deg);
+  -webkit-mask: radial-gradient(closest-side, transparent 95.6%, #000 96.4%, #000 98.6%, transparent 100%);
+  mask: radial-gradient(closest-side, transparent 95.6%, #000 96.4%, #000 98.6%, transparent 100%);
+}
+body .zt-hub:not(#z)::after {
+  content: ""; position: absolute; inset: -14%; z-index: -2; border-radius: 50%; pointer-events: none; filter: blur(9px); opacity: .75;
+  background: conic-gradient(from 0deg at 50% 50%, rgba(170,205,255,0) 0deg, rgba(170,205,255,0) 100deg, rgba(170,205,255,.85) 135deg, rgba(170,205,255,0) 170deg, rgba(170,205,255,0) 360deg);
+  -webkit-mask: radial-gradient(closest-side, transparent 80%, #000 86%, #000 91%, transparent 100%);
+  mask: radial-gradient(closest-side, transparent 80%, #000 86%, #000 91%, transparent 100%);
+}
