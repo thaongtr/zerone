@@ -217,33 +217,28 @@ body .proof-band .proof-arrow { width: 42px; height: 42px; border-radius: 50%; b
 body .proof-band .proof-arrow::before { display: none; }
 body .proof-band .proof-arrow::after { right: auto; top: 50%; left: 50%; width: 9px; height: 9px; border-top: 2px solid #8f1d3f; border-right: 2px solid #8f1d3f; transform: translate(-70%, -50%) rotate(45deg); }
 
-/* ---------- Conversation CTA ("Start a conversation!"): a frosted-glass pill with a burgundy-to-peach bloom ----------
-   One distinctive call to action: lit white glass body, a burgundy bloom with a warm peach edge on the right (palette #59171b > #8f1d3f > #fed7b8),
-   a burgundy glass disc carrying a white arrow, and a warm glow under the pill. Ink text on the near-white body keeps strong contrast. */
+/* ---------- Conversation CTA ("Start a conversation!"): one material, one colour ----------
+   The pill is burgundy GLASS, the same material family as the glass cards it sits on: a lens rim (bright top edge, soft bottom edge), a top sheen,
+   an inner bounce light along the lower edge, a cool light under it. A single accent colour (the brand burgundy), white label and arrow on 8:1 contrast. */
 body .btn.btn-convo:not(#cv) {
-  position: relative; isolation: isolate; display: inline-flex; align-items: center; justify-content: flex-start;
-  min-height: 56px; padding: .9rem 4.4rem .9rem 1.9rem; border-radius: 999px; border: 1px solid rgba(255,255,255,.95);
-  color: #1b1220; font-weight: 650; letter-spacing: -.005em; text-decoration: none; white-space: nowrap;
-  background:
-    radial-gradient(46% 150% at 100% 100%, rgba(254,215,184,.95), rgba(254,215,184,0) 70%),
-    radial-gradient(52% 160% at 98% 12%, rgba(143,29,63,.62), rgba(143,29,63,0) 68%),
-    linear-gradient(180deg, rgba(255,255,255,.98), rgba(238,243,251,.88));
-  box-shadow: 0 18px 32px -12px rgba(89,23,27,.55), 0 0 44px rgba(254,215,184,.55), 0 2px 6px rgba(20,45,80,.16),
-    inset 0 2px 1px #fff, inset 0 -12px 20px -10px rgba(143,29,63,.28);
+  position: relative; isolation: isolate; overflow: hidden; display: inline-flex; align-items: center; justify-content: center; gap: .65rem;
+  min-height: 56px; padding: .95rem 1.7rem .95rem 2.1rem; border-radius: 999px; border: 1px solid rgba(255,255,255,.5);
+  color: #fff; font-weight: 650; letter-spacing: -.005em; text-decoration: none; white-space: nowrap;
+  background: linear-gradient(180deg, rgba(255,255,255,.3) 0%, rgba(255,255,255,.06) 44%, rgba(255,255,255,0) 56%), linear-gradient(140deg, rgba(166,38,82,.94) 0%, rgba(126,24,56,.95) 100%);
+  box-shadow: 0 16px 28px -14px rgba(60,12,30,.6), 0 12px 30px rgba(205,226,255,.32),
+    inset 0 1.5px 1px rgba(255,255,255,.7), inset 0 -1px 1px rgba(255,255,255,.28), inset 0 -12px 18px -10px rgba(255,150,185,.32);
   -webkit-backdrop-filter: blur(14px) saturate(1.4); backdrop-filter: blur(14px) saturate(1.4);
-  transition: transform .2s ease, box-shadow .25s ease, filter .25s ease;
+  transition: transform .2s ease, box-shadow .25s ease;
 }
-body .btn.btn-convo:not(#cv)::after {
-  content: ""; position: absolute; right: 7px; top: 50%; width: 42px; height: 42px; margin-top: -21px; border-radius: 50%;
-  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12h13M13 6l6 6-6 6'/%3E%3C/svg%3E") center / 18px no-repeat,
-    linear-gradient(150deg, #b02a52 0%, #8f1d3f 50%, #59171b 100%);
-  box-shadow: inset 0 1.5px 1px rgba(255,255,255,.55), 0 6px 12px rgba(89,23,27,.38); transition: transform .25s ease;
-}
-body .btn.btn-convo:not(#cv):hover { color: #1b1220; transform: translateY(-2px); filter: saturate(1.12) brightness(1.02);
-  box-shadow: 0 24px 38px -12px rgba(89,23,27,.6), 0 0 56px rgba(254,215,184,.7), 0 2px 6px rgba(20,45,80,.16), inset 0 2px 1px #fff, inset 0 -12px 20px -10px rgba(143,29,63,.32); }
+body .btn.btn-convo:not(#cv)::before { content: ""; position: absolute; inset: 0; z-index: -1; border-radius: inherit; pointer-events: none;
+  background: linear-gradient(105deg, rgba(255,255,255,0) 35%, rgba(255,255,255,.28) 50%, rgba(255,255,255,0) 65%); transform: translateX(-120%); transition: transform .6s ease; }
+body .btn.btn-convo:not(#cv)::after { content: ""; flex: none; width: 20px; height: 20px; transition: transform .25s ease;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12h13M13 6l6 6-6 6'/%3E%3C/svg%3E") center / contain no-repeat; }
+body .btn.btn-convo:not(#cv):hover { color: #fff; transform: translateY(-2px);
+  box-shadow: 0 22px 34px -14px rgba(60,12,30,.65), 0 14px 36px rgba(205,226,255,.42), inset 0 1.5px 1px rgba(255,255,255,.75), inset 0 -1px 1px rgba(255,255,255,.3), inset 0 -12px 18px -10px rgba(255,150,185,.4); }
+body .btn.btn-convo:not(#cv):hover::before { transform: translateX(120%); }
 body .btn.btn-convo:not(#cv):hover::after { transform: translateX(3px); }
 body .btn.btn-convo:not(#cv):active { transform: translateY(0) scale(.985); }
-body .btn.btn-convo:not(#cv):focus-visible { outline: 3px solid rgba(143,29,63,.7); outline-offset: 3px; }
-@media (max-width: 520px) { body .btn.btn-convo:not(#cv) { min-height: 54px; padding-left: 1.5rem; } }
-@media (prefers-reduced-motion: reduce) { body .btn.btn-convo:not(#cv), body .btn.btn-convo:not(#cv)::after { transition: none; } }
-@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) { body .btn.btn-convo:not(#cv) { background-color: #fff; } }
+body .btn.btn-convo:not(#cv):focus-visible { outline: 3px solid rgba(255,255,255,.9); outline-offset: 3px; }
+@media (max-width: 520px) { body .btn.btn-convo:not(#cv) { min-height: 54px; padding-left: 1.7rem; } }
+@media (prefers-reduced-motion: reduce) { body .btn.btn-convo:not(#cv), body .btn.btn-convo:not(#cv)::before, body .btn.btn-convo:not(#cv)::after { transition: none; } }
