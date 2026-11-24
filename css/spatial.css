@@ -293,3 +293,40 @@ body .cta-card.is-blue .cta-glass {
   box-shadow: 0 30px 56px -26px rgba(12,32,64,.4), 0 22px 44px -16px rgba(190,216,255,.38), inset 0 1.5px 1px rgba(255,255,255,.32), inset 0 -1.5px 1px rgba(255,255,255,.2);
 }
 body .cta-card.is-blue .cta-glass h2 { text-shadow: 0 2px 22px rgba(16,40,76,.35); }
+
+/* ---------- Care Continuity hub, take 2: lit from the upper right, like the Actome reference ----------
+   Warm light shows only at the top-centre and bottom-centre of the rim (the interior is masked out, so nothing glows across the circle itself),
+   a diagonal band of light crosses the sphere, and the sphere casts a visible soft shadow toward the lower left. */
+body .zt-hub {
+  background:
+    linear-gradient(122deg, rgba(255,255,255,0) 26%, rgba(255,255,255,.2) 40%, rgba(255,255,255,.04) 50%, rgba(255,255,255,0) 58%),
+    radial-gradient(110% 80% at 70% 8%, rgba(255,255,255,.26), rgba(255,255,255,0) 46%),
+    linear-gradient(145deg, #c23a4d 0%, #a41c2c 44%, #82101e 100%);
+  box-shadow:
+    0 0 0 14px rgba(255,255,255,.5), 0 0 0 15px rgba(255,255,255,.9),
+    -34px 46px 54px -14px rgba(44,60,96,.42),           /* soft cast shadow to the lower left */
+    -10px 16px 22px -8px rgba(44,60,96,.3),              /* contact shadow */
+    inset 0 3px 2px rgba(255,255,255,.5), inset 0 -18px 30px rgba(70,8,22,.36);
+}
+body .zt-hub::before {
+  content: ""; position: absolute; inset: -22%; z-index: -1; border-radius: 50%; pointer-events: none; filter: blur(5px);
+  background:
+    radial-gradient(34% 16% at 50% 14.5%, rgba(255,176,108,.95), rgba(255,176,108,0) 100%),
+    radial-gradient(40% 18% at 50% 85.5%, rgba(255,166,98,1), rgba(255,166,98,0) 100%);
+  -webkit-mask: radial-gradient(closest-side, transparent 68%, #000 71%); mask: radial-gradient(closest-side, transparent 68%, #000 71%);
+}
+/* hub, refinement: a thin warm crescent of light at the rim (not blobs), and a clearer cast shadow */
+body .zt-hub::before {
+  filter: blur(7px);
+  background:
+    radial-gradient(22% 6.5% at 50% 15.4%, rgba(255,178,112,.95), rgba(255,178,112,0) 100%),
+    radial-gradient(27% 7.5% at 50% 84.6%, rgba(255,168,100,1), rgba(255,168,100,0) 100%);
+  -webkit-mask: radial-gradient(closest-side, transparent 69.4%, #000 71%); mask: radial-gradient(closest-side, transparent 69.4%, #000 71%);
+}
+body .zt-hub {
+  box-shadow:
+    0 0 0 14px rgba(255,255,255,.42), 0 0 0 15px rgba(255,255,255,.85),
+    -30px 40px 34px -10px rgba(40,54,88,.5),
+    -8px 14px 16px -6px rgba(40,54,88,.34),
+    inset 0 3px 2px rgba(255,255,255,.5), inset 0 -18px 30px rgba(70,8,22,.36);
+}
