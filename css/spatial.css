@@ -434,3 +434,40 @@ body .f3-card { background: linear-gradient(160deg, rgba(255,255,255,.74), rgba(
   }
 }
 @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) { body .card, body .work-card, body .cap, body .stat, body .pp-card, body .contact-card, body .cs-step { background: rgba(255,255,255,.78); } }
+
+/* clear glass, take 2: remove everything that made it milky — the white fill is almost gone, the inner white glow is gone, the backdrop blur is light
+   (so what is behind stays recognisable) and the pane is defined only by its lens rim, a faint cool inner edge and the light/shadow around it. */
+:root {
+  --lg-fill: linear-gradient(180deg, rgba(255,255,255,.1) 0%, rgba(255,255,255,.02) 46%, rgba(255,255,255,.015) 100%);
+  --lg-shadow: 0 28px 50px -26px rgba(40,64,110,.3), 0 20px 44px -18px rgba(190,214,255,.55),
+    inset 0 1.5px 1px rgba(255,255,255,.8), inset 0 -1.5px 1px rgba(255,255,255,.5), inset 0 -14px 20px -14px rgba(96,134,200,.16);
+  --lg-blur: blur(5px) saturate(1.15);
+}
+
+/* ---------- Two calls to action side by side: primary = burgundy glass (btn-convo), secondary = clear glass (btn-clear) ----------
+   Same height, same padding, same arrow, same lens rim, so the pair reads as one family. The secondary is the clear-glass pill of the reference
+   (transparent, lens rim, cool light underneath) with a light navy tint so the white label keeps 4.5:1 on the blue band. */
+body .btn.btn-clear:not(#cv) {
+  position: relative; isolation: isolate; display: inline-flex; align-items: center; justify-content: center; gap: .65rem;
+  min-height: 56px; padding: .95rem 1.7rem .95rem 2.1rem; border-radius: 999px; border: 1px solid transparent; color: #fff; text-decoration: none; white-space: nowrap;
+  font-weight: 650; letter-spacing: -.005em; text-shadow: 0 1px 14px rgba(16,40,76,.4);
+  background: linear-gradient(180deg, rgba(255,255,255,.16) 0%, rgba(255,255,255,.03) 50%, rgba(255,255,255,.02) 100%), rgba(16,40,76,.2);
+  box-shadow: 0 16px 28px -16px rgba(12,32,64,.5), 0 12px 28px rgba(205,226,255,.3), inset 0 1.5px 1px rgba(255,255,255,.6), inset 0 -1.5px 1px rgba(255,255,255,.4);
+  -webkit-backdrop-filter: blur(6px) saturate(1.15); backdrop-filter: blur(6px) saturate(1.15);
+  transition: transform .2s ease, box-shadow .25s ease, background .25s ease;
+}
+body .btn.btn-clear:not(#cv)::before { content: ""; position: absolute; inset: 0; z-index: -1; border-radius: inherit; padding: 1px; pointer-events: none;
+  background: linear-gradient(180deg, rgba(255,255,255,.95) 0%, rgba(255,255,255,.08) 24%, rgba(255,255,255,.06) 76%, rgba(255,255,255,.65) 100%);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor; mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0); }
+body .btn.btn-clear:not(#cv)::after { content: ""; flex: none; width: 20px; height: 20px; transition: transform .25s ease;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12h13M13 6l6 6-6 6'/%3E%3C/svg%3E") center / contain no-repeat; }
+body .btn.btn-clear:not(#cv):hover { color: #fff; transform: translateY(-2px); background: linear-gradient(180deg, rgba(255,255,255,.24) 0%, rgba(255,255,255,.06) 50%, rgba(255,255,255,.04) 100%), rgba(16,40,76,.2);
+  box-shadow: 0 22px 34px -16px rgba(12,32,64,.55), 0 14px 34px rgba(205,226,255,.42), inset 0 1.5px 1px rgba(255,255,255,.7), inset 0 -1.5px 1px rgba(255,255,255,.45); }
+body .btn.btn-clear:not(#cv):hover::after { transform: translateX(3px); }
+body .btn.btn-clear:not(#cv):active { transform: translateY(0) scale(.985); }
+body .btn.btn-clear:not(#cv):focus-visible { outline: 3px solid rgba(255,255,255,.9); outline-offset: 3px; }
+body .ap2-actions { gap: 16px; align-items: center; }
+@media (max-width: 560px) { body .ap2-actions { flex-direction: column; width: 100%; } body .ap2-actions .btn { width: 100%; max-width: 360px; justify-content: center; } }
+@media (prefers-reduced-motion: reduce) { body .btn.btn-clear:not(#cv), body .btn.btn-clear:not(#cv)::after { transition: none; } }
+/* the pair needs room to sit side by side on a wide screen */
+body .cta-card.is-blue .cta-glass:has(.ap2-actions) { max-width: 52rem; }
