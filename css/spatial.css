@@ -495,3 +495,18 @@ body .btn.btn-convo:not(#cv) {
   box-shadow: 0 14px 24px -12px rgba(40,0,16,.6), 0 10px 26px rgba(205,226,255,.28), inset 0 1.5px 1px rgba(255,255,255,.55), inset 0 -1px 1px rgba(255,255,255,.2);
 }
 body .nav-cta, body .site-nav a.nav-cta { background: linear-gradient(180deg, rgba(255,255,255,.14) 0%, rgba(255,255,255,0) 50%), linear-gradient(135deg, #620a28 0%, #ad1839 100%) !important; box-shadow: inset 0 1px 1px rgba(255,255,255,.4); }
+
+/* ---------- Homepage card bands: give the clear glass something to refract, same blue-grey band as the About page ----------
+   Clear glass over near-white looks white. The About page sits its cards on a blue-grey band (#f6f9fc to #e2eaf4); the homepage bands now do the same,
+   with a soft blue light behind the cards, so the glass reads as transparent. Cards also lift on hover with a quick transition (the reveal animation's
+   slow 1s transform transition made the hover feel absent). */
+body .section.mist:has(.work-card) {
+  background:
+    radial-gradient(42% 70% at 12% 100%, rgba(150,178,228,.5), rgba(150,178,228,0) 72%),
+    radial-gradient(40% 70% at 92% 0%, rgba(176,198,236,.55), rgba(176,198,236,0) 72%),
+    linear-gradient(180deg, #f3f7fc 0%, #dfe8f4 100%);
+}
+@media (hover: hover) {
+  body .work-card.reveal, body .work-card { transition: transform .28s ease, box-shadow .3s ease, opacity 1s cubic-bezier(.22,1,.36,1); }
+  body .work-card:hover, body .pp-card:hover, body .card:hover, body .contact-card:hover { transform: translateY(-4px); }
+}
