@@ -10,7 +10,7 @@ const T = {
     ticker: ["Research", "Positioning", "Proposition", "Brand narrative", "Clinic identity", "Patient journey", "Service principles", "Touchpoints", "Specialist team leadership", "Quality review"],
     nav: { Approach: "Approach", About: "About", FAQ: "FAQ", Contact: "Contact" },
     panel: { approach: "Approach", work: "Case study", about: "About", faq: "FAQ", contact: "Contact" },
-    book: "Book a 30-minute call",
+    book: "Start a conversation!",
     langBtn: "VI", langRow: "Tiếng Việt", langTitle: "Xem bằng tiếng Việt",
     home: "Zerone home", menu: "Menu",
     foot: {
@@ -39,7 +39,7 @@ const T = {
     ticker: ["Nghiên cứu", "Định vị", "Đề xuất giá trị", "Câu chuyện thương hiệu", "Nhận diện phòng khám", "Hành trình người bệnh", "Nguyên tắc dịch vụ", "Điểm chạm", "Điều phối đội ngũ chuyên gia", "Kiểm soát chất lượng"],
     nav: { Approach: "Approach", About: "About", FAQ: "FAQ", Contact: "Contact" },
     panel: { approach: "Approach", work: "Case study", about: "About", faq: "FAQ", contact: "Contact" },
-    book: "Đặt lịch trao đổi 30 phút",
+    book: "Bắt đầu trò chuyện!",
     langBtn: "EN", langRow: "English", langTitle: "View in English",
     home: "Trang chủ Zerone", menu: "Menu",
     foot: {
