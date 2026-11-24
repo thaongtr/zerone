@@ -271,3 +271,18 @@ body .btn.btn-convo:not(#cv):active { transform: translateY(0) scale(.985); }
 body .btn.btn-convo:not(#cv):focus-visible { outline: 3px solid rgba(255,255,255,.9); outline-offset: 3px; }
 @media (max-width: 520px) { body .btn.btn-convo:not(#cv) { min-height: 54px; padding-left: 1.7rem; } }
 @media (prefers-reduced-motion: reduce) { body .btn.btn-convo:not(#cv), body .btn.btn-convo:not(#cv)::before, body .btn.btn-convo:not(#cv)::after { transition: none; } }
+
+/* ---------- CTA panel: clear glass without an outline ("Tell us what you are building") ----------
+   No uniform stroke. A clearer, more transparent pane that blurs what is behind it; its edge is only a faint lens highlight on the top and bottom rims
+   (sides almost invisible), an inner glow, and cool light under the pane. */
+body .cta-card.is-blue .cta-glass {
+  border: 1px solid transparent;
+  background: linear-gradient(180deg, rgba(255,255,255,.2) 0%, rgba(255,255,255,.07) 38%, rgba(255,255,255,.04) 100%);
+  box-shadow: 0 32px 60px -24px rgba(20,45,85,.42), 0 24px 48px -14px rgba(190,216,255,.5),
+    inset 0 1.5px 1px rgba(255,255,255,.4), inset 0 -1.5px 1px rgba(255,255,255,.26), inset 0 0 46px rgba(255,255,255,.07);
+  -webkit-backdrop-filter: blur(26px) saturate(1.2) brightness(1.06); backdrop-filter: blur(26px) saturate(1.2) brightness(1.06);
+}
+body .cta-card.is-blue .cta-glass::before { content: ""; position: absolute; inset: 0; border-radius: inherit; padding: 1px; pointer-events: none; z-index: 0;
+  background: linear-gradient(180deg, rgba(255,255,255,.6) 0%, rgba(255,255,255,.05) 20%, rgba(255,255,255,.03) 80%, rgba(255,255,255,.42) 100%);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor; mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0); }
+body .cta-card.is-blue .cta-glass > * { position: relative; z-index: 1; }
