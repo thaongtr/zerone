@@ -410,3 +410,27 @@ body .dx-sum .btn, body.dx-t-light .dx-sum .btn { background: var(--bur-grad); b
 body .dx-sum .btn:hover, body.dx-t-light .dx-sum .btn:hover { background: var(--bur-grad-hover); }
 body .btn.btn-convo:not(#cv) { background: linear-gradient(180deg, rgba(255,255,255,.3) 0%, rgba(255,255,255,.06) 44%, rgba(255,255,255,0) 56%), linear-gradient(135deg, rgba(98,10,40,.96) 0%, rgba(173,24,57,.96) 100%); box-shadow: 0 16px 28px -14px rgba(40,0,16,.6), 0 12px 30px rgba(205,226,255,.32), inset 0 1.5px 1px rgba(255,255,255,.7), inset 0 -1px 1px rgba(255,255,255,.28), inset 0 -12px 18px -10px rgba(255,120,160,.3); }
 body .zt-hub { background: linear-gradient(122deg, rgba(255,255,255,0) 26%, rgba(255,255,255,.2) 40%, rgba(255,255,255,.04) 50%, rgba(255,255,255,0) 58%), radial-gradient(110% 80% at 70% 8%, rgba(255,255,255,.22), rgba(255,255,255,0) 46%), linear-gradient(145deg, #c23a4d 0%, #a41c2c 44%, #82101e 100%); }  /* the sphere keeps its previous red */
+
+/* ---------- Clear glass for every text box (same material as the "Explore" glass reference) ----------
+   One change of the shared tokens makes all card-like surfaces transparent: a clear pane that only blurs what is behind it, no stroke, cool light under it,
+   and a lens rim that is bright on the top and bottom edges and almost invisible on the sides. Text stays dark ink on the near-clear pane (the page behind is light). */
+:root {
+  --lg-fill: linear-gradient(180deg, rgba(255,255,255,.3) 0%, rgba(255,255,255,.1) 40%, rgba(255,255,255,.06) 100%);
+  --lg-edge: 1px solid transparent;
+  --lg-shadow: 0 28px 50px -26px rgba(40,64,110,.3), 0 20px 44px -18px rgba(190,214,255,.55),
+    inset 0 1.5px 1px rgba(255,255,255,.75), inset 0 -1.5px 1px rgba(255,255,255,.5), inset 0 0 36px rgba(255,255,255,.16);
+  --lg-blur: blur(18px) saturate(1.25);
+}
+:where(body) :where(.work-card, .pp-card, .card, .cap, .stat, .contact-card, .cs-step) { position: relative; }
+body .work-card::before, body .pp-card::before, body .card::before, body .cap::before, body .stat::before, body .contact-card::before, body .cs-step::before {
+  content: ""; position: absolute; inset: 0; border-radius: inherit; padding: 1px; pointer-events: none; z-index: 0;
+  background: linear-gradient(180deg, rgba(255,255,255,.95) 0%, rgba(255,255,255,.08) 22%, rgba(255,255,255,.05) 78%, rgba(255,255,255,.65) 100%);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor; mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
+}
+body .f3-card { background: linear-gradient(160deg, rgba(255,255,255,.74), rgba(255,255,255,.4)); }
+@media (hover: hover) {
+  body .work-card:hover, body .pp-card:hover, body .contact-card:hover, body .card:hover {
+    box-shadow: 0 32px 56px -26px rgba(40,64,110,.36), 0 24px 48px -16px rgba(190,214,255,.7), inset 0 1.5px 1px rgba(255,255,255,.85), inset 0 -1.5px 1px rgba(255,255,255,.6), inset 0 0 40px rgba(255,255,255,.2);
+  }
+}
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) { body .card, body .work-card, body .cap, body .stat, body .pp-card, body .contact-card, body .cs-step { background: rgba(255,255,255,.78); } }
