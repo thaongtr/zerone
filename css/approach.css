@@ -7,7 +7,7 @@
 
 /* ---------- Trust Translation: one photo of care and one continuous line that flows on into the two applications ---------- */
 .ap2-tt .lede { max-width: 56ch; }
-.tt3 { position: relative; isolation: isolate; overflow: hidden; margin: 0; min-height: 660px; border-radius: 32px; color: var(--ink); background: #e3ebf5; box-shadow: 0 30px 70px rgba(52,72,120,.16), inset 0 0 0 1px rgba(255,255,255,.7); }
+.tt3 { position: relative; isolation: isolate; overflow: hidden; margin: 0; min-height: 600px; border-radius: 32px; color: var(--ink); background: #e3ebf5; box-shadow: 0 30px 70px rgba(52,72,120,.16), inset 0 0 0 1px rgba(255,255,255,.7); }
 .tt3-img { position: absolute; inset: 0; z-index: -1; width: 100%; height: 100%; object-fit: cover; object-position: 50% 62%; }
 .tt3::before { content: ""; position: absolute; inset: 0; z-index: -1; background: linear-gradient(180deg, rgba(240,246,252,.62) 0%, rgba(240,246,252,.18) 46%, rgba(240,246,252,0) 70%); }
 .tt3-head { position: absolute; left: 6%; top: 6%; max-width: 50%; }
@@ -39,7 +39,7 @@ body .tt3-core { font-weight: 400; }
 
 @media (max-width: 860px) { .ap2-apps > .display { margin-bottom: 1.4rem; } .ap2-grid { margin-top: 1.4rem; } }
 @media (max-width: 720px) {
-  .tt3 { min-height: 880px; border-radius: 24px; margin-top: 1.8rem; }
+  .tt3 { min-height: 780px; border-radius: 24px; margin-top: 1.8rem; }
   .tt3-img { object-position: 50% 78%; }
   .tt3::before { background: linear-gradient(180deg, rgba(240,246,252,.7) 0%, rgba(240,246,252,.25) 55%, rgba(240,246,252,0) 80%); }
   .tt3-head { left: 7%; right: 7%; top: 5%; max-width: none; }
@@ -193,3 +193,6 @@ body .section.ap2-tt { padding-top: 2.2rem; }
 .ap2-caps strong { display: block; margin-bottom: .25rem; font-family: var(--serif); font-weight: 500; font-size: 1.2rem; line-height: 1.25; color: var(--ink); }
 .ap2-caps span { display: block; font-size: var(--fs-small, .9375rem); line-height: 1.5; color: var(--slate); }
 @media (max-width: 720px) { body .ap2-belief { padding-top: 6.6rem; } body .section.ap2-tt { padding-top: 1.8rem; } .ap2-caps { gap: .7rem; margin-top: 1.5rem; } .ap2-caps strong { font-size: .95rem; } .ap2-caps span { font-size: .8rem; line-height: 1.45; } }
+/* the journey drawing starts higher now that the diagram carries only a label; its lower end still meets the line below */
+.tt3-flow { position: absolute; inset: -70px 0 0 0; }
+@media (max-width: 720px) { .tt3-flow { inset: -120px 0 0 0; } }
