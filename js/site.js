@@ -14,7 +14,7 @@ const T = {
     langBtn: "VI", langRow: "Tiếng Việt", langTitle: "Xem bằng tiếng Việt",
     home: "Zerone home", menu: "Menu",
     foot: {
-      desc: "Healthcare Experience & Innovation.",
+      desc: "Healthcare Innovation Company.",
       explore: "Explore", touch: "Get in touch", legal: "Consulting site privacy", terms: "Consulting site terms",
       city: "Ho Chi Minh City, Vietnam",
       addr: "L18-11-13, Floor 18, Vincom Center Dong Khoi, 72 Le Thanh Ton, Sai Gon Ward, Ho Chi Minh City, Vietnam",
@@ -43,7 +43,7 @@ const T = {
     langBtn: "EN", langRow: "English", langTitle: "View in English",
     home: "Trang chủ Zerone", menu: "Menu",
     foot: {
-      desc: "Trải nghiệm & Đổi mới trong chăm sóc sức khỏe.",
+      desc: "Đổi mới sáng tạo trong chăm sóc sức khỏe.",
       explore: "Khám phá", touch: "Kết nối", legal: "Bảo mật website tư vấn", terms: "Điều khoản website tư vấn",
       city: "Thành phố Hồ Chí Minh, Việt Nam",
       addr: "L18-11-13, Tầng 18, Tòa nhà Vincom Center Đồng Khởi, 72 Lê Thánh Tôn, Phường Sài Gòn, TP. Hồ Chí Minh, Việt Nam",
