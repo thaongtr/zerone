@@ -566,3 +566,5 @@ body .zt-hub:not(#z)::after {
 .prob2-source { margin: .9rem 0 0; max-width: 46ch; font-size: .76rem; line-height: 1.5; opacity: .8; }
 .prob2-source a { color: inherit; text-decoration: underline; }
 .cta-welcome { margin: 0 auto 1.4rem; max-width: 46ch; line-height: 1.6; }
+/* The Vietnamese hero headline is longer: keep it to two lines on wide screens */
+html[lang="vi"] .hero h1 { font-size: clamp(2.35rem, 6.1vw, 5rem); }
