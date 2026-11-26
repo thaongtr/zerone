@@ -568,7 +568,6 @@ body .zt-hub:not(#z)::after {
 /* The Vietnamese hero headline is longer: keep it to two lines on wide screens */
 html[lang="vi"] .hero h1 { font-size: clamp(2.35rem, 6.1vw, 5rem); }
 /* Space the new multi-paragraph blocks */
-body .ttm-tail .lede + .lede { margin-top: 1rem; }
 body .prob2-body + .prob2-body { margin-top: .6rem; }
 
 /* Insight: room for the longer claim; the four labels captioned as touchpoints */
@@ -576,3 +575,8 @@ body .prob2-claim { max-width: 32ch; }
 .prob2-touch { justify-self: center; }
 .prob2-touch-label { margin: 0 0 .5rem; padding-left: calc(5.5rem * .64 + 1.1rem); max-width: 30ch; font-size: .78rem; font-weight: 600; line-height: 1.5; letter-spacing: .1em; text-transform: uppercase; color: rgba(255, 255, 255, .82); }
 @media (max-width: 860px) { .prob2-touch { justify-self: start; } .prob2-touch-label { padding-left: calc(4.2rem * .64 + 1.1rem); } }
+/* Care Continuity on the home page: title, one line, one sentence, origin */
+body .ttm-head { text-align: center; }
+body .ttm-head .ttm-sub { margin: 0 auto; max-width: 30ch; font-family: var(--serif); font-size: clamp(1.3rem, 2.2vw, 1.75rem); line-height: 1.3; color: var(--ink); text-wrap: balance; }
+body .ttm-head .ttm-body { margin: .9rem auto 0; max-width: 56ch; text-wrap: balance; }
+body .ttm-head .ttm-origin { margin: .9rem 0 0; font-size: .76rem; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--slate); }
