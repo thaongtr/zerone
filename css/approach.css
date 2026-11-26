@@ -2,7 +2,7 @@
    Additive and scoped to .ap2-* / .tt2-*; reuses the glass tokens from spatial.css (--lg-fill, --lg-edge, --lg-shadow, --lg-blur) and the site type scale. */
 
 .ap2-belief { padding-bottom: 1.5rem; }
-.ap2-belief h1 { max-width: 16ch; }
+.ap2-belief h1 { max-width: 20ch; text-wrap: balance; }
 .ap2-belief .lede { max-width: 44ch; }
 
 /* ---------- Trust Translation: one photo of care and one continuous line that flows on into the two applications ---------- */
