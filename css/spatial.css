@@ -561,14 +561,12 @@ body .zt-hub:not(#z)::after {
   mask: radial-gradient(closest-side, transparent 80%, #000 86%, #000 91%, transparent 100%);
 }
 
-/* Positioning copy (2026-11-26): hero signature, statistic source, closing welcome line */
-.hero-sign { margin: 1.5rem 0 0; font-size: .85rem; letter-spacing: .06em; color: #fff; opacity: .85; text-shadow: 0 1px 14px rgba(12, 30, 50, .6); }
+/* Positioning copy (2026-11-26): statistic source, closing welcome line */
 .prob2-source { margin: .9rem 0 0; max-width: 46ch; font-size: .76rem; line-height: 1.5; opacity: .8; }
 .prob2-source a { color: inherit; text-decoration: underline; }
 .cta-welcome { margin: 0 auto 1.4rem; max-width: 46ch; line-height: 1.6; }
 /* The Vietnamese hero headline is longer: keep it to two lines on wide screens */
 html[lang="vi"] .hero h1 { font-size: clamp(2.35rem, 6.1vw, 5rem); }
-@media (max-width: 640px) { .hero-sign { margin-top: 1.1rem; font-size: .74rem; letter-spacing: .02em; } }
 /* Space the new multi-paragraph blocks */
 body .ttm-tail .lede + .lede { margin-top: 1rem; }
 body .prob2-body + .prob2-body { margin-top: .6rem; }
