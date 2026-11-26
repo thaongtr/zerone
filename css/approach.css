@@ -182,3 +182,13 @@ body .ap2-apps > .display { font-size: clamp(1.7rem, 2.9vw, 2.45rem); line-heigh
 .ap2-def { max-width: 62ch; margin: 0 auto 1.8rem; text-align: center; font-size: clamp(1.08rem, 1.5vw, 1.25rem); line-height: 1.65; color: var(--ink); }
 @media (max-width: 720px) { .ap2-def { margin-bottom: 0; } }
 @media (max-width: 860px) { .ap2-fork { height: 44px; } .ap2-fork svg { display: none; } .ap2-fork::before { content: ""; position: absolute; left: 50%; top: 0; bottom: 0; width: 1.6px; margin-left: -.8px; background: var(--sc-bur, #ad1839); } .ap2-fork i.a { left: 50%; } .ap2-fork i.b { display: none; } }
+
+/* The three capabilities under the Care Continuity definition */
+.ap2-def:has(+ .ap2-caps) { margin-bottom: 1.4rem; }
+.ap2-caps { max-width: 980px; margin: 0 auto 1.8rem; text-align: center; }
+.ap2-caps-label { margin: 0 0 .9rem; font-size: .78rem; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--slate); }
+.ap2-caps ul { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.2rem; list-style: none; margin: 0; padding: 0; }
+.ap2-caps li { padding-top: .9rem; border-top: 1px solid rgba(63, 88, 115, .22); }
+.ap2-caps strong { display: block; margin-bottom: .35rem; font-family: var(--serif); font-weight: 500; font-size: 1.2rem; color: var(--ink); }
+.ap2-caps span { display: block; font-size: var(--fs-small, .9375rem); line-height: 1.55; color: var(--slate); }
+@media (max-width: 720px) { .ap2-caps { margin-bottom: 0; } .ap2-caps ul { grid-template-columns: 1fr; } }
