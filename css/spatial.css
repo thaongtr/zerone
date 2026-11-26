@@ -580,3 +580,5 @@ body .ttm-head { text-align: center; }
 body .ttm-head .ttm-sub { margin: 0 auto; max-width: 30ch; font-family: var(--serif); font-size: clamp(1.3rem, 2.2vw, 1.75rem); line-height: 1.3; color: var(--ink); text-wrap: balance; }
 body .ttm-head .ttm-body { margin: .9rem auto 0; max-width: 56ch; text-wrap: balance; }
 body .ttm-head .ttm-origin { margin: .9rem 0 0; font-size: .76rem; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--slate); }
+/* Zerone Space on phones: keep the two text links close to each other now that the copy is short */
+@media (max-width: 640px) { body #zerone-space .space-cta { row-gap: .25rem; } }
