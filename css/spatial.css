@@ -569,3 +569,6 @@ body .zt-hub:not(#z)::after {
 /* The Vietnamese hero headline is longer: keep it to two lines on wide screens */
 html[lang="vi"] .hero h1 { font-size: clamp(2.35rem, 6.1vw, 5rem); }
 @media (max-width: 640px) { .hero-sign { margin-top: 1.1rem; font-size: .74rem; letter-spacing: .02em; } }
+/* Space the new multi-paragraph blocks */
+body .ttm-tail .lede + .lede { margin-top: 1rem; }
+body .prob2-body + .prob2-body { margin-top: .6rem; }
