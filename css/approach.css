@@ -7,7 +7,7 @@
 
 /* ---------- Trust Translation: one photo of care and one continuous line that flows on into the two applications ---------- */
 .ap2-tt .lede { max-width: 56ch; }
-.tt3 { position: relative; isolation: isolate; overflow: hidden; margin: 0; min-height: 760px; border-radius: 32px; color: var(--ink); background: #e3ebf5; box-shadow: 0 30px 70px rgba(52,72,120,.16), inset 0 0 0 1px rgba(255,255,255,.7); }
+.tt3 { position: relative; isolation: isolate; overflow: hidden; margin: 0; min-height: 660px; border-radius: 32px; color: var(--ink); background: #e3ebf5; box-shadow: 0 30px 70px rgba(52,72,120,.16), inset 0 0 0 1px rgba(255,255,255,.7); }
 .tt3-img { position: absolute; inset: 0; z-index: -1; width: 100%; height: 100%; object-fit: cover; object-position: 50% 62%; }
 .tt3::before { content: ""; position: absolute; inset: 0; z-index: -1; background: linear-gradient(180deg, rgba(240,246,252,.62) 0%, rgba(240,246,252,.18) 46%, rgba(240,246,252,0) 70%); }
 .tt3-head { position: absolute; left: 6%; top: 6%; max-width: 50%; }
@@ -39,7 +39,7 @@ body .tt3-core { font-weight: 400; }
 
 @media (max-width: 860px) { .ap2-apps > .display { margin-bottom: 1.4rem; } .ap2-grid { margin-top: 1.4rem; } }
 @media (max-width: 720px) {
-  .tt3 { min-height: 1000px; border-radius: 24px; margin-top: 1.8rem; }
+  .tt3 { min-height: 880px; border-radius: 24px; margin-top: 1.8rem; }
   .tt3-img { object-position: 50% 78%; }
   .tt3::before { background: linear-gradient(180deg, rgba(240,246,252,.7) 0%, rgba(240,246,252,.25) 55%, rgba(240,246,252,0) 80%); }
   .tt3-head { left: 7%; right: 7%; top: 5%; max-width: none; }
@@ -180,20 +180,16 @@ body .ap2-apps > .display { font-size: clamp(1.7rem, 2.9vw, 2.45rem); line-heigh
 
 @media (max-width: 860px) { .ap2-fork { height: 44px; } .ap2-fork svg { display: none; } .ap2-fork::before { content: ""; position: absolute; left: 50%; top: 0; bottom: 0; width: 1.6px; margin-left: -.8px; background: var(--sc-bur, #ad1839); } .ap2-fork i.a { left: 50%; } .ap2-fork i.b { display: none; } }
 
-/* Top of the page: headline, then the methodology, then its three capabilities; one left edge */
 body .ap2-belief { padding-top: 7.4rem; padding-bottom: 0; }
-body .section.ap2-tt { padding-top: 1.7rem; scroll-margin-top: 72px; }
-.ap2-method { margin: 0 0 1.5rem; }
-body .ap2-method .ap2-cc { margin: 0 0 .35rem; font-family: var(--serif); font-weight: 400; font-size: clamp(1.7rem, 2.6vw, 2.2rem); line-height: 1.15; letter-spacing: -.02em; color: var(--ink); }
-.ap2-def { max-width: 62ch; margin: 0; font-size: clamp(1.05rem, 1.4vw, 1.2rem); line-height: 1.6; color: var(--ink); }
-.ap2-caps { max-width: 980px; margin: 0 0 2rem; }
-.ap2-caps-label { margin: 0 0 .8rem; font-size: .78rem; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--slate); }
-.ap2-caps ul { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.4rem; list-style: none; margin: 0; padding: 0; }
-.ap2-caps li { padding-top: .8rem; border-top: 1px solid rgba(63, 88, 115, .22); }
-.ap2-caps strong { display: block; margin-bottom: .25rem; font-family: var(--serif); font-weight: 500; font-size: 1.2rem; color: var(--ink); }
-.ap2-caps span { display: block; font-size: var(--fs-small, .9375rem); line-height: 1.55; color: var(--slate); }
-@media (max-width: 720px) { body .ap2-belief { padding-top: 6.6rem; } body .section.ap2-tt { padding-top: 1.6rem; } .ap2-caps { margin-bottom: 0; } .ap2-caps ul { grid-template-columns: 1fr; gap: .9rem; } }
 /* content scrolling under the floating navigation fades out instead of colliding with it (as on the plan page; the navigation itself is untouched) */
 body[data-page="Approach"]::after { content: ""; position: fixed; left: 0; right: 0; top: 0; height: 92px; z-index: 40; pointer-events: none; background: linear-gradient(to bottom, rgba(236, 242, 252, .92), rgba(236, 242, 252, 0)); -webkit-backdrop-filter: blur(7px); backdrop-filter: blur(7px); -webkit-mask-image: linear-gradient(to bottom, #000 55%, transparent); mask-image: linear-gradient(to bottom, #000 55%, transparent); }
 @media (max-width: 880px) { body[data-page="Approach"]::after { height: 84px; } }
 @media print { body[data-page="Approach"]::after { display: none; } }
+
+/* One introduction: Care Continuity, one sentence, three capabilities in a row */
+body .section.ap2-tt { padding-top: 2.2rem; }
+.ap2-caps { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.4rem; max-width: 760px; list-style: none; margin: 2rem 0 0; padding: 0; }
+.ap2-caps li { padding-top: .8rem; border-top: 1px solid rgba(63, 88, 115, .22); }
+.ap2-caps strong { display: block; margin-bottom: .25rem; font-family: var(--serif); font-weight: 500; font-size: 1.2rem; line-height: 1.25; color: var(--ink); }
+.ap2-caps span { display: block; font-size: var(--fs-small, .9375rem); line-height: 1.5; color: var(--slate); }
+@media (max-width: 720px) { body .ap2-belief { padding-top: 6.6rem; } body .section.ap2-tt { padding-top: 1.8rem; } .ap2-caps { gap: .7rem; margin-top: 1.5rem; } .ap2-caps strong { font-size: .95rem; } .ap2-caps span { font-size: .8rem; line-height: 1.45; } }
