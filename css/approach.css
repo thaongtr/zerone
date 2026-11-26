@@ -178,17 +178,22 @@ body .ap2-apps > .display { font-size: clamp(1.7rem, 2.9vw, 2.45rem); line-heigh
 .ap2-fork i.a { left: 25%; } .ap2-fork i.b { left: 75%; }
 .ap2-apps .ap2-grid { margin-top: 1.2rem; }
 
-/* Care Continuity definition, above the journey diagram */
-.ap2-def { max-width: 62ch; margin: 0 auto 1.8rem; text-align: center; font-size: clamp(1.08rem, 1.5vw, 1.25rem); line-height: 1.65; color: var(--ink); }
-@media (max-width: 720px) { .ap2-def { margin-bottom: 0; } }
 @media (max-width: 860px) { .ap2-fork { height: 44px; } .ap2-fork svg { display: none; } .ap2-fork::before { content: ""; position: absolute; left: 50%; top: 0; bottom: 0; width: 1.6px; margin-left: -.8px; background: var(--sc-bur, #ad1839); } .ap2-fork i.a { left: 50%; } .ap2-fork i.b { display: none; } }
 
-/* The three capabilities under the Care Continuity definition */
-.ap2-def:has(+ .ap2-caps) { margin-bottom: 1.4rem; }
-.ap2-caps { max-width: 980px; margin: 0 auto 1.8rem; text-align: center; }
-.ap2-caps-label { margin: 0 0 .9rem; font-size: .78rem; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--slate); }
-.ap2-caps ul { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.2rem; list-style: none; margin: 0; padding: 0; }
-.ap2-caps li { padding-top: .9rem; border-top: 1px solid rgba(63, 88, 115, .22); }
-.ap2-caps strong { display: block; margin-bottom: .35rem; font-family: var(--serif); font-weight: 500; font-size: 1.2rem; color: var(--ink); }
+/* Top of the page: headline, then the methodology, then its three capabilities; one left edge */
+body .ap2-belief { padding-top: 8.5rem; padding-bottom: 0; }
+body .section.ap2-tt { padding-top: 2.6rem; scroll-margin-top: 96px; }
+.ap2-method { margin: 0 0 1.5rem; }
+body .ap2-method .ap2-cc { margin: 0 0 .35rem; font-family: var(--serif); font-weight: 400; font-size: clamp(1.7rem, 2.6vw, 2.2rem); line-height: 1.15; letter-spacing: -.02em; color: var(--ink); }
+.ap2-def { max-width: 62ch; margin: 0; font-size: clamp(1.05rem, 1.4vw, 1.2rem); line-height: 1.6; color: var(--ink); }
+.ap2-caps { max-width: 980px; margin: 0 0 2rem; }
+.ap2-caps-label { margin: 0 0 .8rem; font-size: .78rem; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--slate); }
+.ap2-caps ul { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.4rem; list-style: none; margin: 0; padding: 0; }
+.ap2-caps li { padding-top: .8rem; border-top: 1px solid rgba(63, 88, 115, .22); }
+.ap2-caps strong { display: block; margin-bottom: .25rem; font-family: var(--serif); font-weight: 500; font-size: 1.2rem; color: var(--ink); }
 .ap2-caps span { display: block; font-size: var(--fs-small, .9375rem); line-height: 1.55; color: var(--slate); }
-@media (max-width: 720px) { .ap2-caps { margin-bottom: 0; } .ap2-caps ul { grid-template-columns: 1fr; } }
+@media (max-width: 720px) { body .ap2-belief { padding-top: 7rem; } body .section.ap2-tt { padding-top: 2rem; } .ap2-caps { margin-bottom: 0; } .ap2-caps ul { grid-template-columns: 1fr; gap: .9rem; } }
+/* content scrolling under the floating navigation fades out instead of colliding with it (as on the plan page; the navigation itself is untouched) */
+body[data-page="Approach"]::after { content: ""; position: fixed; left: 0; right: 0; top: 0; height: 92px; z-index: 40; pointer-events: none; background: linear-gradient(to bottom, rgba(236, 242, 252, .92), rgba(236, 242, 252, 0)); -webkit-backdrop-filter: blur(7px); backdrop-filter: blur(7px); -webkit-mask-image: linear-gradient(to bottom, #000 55%, transparent); mask-image: linear-gradient(to bottom, #000 55%, transparent); }
+@media (max-width: 880px) { body[data-page="Approach"]::after { height: 84px; } }
+@media print { body[data-page="Approach"]::after { display: none; } }
