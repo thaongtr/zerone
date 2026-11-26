@@ -177,4 +177,8 @@ body .ap2-apps > .display { font-size: clamp(1.7rem, 2.9vw, 2.45rem); line-heigh
 .ap2-fork i { position: absolute; bottom: -5px; width: 11px; height: 11px; margin-left: -5.5px; border-radius: 50%; background: #fff; border: 2px solid var(--sc-bur, #ad1839); box-shadow: 0 0 0 6px rgba(143,29,63,.1); }
 .ap2-fork i.a { left: 25%; } .ap2-fork i.b { left: 75%; }
 .ap2-apps .ap2-grid { margin-top: 1.2rem; }
+
+/* Care Continuity definition, above the journey diagram */
+.ap2-def { max-width: 62ch; margin: 0 auto 1.8rem; text-align: center; font-size: clamp(1.08rem, 1.5vw, 1.25rem); line-height: 1.65; color: var(--ink); }
+@media (max-width: 720px) { .ap2-def { margin-bottom: 0; } }
 @media (max-width: 860px) { .ap2-fork { height: 44px; } .ap2-fork svg { display: none; } .ap2-fork::before { content: ""; position: absolute; left: 50%; top: 0; bottom: 0; width: 1.6px; margin-left: -.8px; background: var(--sc-bur, #ad1839); } .ap2-fork i.a { left: 50%; } .ap2-fork i.b { display: none; } }
