@@ -570,5 +570,10 @@ body .zt-hub:not(#z)::after {
 html[lang="vi"] .hero h1 { font-size: clamp(2.35rem, 6.1vw, 5rem); }
 @media (max-width: 640px) { .hero-sign { margin-top: 1.1rem; font-size: .74rem; letter-spacing: .02em; } }
 /* Space the new multi-paragraph blocks */
-body .ttm-tail .lede + .lede { margin-top: 1rem; }
 body .prob2-body + .prob2-body { margin-top: .6rem; }
+
+/* Care Continuity on the home page: title, one line, one sentence, origin */
+body .ttm-head { text-align: center; }
+body .ttm-head .ttm-sub { margin: 0 auto; max-width: 30ch; font-family: var(--serif); font-size: clamp(1.3rem, 2.2vw, 1.75rem); line-height: 1.3; color: var(--ink); text-wrap: balance; }
+body .ttm-head .ttm-body { margin: .9rem auto 0; max-width: 56ch; text-wrap: balance; }
+body .ttm-head .ttm-origin { margin: .9rem 0 0; font-size: .76rem; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--slate); }
