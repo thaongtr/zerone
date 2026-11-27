@@ -188,11 +188,14 @@ body[data-page="Approach"]::after { content: ""; position: fixed; left: 0; right
 
 /* One introduction: Care Continuity, one sentence, three capabilities in a row */
 body .section.ap2-tt { padding-top: 2.2rem; }
-.ap2-caps { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.4rem; max-width: 760px; list-style: none; margin: 2rem 0 0; padding: 0; }
-.ap2-caps li { padding-top: .8rem; border-top: 1px solid rgba(63, 88, 115, .22); }
-.ap2-caps strong { display: block; margin-bottom: .25rem; font-family: var(--serif); font-weight: 500; font-size: 1.2rem; line-height: 1.25; color: var(--ink); }
-.ap2-caps span { display: block; font-size: var(--fs-small, .9375rem); line-height: 1.5; color: var(--slate); }
-@media (max-width: 720px) { body .ap2-belief { padding-top: 6.6rem; } body .section.ap2-tt { padding-top: 1.8rem; } .ap2-caps { gap: .7rem; margin-top: 1.5rem; } .ap2-caps strong { font-size: .95rem; } .ap2-caps span { font-size: .8rem; line-height: 1.45; } }
 /* the journey drawing starts higher now that the diagram carries only a label; its lower end still meets the line below */
 .tt3-flow { position: absolute; inset: -70px 0 0 0; }
 @media (max-width: 720px) { .tt3-flow { inset: -120px 0 0 0; } }
+/* the name leads, the subheadline follows, one short description, then the three capabilities */
+body .ap2-belief .ap2-sub { margin: 0 0 .8rem; max-width: 36ch; font-family: var(--serif); font-size: clamp(1.35rem, 2.2vw, 1.75rem); line-height: 1.3; letter-spacing: -.01em; color: var(--ink); text-wrap: balance; }
+body .ap2-belief .lede { max-width: 68ch; margin-top: 0; }
+.ap2-caps { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.4rem; max-width: 980px; list-style: none; margin: 1.8rem 0 0; padding: 0; }
+.ap2-caps li { padding-top: .8rem; border-top: 1px solid rgba(63, 88, 115, .22); }
+.ap2-caps strong { display: block; margin-bottom: .25rem; font-family: var(--serif); font-weight: 500; font-size: 1.2rem; line-height: 1.25; color: var(--ink); }
+.ap2-caps span { display: block; font-size: var(--fs-small, .9375rem); line-height: 1.5; color: var(--slate); }
+@media (max-width: 720px) { body .ap2-belief { padding-top: 6.6rem; } body .section.ap2-tt { padding-top: 1.8rem; } .ap2-caps { grid-template-columns: 1fr; gap: .8rem; margin-top: 1.4rem; } .ap2-caps li { padding-top: .65rem; } .ap2-caps strong { font-size: 1.1rem; margin-bottom: .1rem; } }
