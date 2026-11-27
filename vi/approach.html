@@ -125,9 +125,16 @@
       (function () {
         var el = document.querySelector(".tt3");
         if (!el) return;
-        if (!("IntersectionObserver" in window) || matchMedia("(prefers-reduced-motion: reduce)").matches) { el.classList.add("is-in"); return; }
+        if (matchMedia("(prefers-reduced-motion: reduce)").matches) { el.classList.add("is-in"); return; }
         document.documentElement.classList.add("tt3-js");
-        new IntersectionObserver(function (e, o) { if (e[0].isIntersecting) { el.classList.add("is-in"); o.disconnect(); } }, { threshold: 0.3 }).observe(el);
+        /* play once the visitor scrolls the drawing up to mid-screen, so it is not over before they look at it */
+        function play() {
+          if (window.scrollY < 20 || el.getBoundingClientRect().top > window.innerHeight * 0.5) return;
+          el.classList.add("is-in");
+          window.removeEventListener("scroll", play);
+        }
+        window.addEventListener("scroll", play, { passive: true });
+        play();
       })();
     </script>
   </body>
