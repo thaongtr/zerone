@@ -50,18 +50,10 @@ body .tt3-core { font-weight: 400; }
   .tt3-drop { height: 60px; }
 }
 
-/* one-time reveal (~2.8s): the line is drawn once, stage by stage; static without scripting or with reduced motion */
+/* the red thread grows with the scroll (js/approach-thread.js) and each word appears as it arrives; full and static without scripting or with reduced motion */
 @media (prefers-reduced-motion: no-preference) {
-  .tt3-js .tt3:not(.is-in) .tt3-curve path { stroke-dashoffset: 4000; }
-  .tt3-js .tt3:not(.is-in) .tt3-dot, .tt3-js .tt3:not(.is-in) .tt3-s { opacity: 0; }
-  .tt3-js .tt3:not(.is-in) ~ .tt3-drop path, .tt3-js .tt3:not(.is-in) ~ .tt3-drop i { opacity: 0; }
-  .tt3-curve path { transition: stroke-dashoffset 2.2s cubic-bezier(.4,0,.2,1) .2s; }
-  .tt3-dot, .tt3-s, .tt3-drop path, .tt3-drop i { transition: opacity .5s ease; }
-  .tt3.is-in .tt3-dot:nth-of-type(1), .tt3.is-in .tt3-s1 { transition-delay: .2s; }
-  .tt3.is-in .tt3-dot:nth-of-type(2), .tt3.is-in .tt3-s2 { transition-delay: .8s; }
-  .tt3.is-in .tt3-dot:nth-of-type(3), .tt3.is-in .tt3-s3 { transition-delay: 1.4s; }
-  .tt3.is-in .tt3-dot:nth-of-type(4), .tt3.is-in .tt3-s4 { transition-delay: 2s; }
-  .tt3.is-in ~ .tt3-drop path, .tt3.is-in ~ .tt3-drop i { transition-delay: 2.4s; }
+  .tt3-dot, .tt3-s { transition: opacity .35s ease; }
+  .tt3-js .tt3-dot:not(.on), .tt3-js .tt3-s:not(.on) { opacity: 0; }
 }
 
 /* ---------- Two applications: equal weight ---------- */
