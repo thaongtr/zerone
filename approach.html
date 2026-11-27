@@ -16,7 +16,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,wght@0,400;0,500;1,400;1,500&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="css/site.css?v=bur2" />
     <link rel="stylesheet" href="css/spatial.css?v=hub8" />
-    <link rel="stylesheet" href="css/approach.css?v=model1" />
+    <link rel="stylesheet" href="css/approach.css?v=thread1" />
   </head>
   <body data-page="Approach">
     <div id="chrome-top"></div>
@@ -120,21 +120,6 @@
     <div id="chrome-bottom"></div>
     <script src="js/site.js?v=20261111j"></script>
     <script src="js/journey.js" defer></script>
-    <script>
-      (function () {
-        var el = document.querySelector(".tt3");
-        if (!el) return;
-        if (matchMedia("(prefers-reduced-motion: reduce)").matches) { el.classList.add("is-in"); return; }
-        document.documentElement.classList.add("tt3-js");
-        /* play once the visitor scrolls the drawing up to mid-screen, so it is not over before they look at it */
-        function play() {
-          if (window.scrollY < 20 || el.getBoundingClientRect().top > window.innerHeight * 0.5) return;
-          el.classList.add("is-in");
-          window.removeEventListener("scroll", play);
-        }
-        window.addEventListener("scroll", play, { passive: true });
-        play();
-      })();
-    </script>
+    <script src="js/approach-thread.js?v=1"></script>
   </body>
 </html>
